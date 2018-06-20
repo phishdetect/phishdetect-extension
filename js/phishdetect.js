@@ -2,6 +2,11 @@
 
 const jQuery = require("jquery");
 const $ = jQuery;
+
+const vex = require("vex-js")
+vex.registerPlugin(require("vex-dialog"))
+vex.defaultOptions.className = "vex-theme-default"
+
 const GmailFactory = require("gmail-js");
 const gmail = new GmailFactory.Gmail($);
 window.gmail = gmail;
@@ -38,17 +43,15 @@ gmail.observe.on("open_email", function(id, url, body, xhr) {
                 var safe_url = BACKEND_URL_CHECK + encodeURIComponent(unsafe_url)
 
                 // We spawn a dialog.
-                // Pick the default theme.
-                vex.defaultOptions.className = "vex-theme-default";
                 // TODO: This is actually not working.
-                // vex.defaultOptions.contentClassName = "nophish-dialog-large";
+                // vex.defaultOptions.contentClassName = "phishdetect-dialog-large";
                 vex.dialog.open({
                     unsafeMessage: DIALOG_MESSAGE,
                     buttons: [
                         // Button to open "Safely".
                         $.extend({}, vex.dialog.buttons.YES, {
                             text: "Safely",
-                            className: "nophish-button-safe",
+                            className: "phishdetect-button-safe",
                             click: function($vexContent, event) {
                                 this.value = "safe";
                                 this.close();
@@ -58,7 +61,7 @@ gmail.observe.on("open_email", function(id, url, body, xhr) {
                         // Button to open "Unsafely".
                         $.extend({}, vex.dialog.buttons.YES, {
                             text: "Unsafely",
-                            className: "nophish-button-unsafe",
+                            className: "phishdetect-button-unsafe",
                             click: function($vexContent, event) {
                                 this.value = "unsafe";
                                 this.close();

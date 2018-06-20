@@ -13,6 +13,7 @@
     "license": "ISC",
     "dependencies": {
         "vex-dialog": "latest",
+        "vex-js": "latest",
         "gmail-js": "latest",
         "jquery": "latest"
     },

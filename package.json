@@ -1,0 +1,22 @@
+{
+    "name": "phishdetect",
+    "version": "2.3.0",
+    "description": "",
+    "main": "",
+    "scripts": {
+        "deps": "npm install",
+        "stage": "mkdir dist || echo Dist already exists.",
+        "bundle": "browserify -o dist/phishdetect.js js/const.js js/phishdetect.js",
+        "build": "npm run stage && npm run bundle"
+    },
+    "author": "Claudio Guarnieri",
+    "license": "ISC",
+    "dependencies": {
+        "vex-dialog": "latest",
+        "gmail-js": "latest",
+        "jquery": "latest"
+    },
+    "devDependencies": {
+        "browserify": "latest"
+    }
+}

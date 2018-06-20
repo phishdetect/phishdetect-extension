@@ -1,0 +1,35 @@
+html, body {
+    background-color: #fff;
+    font-family: "Lucida Grande", "Segoe UI", Tahoma, "DejaVu Sans", Arial, sans-serif;
+    /*margin: 1em;*/
+    font-size: 90%;
+}
+
+#container {
+    padding: 2em;
+    min-width: 210px;
+}
+
+
+h2 {
+    line-height: 1;
+    font-size: 1.3em;
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: #2779BD;
+    text-decoration: none;
+}
+a:hover {
+    color: #1C3D5A;
+    text-decoration: underline;
+}
+
+.separator {
+    border-bottom: 1px solid #B8C2CC;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}

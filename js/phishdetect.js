@@ -13,10 +13,12 @@ window.gmail = gmail;
 
 gmail.observe.on("load", () => {
     const userEmail = gmail.get.user_email();
-    console.log("Hello, " + userEmail + ". This is your extension talking!");
+    // console.log("Hello, " + userEmail + ". This is your extension talking!");
 });
 
 gmail.observe.on("open_email", function(id, url, body, xhr) {
+    // console.log("Email opened with id " + id);
+
     var email = new gmail.dom.email(id);
     var emailBody = email.dom("body");
     var anchors = $(emailBody).find("a");
@@ -26,8 +28,6 @@ gmail.observe.on("open_email", function(id, url, body, xhr) {
 
         // We check if it is an http link.
         if (href.indexOf("http://") === 0 || href.indexOf("https://") === 0) {
-            console.log(href);
-
             // We delete data-saferedirecturl.
             // Maybe we should make this optional, but the value of it seems
             // mostly duplicated by using nophi.sh anyway.
@@ -39,7 +39,8 @@ gmail.observe.on("open_email", function(id, url, body, xhr) {
                 event.preventDefault();
 
                 // Get URLs.
-                var unsafe_url = event.srcElement.getAttribute("href");
+                // var unsafe_url = event.srcElement.getAttribute("href");
+                var unsafe_url = href;
                 var safe_url = BACKEND_URL_CHECK + encodeURIComponent(unsafe_url)
 
                 // We spawn a dialog.

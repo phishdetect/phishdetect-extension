@@ -18,7 +18,7 @@ function scanPage() {
 document.addEventListener("DOMContentLoaded", function () {
     getTab(function(tab) {
         let url = new URL(tab.url);
-        if (url.hostname == "nophi.sh") {
+        if (url.hostname == "phishdetect.io") {
             document.getElementById("div-scanpage").innerHTML = "";
         }
     });

@@ -30,7 +30,7 @@ gmail.observe.on("open_email", function(id, url, body, xhr) {
         if (href.indexOf("http://") === 0 || href.indexOf("https://") === 0) {
             // We delete data-saferedirecturl.
             // Maybe we should make this optional, but the value of it seems
-            // mostly duplicated by using nophi.sh anyway.
+            // mostly duplicated by using phishdetect.io anyway.
             anchors[i].removeAttribute("data-saferedirecturl");
 
             // We add a listener so we can catch the clicks.

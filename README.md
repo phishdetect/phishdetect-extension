@@ -6,10 +6,10 @@ First install node.js and npm:
 
     $ sudo apt-get install nodejs npm
 
-Now install Node dependencies:
+Build:
 
-    $ npm install
+    $ make build
 
-Then run the builder:
+Create package:
 
-    $ npm run build
+    $ make package

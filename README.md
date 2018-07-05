@@ -9,6 +9,7 @@ Additionally, through the use of gmail.js, it modifies links contained emails'
 bodies in order to display a dialog prompt that offers the user the possibility
 of scanning the links with PhishDetect.
 
+
 ## Build
 
 First install node.js and npm:
@@ -23,3 +24,12 @@ single JavaScript file:
 Finally, we can create the package that we can use for distribution:
 
     $ make package
+
+
+## Technologies used:
+
+- JQuery
+- Gmail.js
+- Vex.js
+- Vex Dialog
+- Tailwind CSS

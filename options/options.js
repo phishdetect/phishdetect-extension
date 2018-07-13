@@ -1,22 +1,17 @@
-function saveOptions(e) {
-    e.preventDefault();
-    browser.storage.local.set({
-        server: document.querySelector("#server").value
-    })
+function loadOptions() {
+    document.getElementById("currentServer").innerText = getBackendDomain();
 }
 
-function loadOptions() {
-    function showOptions(result) {
-        document.getElementById("current_server").innerText = result.server || "phishdetect.io";
-    }
+function saveOptions() {
+    setBackendDomain(document.querySelector("#server").value);
+    loadOptions();
+}
 
-    function onError(error) {
-        console.log(error);
-    }
-
-    var server = browser.storage.local.get("server");
-    server.then(showOptions, onError);
+function restoreDefaults() {
+    setBackendDefaults();
+    loadOptions();
 }
 
 document.addEventListener("DOMContentLoaded", loadOptions);
-document.querySelector("#form").addEventListener("submit", saveOptions);
+document.querySelector("form").addEventListener("submit", saveOptions);
+document.querySelector("#restoreDefaults").addEventListener("click", restoreDefaults);

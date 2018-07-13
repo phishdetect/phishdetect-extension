@@ -3,7 +3,7 @@ function injectRedirect(tabId) {
     chrome.tabs.captureVisibleTab(null, {}, function(img) {
         // Inject some data in the page.
         chrome.tabs.executeScript(tabId, {
-            code: "var screenshot = '" + img + "'; var backend = '" + BACKEND_URL_CHECK + "';"
+            code: "var screenshot = '" + img + "'; var backend = '" + getBackendURL() + "';"
         }, function() {
             // Load jQuery.
             // TODO: We don't actually need this.
@@ -16,7 +16,7 @@ function injectRedirect(tabId) {
 }
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    if (request.greeting === "scanPage") {
+    if (request.method === "scanPage") {
         injectRedirect(request.tabId);
         return false;
     }
@@ -37,7 +37,7 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
     // If we're scanning a link, we just open a tab to our service.
     } else if (info.menuItemId === "scan-link") {
         var linkUrl = info.linkUrl;
-        var safeUrl = BACKEND_URL_CHECK + encodeURIComponent(linkUrl);
+        var safeUrl = getBackendURL() + encodeURIComponent(linkUrl);
         chrome.tabs.create({"url": safeUrl});
         return false;
     }

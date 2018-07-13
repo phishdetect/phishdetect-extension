@@ -12,15 +12,17 @@
 
     <p class="mt-4 mb-4">Through this form you can decide which PhishDetect server to connect to. The currently configured server is:</p>
 
-    <div id="current_server" class="mb-4 p-4 text-lg bg-grey-lighter rounded"></div>
+    <div id="currentServer" class="mb-4 p-4 text-lg bg-grey-lighter rounded"></div>
 
-    <form id="form">
+    <form>
         <label for="server" class="font-bold">Server domain name<label>
         <div class="mt-2"><input type="text" class="block appearance-none w-full bg-white border border-grey-light px-4 py-4 rounded" id="server" /></div>
 
-        <div class="mt-4"><button type="submit" class="bg-blue hover:bg-blue-light text-white py-2 px-4 border-b-4 border-blue-dark hover:text-white hover:no-underline hover:border-blue rounded text-lg cursor-pointer">Save</button></div>
+        <div class="mt-4"><button type="submit" class="bg-blue hover:bg-blue-light text-white py-2 px-4 border-b-4 border-blue-dark hover:text-white hover:no-underline hover:border-blue rounded text-lg cursor-pointer">Save</button> <a id="restoreDefaults" class="bg-grey hover:bg-grey-light py-2 px-4 border-b-4 border-grey-dark hover:no-underline hover:border-grey rounded text-lg cursor-pointer font-normal text-grey-darkest">Restore Defaults</a></div>
     </form>
 </div>
+<script src="../js/const.js"></script>
+<script src="../js/settings.js"></script>
 <script src="options.js"></script>
 </body>
 </html>

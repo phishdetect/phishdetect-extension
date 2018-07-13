@@ -6,7 +6,7 @@
     "scripts": {
         "deps": "npm install",
         "stage": "mkdir dist || echo Dist already exists.",
-        "bundle": "browserify -o dist/phishdetect.js js/const.js js/phishdetect.js",
+        "bundle": "browserify -o dist/phishdetect.js js/const.js js/settings.js js/phishdetect.js",
         "build": "npm run stage && npm run bundle"
     },
     "author": "Claudio Guarnieri",

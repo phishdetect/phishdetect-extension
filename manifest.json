@@ -3,7 +3,7 @@
 
     "name": "PhishDetect",
     "description": "Anti-phishing browser extension. Scan suspicious pages and links.",
-    "version": "2.3.1",
+    "version": "2.4",
     "icons": {
         "16": "img/icon.png",
         "48": "img/icon.png",
@@ -11,7 +11,7 @@
     },
     "browser_action": {
         "default_icon": "img/icon.png",
-        "default_popup": "popup/index.html"
+        "default_popup": "popup/popup.html"
     },
     "background": {
         "scripts": ["js/const.js", "js/utils.js", "js/background.js"]
@@ -20,7 +20,8 @@
         "activeTab",
         "tabs",
         "contextMenus",
-        "<all_urls>"
+        "<all_urls>",
+        "storage"
     ],
     "content_scripts": [
         {
@@ -42,5 +43,8 @@
     ],
     "web_accessible_resources": [
         "dist/phishdetect.js"
-    ]
+    ],
+    "options_ui" : {
+        "page": "options/options.html"
+    }
 }

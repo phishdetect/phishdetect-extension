@@ -6,7 +6,7 @@ build:
 
 package:
 	@echo "Packaging the extension..."
-	@zip -r -FS phishdetect.zip css/ dist/ img/ js/ popup/ manifest.json
+	@zip -r -FS phishdetect.zip css/ dist/ img/ js/ options/ popup/ manifest.json
 
 clean:
 	rm -rf dist/

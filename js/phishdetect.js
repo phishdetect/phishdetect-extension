@@ -41,7 +41,7 @@ gmail.observe.on("open_email", function(id, url, body, xhr) {
                 // Get URLs.
                 // var unsafe_url = event.srcElement.getAttribute("href");
                 var unsafe_url = href;
-                var safe_url = getBackendURL() + encodeURIComponent(unsafe_url)
+                var safe_url = getBackendURL() + window.btoa(unsafe_url)
 
                 // We spawn a dialog.
                 // TODO: This is actually not working.

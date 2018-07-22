@@ -12,6 +12,6 @@ function getBackendDomain() {
 }
 
 function getBackendURL() {
-    var url = "https://" + getBackendDomain() + "/check/";
+    var url = getBackendDomain() + "/check/";
     return url;
 }

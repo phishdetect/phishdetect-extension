@@ -37,7 +37,7 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
     // If we're scanning a link, we just open a tab to our service.
     } else if (info.menuItemId === "scan-link") {
         var linkUrl = info.linkUrl;
-        var safeUrl = getBackendURL() + encodeURIComponent(linkUrl);
+        var safeUrl = getBackendURL() + window.btoa(linkUrl);
         chrome.tabs.create({"url": safeUrl});
         return false;
     }

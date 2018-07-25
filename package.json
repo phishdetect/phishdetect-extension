@@ -10,7 +10,7 @@
         "build": "npm run stage && npm run bundle"
     },
     "author": "Claudio Guarnieri",
-    "license": "ISC",
+    "license": "GPL-3.0",
     "dependencies": {
         "vex-dialog": "latest",
         "vex-js": "latest",

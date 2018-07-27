@@ -1,8 +1,5 @@
 "use strict";
 
-// Loading the configuration helpers.
-const config = require("./config.js");
-
 const jQuery = require("jquery");
 const $ = jQuery;
 
@@ -42,7 +39,7 @@ function modifyEmail(id) {
                 // Get URLs.
                 // var unsafe_url = event.srcElement.getAttribute("href");
                 var unsafe_url = href;
-                var safe_url = config.getBackendURL() + window.btoa(unsafe_url)
+                var safe_url = getBackendURL() + window.btoa(unsafe_url)
 
                 // We spawn a dialog.
                 // TODO: This is actually not working.

@@ -7,4 +7,5 @@ function addScript(src) {
     (document.body || document.head || document.documentElement).appendChild(script);
 }
 
+addScript("js/config.js");
 addScript("dist/phishdetect.js");

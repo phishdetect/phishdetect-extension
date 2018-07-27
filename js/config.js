@@ -17,10 +17,3 @@ function getBackendURL() {
     var url = getBackendDomain() + "/check/";
     return url;
 }
-
-/*module.exports = {
-    setBackendDomain,
-    setBackendDefaults,
-    getBackendDomain,
-    getBackendURL,
-}*/

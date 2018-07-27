@@ -5,12 +5,8 @@ function injectRedirect(tabId) {
         chrome.tabs.executeScript(tabId, {
             code: "var screenshot = '" + img + "'; var backend = '" + getBackendURL() + "';"
         }, function() {
-            // Load jQuery.
-            // TODO: We don't actually need this.
-            chrome.tabs.executeScript(tabId, {file: "js/libs/jquery.js"}, function() {
-                // Inject our redirector.
-                chrome.tabs.executeScript(tabId, {file: "js/html.js"});
-            });
+            // Inject our redirector.
+            chrome.tabs.executeScript(tabId, {file: "js/html.js"});
         });
     });
 }

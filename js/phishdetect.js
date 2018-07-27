@@ -57,9 +57,9 @@ function modifyEmail(id) {
                                 return false;
                             }
                         }),
-                        // Button to open "Unsafely".
+                        // Button to open "Directly" / "Unsafely".
                         $.extend({}, vex.dialog.buttons.YES, {
-                            text: "Unsafely",
+                            text: "Directly",
                             className: "phishdetect-button-unsafe",
                             click: function($vexContent, event) {
                                 this.value = "unsafe";

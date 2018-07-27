@@ -86,7 +86,7 @@ function modifyEmail(id) {
                             } else if (value == "unsafe") {
                                 window.open(unsafe_url);
                             } else if (value == "help") {
-                                window.open(BACKEND_URL + "help/");
+                                window.open("https://phishdetect.io/help/");
                             }
                         }
                     }

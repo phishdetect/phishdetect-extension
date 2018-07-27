@@ -1,5 +1,8 @@
 "use strict";
 
+// Loading the configuration helpers.
+const config = require("./config.js");
+
 const jQuery = require("jquery");
 const $ = jQuery;
 
@@ -11,13 +14,11 @@ const GmailFactory = require("gmail-js");
 const gmail = new GmailFactory.Gmail($);
 window.gmail = gmail;
 
-gmail.observe.on("load", () => {
-    const userEmail = gmail.get.user_email();
-    // console.log("Hello, " + userEmail + ". This is your extension talking!");
-});
+const DIALOG_TITLE = "PhishDetect";
+const DIALOG_MESSAGE = "<b>" + DIALOG_TITLE + "</b><br />How do you want to open this link?";
 
-gmail.observe.on("open_email", function(id, url, body, xhr) {
-    // console.log("Email opened with id " + id);
+function modifyEmail(id) {
+    console.log("Modifying email ", id);
 
     var email = new gmail.dom.email(id);
     var emailBody = email.dom("body");
@@ -41,7 +42,7 @@ gmail.observe.on("open_email", function(id, url, body, xhr) {
                 // Get URLs.
                 // var unsafe_url = event.srcElement.getAttribute("href");
                 var unsafe_url = href;
-                var safe_url = getBackendURL() + window.btoa(unsafe_url)
+                var safe_url = config.getBackendURL() + window.btoa(unsafe_url)
 
                 // We spawn a dialog.
                 // TODO: This is actually not working.
@@ -96,4 +97,27 @@ gmail.observe.on("open_email", function(id, url, body, xhr) {
             });
         }
     }
+}
+
+// NOTE: Currently disabled this event as we don't need the user email atm.
+//gmail.observe.on("load", () => {
+//    const userEmail = gmail.get.user_email();
+//    console.log("Hello, " + userEmail + ". This is your extension talking!");
+//});
+
+// We only observe this to activate view_email.
+gmail.observe.on("view_thread", function(obj) {
+    console.log("Thread opened with ID ", obj.id);
 });
+
+// This is the event we watch to be able to modify the links in the body.
+gmail.observe.on("view_email", function(obj) {
+    console.log("Email opened with ID ", obj.id);
+    modifyEmail(obj.id);
+});
+
+// NOTE: Currently disabled this event as it doesn't seem to work consistently.
+//gmail.observe.on("open_email", function(id, url, body, xhr) {
+//    console.log("Email opened with id " + id);
+//    modifyEmail(id);
+//});

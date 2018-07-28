@@ -27,4 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
     btnScan.addEventListener("click", function() {
         scanPage();
     });
+
+    helpLink = document.getElementById("button-help");
+    helpLink.href = getBackendDomain() + "/help/";
 });

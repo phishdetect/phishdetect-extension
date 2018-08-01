@@ -35,7 +35,8 @@ function scanPage() {
 document.addEventListener("DOMContentLoaded", function () {
     getTab(function(tab) {
         let url = new URL(tab.url);
-        if (url.hostname == "phishdetect.io") {
+        let backendURL = new URL(getBackendDomain());
+        if (url.hostname == backendURL.hostname) {
             document.getElementById("div-scanpage").innerHTML = "";
         }
     });

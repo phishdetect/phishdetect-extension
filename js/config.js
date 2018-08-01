@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-const BACKEND_DEFAULT_DOMAIN = "https://phishdetect.io";
+const BACKEND_DEFAULT_DOMAIN = "https://node.phishdetect.io";
 
 function setBackendDomain(domain) {
     localStorage.setItem("server", domain);

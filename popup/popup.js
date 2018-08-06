@@ -47,5 +47,5 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     helpLink = document.getElementById("button-help");
-    helpLink.href = chrome.extension.getURL("/help/index.html");
+    helpLink.href = chrome.extension.getURL("/pages/help/index.html");
 });

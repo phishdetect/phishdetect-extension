@@ -1,0 +1,122 @@
+/**
+ * This injects Tailwind's base styles, which is a combination of
+ * Normalize.css and some additional base styles.
+ *
+ * You can see the styles here:
+ * https://github.com/tailwindcss/tailwindcss/blob/master/css/preflight.css
+ *
+ * If using `postcss-import`, use this import instead:
+ *
+ * @import "tailwindcss/preflight";
+ */
+@tailwind preflight;
+
+/**
+ * This injects any component classes registered by plugins.
+ *
+ * If using `postcss-import`, use this import instead:
+ *
+ * @import "tailwindcss/components";
+ */
+@tailwind components;
+
+/**
+ * Here you would add any of your custom component classes; stuff that you'd
+ * want loaded *before* the utilities so that the utilities could still
+ * override them.
+ *
+ * Example:
+ *
+ * .btn { ... }
+ * .form-input { ... }
+ *
+ * Or if using a preprocessor or `postcss-import`:
+ *
+ * @import "components/buttons";
+ * @import "components/forms";
+ */
+
+body {
+    @apply bg-grey-lighter;
+}
+
+a:link, a:visited {
+    @apply text-blue underline;
+}
+a:hover {
+    @apply text-blue-darker no-underline;
+}
+
+img.screenshot {
+    @apply rounded-lg shadow-lg mb-8 mt-2;
+}
+
+#logo {
+    @apply mb-4 h-24;
+}
+
+#content {
+    @apply bg-white p-12;
+}
+
+h1, h2, h3, h4 {
+    @apply font-normal;
+}
+h2 {
+    @apply mt-6 mb-4 border-b-2 pb-2 border-grey-light;
+}
+
+p {
+    @apply leading-normal mb-6;
+}
+
+.tabs-list {
+    @apply list-reset flex border-b mt-6 mb-6;
+}
+.tabs-item {
+    @apply mr-1;
+}
+.tabs-link-active:link, .tabs-link-active:visited {
+    @apply bg-white inline-block border-l border-t border-r rounded-r py-4 px-6 text-blue no-underline
+}
+.tabs-link-active:hover {
+    @apply text-blue-darker;
+}
+.tabs-link-inactive:link, .tabs-link-inactive:visited {
+    @apply bg-white inline-block py-4 px-6 text-blue no-underline
+}
+.tabs-link-inactive:hover {
+    @apply text-blue-darker;
+}
+.tabs-link-alarm:link, .tabs-link-alarm:visited {
+    @apply text-red;
+}
+.tabs-link-alarm:hover {
+    @apply text-red-darker;
+}
+
+/**
+ * This injects all of Tailwind's utility classes, generated based on your
+ * config file.
+ *
+ * If using `postcss-import`, use this import instead:
+ *
+ * @import "tailwindcss/utilities";
+ */
+@tailwind utilities;
+
+/**
+ * Here you would add any custom utilities you need that don't come out of the
+ * box with Tailwind.
+ *
+ * Example :
+ *
+ * .bg-pattern-graph-paper { ... }
+ * .skew-45 { ... }
+ *
+ * Or if using a preprocessor or `postcss-import`:
+ *
+ * @import "utilities/background-patterns";
+ * @import "utilities/skew-transforms";
+ */
+

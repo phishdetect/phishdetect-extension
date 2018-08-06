@@ -14,8 +14,8 @@
         "default_popup": "popup/popup.html"
     },
     "options_ui" : {
-    "page": "options/options.html"
-    }.
+        "page": "options/options.html"
+    },
     "background": {
         "scripts": ["js/config.js", "js/background.js"]
     },
@@ -35,13 +35,9 @@
             "css": [
                 "css/vex.css",
                 "css/vex-theme-default.css",
-                "css/phishdetect.css"
+                "css/gmailDialog.css"
             ],
             "run_at": "document_end"
-        },
-        {
-            "matches": ["<all_urls>"],
-            "css": ["css/phishdetect.css"]
         }
     ],
     "web_accessible_resources": [

@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>PhishDetect - Anti-Phishing Service</title>
+<link rel="stylesheet" href="../css/dist.css">
+<script src="../../js/config.js"></script>
+<script src="help.js"></script>
+</head>
+<body>
+<div class="container mx-auto justify-center items-center" id="content">
+    <div style="margin-bottom: 2em;text-align: center;"><img id="logo" src="../../img/icon.png" /><h1><b>PhishDetect</b> Help</h1></div>
+
+    <p>PhishDetect is a anti-phishing service complemented with a browser extension currently available for the <a href="https://phishdetect.io/chrome">Chrome</a> browser and for <a href="https://phishdetect.io/firefox">Mozilla Firefox</a>. You are reading the <b>Help</b> page, which provides information on how to use the browser extension you have installed, and details on privacy and security.</p>
+
+    <ul class="tabs-list">
+        <li class="-mb-px tabs-item">
+            <a class="tabs-link-active" href="index.html">How to use</a>
+        </li>
+        <li class="tabs-item">
+            <a class="tabs-link-inactive" href="#">Privacy</a>
+        </li>
+        <li class="tabs-item">
+            <a class="tabs-link-inactive tabs-link-alarm" href="#">I received phishing!</a>
+        </li>
+    </ul>
+
+    <p>If you are suspicious of a webpage you have opened or a link you have received, you can ask the configured <b>PhishDetect Node</b> to scan scan them for phishing. A PhishDetect Node is a service that securely conducts the scanning of the suspicious link or page. Every newly installed brower extension comes pre-configured with a default PhishDetect Node located at <b>node.phishdetect.io</b>, which is operated by the creators of PhishDetect.</p>
+
+    <div class="mb-8 rounded-lg bg-blue-lightest p-6 text-blue-darkest">
+        <div>You have currently configured the following PhishDetect Node:</div>    
+        <div id="configured-domain" class="mt-4 text-xl"></div>
+    </div>
+
+    <p>If you wish to use a different PhishDetect Node (for example in case the organization you work for operates one) you can do so by clicking on PhishDetect Browser Extension's toolbar button (normally located next to the address bar, on the top-right corner of the browser window) and on the "Settings" link, which will open the following settings dialog:</p>
+
+    <img class="screenshot" src="images/settings.png" />
+
+    <p>Through this form you can enter the address of the PhishDetect Node you wish to use instead.</p>
+
+    <h2>Using the browser's menu options</h2>
+
+    <p>If you have received a link (for example through a private message or via social media) and you want to check it, you can right-click on the link and use the menu option <i>"Scan this link for phishing"</i>:</p>
+
+    <img class="screenshot" src="images/scan_link.png" />
+
+    <p>If you already have open a page you are suspicious of, you can right-click on the page and use the <i>"Scan this page for phishing"</i> context menu option:</p>
+
+    <img class="screenshot" src="images/scan_page.png" />
+
+    <p>Alternatively, you can click on the hook button in the browser's toolbar and click on the <i>"Scan this page"</i> button:</p>
+
+    <img class="screenshot" src="images/scan_hook.png" />
+
+    <p>These last two options have the advantage of analyzing the content of the webpage directly as it was rendered in your browser, therefore likely avoiding any potential anti-detection system the phishing kit might implement. These options are also normally a lot faster. You can read more about this in "How does it work?" section.</p>
+
+    <h2>Checking links from messages in Gmail</h2>
+
+    <p>When you click on a link contained inside the body of an email through the Gmail web interface, you should be presented with the following dialog:</p>
+
+    <img class="screenshot" src="images/gmail.png" width="80%" />
+
+    <p>The <span style="color: #428bca; font-weight: bold;">?</span> button takes you here.</p>
+
+    <p>By pressing the <span class="unsafely">Directly</span> red button, you are directed straight to the original link.</p>
+
+    <p>By pressing the <span class="safely">Safely</span> green button, you are directed to this service. This service will analyze the link and try to determine whether there is anything suspicious with it.</p>
+    
+    <p><b>In case any suspicious element is found, you will be presented with a preview of the page and a warning.</b> <a href="images/warning.png" data-toggle="lightbox">Click here</a> for an example. If nothing suspicious if found, or if the page was even identified to be whitelisted (meaning it belongs to well-known online services such as Google, Facebook, Twitter, etc.) you will be presented with a temporary preview and you will then be redirected to the original link after 30 seconds. <a href="images/redirect.png" data-toggle="lightbox">Click here</a> for an example.</p>
+</div>
+</body>
+</html>

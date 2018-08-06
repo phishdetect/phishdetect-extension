@@ -1,6 +1,10 @@
 build:
 	@echo "Installing dependencies..."
 	npm install
+
+	@echo "Building CSS..."
+
+
 	@echo "Building files..."
 	npm run build
 

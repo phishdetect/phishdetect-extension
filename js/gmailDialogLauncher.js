@@ -25,4 +25,4 @@ function addScript(src) {
 }
 
 addScript("js/config.js");
-addScript("dist/phishdetect.js");
+addScript("dist/gmailDialog.js");

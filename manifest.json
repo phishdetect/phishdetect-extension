@@ -13,8 +13,11 @@
         "default_icon": "img/icon.png",
         "default_popup": "popup/popup.html"
     },
+    "options_ui" : {
+    "page": "options/options.html"
+    }.
     "background": {
-        "scripts": ["js/utils.js", "js/config.js", "js/background.js"]
+        "scripts": ["js/config.js", "js/background.js"]
     },
     "permissions": [
         "activeTab",
@@ -27,7 +30,7 @@
         {
             "matches": ["https://mail.google.com/*", "https://inbox.google.com/*"],
             "js": [
-                "js/phishdetectLauncher.js"
+                "js/gmailDialogLauncher.js"
             ],
             "css": [
                 "css/vex.css",
@@ -43,9 +46,6 @@
     ],
     "web_accessible_resources": [
         "js/config.js",
-        "dist/phishdetect.js"
-    ],
-    "options_ui" : {
-        "page": "options/options.html"
-    }
+        "dist/gmailDialog.js"
+    ]
 }

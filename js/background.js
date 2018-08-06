@@ -23,7 +23,7 @@ function injectRedirect(tabId) {
             code: "var screenshot = '" + img + "'; var backend = '" + getBackendURL() + "';"
         }, function() {
             // Inject our redirector.
-            chrome.tabs.executeScript(tabId, {file: "js/html.js"});
+            chrome.tabs.executeScript(tabId, {file: "js/pageInject.js"});
         });
     });
 }
@@ -40,6 +40,20 @@ chrome.browserAction.onClicked.addListener(function(tab) {
     const url = chrome.extension.getURL("/popup/index.html?tabId=" + tab.id);
     chrome.tabs.create({url});
 });
+
+function loadContextMenus() {
+    chrome.contextMenus.create({
+        "title": "Scan this page for phishing",
+        "id": "scan-page",
+        "contexts": ["page", "frame", "selection", "editable", "image", "video", "audio"]
+    });
+
+    chrome.contextMenus.create({
+        "title": "Scan this link for phishing",
+        "id": "scan-link",
+        "contexts": ["link"]
+    });
+}
 
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
     // If we're scanning a page, we inject a JavaScript that collects the HTML

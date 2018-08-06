@@ -62,8 +62,8 @@ img.screenshot {
 h1, h2, h3, h4 {
     @apply font-normal;
 }
-h2 {
-    @apply mt-6 mb-4 border-b-2 pb-2 border-grey-light;
+h3 {
+    @apply mt-10 mb-4 border-b-2 pb-2 text-grey-darkest;
 }
 
 p {
@@ -77,7 +77,7 @@ p {
     @apply mr-1;
 }
 .tabs-link-active:link, .tabs-link-active:visited {
-    @apply bg-white inline-block border-l border-t border-r rounded-r py-4 px-6 text-blue no-underline
+    @apply bg-white inline-block border-l border-t border-r rounded-t-lg py-4 px-6 text-blue no-underline
 }
 .tabs-link-active:hover {
     @apply text-blue-darker;

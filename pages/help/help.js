@@ -1,10 +1,11 @@
 document.addEventListener("DOMContentLoaded", function() {
     let backendURL = new URL(getBackendDomain());
-    var configuredHTML = "";
-    if (backendURL.hostname == "node.phishdetect.io") {
-        configuredHTML = "<b>node.phishdetect.io</b> (default configuration)";
-    } else {
-        configuredHTML = "<b>" + backendURL.hostname + "</b>";
+    let defaultURL = new URL(BACKEND_DEFAULT_DOMAIN);
+    var configuredHTML = "<b>" + backendURL.hostname + "</b>";
+
+    if (backendURL.hostname == defaultURL.hostname) {
+        configuredHTML += " (default configuration)";
     }
+
     document.getElementById("configured-domain").innerHTML = configuredHTML;
 });

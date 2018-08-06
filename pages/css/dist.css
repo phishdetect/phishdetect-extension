@@ -708,12 +708,12 @@ h4 {
   font-weight: 400;
 }
 
-h2 {
-  margin-top: 1.5rem;
+h3 {
+  margin-top: 2.5rem;
   margin-bottom: 1rem;
   border-bottom-width: 2px;
   padding-bottom: .5rem;
-  border-color: #dae1e7;
+  color: #3d4852;
 }
 
 p {
@@ -741,8 +741,8 @@ p {
   border-left-width: 1px;
   border-top-width: 1px;
   border-right-width: 1px;
-  border-top-right-radius: .25rem;
-  border-bottom-right-radius: .25rem;
+  border-top-left-radius: .5rem;
+  border-top-right-radius: .5rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
   padding-left: 1.5rem;

@@ -1,23 +1,43 @@
-     <div class="tab-pane fade" id="nav-privacy" role="tabpanel" aria-labelledby="nav-privacy-tab">
-         <h2>What type of data PhishDetect collects</h2>
+ <!doctype html>
+ <html>
+ <head>
+ <meta charset="utf-8">
+ <title>PhishDetect - Anti-Phishing Service</title>
+ <link rel="stylesheet" href="../css/dist.css">
+ </head>
+ <body>
+ <div class="container mx-auto justify-center items-center" id="content">
+    <div style="margin-bottom: 2em;text-align: center;"><img id="logo" src="../../img/icon.png" /><h1><b>PhishDetect</b>      Help</h1></div>
  
-         <p>Firstly it is important to note that when you request a link or a page to be scanned for potential phishing you    might share some private information with this node, if such page or link contains any. However, you are given the agency to  decide which links and pages to scan and which not to. <b>No action is performed without your expressed manual consent.</b></ p>
+    <p>PhishDetect is a anti-phishing service complemented with a browser extension currently available for the <a            target="_blank" href="https://phishdetect.io/chrome">Chrome</a> browser and for <a target="_blank" href="https://phishdetect. io/firefox">Mozilla Firefox</a>. You are reading the <b>Help</b> page, which provides information on how to use the browser   extension you have installed, and details on privacy and security.</p>
  
-         <h2>If you are using the default phishdetect.io node</h2>
- 
-         <p>We store details of links and pages that are detected to be suspicious, and we might use it to complement other    defensive services such as <a href="https://securitywithoutborders.org/tools/blockade.html">Blockade</a>, by adding to its    blocklist domains that are discovered serving phishing. These details are not shared with any third party and they are        exclusively stored on a server in the Netherlands, provided by <a href="https://greenhost.net">Greenhost</a>. We do not       store any information on scanned links and pages that were found to be innocuous.</p>
- 
-         <h2>If you are using an independent PhishDetect node</h2>
- 
-         <p>If you have configured your PhishDetect Extension to communicate with a different PhishDetect node than the        default, you should refer to its operators and their specific privacy policy.</p>
-     </div>
-     <div class="tab-pane fade" id="nav-how" role="tabpanel" aria-labelledby="nav-how-tab">
-         <p>When asked to open a link safely, the PhishDetect service will attempt to automatically open the provided URL and  then fetch analyze the content of the resulting webpage.</p>
- 
-         <p>A number of heuristics and detection patterns are then applied to calculate an approximate score that allows us    to determine whether there are sufficient indications of suspicious or malicious behavior to warn you of.</p>
- 
-         <p>Depending on the score, the warning might vary visually and in terms of suggested action. If PhishDetect           determines that there aren't enough suspicious elements, you will be redirected automatically to the original link.</p>
- 
-         <p>When clicking the hook button in the browser bar (or using the "Scan this page for phishing" menu option),         instead of opening the link in an emulated browser, we analyze directly the page as rendered by your browser. While opening   a suspicious link can carry some significant risks, if you already happened to have it opened, using this option has a small  advantage of analyzing the page directly as it was rendered in your browser. Because some phishing kits might be designed to  detect signs of automation, or block network connections from certain countries, being able to analyze a suspicious page as   you opened it could allow to avoid any of such potential anti-detection mechanisms. Additionally, because by analyzing the    rendered page directly we don't need to launch PhishDetect's browser, the results are normally generated a lot faster.</p>
-     </div>
+    <ul class="tabs-list">
+        <li class="tabs-item">
+            <a class="tabs-link-inactive" href="index.html">How to use</a>
+        </li>
+        <li class="-mb-px tabs-item">
+            <a class="tabs-link-active" href="privacy.html">Privacy</a>
+        </li>
+        <li class="tabs-item">
+            <a class="tabs-link-inactive tabs-link-alarm" href="emergency.html">I received phishing!</a>
+        </li>
+    </ul>
 
+    <h2>What type of data PhishDetect collects</h2>
+ 
+    <p>Firstly it is important to note that when you request a link or a page to be scanned for potential phishing you    might share some private information with this node, if such page or link contains any. However, you are given the agency to  decide which links and pages to scan and which not to. <b>No action is performed without your expressed manual consent.</b></ p>
+ 
+    
+    <h2>If you are using the default phishdetect.io node</h2>
+ 
+    
+    <p>We store details of links and pages that are detected to be suspicious, and we might use it to complement other    defensive services such as <a href="https://securitywithoutborders.org/tools/blockade.html">Blockade</a>, by adding to its    blocklist domains that are discovered serving phishing. These details are not shared with any third party and they are        exclusively stored on a server in the Netherlands, provided by <a href="https://greenhost.net">Greenhost</a>. We do not       store any information on scanned links and pages that were found to be innocuous.</p>
+ 
+    
+    <h2>If you are using an independent PhishDetect node</h2>
+ 
+    
+    <p>If you have configured your PhishDetect Extension to communicate with a different PhishDetect node than the        default, you should refer to its operators and their specific privacy policy.</p>
+</div>
+</body>
+</html>

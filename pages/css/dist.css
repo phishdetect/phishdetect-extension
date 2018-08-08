@@ -701,6 +701,7 @@ img.screenshot {
   padding: 4rem;
   margin-top: 4rem;
   margin-bottom: 4rem;
+  border-radius: .5rem;
 }
 
 h1,

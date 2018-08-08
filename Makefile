@@ -2,12 +2,9 @@ styles:
 	@echo "Building CSS for embedded pages..."
 	node_modules/.bin/tailwind build -o pages/css/dist.css pages/css/build.css
 
-build:
+build: styles
 	@echo "Installing dependencies..."
 	npm install
-
-	@echo "Building CSS for embedded pages..."
-	node_modules/.bin/tailwind build -o pages/css/dist.css pages/css/build.css
 
 	@echo "Building files..."
 	npm run build

@@ -698,7 +698,7 @@ img.screenshot {
 
 #content {
   background-color: #fff;
-  padding: 3rem;
+  padding: 4rem;
 }
 
 h1,
@@ -711,6 +711,14 @@ h4 {
 h3 {
   margin-top: 2.5rem;
   margin-bottom: 1rem;
+  border-bottom-width: 2px;
+  padding-bottom: .5rem;
+  color: #3d4852;
+}
+
+h4 {
+  margin-top: 1.5rem;
+  margin-bottom: .5rem;
   border-bottom-width: 2px;
   padding-bottom: .5rem;
   color: #3d4852;

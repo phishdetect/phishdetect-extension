@@ -56,7 +56,7 @@ img.screenshot {
 }
 
 #content {
-    @apply bg-white p-12;
+    @apply bg-white p-16;
 }
 
 h1, h2, h3, h4 {
@@ -64,6 +64,9 @@ h1, h2, h3, h4 {
 }
 h3 {
     @apply mt-10 mb-4 border-b-2 pb-2 text-grey-darkest;
+}
+h4 {
+    @apply mt-6 mb-2 border-b-2 pb-2 text-grey-darkest;
 }
 
 p {

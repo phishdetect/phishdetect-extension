@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var configuredHTML = "<b>" + backendURL.hostname + "</b>";
 
     if (backendURL.hostname == defaultURL.hostname) {
-        configuredHTML += " (default configuration)";
+        configuredHTML += " (default)";
     }
 
     document.getElementById("configured-domain").innerHTML = configuredHTML;

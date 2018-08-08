@@ -31,8 +31,14 @@
 
     <h3>What type of data PhishDetect collects</h3>
 
-    <p>Firstly it is important to note that when you request a link or a page to be scanned for potential phishing you might share some private information with the configured PhishDetect Node, if such page or link contains any. However, you are given the agency to decide which links and pages to scan and which not to. <b>No action is performed without your expressed manual consent.</b></p>
+    <p>When using PhishDetect Browser Extension's Gmail integration neither the developers of PhishDetect, nor the operators of the configured PhishDetect Node have in any way access to your email account. Neither your account information, nor any information related to emails you send or receive are sent anywhere. Only any link you manually request to have scanned is going to be forwarded to the configured PhishDetect Node.</p>
 
+    <p>When using the <i>"Scan this link for phishing"</i> option only the link itself is forwarded to the configured PhishDetect Node. It is important to note that the link <i>might</i> contain some personal information (for example phishing pages often include in the link your name, or your email address in an encoded form).</p>
+
+    <p>When using the <i>"Scan this page for phishing"</i> option or using the equivalent <i>"Scan this page!"</i> button from the toolbar, the PhishDetect Browser Extension will forward to the configured PhishDetect Node both the URL, the HTML content as well as the screenshot of the opened page. It is important to note that both the URL and especially the HTML content <i>might</i> contain personal and private information. PhishDetect Nodes normally <b>do not</b> store the HTML content of the page nor the screenshot. If you are using a non-default PhishDetect Node, please refer to its operators for confirmation.</p>
+
+    <p><b>PhishDetect Browser Extension does not perform any automated scan.</b> Only the links and suspicious pages you specifically requested to have verified are sent to the configured PhishDetect Node. <b>No action is performed without your expressed manual consent.</b></p>
+ 
     <h4>If you are using the default phishdetect.io node</h4>
 
     <p>We store details of links and pages that are detected to be suspicious, and we might use it to complement other defensive services such as <a href="https://securitywithoutborders.org/tools/blockade.html">Blockade</a>, by adding to its blocklist domains that are discovered serving phishing. These details are not shared with any third party and they are exclusively stored on a server in the Netherlands, provided by <a href="https://greenhost.net">Greenhost</a>. We do not store any information on scanned links and pages that were found to be innocuous.</p>

@@ -52,7 +52,7 @@ img.screenshot {
 }
 
 #logo {
-    @apply mb-4 h-24;
+    @apply mb-4 h-16;
 }
 
 #content {

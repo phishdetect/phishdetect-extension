@@ -699,6 +699,8 @@ img.screenshot {
 #content {
   background-color: #fff;
   padding: 4rem;
+  margin-top: 4rem;
+  margin-bottom: 4rem;
 }
 
 h1,

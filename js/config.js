@@ -26,11 +26,14 @@ function setBackendDefaults() {
 }
 
 function getBackendDomain() {
-    var server = localStorage.getItem("server") || BACKEND_DEFAULT_DOMAIN;
+    let server = localStorage.getItem("server") || BACKEND_DEFAULT_DOMAIN;
+    if (!server.startsWith("http")) {
+        return "https://" + server;
+    }
     return server;
 }
 
 function getBackendURL() {
-    var url = getBackendDomain() + "/check/";
+    let url = getBackendDomain() + "/check/";
     return url;
 }

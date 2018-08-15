@@ -45,7 +45,4 @@ document.addEventListener("DOMContentLoaded", function () {
     btnScan.addEventListener("click", function() {
         scanPage();
     });
-
-    helpLink = document.getElementById("button-help");
-    helpLink.href = chrome.extension.getURL("/pages/help/index.html");
 });

@@ -15,14 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-"use strict";
-
-function addScript(src) {
-    const script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src = chrome.extension.getURL(src);
-    (document.body || document.head || document.documentElement).appendChild(script);
+function updateIndicators() {
+    
 }
 
-addScript("js/config.js");
-addScript("dist/gmailDialog.js");
+function getIndicators() {
+	return JSON.stringify({
+		senders: ['0AD6FDDB0A6CDE372FD895DB5E1B97B1EF986BE414C6890C5D7089EE80399B1E',],
+		domains: ['5D977F4D473900F405E5319857534A57F2D4F00630029949B458FB149F08069C',],
+	});
+}

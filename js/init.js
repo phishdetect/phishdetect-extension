@@ -15,26 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-function loadOptions() {
-    document.getElementById("currentServer").innerText = cfg.getNode();
-    document.getElementById("report").checked = cfg.getReport();
-}
-
-function saveOptions() {
-	let node = document.querySelector("#server").value.trim();
-	if (node != "") {
-		cfg.setNode(node);
-	}
-    cfg.setReport(document.querySelector("#report").checked);
-    loadOptions();
-}
-
-function restoreDefaults() {
-    cfg.restoreDefaultNode();
-    cfg.setReport(true);
-    loadOptions();
-}
-
-document.addEventListener("DOMContentLoaded", loadOptions);
-document.querySelector("form").addEventListener("submit", saveOptions);
-document.querySelector("#restoreDefaults").addEventListener("click", restoreDefaults);
+(function() {
+    if (typeof localStorage.cfg_init === "undefined") {
+        localStorage.cfg_init = true;
+        localStorage.cfg_node = NODE_DEFAULT_URL;
+        localStorage.cfg_update_frequency = 30;
+        localStorage.cfg_indicators = JSON.stringify({});
+        localStorage.cfg_report = true;
+    }
+})();

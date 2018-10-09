@@ -15,12 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
+// Events.
 function injectRedirect(tabId) {
     // Capture screenshot of page.
     chrome.tabs.captureVisibleTab(null, {}, function(img) {
         // Inject some data in the page.
         chrome.tabs.executeScript(tabId, {
-            code: "var screenshot = '" + img + "'; var backend = '" + getBackendURL() + "';"
+            code: "var screenshot = '" + img + "'; var backend = '" + cfg.getCheckURL() + "';"
         }, function() {
             // Inject our redirector.
             chrome.tabs.executeScript(tabId, {file: "js/pageInject.js"});
@@ -32,6 +33,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.method === "scanPage") {
         injectRedirect(request.tabId);
         return false;
+    } else if (request.method === "getCheckURL") {
+        sendResponse(cfg.getCheckURL());
+    } else if (request.method === "getIndicators") {
+        sendResponse(getIndicators());
     }
 });
 
@@ -41,6 +46,7 @@ chrome.browserAction.onClicked.addListener(function(tab) {
     chrome.tabs.create({url});
 });
 
+// Context menus.
 function loadContextMenus() {
     chrome.contextMenus.create({
         "title": "Scan this page for phishing",
@@ -63,8 +69,8 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
         return false;
     // If we're scanning a link, we just open a tab to our service.
     } else if (info.menuItemId === "scan-link") {
-        var linkUrl = info.linkUrl;
-        var safeUrl = getBackendURL() + window.btoa(linkUrl);
+        let linkUrl = info.linkUrl;
+        let safeUrl = cfg.getCheckURL() + window.btoa(linkUrl);
         chrome.tabs.create({"url": safeUrl});
         return false;
     }

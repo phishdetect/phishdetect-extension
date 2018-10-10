@@ -29,3 +29,7 @@ function updateIndicators() {
 function getIndicators() {
 	return JSON.parse(cfg.getIndicators());
 }
+
+(function() {
+	updateIndicators();
+})();

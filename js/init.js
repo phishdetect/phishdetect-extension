@@ -23,6 +23,4 @@
         localStorage.cfg_indicators = JSON.stringify({});
         localStorage.cfg_report = true;
     }
-
-    updateIndicators();
 })();

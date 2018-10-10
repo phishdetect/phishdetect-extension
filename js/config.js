@@ -33,12 +33,12 @@ var Config = function() {
     }
 
     this.getCheckURL = function() {
-        let url = this.getNode() + "/check/";
+        let url = this.getNode() + NODE_CHECK_PATH;
         return url;
     }
 
     this.getIndicatorsURL = function() {
-        let url = this.getNode() + "/api/indicators/";
+        let url = this.getNode() + NODE_API_INDICATORS_FETCH_PATH;
         return url;
     }
 
@@ -48,6 +48,14 @@ var Config = function() {
 
     this.setReport = function(value) {
         localStorage.setItem("cfg_report", value);
+    }
+
+    this.getIndicators = function() {
+        return localStorage.getItem("cfg_indicators");
+    }
+
+    this.setIndicators = function(value) {
+        localStorage.setItem("cfg_indicators", value);
     }
 }
 

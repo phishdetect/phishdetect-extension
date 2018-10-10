@@ -29,7 +29,6 @@ const gmail = new GmailFactory.Gmail($);
 window.gmail = gmail;
 
 const forge = require("node-forge");
-
 const tldts = require("tldts");
 
 function sha256(target) {
@@ -56,19 +55,20 @@ function checkEmail(id) {
         if (response == "") {
             return false
         }
+        let indicators = response;
 
-        // Parse from JSON.
-        let indicators = JSON.parse(response);
+        // Email status.
+        let isEmailBad = false;
 
         // We loop through the list of hashed bad senders.
         for (let i=0; i<indicators.senders.length; i++) {
             let badSender = indicators.senders[i].toLowerCase();
             // We check if the email sender matches a bad sender.
             if (badSender == fromEmailHash) {
-                vex.dialog.open({
-                    unsafeMessage: "<b>PhishDetect</b><br />Warning! Bad sender!",
-                });
-                return false;
+                // Mark email as bad.
+                isEmailBad = true;
+                // We don't need to check all bad senders, one is enough.
+                break;
             }
         }
 
@@ -81,7 +81,7 @@ function checkEmail(id) {
 
             // Only check for HTTP links.
             if (href.indexOf("http://") != 0 && href.indexOf("https://") != 0) {
-                continue
+                continue;
             }
 
             let hrefParsed = tldts.parse(href);
@@ -92,22 +92,28 @@ function checkEmail(id) {
             for (let i=0; i<indicators.domains.length; i++) {
                 let badDomain = indicators.domains[i].toLowerCase();
 
-                // First we check if the full domain matches a bad domain.
-                if (badDomain == domainHash) {
-                    vex.dialog.open({
-                        unsafeMessage: "<b>PhishDetect</b><br />Warning! Bad domain!",
-                    });
-                    return false;
-                }
+                // Check if the domain is bad.
+                if (badDomain == domainHash || badDomain == topdomainHash) {
+                    // Mark whole email as bad.
+                    // TODO: this is ugly.
+                    isEmailBad = true;
 
-                // Now we check if only the top level domain matches a bad domain.
-                if (badDomain == topdomainHash) {
-                    vex.dialog.open({
-                        unsafeMessage: "<b>PhishDetect</b><br />Warning! Bad top level domain!",
-                    });
-                    return false;
+                    // TODO: how to make this less aggressive?
+                    let alert = document.createElement("span");
+                    alert.classList.add("bg-red-lighter");
+                    alert.innerHTML = "<b>PhishDetect</b>: I disabled this link because it is malicious!";
+                    anchors[i].parentNode.replaceChild(alert, anchors[i]);
+
+                    // We don't need to check all bad domains, one is enough.
+                    break;
                 }
             }
+        }
+
+        if (isEmailBad === true) {
+            vex.dialog.open({
+                unsafeMessage: "<b>PhishDetect</b><br />I found malicious elements in this email!",
+            });
         }
     });
 }

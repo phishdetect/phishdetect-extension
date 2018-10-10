@@ -20,6 +20,7 @@
         "scripts": ["js/const.js", "js/init.js", "js/config.js", "js/alarms.js", "js/indicators.js", "js/background.js"]
     },
     "permissions": [
+        "alarms",
         "activeTab",
         "tabs",
         "contextMenus",

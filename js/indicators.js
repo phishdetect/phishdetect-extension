@@ -27,7 +27,5 @@ function updateIndicators() {
 }
 
 function getIndicators() {
-	// TODO: Temporary.
-	updateIndicators();
 	return JSON.parse(cfg.getIndicators());
 }

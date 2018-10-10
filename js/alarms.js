@@ -15,8 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-// chrome.alarms.onAlarm.addListener(function(alarm) {
-//     if (alarm.name == "updateIndicators") {
-//         updateIndicators();
-//     }
-// });
+chrome.alarms.onAlarm.addListener(function(alarm) {
+    if (alarm.name == "updateIndicators") {
+        updateIndicators();
+    }
+});
+
+chrome.alarms.create("updateIndicators", {periodInMinutes: INDICATORS_UPDATE_FREQUENCY});

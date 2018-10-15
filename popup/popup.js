@@ -35,7 +35,7 @@ function scanPage() {
 document.addEventListener("DOMContentLoaded", function () {
     getTab(function(tab) {
         let url = new URL(tab.url);
-        let backendURL = new URL(getBackendDomain());
+        let backendURL = new URL(cfg.getNode());
         if (url.hostname == backendURL.hostname) {
             document.getElementById("div-scanpage").innerHTML = "";
         }

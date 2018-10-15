@@ -15,14 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-"use strict";
+chrome.alarms.onAlarm.addListener(function(alarm) {
+    if (alarm.name == "updateIndicators") {
+        updateIndicators();
+    }
+});
 
-function addScript(src) {
-    const script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src = chrome.extension.getURL(src);
-    (document.body || document.head || document.documentElement).appendChild(script);
-}
-
-addScript("js/config.js");
-addScript("dist/gmailDialog.js");
+chrome.alarms.create("updateIndicators", {periodInMinutes: INDICATORS_UPDATE_FREQUENCY});

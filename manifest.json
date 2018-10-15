@@ -3,7 +3,7 @@
 
     "name": "PhishDetect",
     "description": "Anti-phishing browser extension. Scan suspicious pages and links.",
-    "version": "2.5.0",
+    "version": "3.0.0",
     "icons": {
         "16": "img/icon.png",
         "48": "img/icon.png",
@@ -17,31 +17,28 @@
         "page": "options/options.html"
     },
     "background": {
-        "scripts": ["js/config.js", "js/background.js"]
+        "scripts": ["js/const.js", "js/init.js", "js/config.js", "js/alarms.js", "js/indicators.js", "js/background.js"]
     },
     "permissions": [
+        "alarms",
         "activeTab",
         "tabs",
         "contextMenus",
-        "<all_urls>",
-        "storage"
+        "storage",
+        "<all_urls>"
     ],
     "content_scripts": [
         {
             "matches": ["https://mail.google.com/*", "https://inbox.google.com/*"],
             "js": [
-                "js/gmailDialogLauncher.js"
+                "dist/gmail.js"
             ],
             "css": [
                 "css/vex.css",
                 "css/vex-theme-default.css",
-                "css/gmailDialog.css"
+                "css/tailwind.min.css"
             ],
             "run_at": "document_end"
         }
-    ],
-    "web_accessible_resources": [
-        "js/config.js",
-        "dist/gmailDialog.js"
     ]
 }

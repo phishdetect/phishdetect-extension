@@ -15,26 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-function loadOptions() {
-    document.getElementById("currentServer").innerText = cfg.getNode();
-    document.getElementById("report").checked = cfg.getReport();
-}
-
-function saveOptions() {
-	let node = document.querySelector("#server").value.trim();
-	if (node != "") {
-		cfg.setNode(node);
-	}
-    cfg.setReport(document.querySelector("#report").checked);
-    loadOptions();
-}
-
-function restoreDefaults() {
-    cfg.restoreDefaultNode();
-    cfg.setReport(true);
-    loadOptions();
-}
-
-document.addEventListener("DOMContentLoaded", loadOptions);
-document.querySelector("form").addEventListener("submit", saveOptions);
-document.querySelector("#restoreDefaults").addEventListener("click", restoreDefaults);
+NODE_DEFAULT_URL = "https://node.phishdetect.io";
+NODE_CHECK_PATH = "/check/";
+NODE_API_INDICATORS_FETCH_PATH = "/api/indicators/fetch/";
+// TODO: Is 15 minutes a good frequency?
+INDICATORS_UPDATE_FREQUENCY = 15;

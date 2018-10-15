@@ -15,25 +15,48 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-const BACKEND_DEFAULT_DOMAIN = "https://node.phishdetect.io";
-
-function setBackendDomain(domain) {
-    localStorage.setItem("server", domain);
-}
-
-function setBackendDefaults() {
-    localStorage.setItem("server", BACKEND_DEFAULT_DOMAIN);
-}
-
-function getBackendDomain() {
-    let server = localStorage.getItem("server") || BACKEND_DEFAULT_DOMAIN;
-    if (!server.startsWith("http")) {
-        return "https://" + server;
+var Config = function() {
+    this.getNode = function() {
+        let server = localStorage.getItem("cfg_node");
+        if (!server.startsWith("http")) {
+            return "https://" + server;
+        }
+        return server;
     }
-    return server;
+
+    this.setNode = function(domain) {
+        localStorage.setItem("cfg_node", domain);
+    }
+
+    this.restoreDefaultNode = function() {
+        localStorage.setItem("cfg_node", NODE_DEFAULT_URL);
+    }
+
+    this.getCheckURL = function() {
+        let url = this.getNode() + NODE_CHECK_PATH;
+        return url;
+    }
+
+    this.getIndicatorsURL = function() {
+        let url = this.getNode() + NODE_API_INDICATORS_FETCH_PATH;
+        return url;
+    }
+
+    this.getReport = function() {
+        return localStorage.getItem("cfg_report") == "true" ? true : false;
+    }
+
+    this.setReport = function(value) {
+        localStorage.setItem("cfg_report", value);
+    }
+
+    this.getIndicators = function() {
+        return localStorage.getItem("cfg_indicators");
+    }
+
+    this.setIndicators = function(value) {
+        localStorage.setItem("cfg_indicators", value);
+    }
 }
 
-function getBackendURL() {
-    let url = getBackendDomain() + "/check/";
-    return url;
-}
+var cfg = new Config();

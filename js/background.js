@@ -15,6 +15,32 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
+// Check for web requests.
+chrome.webRequest.onBeforeRequest.addListener(function(data) {
+    let domainHash = window.sha256(window.getDomainFromURL(data.url));
+    let topdomainHash = window.sha256(window.getTopDomainFromURL(data.url));
+
+    let indicators = getIndicators();
+    for (let i=0; i<indicators.domains.length; i++) {
+        let badDomainHash = indicators.domains[i].toLowerCase();
+
+        if (badDomainHash == domainHash || badDomainHash == topdomainHash) {
+            console.log("BAD DOMAIN!!!!!");
+            let redirect = chrome.extension.getURL(WARNING_PAGE);
+            console.log(redirect);
+            return {redirectUrl: redirect};
+        }
+    }
+
+    console.log("MMM");
+
+    // If nothing suspicious is found, proceed with visit.
+    return {cancel: false};
+},
+{urls: ["http://*/", "https://*/"]},
+["blocking"]
+);
+
 // Events.
 function injectRedirect(tabId) {
     // Capture screenshot of page.

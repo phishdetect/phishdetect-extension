@@ -15,9 +15,23 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-NODE_DEFAULT_URL = "https://node.phishdetect.io";
-NODE_CHECK_PATH = "/check/";
-NODE_API_INDICATORS_FETCH_PATH = "/api/indicators/fetch/";
-// TODO: Is 15 minutes a good frequency?
-INDICATORS_UPDATE_FREQUENCY = 15;
-WARNING_PAGE = "warning/warning.html";
+"use strict";
+
+const forge = require("node-forge");
+const tldts = require("tldts");
+
+window.sha256 = function sha256(target) {
+    let md = forge.md.sha256.create();
+    md.update(target);
+    return md.digest().toHex();
+}
+
+window.getDomainFromURL = function getDomainFromURL(url) {
+    let urlParsed = tldts.parse(url);
+    return urlParsed.host;
+}
+
+window.getTopDomainFromURL = function getTopDomainFromURL(url) {
+    let urlParsed = tldts.parse(url);
+    return urlParsed.domain;
+}

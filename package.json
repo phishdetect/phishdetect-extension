@@ -5,20 +5,21 @@
     "main": "",
     "scripts": {
         "deps": "npm install",
-        "stage": "mkdir dist || echo Dist already exists.",
-        "bundle": "browserify -o dist/gmail.js js/gmail.js",
+        "stage": "mkdir dist || echo ''",
+        "bundle": "browserify -o dist/gmail.js js/gmail.js && browserify -o dist/utils.js js/utils.js",
         "build": "npm run stage && npm run bundle"
     },
     "author": "Claudio Guarnieri",
     "license": "GPL-3.0",
     "dependencies": {
-        "vex-dialog": "latest",
-        "vex-js": "latest",
         "gmail-js": ">=0.7.7",
         "jquery": "latest",
-        "tailwindcss": "latest",
         "node-forge": "latest",
-        "tldts": "latest"
+        "npm": "^6.4.1",
+        "tailwindcss": "latest",
+        "tldts": "latest",
+        "vex-dialog": "latest",
+        "vex-js": "latest"
     },
     "devDependencies": {
         "browserify": "latest"

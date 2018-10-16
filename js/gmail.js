@@ -90,10 +90,10 @@ function checkEmail(id) {
 
             // We loop through the list of hashed bad domains.
             for (let i=0; i<indicators.domains.length; i++) {
-                let badDomain = indicators.domains[i].toLowerCase();
+                let badDomainHash = indicators.domains[i].toLowerCase();
 
                 // Check if the domain is bad.
-                if (badDomain == domainHash || badDomain == topdomainHash) {
+                if (badDomainHash == domainHash || badDomainHash == topdomainHash) {
                     // Mark whole email as bad.
                     // TODO: this is ugly.
                     isEmailBad = true;

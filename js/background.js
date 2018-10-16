@@ -16,20 +16,25 @@
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
 // Check for web requests.
-chrome.webRequest.onBeforeRequest.addListener(function(data) {
-    let domainHash = window.sha256(window.getDomainFromURL(data.url));
-    let topdomainHash = window.sha256(window.getTopDomainFromURL(data.url));
+chrome.webRequest.onBeforeRequest.addListener(function(details) {
+    // TODO: Should we check for main_frame only?
+    // if (details.type != "main_frame") {
+    //     return {cancel: false};
+    // }
+
+    let domainHash = window.sha256(window.getDomainFromURL(details.url));
+    let topdomainHash = window.sha256(window.getTopDomainFromURL(details.url));
 
     let indicators = getIndicators();
     if (typeof indicators == "undefined") {
-        return {cancel: false}
+        return {cancel: false};
     }
 
     for (let i=0; i<indicators.domains.length; i++) {
         let badDomainHash = indicators.domains[i].toLowerCase();
 
         if (badDomainHash == domainHash || badDomainHash == topdomainHash) {
-            console.log("Bad domain identified: ", data.url);
+            console.log("Bad domain identified:", details.url);
             let redirect = chrome.extension.getURL(WARNING_PAGE);
             return {redirectUrl: redirect};
         }

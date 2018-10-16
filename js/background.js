@@ -29,14 +29,11 @@ chrome.webRequest.onBeforeRequest.addListener(function(data) {
         let badDomainHash = indicators.domains[i].toLowerCase();
 
         if (badDomainHash == domainHash || badDomainHash == topdomainHash) {
-            console.log("BAD DOMAIN!!!!!");
+            console.log("Bad domain identified: ", data.url);
             let redirect = chrome.extension.getURL(WARNING_PAGE);
-            console.log(redirect);
             return {redirectUrl: redirect};
         }
     }
-
-    console.log("MMM");
 
     // If nothing suspicious is found, proceed with visit.
     return {cancel: false};

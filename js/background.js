@@ -21,6 +21,10 @@ chrome.webRequest.onBeforeRequest.addListener(function(data) {
     let topdomainHash = window.sha256(window.getTopDomainFromURL(data.url));
 
     let indicators = getIndicators();
+    if (typeof indicators == "undefined") {
+        return {cancel: false}
+    }
+
     for (let i=0; i<indicators.domains.length; i++) {
         let badDomainHash = indicators.domains[i].toLowerCase();
 

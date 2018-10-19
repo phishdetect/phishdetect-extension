@@ -23,6 +23,7 @@
             "js/init.js",
             "js/config.js",
             "js/alarms.js",
+            "js/events.js",
             "js/indicators.js",
             "js/background.js"
         ]

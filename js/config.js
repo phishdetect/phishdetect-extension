@@ -42,6 +42,11 @@ var Config = function() {
         return url;
     }
 
+    this.getEventsURL = function() {
+        let url = this.getNode() + NODE_API_EVENTS_ADD_PATH;
+        return url;
+    }
+
     this.getReport = function() {
         return localStorage.getItem("cfg_report") == "true" ? true : false;
     }

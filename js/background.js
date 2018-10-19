@@ -35,6 +35,15 @@ chrome.webRequest.onBeforeRequest.addListener(function(details) {
 
         if (badDomainHash == domainHash || badDomainHash == topdomainHash) {
             console.log("Bad domain identified:", details.url);
+
+            // If the user as the report option enabled, we send an event to
+            // the PhishDetect Node.
+            if (cfg.getReport() === true) {
+                // TODO: Make this a message?
+                sendEvent("website_visit", details.url, badDomainHash, "");
+            }
+
+            // We redirect to the warning page.
             let redirect = chrome.extension.getURL(WARNING_PAGE);
             return {redirectUrl: redirect};
         }
@@ -62,11 +71,21 @@ function injectRedirect(tabId) {
 }
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    // This message is received when the user requests to scan an opened page.
     if (request.method === "scanPage") {
         injectRedirect(request.tabId);
         return false;
+    // This message is received when a security event was detected and needs to be sent
+    // to the PhishDetect node.
+    } else if (request.method == "sendEvent") {
+        sendEvent(request.eventType, request.indicator, request.hashed, request.targetEmail);
+        return false;
+    // This message is received when a component of the extension is requesting the
+    // check URL, normally from gmail.js.
     } else if (request.method === "getCheckURL") {
         sendResponse(cfg.getCheckURL());
+    // This message is received when a component of the extension is requesting the
+    // full list of indicators, normally from gmail.js.
     } else if (request.method === "getIndicators") {
         sendResponse(getIndicators());
     }

@@ -59,6 +59,9 @@ function checkEmail(id) {
 
         // Email status.
         let isEmailBad = false;
+        let detectedType = "";
+        let detectedElement = "";
+        let detectedIndicatorHash = "";
 
         // We loop through the list of hashed bad senders.
         for (let i=0; i<indicators.senders.length; i++) {
@@ -67,6 +70,9 @@ function checkEmail(id) {
             if (badSender == fromEmailHash) {
                 // Mark email as bad.
                 isEmailBad = true;
+                detectedType = "email_sender";
+                detectedElement = fromEmail;
+                detectedIndicatorHash = badSender;
                 // We don't need to check all bad senders, one is enough.
                 break;
             }
@@ -97,6 +103,9 @@ function checkEmail(id) {
                     // Mark whole email as bad.
                     // TODO: this is ugly.
                     isEmailBad = true;
+                    detectedType = "email_link";
+                    detectedElement = href;
+                    detectedIndicatorHash = badDomainHash;
 
                     // TODO: how to make this less aggressive?
                     let alert = document.createElement("span");
@@ -111,6 +120,15 @@ function checkEmail(id) {
         }
 
         if (isEmailBad === true) {
+            chrome.runtime.sendMessage({
+                method: "sendEvent",
+                eventType: detectedType,
+                indicator: detectedElement,
+                hashed: detectedIndicatorHash,
+                // TODO: Add gmail.get.user_email()?
+                targetContact: "",
+            });
+
             vex.dialog.open({
                 unsafeMessage: "<b>PhishDetect</b><br />I found malicious elements in this email!",
             });

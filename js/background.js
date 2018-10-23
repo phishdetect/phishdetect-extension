@@ -78,7 +78,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     // This message is received when a security event was detected and needs to be sent
     // to the PhishDetect node.
     } else if (request.method == "sendEvent") {
-        sendEvent(request.eventType, request.indicator, request.hashed, request.targetEmail);
+        sendEvent(request.eventType, request.indicator, request.hashed, request.targetContact);
         return false;
     // This message is received when a component of the extension is requesting the
     // check URL, normally from gmail.js.

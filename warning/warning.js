@@ -18,12 +18,12 @@
 function loadContent() {
     let href = new URL(location.href);
     let url = href.searchParams.get("url");
+    // TODO: This is a super hacky converstion to HTML entities.
+    // https://stackoverflow.com/questions/18749591/encode-html-entities-in-javascript
     let cleanURL = url.replace(/[\u00A0-\u9999<>\&]/gim, function(i) {
         return '&#'+i.charCodeAt(0)+';';
     });
 
-    // TODO: This is a super hacky converstion to HTML entities.
-    // https://stackoverflow.com/questions/18749591/encode-html-entities-in-javascript
     document.getElementById("badURL").innerHTML = cleanURL;
 
     let takeMeAway = document.getElementById("takeMeAway");

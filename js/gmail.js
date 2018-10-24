@@ -57,64 +57,74 @@ function checkEmail(id) {
         }
         let indicators = response;
 
+        if (typeof indicators === "undefined") {
+            return false
+        }
+
         // Email status.
         let isEmailBad = false;
         let detectedType = "";
         let detectedElement = "";
         let detectedIndicatorHash = "";
 
-        // We loop through the list of hashed bad senders.
-        for (let i=0; i<indicators.senders.length; i++) {
-            let badSender = indicators.senders[i].toLowerCase();
-            // We check if the email sender matches a bad sender.
-            if (badSender == fromEmailHash) {
-                // Mark email as bad.
-                isEmailBad = true;
-                detectedType = "email_sender";
-                detectedElement = fromEmail;
-                detectedIndicatorHash = badSender;
-                // We don't need to check all bad senders, one is enough.
-                break;
+        // We check for senders, if we have any indicators to check.
+        if (indicators.senders !== null) {
+            // We loop through the list of hashed bad senders.
+            for (let i=0; i<indicators.senders.length; i++) {
+                let badSender = indicators.senders[i].toLowerCase();
+                // We check if the email sender matches a bad sender.
+                if (badSender == fromEmailHash) {
+                    // Mark email as bad.
+                    isEmailBad = true;
+                    detectedType = "email_sender";
+                    detectedElement = fromEmail;
+                    detectedIndicatorHash = badSender;
+                    // We don't need to check all bad senders, one is enough.
+                    break;
+                }
             }
         }
 
-        // We extract all links from the body of the email.
-        let emailBody = email.dom("body");
-        let anchors = $(emailBody).find("a");
+        // We check for links, if we have any indicators to check.
+        if (indicators.domains !== null) {
+            // We extract all links from the body of the email.
+            let emailBody = email.dom("body");
+            let anchors = $(emailBody).find("a");
 
-        for (let i=0; i<anchors.length; i++) {
-            let href = anchors[i].href;
+            for (let i=0; i<anchors.length; i++) {
+                let href = anchors[i].href;
 
-            // Only check for HTTP links.
-            if (href.indexOf("http://") != 0 && href.indexOf("https://") != 0) {
-                continue;
-            }
+                // Only check for HTTP links.
+                if (href.indexOf("http://") != 0 && href.indexOf("https://") != 0) {
+                    continue;
+                }
 
-            let hrefParsed = tldts.parse(href);
-            let domainHash = sha256(hrefParsed.host);
-            let topdomainHash = sha256(hrefParsed.domain);
+                let hrefParsed = tldts.parse(href);
+                let domainHash = sha256(hrefParsed.host);
+                let topdomainHash = sha256(hrefParsed.domain);
 
-            // We loop through the list of hashed bad domains.
-            for (let i=0; i<indicators.domains.length; i++) {
-                let badDomainHash = indicators.domains[i].toLowerCase();
+                // We loop through the list of hashed bad domains.
+                for (let i=0; i<indicators.domains.length; i++) {
+                    let badDomainHash = indicators.domains[i].toLowerCase();
 
-                // Check if the domain is bad.
-                if (badDomainHash == domainHash || badDomainHash == topdomainHash) {
-                    // Mark whole email as bad.
-                    // TODO: this is ugly.
-                    isEmailBad = true;
-                    detectedType = "email_link";
-                    detectedElement = href;
-                    detectedIndicatorHash = badDomainHash;
+                    // Check if the domain is bad.
+                    if (badDomainHash == domainHash || badDomainHash == topdomainHash) {
+                        // Mark whole email as bad.
+                        // TODO: this is ugly.
+                        isEmailBad = true;
+                        detectedType = "email_link";
+                        detectedElement = href;
+                        detectedIndicatorHash = badDomainHash;
 
-                    // TODO: how to make this less aggressive?
-                    let alert = document.createElement("span");
-                    alert.classList.add("bg-red-lighter");
-                    alert.innerHTML = "<b>PhishDetect</b>: I disabled this link because it is malicious!";
-                    anchors[i].parentNode.replaceChild(alert, anchors[i]);
+                        // TODO: how to make this less aggressive?
+                        let alert = document.createElement("span");
+                        alert.classList.add("bg-red-lighter");
+                        alert.innerHTML = "<b>PhishDetect</b>: I disabled this link because it is malicious!";
+                        anchors[i].parentNode.replaceChild(alert, anchors[i]);
 
-                    // We don't need to check all bad domains, one is enough.
-                    break;
+                        // We don't need to check all bad domains, one is enough.
+                        break;
+                    }
                 }
             }
         }

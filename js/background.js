@@ -52,7 +52,7 @@ chrome.webRequest.onBeforeRequest.addListener(function(details) {
     // If nothing suspicious is found, proceed with visit.
     return {cancel: false};
 },
-{urls: ["http://*/", "https://*/"]},
+{urls: ["<all_urls>"]},
 ["blocking"]
 );
 

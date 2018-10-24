@@ -25,7 +25,6 @@ function loadContent() {
     // TODO: This is a super hacky converstion to HTML entities.
     // https://stackoverflow.com/questions/18749591/encode-html-entities-in-javascript
     document.getElementById("badURL").innerHTML = cleanURL;
-    document.getElementById("continueAnyway").href = cleanURL;
 
     let takeMeAway = document.getElementById("takeMeAway");
     if (document.referrer !== "") {

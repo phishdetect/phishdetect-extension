@@ -16,7 +16,7 @@
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
 function loadOptions() {
-    document.getElementById("currentServer").innerText = cfg.getNode();
+    document.getElementById("server").value = cfg.getNode();
     document.getElementById("report").checked = cfg.getReport();
 }
 

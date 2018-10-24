@@ -6,13 +6,16 @@
 <link href="popup.css" rel="stylesheet">
 <link href="../css/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-red-light text-red-darkest p-20">
-<div id="container">
+<body class="bg-red-light text-red-lightest p-20">
+<div class="container mx-auto">
     <div class="text-5xl mb-4"><b>PhishDetect</b> Warning</div>
-    <div class="text-xl">
-        <p>You have tried to visit a page that is considered <b>not safe</b>.</p>
+    <div class="text-xl leading-normal">
+        <p>You have tried to visit a page that PhishDetect reported as <b>not safe</b>.</p>
         <p>PhishDetect prevented you from visiting this page and, if you have this option enabled, alerted the maintainer of your configured PhishDetect Node.</p>
+
+        <div class="mt-8 py-4 px-4 bg-red border-b-4 border-red-dark rounded cursor-pointer text-center"><a id="takeMeAway" class="text-red-lightest no-underline text-base font-bold" href="#">TAKE ME AWAY</a></div>
     </div>
 </div>
+<script src="warning.js"></script>
 </body>
 </html>

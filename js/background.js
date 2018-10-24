@@ -44,7 +44,7 @@ chrome.webRequest.onBeforeRequest.addListener(function(details) {
             }
 
             // We redirect to the warning page.
-            let redirect = chrome.extension.getURL(WARNING_PAGE);
+            let redirect = chrome.extension.getURL(WARNING_PAGE) + "?url=" + encodeURIComponent(details.url);
             return {redirectUrl: redirect};
         }
     }

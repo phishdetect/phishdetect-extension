@@ -16,6 +16,17 @@
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
 function loadContent() {
+    let href = new URL(location.href);
+    let url = href.searchParams.get("url");
+    let cleanURL = url.replace(/[\u00A0-\u9999<>\&]/gim, function(i) {
+        return '&#'+i.charCodeAt(0)+';';
+    });
+
+    // TODO: This is a super hacky converstion to HTML entities.
+    // https://stackoverflow.com/questions/18749591/encode-html-entities-in-javascript
+    document.getElementById("badURL").innerHTML = cleanURL;
+    document.getElementById("continueAnyway").href = cleanURL;
+
     let takeMeAway = document.getElementById("takeMeAway");
     if (document.referrer !== "") {
         takeMeAway.href = window.history.back();

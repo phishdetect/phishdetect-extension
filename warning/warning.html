@@ -5,15 +5,17 @@
 <title data-i18n=""></title>
 <link href="popup.css" rel="stylesheet">
 <link href="../css/tailwind.min.css" rel="stylesheet">
+<link href="../fontawesome/css/all.min.css" rel="stylesheet">
 </head>
-<body class="bg-red-light text-red-lightest p-20">
+<body class="bg-black text-grey-lighter p-20">
 <div class="container mx-auto">
-    <div class="text-5xl mb-4"><b>PhishDetect</b> Warning</div>
+    <div class="text-5xl mb-4 text-center"><i class="fas fa-exclamation-triangle"></i></div>
+    <div class="text-5xl mb-4 text-center"><b>PhishDetect</b> Warning</div>
     <div class="text-xl leading-normal">
         <p>You tried to visit <span class="font-bold font-mono" id="badURL"></span>. PhishDetect reported it as <b>not safe</b>.</p>
         <p>PhishDetect prevented you from visiting this page and, if you have this option enabled, alerted the administrator of your configured PhishDetect Node. For more information about this warning read <a class="text-red-lightest" target="_blank" href="https://phishdetect.io/help/">PhishDetect Help Page</a>.</p>
 
-        <a class="no-underline" id="takeMeAway"  href="#"><div class="mt-8 py-4 px-4 bg-red border-b-4 border-red-dark rounded cursor-pointer text-center text-red-lightest no-underline text-base font-bold">TAKE ME AWAY</div></a>
+        <a class="no-underline" id="takeMeAway"  href="#"><div class="mt-8 py-4 px-4 bg-blue hover:bg-blue-light border-b-8 border-blue-dark hover:border-blue rounded cursor-pointer text-center text-blue-lightest no-underline text-base font-bold">TAKE ME AWAY</div></a>
 
         <!-- <p class="mt-12 text-sm text-red-lighter">If you want to visit this link anyway, you can do so <a id="continueAnyway" class="text-red-lighter" href="">at your own risk</a>.</p> -->
     </div>

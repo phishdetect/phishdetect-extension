@@ -52,5 +52,8 @@
             "run_at": "document_end"
         }
     ],
-    "web_accessible_resources": ["warning/warning.html"]
+    "web_accessible_resources": [
+        "fontawesome/",
+        "warning/warning.html"
+    ]
 }

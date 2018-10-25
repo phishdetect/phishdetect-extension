@@ -29,6 +29,9 @@ chrome.webRequest.onBeforeRequest.addListener(function(details) {
     if (typeof indicators == "undefined") {
         return {cancel: false};
     }
+    if (indicators.domains === null) {
+        return {cancel: false};
+    }
 
     for (let i=0; i<indicators.domains.length; i++) {
         let badDomainHash = indicators.domains[i].toLowerCase();

@@ -16,6 +16,7 @@
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
 var Config = function() {
+    // Functions to set and get the PhishDetect Node.
     this.getNode = function() {
         let server = localStorage.getItem("cfg_node");
         if (!server.startsWith("http")) {
@@ -23,42 +24,47 @@ var Config = function() {
         }
         return server;
     }
-
     this.setNode = function(domain) {
         localStorage.setItem("cfg_node", domain);
     }
-
     this.restoreDefaultNode = function() {
         localStorage.setItem("cfg_node", NODE_DEFAULT_URL);
     }
 
+    // Functions to get Node URLs.
     this.getCheckURL = function() {
         let url = this.getNode() + NODE_CHECK_PATH;
         return url;
     }
-
     this.getIndicatorsURL = function() {
         let url = this.getNode() + NODE_API_INDICATORS_FETCH_PATH;
         return url;
     }
-
     this.getEventsURL = function() {
         let url = this.getNode() + NODE_API_EVENTS_ADD_PATH;
         return url;
     }
 
+    // Flag for reporting events to Node.
     this.getReport = function() {
         return localStorage.getItem("cfg_report") == "true" ? true : false;
     }
-
     this.setReport = function(value) {
         localStorage.setItem("cfg_report", value);
     }
 
+    // Flag for Gmail integration.
+    this.getGmail = function() {
+        return localStorage.getItem("cfg_gmail") == "true" ? true : false;
+    }
+    this.setGmail = function(value) {
+        localStorage.setItem("cfg_gmail", value);
+    }
+
+    // Indicators stored in local storage.
     this.getIndicators = function() {
         return localStorage.getItem("cfg_indicators");
     }
-
     this.setIndicators = function(value) {
         localStorage.setItem("cfg_indicators", value);
     }

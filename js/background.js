@@ -83,6 +83,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     } else if (request.method == "sendEvent") {
         sendEvent(request.eventType, request.indicator, request.hashed, request.targetContact);
         return false;
+    // Get the flag to enable or disable Gmail integration.
+    } else if (request.method === "getGmail") {
+        sendResponse(cfg.getGmail());
     // This message is received when a component of the extension is requesting the
     // check URL, normally from gmail.js.
     } else if (request.method === "getCheckURL") {

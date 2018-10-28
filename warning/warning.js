@@ -30,7 +30,7 @@ function loadContent() {
     if (document.referrer !== "") {
         takeMeAway.href = window.history.back();
     } else {
-        takeMeAway.href = "about:home";
+        takeMeAway.href = "about:blank";
     }
 }
 

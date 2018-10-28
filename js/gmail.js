@@ -247,10 +247,15 @@ function modifyEmail(id) {
 // });
 
 // This is the event we watch to be able to modify the links in the body.
-gmail.observe.on("view_email", function(obj) {
-    console.log("Email opened with ID", obj.id);
-    // First we check the original content of the email for known indicators.
-    checkEmail(obj.id);
-    // Afterwards, we change the email to add our dialog.
-    modifyEmail(obj.id);
+chrome.runtime.sendMessage({method: "getGmail"}, function(response) {
+    if (response === false) {
+        return;
+    }
+    gmail.observe.on("view_email", function(obj) {
+        console.log("Email opened with ID", obj.id);
+        // First we check the original content of the email for known indicators.
+        checkEmail(obj.id);
+        // Afterwards, we change the email to add our dialog.
+        modifyEmail(obj.id);
+    });
 });

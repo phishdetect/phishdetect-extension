@@ -18,6 +18,7 @@
 function loadOptions() {
     document.getElementById("server").value = cfg.getNode();
     document.getElementById("report").checked = cfg.getReport();
+    document.getElementById("gmail").checked = cfg.getGmail();
 }
 
 function saveOptions() {
@@ -26,6 +27,7 @@ function saveOptions() {
 		cfg.setNode(node);
 	}
     cfg.setReport(document.querySelector("#report").checked);
+    cfg.setGmail(document.querySelector("#gmail").checked);
     loadOptions();
 }
 

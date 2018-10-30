@@ -119,7 +119,7 @@ function checkEmail(id) {
                         // TODO: how to make this less aggressive?
                         let alert = document.createElement("span");
                         alert.classList.add("bg-red-lighter");
-                        alert.innerHTML = "<b>PhishDetect</b>: I disabled this link because it is malicious!";
+                        alert.innerHTML = "<b>PhishDetect</b>: I disabled this link because it is malicious!";                        
                         anchors[i].parentNode.replaceChild(alert, anchors[i]);
 
                         // We don't need to check all bad domains, one is enough.

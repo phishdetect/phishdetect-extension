@@ -27,11 +27,7 @@ function loadContent() {
     document.getElementById("badURL").innerHTML = cleanURL;
 
     let takeMeAway = document.getElementById("takeMeAway");
-    if (document.referrer !== "") {
-        takeMeAway.href = window.history.back();
-    } else {
-        takeMeAway.href = "about:blank";
-    }
+    takeMeAway.href = "about:blank";
 }
 
 document.addEventListener("DOMContentLoaded", loadContent);

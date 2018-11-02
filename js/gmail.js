@@ -136,7 +136,7 @@ function checkEmail(id) {
                 indicator: detectedElement,
                 hashed: detectedIndicatorHash,
                 // TODO: Add gmail.get.user_email()?
-                targetContact: "",
+                userContact: "",
             });
 
             vex.dialog.open({

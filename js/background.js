@@ -81,7 +81,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     // This message is received when a security event was detected and needs to be sent
     // to the PhishDetect node.
     } else if (request.method == "sendEvent") {
-        sendEvent(request.eventType, request.indicator, request.hashed, request.targetContact);
+        sendEvent(request.eventType, request.indicator, request.hashed, request.userContact);
         return false;
     // Get the flag to enable or disable Gmail integration.
     } else if (request.method === "getGmail") {

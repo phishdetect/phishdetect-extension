@@ -67,11 +67,11 @@ function checkEmail(id) {
         let detectedElement = "";
         let detectedIndicatorHash = "";
 
-        // We check for senders, if we have any indicators to check.
-        if (indicators.senders !== null) {
-            // We loop through the list of hashed bad senders.
-            for (let i=0; i<indicators.senders.length; i++) {
-                let badSender = indicators.senders[i].toLowerCase();
+        // We check for emails, if we have any indicators to check.
+        if (indicators.emails !== null) {
+            // We loop through the list of hashed bad emails.
+            for (let i=0; i<indicators.emails.length; i++) {
+                let badSender = indicators.emails[i].toLowerCase();
                 // We check if the email sender matches a bad sender.
                 if (badSender == fromEmailHash) {
                     // Mark email as bad.
@@ -79,7 +79,7 @@ function checkEmail(id) {
                     detectedType = "email_sender";
                     detectedElement = fromEmail;
                     detectedIndicatorHash = badSender;
-                    // We don't need to check all bad senders, one is enough.
+                    // We don't need to check all bad emails, one is enough.
                     break;
                 }
             }

@@ -63,9 +63,9 @@ function checkEmail(id) {
 
         // Email status.
         let isEmailBad = false;
-        let detectedType = "";
-        let detectedElement = "";
-        let detectedIndicatorHash = "";
+        let eventType = "";
+        let eventMatch = "";
+        let eventIndicator = "";
 
         // We check for emails, if we have any indicators to check.
         if (indicators.emails !== null) {
@@ -76,9 +76,9 @@ function checkEmail(id) {
                 if (badSender == fromEmailHash) {
                     // Mark email as bad.
                     isEmailBad = true;
-                    detectedType = "email_sender";
-                    detectedElement = fromEmail;
-                    detectedIndicatorHash = badSender;
+                    eventType = "email_sender";
+                    eventMatch = fromEmail;
+                    eventIndicator = badSender;
                     // We don't need to check all bad emails, one is enough.
                     break;
                 }
@@ -112,9 +112,9 @@ function checkEmail(id) {
                         // Mark whole email as bad.
                         // TODO: this is ugly.
                         isEmailBad = true;
-                        detectedType = "email_link";
-                        detectedElement = href;
-                        detectedIndicatorHash = badDomainHash;
+                        eventType = "email_link";
+                        eventMatch = href;
+                        eventIndicator = badDomainHash;
 
                         // TODO: how to make this less aggressive?
                         let alert = document.createElement("span");
@@ -132,9 +132,9 @@ function checkEmail(id) {
         if (isEmailBad === true) {
             chrome.runtime.sendMessage({
                 method: "sendEvent",
-                eventType: detectedType,
-                indicator: detectedElement,
-                hashed: detectedIndicatorHash,
+                eventType: eventType,
+                match: eventMatch,
+                indicator: eventIndicator,
                 // TODO: Add gmail.get.user_email()?
                 userContact: "",
             });

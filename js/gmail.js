@@ -225,7 +225,7 @@ function modifyEmail(id) {
                             } else if (value == "unsafe") {
                                 window.open(unsafe_url);
                             } else if (value == "help") {
-                                window.open("https://phishdetect.io/docs");
+                                window.open("https://phishdetect.io/help/");
                             }
                         }
                     }

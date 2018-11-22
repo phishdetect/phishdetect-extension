@@ -28,14 +28,7 @@ const GmailFactory = require("gmail-js");
 const gmail = new GmailFactory.Gmail($);
 window.gmail = gmail;
 
-const forge = require("node-forge");
 const tldts = require("tldts");
-
-function sha256(target) {
-    let md = forge.md.sha256.create();
-    md.update(target);
-    return md.digest().toHex();
-}
 
 // checkEmail
 function checkEmail(id) {
@@ -67,12 +60,12 @@ function checkEmail(id) {
         let eventMatch = "";
         let eventIndicator = "";
 
-        // We check for emails, if we have any indicators to check.
+        // We check for email addresses, if we have any indicators to check.
         if (indicators.emails !== null) {
-            // We loop through the list of hashed bad emails.
+            // We loop through the list of hashed bad email addresses.
             for (let i=0; i<indicators.emails.length; i++) {
                 let badSender = indicators.emails[i].toLowerCase();
-                // We check if the email sender matches a bad sender.
+                // We check if the email sender matches a bad address.
                 if (badSender == fromEmailHash) {
                     // Mark email as bad.
                     isEmailBad = true;
@@ -101,14 +94,14 @@ function checkEmail(id) {
 
                 let hrefParsed = tldts.parse(href);
                 let domainHash = sha256(hrefParsed.host);
-                let topdomainHash = sha256(hrefParsed.domain);
+                let topDomainHash = sha256(hrefParsed.domain);
 
                 // We loop through the list of hashed bad domains.
                 for (let i=0; i<indicators.domains.length; i++) {
                     let badDomainHash = indicators.domains[i].toLowerCase();
 
                     // Check if the domain is bad.
-                    if (badDomainHash == domainHash || badDomainHash == topdomainHash) {
+                    if (badDomainHash == domainHash || badDomainHash == topDomainHash) {
                         // Mark whole email as bad.
                         // TODO: this is ugly.
                         isEmailBad = true;

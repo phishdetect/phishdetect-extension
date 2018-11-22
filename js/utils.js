@@ -17,14 +17,7 @@
 
 "use strict";
 
-const forge = require("node-forge");
 const tldts = require("tldts");
-
-window.sha256 = function sha256(target) {
-    let md = forge.md.sha256.create();
-    md.update(target);
-    return md.digest().toHex();
-}
 
 window.getDomainFromURL = function getDomainFromURL(url) {
     let urlParsed = tldts.parse(url);

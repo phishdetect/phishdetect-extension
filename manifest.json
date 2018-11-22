@@ -18,6 +18,7 @@
     },
     "background": {
         "scripts": [
+            "libs/sha256.js",
             "dist/utils.js",
             "js/const.js",
             "js/init.js",
@@ -42,6 +43,7 @@
         {
             "matches": ["https://mail.google.com/*", "https://inbox.google.com/*"],
             "js": [
+                "libs/sha256.js",
                 "dist/gmail.js"
             ],
             "css": [

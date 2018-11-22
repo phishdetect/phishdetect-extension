@@ -22,8 +22,8 @@ chrome.webRequest.onBeforeRequest.addListener(function(details) {
     //     return {cancel: false};
     // }
 
-    let domainHash = window.sha256(window.getDomainFromURL(details.url));
-    let topdomainHash = window.sha256(window.getTopDomainFromURL(details.url));
+    let domainHash = sha256(window.getDomainFromURL(details.url));
+    let topDomainHash = sha256(window.getTopDomainFromURL(details.url));
 
     let indicators = getIndicators();
     if (typeof indicators == "undefined") {
@@ -36,7 +36,7 @@ chrome.webRequest.onBeforeRequest.addListener(function(details) {
     for (let i=0; i<indicators.domains.length; i++) {
         let badDomainHash = indicators.domains[i].toLowerCase();
 
-        if (badDomainHash == domainHash || badDomainHash == topdomainHash) {
+        if (badDomainHash == domainHash || badDomainHash == topDomainHash) {
             console.log("Bad domain identified:", details.url);
 
             // If the user as the report option enabled, we send an event to

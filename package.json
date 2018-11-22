@@ -14,7 +14,6 @@
     "dependencies": {
         "gmail-js": ">=0.7.7",
         "jquery": "latest",
-        "node-forge": "latest",
         "npm": "^6.4.1",
         "tailwindcss": "latest",
         "tldts": "latest",

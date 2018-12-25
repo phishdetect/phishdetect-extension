@@ -1,6 +1,6 @@
 {
     "name": "phishdetect",
-    "version": "3.0.0",
+    "version": "3.1.0",
     "description": "",
     "main": "",
     "scripts": {
@@ -12,13 +12,13 @@
     "author": "Claudio Guarnieri",
     "license": "GPL-3.0",
     "dependencies": {
-        "gmail-js": ">=0.7.7",
-        "jquery": "latest",
-        "npm": "^6.4.1",
-        "tailwindcss": "latest",
-        "tldts": "latest",
-        "vex-dialog": "latest",
-        "vex-js": "latest"
+        "gmail-js": "^0.9.1",
+        "jquery": "^3.3.1",
+        "npm": "^6.5.0",
+        "tailwindcss": "^0.7.3",
+        "tldts": "^3.1.2",
+        "vex-dialog": "^1.1.0",
+        "vex-js": "^4.1.0"
     },
     "devDependencies": {
         "browserify": "latest"

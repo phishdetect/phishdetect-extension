@@ -22,14 +22,18 @@ chrome.webRequest.onBeforeRequest.addListener(function(details) {
     //     return {cancel: false};
     // }
 
-    let domainHash = sha256(window.getDomainFromURL(details.url));
-    let topDomainHash = sha256(window.getTopDomainFromURL(details.url));
+    let domain = window.getDomainFromURL(details.url);
+    let topDomain = window.getTopDomainFromURL(details.url);
 
-    let indicators = getIndicators();
-    if (typeof indicators == "undefined") {
+    if (domain === null || topDomain === null) {
         return {cancel: false};
     }
-    if (indicators.domains === null) {
+
+    let domainHash = sha256(domain);
+    let topDomainHash = sha256(topDomain);
+
+    let indicators = getIndicators();
+    if (indicators === undefined || indicators.domains === undefined || indicators.domains === null) {
         return {cancel: false};
     }
 

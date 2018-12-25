@@ -21,6 +21,7 @@ const jQuery = require("jquery");
 const $ = jQuery;
 
 const vex = require("vex-js");
+window.vex = vex;
 vex.registerPlugin(require("vex-dialog"));
 vex.defaultOptions.className = "vex-theme-default";
 
@@ -29,6 +30,7 @@ const gmail = new GmailFactory.Gmail($);
 window.gmail = gmail;
 
 const tldts = require("tldts");
+window.tldts = tldts;
 
 // checkEmail
 function checkEmail(id) {
@@ -50,7 +52,7 @@ function checkEmail(id) {
         }
         let indicators = response;
 
-        if (typeof indicators === "undefined") {
+        if (indicators === undefined) {
             return false
         }
 
@@ -174,7 +176,7 @@ function modifyEmail(id) {
                 let safe_url = response + window.btoa(unsafe_url);
 
                 // We spawn a dialog.
-                // vex.defaultOptions.contentClassName = "w-full";
+                vex.defaultOptions.contentClassName = "w-full";
                 vex.dialog.open({
                     unsafeMessage: "<b>PhishDetect</b><br />How do you want to open this link?",
                     buttons: [

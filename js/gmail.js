@@ -180,7 +180,18 @@ function checkEmail(id) {
             });
 
             let emailBody = email.dom("body");
-            emailBody.prepend("<div class=\"bg-red-lighter p-2 mb-4 rounded-lg text-red-darker\"><span class=\"text-lg font-bold\">PhishDetect Warning</span><br />I found malicious elements in this email! Please be cautious!</div>");
+            let warning = "<div class=\"bg-red-lighter p-2 mb-4 rounded-lg text-red-darker\">"
+            warning += "<span class=\"text-lg font-bold\">PhishDetect Warning</span><br />"
+            warning += "I found malicious elements in this email! Please be cautious!"
+
+            if (eventType == "email_sender" || eventType == "email_sender_domain") {
+                warning += "The email was sent by a known malicious address."
+            } else if (eventType == "email_link") {
+                warning += "The email contains known malicious links."
+            }
+
+            warning += "</div>"
+            emailBody.prepend(warning);
 
             // vex.dialog.open({
             //     unsafeMessage: "<b>PhishDetect</b><br />I found malicious elements in this email!",

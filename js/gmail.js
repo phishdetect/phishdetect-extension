@@ -180,15 +180,17 @@ function checkEmail(id) {
             });
 
             let emailBody = email.dom("body");
-            let warning = "<div class=\"bg-red-lighter p-2 mb-4 rounded-lg text-red-darker\">"
+            let warning = "<div class=\"bg-red-lighter p-4 mb-4 rounded-lg text-red-darker tracking-normal\">"
             warning += "<span class=\"text-lg font-bold\">PhishDetect Warning</span><br />"
-            warning += "I found malicious elements in this email! Please be cautious!"
+            warning += "I found malicious elements in this email! "
 
             if (eventType == "email_sender" || eventType == "email_sender_domain") {
-                warning += "The email was sent by a known malicious address."
+                warning += "The email was sent by a known malicious address. "
             } else if (eventType == "email_link") {
-                warning += "The email contains known malicious links."
+                warning += "The email contains known malicious links. "
             }
+
+            warning += "Please be cautious! For more information visit our <a class=\"underline hover:no-underline text-red-darkest\" href=\"https://phishdetect.io/help/\">Help</a> page."
 
             warning += "</div>"
             emailBody.prepend(warning);

@@ -40,9 +40,28 @@ function checkEmail(id) {
     let from = email.from();
     let fromEmail = from["email"].toLowerCase()
     let fromEmailHash = sha256(fromEmail);
+    let fromEmailDomain = "";
+    let fromEmailDomainHash = "";
+    let fromEmailTopDomain = "";
+    let fromEmailTopDomainHash = "";
+
+    console.log("All good so far");
+    // We extract the domain from the email address.
+    let parts = fromEmail.split('@');
+    if (parts.length === 2) {
+        let parsed = tldts.parse(parts[1]);
+        fromEmailDomain = parsed.host;
+        fromEmailDomainHash = sha256(fromEmailDomain);
+        fromEmailTopDomain = parsed.domain;
+        fromEmailTopDomainHash = sha256(fromEmailTopDomain);
+    }
 
     console.log("Sender is:", fromEmail);
     console.log("Sender hash is:", fromEmailHash);
+    console.log("Sender domain is:", fromEmailDomain);
+    console.log("Sender domain hash is:", fromEmailDomainHash);
+    console.log("Sender top domain is:", fromEmailTopDomain);
+    console.log("Sender top domain hash is:", fromEmailTopDomainHash);
 
     // First we get the list of indicators.
     chrome.runtime.sendMessage({method: "getIndicators"}, function(response) {
@@ -74,18 +93,38 @@ function checkEmail(id) {
                     eventType = "email_sender";
                     eventMatch = fromEmail;
                     eventIndicator = badSender;
-                    // We don't need to check all bad emails, one is enough.
+
                     break;
                 }
             }
         }
 
-        // We check for links, if we have any indicators to check.
+        // TODO: Need to review the performance of this.
+        // We check for domains, if we have any indicators to check.
         if (indicators.domains !== null) {
+            // First we check the domain of the email sender.
+            for (let i=0; i<indicators.domains.length; i++) {
+                let badDomainHash = indicators.domains[i].toLowerCase();
+
+                // Check if the domain is bad.
+                if (badDomainHash == fromEmailDomainHash || badDomainHash == fromEmailTopDomainHash) {
+                    // Mark whole email as bad.
+                    // TODO: this is ugly.
+                    isEmailBad = true;
+                    eventType = "email_sender_domain";
+                    eventMatch = fromEmail;
+                    eventIndicator = badDomainHash;
+
+                    break;
+                }
+            }
+
+            // Now we check for links contained in the emails body.
             // We extract all links from the body of the email.
             let emailBody = email.dom("body");
             let anchors = $(emailBody).find("a");
 
+            // TODO: Might want to reverse these loops for performance reasons.
             for (let i=0; i<anchors.length; i++) {
                 let href = anchors[i].href;
 
@@ -117,7 +156,6 @@ function checkEmail(id) {
                         alert.innerHTML = "<b>PhishDetect</b>: I disabled this link because it is malicious!";                        
                         anchors[i].parentNode.replaceChild(alert, anchors[i]);
 
-                        // We don't need to check all bad domains, one is enough.
                         break;
                     }
                 }

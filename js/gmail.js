@@ -179,8 +179,8 @@ function checkEmail(id) {
                 userContact: "",
             });
 
-            let emailBody = email.body();
-            email.body("<div class=\"bg-red-lighter p-2 mb-4 rounded-lg text-red-darker\"><span class=\"text-lg font-bold\">PhishDetect Warning</span><br />I found malicious elements in this email! Please be cautious!</div>" + emailBody);
+            let emailBody = email.dom("body");
+            emailBody.prepend("<div class=\"bg-red-lighter p-2 mb-4 rounded-lg text-red-darker\"><span class=\"text-lg font-bold\">PhishDetect Warning</span><br />I found malicious elements in this email! Please be cautious!</div>");
 
             // vex.dialog.open({
             //     unsafeMessage: "<b>PhishDetect</b><br />I found malicious elements in this email!",

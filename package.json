@@ -11,6 +11,10 @@
     },
     "author": "Claudio Guarnieri",
     "license": "GPL-3.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/phishdetect/phishdetect-extension.git"
+    },
     "dependencies": {
         "gmail-js": "^0.9.1",
         "jquery": "^3.3.1",

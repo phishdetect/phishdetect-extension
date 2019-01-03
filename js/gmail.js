@@ -17,8 +17,6 @@
 
 "use strict";
 
-const userEmail = "";
-
 const jQuery = require("jquery");
 const $ = jQuery;
 
@@ -291,14 +289,16 @@ function modifyEmail(id) {
     }
 }
 
+// gmail.observe.on("load", function() {
+//     // TODO: Currently not working.
+//     let userEmail = gmail.get.user_email();
+//     console.log("Hello, " + userEmail + ". PhishDetect is starting...");
+// });
+
 chrome.runtime.sendMessage({method: "getGmail"}, function(response) {
     if (response === false) {
         return;
     }
-
-    // TODO: Currently not working.
-    // userEmail = gmail.get.user_email();
-    // console.log("Hello, " + userEmail + ". PhishDetect is starting...");
 
     gmail.observe.on("view_email", function(obj) {
         console.log("Email opened with ID", obj.id);

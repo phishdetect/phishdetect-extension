@@ -1,4 +1,4 @@
-// Copyright (c) 2018 Claudio Guarnieri.
+// Copyright (c) 2018-2019 Claudio Guarnieri.
 //
 // This file is part of PhishDetect.
 //

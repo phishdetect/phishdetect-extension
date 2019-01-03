@@ -17,6 +17,8 @@
 
 "use strict";
 
+const userEmail = "";
+
 const jQuery = require("jquery");
 const $ = jQuery;
 
@@ -168,14 +170,16 @@ function checkEmail(id) {
         if (indicators.emails !== null) {
             // We loop through the list of hashed bad email addresses.
             for (let i=0; i<indicators.emails.length; i++) {
-                let badSender = indicators.emails[i].toLowerCase();
+                let badSenderHash = indicators.emails[i].toLowerCase();
                 // We check if the email sender matches a bad address.
-                if (badSender == fromEmailHash) {
+                if (badSenderHash == fromEmailHash) {
+                    console.log("Detected bad email sender with indicator:", badSenderHash);
+
                     // Mark email as bad.
                     isEmailBad = true;
                     eventType = "email_sender";
                     eventMatch = fromEmail;
-                    eventIndicator = badSender;
+                    eventIndicator = badSenderHash;
 
                     break;
                 }
@@ -191,6 +195,8 @@ function checkEmail(id) {
 
                 // Check if the domain is bad.
                 if (badDomainHash == fromEmailDomainHash || badDomainHash == fromEmailTopDomainHash) {
+                    console.log("Detected email sender domain with indicator:", badDomainHash);
+
                     // Mark whole email as bad.
                     // TODO: this is ugly.
                     isEmailBad = true;
@@ -230,6 +236,8 @@ function checkEmail(id) {
 
                     // Check if the domain is bad.
                     if (badDomainHash == hrefDomainHash || badDomainHash == hrefTopDomainHash) {
+                        console.log("Detected bad link with indicator:", badDomainHash);
+
                         // Mark whole email as bad.
                         // TODO: this is ugly.
                         isEmailBad = true;
@@ -266,27 +274,22 @@ function checkEmail(id) {
     });
 }
 
-// NOTE: Currently disabled this event as we don't need the user email atm.
-//gmail.observe.on("load", () => {
-//    const userEmail = gmail.get.user_email();
-//    console.log("Hello, " + userEmail + ". This is your extension talking!");
-//});
+gmail.observe.on("load", function() {
+    chrome.runtime.sendMessage({method: "getGmail"}, function(response) {
+        if (response === false) {
+            return;
+        }
 
-// We only observe this to activate view_email.
-// gmail.observe.on("view_thread", function(obj) {
-//     console.log("Thread opened with ID", obj.id);
-// });
+        // TODO: Currently not working.
+        // userEmail = gmail.get.user_email();
+        // console.log("Hello, " + userEmail + ". PhishDetect is starting...");
 
-// This is the event we watch to be able to modify the links in the body.
-chrome.runtime.sendMessage({method: "getGmail"}, function(response) {
-    if (response === false) {
-        return;
-    }
-    gmail.observe.on("view_email", function(obj) {
-        console.log("Email opened with ID", obj.id);
-        // First, we change the email to add our dialog.
-        modifyEmail(obj.id);
-        // Then we check the original content of the email for known indicators.
-        checkEmail(obj.id);
+        gmail.observe.on("view_email", function(obj) {
+            console.log("Email opened with ID", obj.id);
+            // First, we change the email to add our dialog.
+            modifyEmail(obj.id);
+            // Then we check the original content of the email for known indicators.
+            checkEmail(obj.id);
+        });
     });
 });

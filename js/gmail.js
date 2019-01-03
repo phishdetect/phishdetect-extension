@@ -34,95 +34,6 @@ window.gmail = gmail;
 const tldts = require("tldts");
 window.tldts = tldts;
 
-// modifyEmail will modify the email body and rewrite links to open our
-// confirmation dialog first.
-function modifyEmail(id) {
-    console.log("Modifying email", id);
-
-    let email = new gmail.dom.email(id);
-    let emailBody = email.dom("body");
-    let anchors = $(emailBody).find("a");
-
-    for (let i=0; i<anchors.length; i++) {
-        let href = anchors[i].href;
-
-        // We check if it is an http link.
-        if (href.indexOf("http://") != 0 && href.indexOf("https://") != 0) {
-            continue;
-        }
-
-        // We delete data-saferedirecturl.
-        // Maybe we should make this optional, but the value of it seems
-        // mostly duplicated by using phishdetect.io anyway.
-        anchors[i].removeAttribute("data-saferedirecturl");
-
-        // We add a listener so we can catch the clicks.
-        anchors[i].addEventListener("click", function(event) {
-            // We prevent the link from opening.
-            event.preventDefault();
-
-            // Get URLs.
-            // let unsafe_url = event.srcElement.getAttribute("href");
-            let unsafe_url = href;
-            // Get check URL from config.
-            chrome.runtime.sendMessage({method: "getCheckURL"}, function(response) {
-                let safe_url = response + window.btoa(unsafe_url);
-
-                // We spawn a dialog.
-                vex.defaultOptions.contentClassName = "w-full";
-                vex.dialog.open({
-                    unsafeMessage: "<b>PhishDetect</b><br />How do you want to open this link?",
-                    buttons: [
-                        // Button to open "Safely".
-                        $.extend({}, vex.dialog.buttons.YES, {
-                            text: "Safely",
-                            // className: "phishdetect-button-safe",
-                            className: "text-white bg-green",
-                            click: function($vexContent, event) {
-                                this.value = "safe";
-                                this.close();
-                                return false;
-                            }
-                        }),
-                        // Button to open "Directly" / "Unsafely".
-                        $.extend({}, vex.dialog.buttons.YES, {
-                            text: "Directly",
-                            className: "text-white bg-red",
-                            click: function($vexContent, event) {
-                                this.value = "unsafe";
-                                this.close();
-                                return false
-                            }
-                        }),
-                        // Button to open help page.
-                        $.extend({}, vex.dialog.buttons.YES, {
-                            text: "?",
-                            click: function($vexContent, event) {
-                                this.value = "help";
-                                return false
-                            }
-                        })
-                    ],
-                    // Callback to handle button actions.
-                    callback: function(value) {
-                        if (value) {
-                            // Open the URL through our service.
-                            if (value == "safe") {
-                                window.open(safe_url);
-                            // Open the URL directly.
-                            } else if (value == "unsafe") {
-                                window.open(unsafe_url);
-                            } else if (value == "help") {
-                                window.open("https://phishdetect.io/help/");
-                            }
-                        }
-                    }
-                });
-            });
-        });
-    }
-}
-
 // checkEmail
 function checkEmail(id) {
     console.log("Checking email", id)
@@ -258,6 +169,7 @@ function checkEmail(id) {
         }
 
         if (isEmailBad === true) {
+            // TODO: Send event only if the message ID was not reported before.
             chrome.runtime.sendMessage({
                 method: "sendEvent",
                 eventType: eventType,
@@ -267,29 +179,119 @@ function checkEmail(id) {
                 userContact: "",
             });
 
-            vex.dialog.open({
-                unsafeMessage: "<b>PhishDetect</b><br />I found malicious elements in this email!",
-            });
+            let emailBody = email.body();
+            email.body("<div class=\"bg-red-lighter p-2 mb-4 rounded-lg text-red-darker\"><span class=\"text-lg font-bold\">PhishDetect Warning</span><br />I found malicious elements in this email! Please be cautious!</div>" + emailBody);
+
+            // vex.dialog.open({
+            //     unsafeMessage: "<b>PhishDetect</b><br />I found malicious elements in this email!",
+            // });
         }
     });
 }
 
-gmail.observe.on("load", function() {
-    chrome.runtime.sendMessage({method: "getGmail"}, function(response) {
-        if (response === false) {
-            return;
+// modifyEmail will modify the email body and rewrite links to open our
+// confirmation dialog first.
+function modifyEmail(id) {
+    console.log("Modifying email", id);
+
+    let email = new gmail.dom.email(id);
+    let emailBody = email.dom("body");
+    let anchors = $(emailBody).find("a");
+
+    for (let i=0; i<anchors.length; i++) {
+        let href = anchors[i].href;
+
+        // We check if it is an http link.
+        if (href.indexOf("http://") != 0 && href.indexOf("https://") != 0) {
+            continue;
         }
 
-        // TODO: Currently not working.
-        // userEmail = gmail.get.user_email();
-        // console.log("Hello, " + userEmail + ". PhishDetect is starting...");
+        // We delete data-saferedirecturl.
+        // Maybe we should make this optional, but the value of it seems
+        // mostly duplicated by using phishdetect.io anyway.
+        anchors[i].removeAttribute("data-saferedirecturl");
 
-        gmail.observe.on("view_email", function(obj) {
-            console.log("Email opened with ID", obj.id);
-            // First, we change the email to add our dialog.
-            modifyEmail(obj.id);
-            // Then we check the original content of the email for known indicators.
-            checkEmail(obj.id);
+        // We add a listener so we can catch the clicks.
+        anchors[i].addEventListener("click", function(event) {
+            // We prevent the link from opening.
+            event.preventDefault();
+
+            // Get URLs.
+            // let unsafe_url = event.srcElement.getAttribute("href");
+            let unsafe_url = href;
+            // Get check URL from config.
+            chrome.runtime.sendMessage({method: "getCheckURL"}, function(response) {
+                let safe_url = response + window.btoa(unsafe_url);
+
+                // We spawn a dialog.
+                vex.defaultOptions.contentClassName = "w-full";
+                vex.dialog.open({
+                    unsafeMessage: "<b>PhishDetect</b><br />How do you want to open this link?",
+                    buttons: [
+                        // Button to open "Safely".
+                        $.extend({}, vex.dialog.buttons.YES, {
+                            text: "Safely",
+                            // className: "phishdetect-button-safe",
+                            className: "text-white bg-green",
+                            click: function($vexContent, event) {
+                                this.value = "safe";
+                                this.close();
+                                return false;
+                            }
+                        }),
+                        // Button to open "Directly" / "Unsafely".
+                        $.extend({}, vex.dialog.buttons.YES, {
+                            text: "Directly",
+                            className: "text-white bg-red",
+                            click: function($vexContent, event) {
+                                this.value = "unsafe";
+                                this.close();
+                                return false
+                            }
+                        }),
+                        // Button to open help page.
+                        $.extend({}, vex.dialog.buttons.YES, {
+                            text: "?",
+                            click: function($vexContent, event) {
+                                this.value = "help";
+                                return false
+                            }
+                        })
+                    ],
+                    // Callback to handle button actions.
+                    callback: function(value) {
+                        if (value) {
+                            // Open the URL through our service.
+                            if (value == "safe") {
+                                window.open(safe_url);
+                            // Open the URL directly.
+                            } else if (value == "unsafe") {
+                                window.open(unsafe_url);
+                            } else if (value == "help") {
+                                window.open("https://phishdetect.io/help/");
+                            }
+                        }
+                    }
+                });
+            });
         });
+    }
+}
+
+chrome.runtime.sendMessage({method: "getGmail"}, function(response) {
+    if (response === false) {
+        return;
+    }
+
+    // TODO: Currently not working.
+    // userEmail = gmail.get.user_email();
+    // console.log("Hello, " + userEmail + ". PhishDetect is starting...");
+
+    gmail.observe.on("view_email", function(obj) {
+        console.log("Email opened with ID", obj.id);
+        // We check the original content of the email for known indicators.
+        checkEmail(obj.id);
+        // We change the email to add our dialog.
+        modifyEmail(obj.id);
     });
 });

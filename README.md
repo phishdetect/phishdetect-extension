@@ -38,3 +38,5 @@ Finally, we can create the package that we can use for distribution:
 ## License
 
 PhishDetect Extension is released under GNU General Public License 3.0 and is copyrighted to Claudio Guarnieri.
+
+The hook icon was created by Alex Fuller from Noun Project.

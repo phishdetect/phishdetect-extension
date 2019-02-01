@@ -112,7 +112,7 @@ function loadContextMenus() {
     chrome.contextMenus.create({
         "title": "Scan this page for phishing",
         "id": "scan-page",
-        "contexts": ["page", "frame", "selection", "editable", "image", "video", "audio"]
+        "contexts": ["page", "frame"]
     });
 
     chrome.contextMenus.create({

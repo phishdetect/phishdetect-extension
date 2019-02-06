@@ -23,5 +23,6 @@
         localStorage.cfg_indicators = JSON.stringify({});
         localStorage.cfg_report = true;
         localStorage.cfg_gmail = true;
+        localStorage.cfg_contact = "";
     }
 })();

@@ -68,6 +68,14 @@ var Config = function() {
     this.setIndicators = function(value) {
         localStorage.setItem("cfg_indicators", value);
     }
+
+    // User contact details.
+    this.getContact = function() {
+        return localStorage.getItem("cfg_contact");
+    }
+    this.setContact = function(value) {
+        localStorage.setItem("cfg_contact", value);
+    }
 }
 
 var cfg = new Config();

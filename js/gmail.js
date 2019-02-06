@@ -173,8 +173,6 @@ function checkEmail(id) {
                 eventType: eventType,
                 match: eventMatch,
                 indicator: eventIndicator,
-                // TODO: Add gmail.get.user_email()?
-                userContact: "",
             });
 
             let emailBody = email.dom("body");

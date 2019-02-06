@@ -17,8 +17,18 @@
 
 function loadOptions() {
     document.getElementById("server").value = cfg.getNode();
-    document.getElementById("report").checked = cfg.getReport();
     document.getElementById("gmail").checked = cfg.getGmail();
+
+    let report = cfg.getReport();
+    document.getElementById("report").checked = report;
+    document.getElementById("contact").value = cfg.getContact();
+    if (report) {
+        document.getElementById("contactLabel").classList.remove("text-grey");
+        document.getElementById("contact").disabled = false;
+    } else {
+        document.getElementById("contactLabel").classList.add("text-grey");
+        document.getElementById("contact").disabled = true;
+    }
 }
 
 function saveOptions() {
@@ -26,6 +36,10 @@ function saveOptions() {
 	if (node != "") {
 		cfg.setNode(node);
 	}
+    let contact = document.querySelector("#contact").value.trim();
+    if (contact != "") {
+        cfg.setContact(contact);
+    }
     cfg.setReport(document.querySelector("#report").checked);
     cfg.setGmail(document.querySelector("#gmail").checked);
     loadOptions();
@@ -33,10 +47,22 @@ function saveOptions() {
 
 function restoreDefaults() {
     cfg.restoreDefaultNode();
+    cfg.setGmail(true);
     cfg.setReport(true);
+    cfg.setContact("");
     loadOptions();
 }
 
 document.addEventListener("DOMContentLoaded", loadOptions);
 document.querySelector("form").addEventListener("submit", saveOptions);
 document.querySelector("#restoreDefaults").addEventListener("click", restoreDefaults);
+
+document.querySelector("#report").addEventListener("change", function() {
+    if (this.checked) {
+        document.getElementById("contactLabel").classList.remove("text-grey");
+        document.getElementById("contact").disabled = false;
+    } else {
+        document.getElementById("contactLabel").classList.add("text-grey");
+        document.getElementById("contact").disabled = true;
+    }
+});

@@ -47,7 +47,7 @@ chrome.webRequest.onBeforeRequest.addListener(function(details) {
             // the PhishDetect Node.
             if (cfg.getReport() === true) {
                 // TODO: Make this a message?
-                sendEvent("website_visit", details.url, badDomainHash, "");
+                sendEvent("website_visit", details.url, badDomainHash);
             }
 
             // We redirect to the warning page.
@@ -85,7 +85,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     // This message is received when a security event was detected and needs to be sent
     // to the PhishDetect node.
     } else if (request.method == "sendEvent") {
-        sendEvent(request.eventType, request.match, request.indicator, request.userContact);
+        sendEvent(request.eventType, request.match, request.indicator);
         return false;
     // Get the flag to enable or disable Gmail integration.
     } else if (request.method === "getGmail") {

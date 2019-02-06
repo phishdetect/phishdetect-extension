@@ -15,14 +15,14 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-function sendEvent(eventType, match, indicator, userContact) {
+function sendEvent(eventType, match, indicator) {
 	var properties = {
 		method: "POST",
 		body: JSON.stringify({
 			"type": eventType,
 			"match": match,
 			"indicator": indicator,
-			"user_contact": userContact,
+			"user_contact": cfg.getContact(),
 		}),
 		headers: {"Content-Type": "application/json"},
 	};

@@ -42,7 +42,9 @@ function saveOptions() {
     }
     cfg.setReport(document.querySelector("#report").checked);
     cfg.setGmail(document.querySelector("#gmail").checked);
-    loadOptions();
+
+    document.getElementById("container").innerHTML = "<div class=\"text-center\"><i class=\"fas fa-check-circle text-5xl text-green\"></i><div class=\"mt-4\">Saved!</div></div>";
+    // loadOptions();
 }
 
 function restoreDefaults() {

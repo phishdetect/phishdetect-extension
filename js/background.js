@@ -22,8 +22,11 @@ chrome.webRequest.onBeforeRequest.addListener(function(details) {
     //     return {cancel: false};
     // }
 
-    let domain = window.getDomainFromURL(details.url);
-    let topDomain = window.getTopDomainFromURL(details.url);
+    // We lowercase the link.
+    let url = details.url.toLowerCase();
+
+    let domain = window.getDomainFromURL(url);
+    let topDomain = window.getTopDomainFromURL(url);
 
     if (domain === null || topDomain === null) {
         return {cancel: false};
@@ -41,17 +44,17 @@ chrome.webRequest.onBeforeRequest.addListener(function(details) {
         let badDomainHash = indicators.domains[i].toLowerCase();
 
         if (badDomainHash == domainHash || badDomainHash == topDomainHash) {
-            console.log("Bad domain identified:", details.url);
+            console.log("Bad domain identified:", url);
 
             // If the user as the report option enabled, we send an event to
             // the PhishDetect Node.
             if (cfg.getReport() === true) {
                 // TODO: Make this a message?
-                sendEvent("website_visit", details.url, badDomainHash);
+                sendEvent("website_visit", url, badDomainHash);
             }
 
             // We redirect to the warning page.
-            let redirect = chrome.extension.getURL(WARNING_PAGE) + "?url=" + encodeURIComponent(details.url);
+            let redirect = chrome.extension.getURL(WARNING_PAGE) + "?url=" + encodeURIComponent(url);
             return {redirectUrl: redirect};
         }
     }

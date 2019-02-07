@@ -124,10 +124,12 @@ function checkEmail(id) {
 
             // TODO: Might want to reverse these loops for performance reasons.
             for (let i=0; i<anchors.length; i++) {
-                let href = anchors[i].href;
+                // Lowercase the link.
+                let href = anchors[i].href.toLowerCase();
 
                 // Only check for HTTP links.
-                if (href.indexOf("http://") != 0 && href.indexOf("https://") != 0) {
+                // NOTE: also scanning for mailto: links (currently experimental).
+                if (href.indexOf("http://") != 0 && href.indexOf("https://") != 0 && href.indexOf("mailto:") != 0) {
                     continue;
                 }
 
@@ -153,12 +155,6 @@ function checkEmail(id) {
                         eventType = "email_link";
                         eventMatch = href;
                         eventIndicator = badDomainHash;
-
-                        // TODO: Currently not working.
-                        // let alert = document.createElement("span");
-                        // alert.classList.add("bg-red-lighter");
-                        // alert.innerHTML = "<b>PhishDetect</b>: I disabled this link because it is malicious!";
-                        // anchors[i].parentNode.replaceChild(alert, anchors[i]);
 
                         break;
                     }
@@ -190,10 +186,6 @@ function checkEmail(id) {
 
             warning += "</div>"
             emailBody.prepend(warning);
-
-            // vex.dialog.open({
-            //     unsafeMessage: "<b>PhishDetect</b><br />I found malicious elements in this email!",
-            // });
         }
     });
 }

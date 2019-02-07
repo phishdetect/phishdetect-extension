@@ -176,9 +176,9 @@ function checkEmail(id) {
             });
 
             let emailBody = email.dom("body");
-            let warning = "<div class=\"bg-red-lighter p-4 mb-4 rounded-lg text-red-darker tracking-normal\">"
-            warning += "<span class=\"text-lg font-bold\">PhishDetect Warning</span><br />"
-            warning += "I found malicious elements in this email! "
+            let warning = "<div class=\"bg-black text-grey-lighter p-4 mb-4 rounded-lg tracking-normal\">"
+            warning += "<span class=\"text-lg\"><b>PhishDetect</b> Warning</span><br />"
+            warning += "Please be cautious! "
 
             if (eventType == "email_sender" || eventType == "email_sender_domain") {
                 warning += "The email was sent by a known malicious address. "
@@ -186,7 +186,7 @@ function checkEmail(id) {
                 warning += "The email contains known malicious links. "
             }
 
-            warning += "Please be cautious! For more information visit our <a class=\"underline hover:no-underline text-red-darkest\" href=\"https://phishdetect.io/help/\">Help</a> page."
+            warning += "For more information visit our <a class=\"no-underline\" href=\"https://phishdetect.io/help/\"><span class=\"text-blue-light font-bold\">Help</span></a> page."
 
             warning += "</div>"
             emailBody.prepend(warning);

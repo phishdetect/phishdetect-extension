@@ -45,13 +45,7 @@ chrome.webRequest.onBeforeRequest.addListener(function(details) {
 
         if (badDomainHash == domainHash || badDomainHash == topDomainHash) {
             console.log("Bad domain identified:", url);
-
-            // If the user as the report option enabled, we send an event to
-            // the PhishDetect Node.
-            if (cfg.getReport() === true) {
-                // TODO: Make this a message?
-                sendEvent("website_visit", url, badDomainHash);
-            }
+            sendEvent("website_visit", url, badDomainHash);
 
             // We redirect to the warning page.
             let redirect = chrome.extension.getURL(WARNING_PAGE) + "?url=" + encodeURIComponent(url);

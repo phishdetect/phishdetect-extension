@@ -16,6 +16,10 @@
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
 function sendEvent(eventType, match, indicator) {
+	if (cfg.getReport() === false) {
+		return;
+	}
+
 	var properties = {
 		method: "POST",
 		body: JSON.stringify({

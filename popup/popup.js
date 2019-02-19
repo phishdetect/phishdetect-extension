@@ -36,7 +36,8 @@ document.addEventListener("DOMContentLoaded", function () {
     getTab(function(tab) {
         let url = new URL(tab.url);
         let backendURL = new URL(cfg.getNode());
-        if (url.hostname == backendURL.hostname) {
+        // We disable the scan this page button for the node site and for Gmail.
+        if (url.hostname == backendURL.hostname || url.hostname == "mail.google.com") {
             document.getElementById("div-scanpage").innerHTML = "";
         }
     });

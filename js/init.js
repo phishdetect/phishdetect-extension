@@ -16,13 +16,28 @@
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
 (function() {
-    if (typeof localStorage.cfg_init === "undefined") {
+    if (localStorage.cfg_init === undefined) {
         localStorage.cfg_init = true;
+    }
+    if (localStorage.cfg_node === undefined) {
         localStorage.cfg_node = NODE_DEFAULT_URL;
+    }
+    if (localStorage.cfg_update_frequency === undefined) {
         localStorage.cfg_update_frequency = 30;
+    }
+    if (localStorage.cfg_indicators === undefined) {
         localStorage.cfg_indicators = JSON.stringify({});
+    }
+    if (localStorage.cfg_report === undefined) {
         localStorage.cfg_report = true;
+    }
+    if (localStorage.cfg_gmail === undefined) {
         localStorage.cfg_gmail = true;
+    }
+    if (localStorage.cfg_contact === undefined) {
         localStorage.cfg_contact = "";
+    }
+    if (localStorage.cfg_reported_emails === undefined) {
+        localStorage.cfg_reported_emails = JSON.stringify([]);
     }
 })();

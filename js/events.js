@@ -15,27 +15,48 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-function sendEvent(eventType, match, indicator) {
-	if (cfg.getReport() === false) {
-		return;
-	}
+function sendEvent(eventType, match, indicator, identifier) {
+    if (cfg.getReport() === false) {
+        return;
+    }
 
-	var properties = {
-		method: "POST",
-		body: JSON.stringify({
-			"type": eventType,
-			"match": match,
-			"indicator": indicator,
-			"user_contact": cfg.getContact(),
-		}),
-		headers: {"Content-Type": "application/json"},
-	};
+    // Check if the event type is email_*.
+    if (eventType.startsWith("email_")) {
+        // If an email identifier was provided...
+        if (identifier !== undefined && identifier != "") {
+            // Get a list of already reported emails.
+            let emails = cfg.getReportedEmails();
+            for (let i=0; i<emails.length; i++) {
+                // If the email was already reported before, no need to
+                // report it again.
+                if (emails[i] == identifier) {
+                    return;
+                }
+            }
+        }
+    }
 
-	fetch(cfg.getEventsURL(), properties)
-	.then((response) => response.json())
-	.then(function(data) {
-	})
-	.catch(error => {
-		console.log(error);
-	})
+    var properties = {
+        method: "POST",
+        body: JSON.stringify({
+            "type": eventType,
+            "match": match,
+            "indicator": indicator,
+            "user_contact": cfg.getContact(),
+        }),
+        headers: {"Content-Type": "application/json"},
+    };
+
+    fetch(cfg.getEventsURL(), properties)
+    .then((response) => response.json())
+    .then(function(data) {
+        if (eventType.startsWith("email_")) {
+            if (identifier !== undefined && identifier != "") {
+                cfg.addReportedEmail(identifier);
+            }
+        }
+    })
+    .catch(error => {
+        console.log(error);
+    })
 }

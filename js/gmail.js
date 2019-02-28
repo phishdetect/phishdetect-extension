@@ -169,6 +169,7 @@ function checkEmail(id) {
                 eventType: eventType,
                 match: eventMatch,
                 indicator: eventIndicator,
+                identifier: id,
             });
 
             let emailBody = email.dom("body");

@@ -76,6 +76,16 @@ var Config = function() {
     this.setContact = function(value) {
         localStorage.setItem("cfg_contact", value);
     }
+
+    // List of email IDs that have already been reported (to avoid duplication).
+    this.getReportedEmails = function() {
+        return JSON.parse(localStorage.getItem("cfg_reported_emails"));
+    }
+    this.addReportedEmail = function(value) {
+        let emails = JSON.parse(localStorage.getItem("cfg_reported_emails"));
+        emails.push(value);
+        localStorage.setItem("cfg_reported_emails", JSON.stringify(emails));
+    }
 }
 
 var cfg = new Config();

@@ -45,7 +45,7 @@ chrome.webRequest.onBeforeRequest.addListener(function(details) {
 
         if (badDomainHash == domainHash || badDomainHash == topDomainHash) {
             console.log("Bad domain identified:", url);
-            sendEvent("website_visit", url, badDomainHash);
+            sendEvent("website_visit", url, badDomainHash, "");
 
             // We redirect to the warning page.
             let redirect = chrome.extension.getURL(WARNING_PAGE) + "?url=" + encodeURIComponent(url);
@@ -82,7 +82,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     // This message is received when a security event was detected and needs to be sent
     // to the PhishDetect node.
     } else if (request.method == "sendEvent") {
-        sendEvent(request.eventType, request.match, request.indicator);
+        // Send event to REST API server.
+        sendEvent(request.eventType, request.match, request.indicator, request.identifier);
         return false;
     // Get the flag to enable or disable Gmail integration.
     } else if (request.method === "getGmail") {

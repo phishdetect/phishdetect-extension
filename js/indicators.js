@@ -16,20 +16,20 @@
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
 function updateIndicators() {
-	fetch(cfg.getIndicatorsURL())
-	.then((response) => response.json())
-	.then(function(data) {
-		cfg.setIndicators(JSON.stringify(data));
-	})
-	.catch(error => {
-		console.log(error);
-	})
+    fetch(cfg.getIndicatorsURL())
+    .then((response) => response.json())
+    .then(function(data) {
+        cfg.setIndicators(JSON.stringify(data));
+    })
+    .catch(error => {
+        console.log(error);
+    })
 }
 
 function getIndicators() {
-	return JSON.parse(cfg.getIndicators());
+    return JSON.parse(cfg.getIndicators());
 }
 
 (function() {
-	updateIndicators();
+    updateIndicators();
 })();

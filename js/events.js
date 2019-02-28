@@ -36,6 +36,7 @@ function sendEvent(eventType, match, indicator, identifier) {
         }
     }
 
+    // Craft request to send to REST API server.
     var properties = {
         method: "POST",
         body: JSON.stringify({
@@ -50,6 +51,8 @@ function sendEvent(eventType, match, indicator, identifier) {
     fetch(cfg.getEventsURL(), properties)
     .then((response) => response.json())
     .then(function(data) {
+        // If event is of type email_* we add the email ID to the list of
+        // successfully reported emails.
         if (eventType.startsWith("email_")) {
             if (identifier !== undefined && identifier != "") {
                 cfg.addReportedEmail(identifier);

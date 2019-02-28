@@ -163,7 +163,6 @@ function checkEmail(id) {
         }
 
         if (isEmailBad === true) {
-            // TODO: Send event only if the message ID was not reported before.
             chrome.runtime.sendMessage({
                 method: "sendEvent",
                 eventType: eventType,
@@ -184,7 +183,6 @@ function checkEmail(id) {
             }
 
             warning += "For more information visit our <a class=\"no-underline\" href=\"https://phishdetect.io/help/\"><span class=\"text-blue-light font-bold\">Help</span></a> page."
-
             warning += "</div>"
             emailBody.prepend(warning);
         }

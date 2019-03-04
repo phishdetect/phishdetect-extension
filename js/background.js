@@ -85,6 +85,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         // Send event to REST API server.
         sendEvent(request.eventType, request.match, request.indicator, request.identifier);
         return false;
+    } else if (request.method == "sendRaw") {
+        sendRaw(request.rawType, request.rawContent);
+        return false
     // Get the flag to enable or disable Gmail integration.
     } else if (request.method === "getGmail") {
         sendResponse(cfg.getGmail());

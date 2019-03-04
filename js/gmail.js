@@ -291,6 +291,16 @@ chrome.runtime.sendMessage({method: "getGmail"}, function(response) {
 
     gmail.observe.on("view_email", function(obj) {
         console.log("Email opened with ID", obj.id);
+
+        gmail.tools.add_toolbar_button("Share this email with PhishDetect", function() {
+            let email = new gmail.dom.email(obj.id);
+            chrome.runtime.sendMessage({
+                method: "sendRaw",
+                rawType: "email",
+                rawContent: email.source(),
+            });
+        });
+
         // We check the original content of the email for known indicators.
         checkEmail(obj.id);
         // We change the email to add our dialog.

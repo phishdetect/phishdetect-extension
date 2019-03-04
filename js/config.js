@@ -33,16 +33,16 @@ var Config = function() {
 
     // Functions to get Node URLs.
     this.getCheckURL = function() {
-        let url = this.getNode() + NODE_CHECK_PATH;
-        return url;
+        return this.getNode() + NODE_CHECK_PATH;
     }
     this.getIndicatorsURL = function() {
-        let url = this.getNode() + NODE_API_INDICATORS_FETCH_PATH;
-        return url;
+        return this.getNode() + NODE_API_INDICATORS_FETCH_PATH;
     }
     this.getEventsURL = function() {
-        let url = this.getNode() + NODE_API_EVENTS_ADD_PATH;
-        return url;
+        return this.getNode() + NODE_API_EVENTS_ADD_PATH;
+    }
+    this.getRawURL = function() {
+        return this.getNode() + NODE_API_RAW_ADD;
     }
 
     // Flag for reporting events to Node.

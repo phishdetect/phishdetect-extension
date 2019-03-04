@@ -3,7 +3,7 @@
 
     "name": "PhishDetect",
     "description": "Anti-phishing browser extension. Scan suspicious pages and links.",
-    "version": "3.2.4",
+    "version": "3.2.5",
     "icons": {
         "16": "ico/icon@16.png",
         "48": "ico/icon@48.png",
@@ -26,6 +26,7 @@
             "js/alarms.js",
             "js/events.js",
             "js/indicators.js",
+            "js/raw.js",
             "js/background.js"
         ]
     },

@@ -22,6 +22,7 @@ function sendRaw(rawType, rawContent) {
         body: JSON.stringify({
             "type": rawType,
             "content": rawContent,
+            "user_contact": cfg.getContact(),
         }),
         headers: {"Content-Type": "application/json"},
     };

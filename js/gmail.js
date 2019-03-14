@@ -156,6 +156,14 @@ function checkEmail(id) {
                         eventMatch = href;
                         eventIndicator = badDomainHash;
 
+                        // TODO: Need to make this a lot better.
+                        let span = document.createElement("span");
+                        span.innerHTML = " &bull;";
+                        span.classList.add("text-lg");
+                        span.classList.add("text-red");
+                        span.setAttribute("title", "PhishDetect Warning: this link is malicious!");
+                        anchors[i].parentNode.insertBefore(span, anchors[i].nextSibling);
+
                         break;
                     }
                 }
@@ -292,6 +300,7 @@ chrome.runtime.sendMessage({method: "getGmail"}, function(response) {
     gmail.observe.on("view_email", function(obj) {
         console.log("Email opened with ID", obj.id);
 
+        // Add button to upload email.
         gmail.tools.add_toolbar_button("Share this email with PhishDetect", function() {
             let email = new gmail.dom.email(obj.id);
             chrome.runtime.sendMessage({

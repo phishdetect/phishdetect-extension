@@ -158,7 +158,7 @@ function checkEmail(id) {
 
                         // TODO: Need to make this a lot better.
                         let span = document.createElement("span");
-                        span.innerHTML = " &bull;";
+                        span.innerHTML = " &#9888;";
                         span.classList.add("text-lg");
                         span.classList.add("text-red");
                         span.setAttribute("title", "PhishDetect Warning: this link is malicious!");

@@ -15,7 +15,23 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-function sendRaw(rawType, rawContent) {
+function sendRaw(rawType, rawContent, identifier) {
+    // Check if the event type is email_*.
+    if (rawType == "email") {
+        // If an email identifier was provided...
+        if (identifier !== undefined && identifier != "") {
+            // Get a list of already shared emails.
+            let emails = cfg.getSharedEmails();
+            for (let i=0; i<emails.length; i++) {
+                // If the email was already shared before, no need to
+                // report it again.
+                if (emails[i] == identifier) {
+                    return;
+                }
+            }
+        }
+    }
+
     // Craft request to send to REST API server.
     var properties = {
         method: "POST",
@@ -30,6 +46,12 @@ function sendRaw(rawType, rawContent) {
     fetch(cfg.getRawURL(), properties)
     .then((response) => response.json())
     .then(function(data) {
+        // We do this to avoid re-sharing already shared emails.
+        if (rawType == "email") {
+            if (identifier !== undefined && identifier != "") {
+                cfg.addSharedEmail(identifier);
+            }
+        }
     })
     .catch(error => {
         console.log(error);

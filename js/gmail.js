@@ -238,7 +238,6 @@ function modifyEmail(id) {
                         // Button to open "Safely".
                         $.extend({}, vex.dialog.buttons.YES, {
                             text: "Safely",
-                            // className: "phishdetect-button-safe",
                             className: "text-white bg-green",
                             click: function($vexContent, event) {
                                 this.value = "safe";
@@ -285,11 +284,41 @@ function modifyEmail(id) {
     }
 }
 
-// gmail.observe.on("load", function() {
-//     // TODO: Currently not working.
-//     let userEmail = gmail.get.user_email();
-//     console.log("Hello, " + userEmail + ". PhishDetect is starting...");
-// });
+// shareEmail creates a button to share the currently open email with the
+// PhishDetect Node. Shared emails will be marked in the extension's storage
+// and we will avoid duplication.
+function shareEmail(id) {
+    chrome.runtime.sendMessage({method: "getSharedEmails"}, function(response) {
+        let is_shared = false;
+        for (let i=0; i<response.length; i++) {
+            // If the email was already shared before, no need to
+            // report it again.
+            if (response[i] == id) {
+                is_shared = true;
+            }
+        }
+
+        // Add button to upload email.
+        let html_share_button = "<span id=\"pd_share\"><span class=\"bg-blue hover:bg-blue-light text-white py-2 px-4 border-b-4 border-blue-dark hover:text-white hover:no-underline hover:border-blue rounded\"><i class=\"fas fa-fish\"></i> Share with PhishDetect</span></span>"
+        let html_shared_already = "<i class=\"fas fa-check-circle text-green mr-2\"></i>Shared with PhishDetect";
+
+        if (is_shared) {
+            gmail.tools.add_toolbar_button(html_shared_already, function() {});
+        } else {
+            gmail.tools.add_toolbar_button(html_share_button, function() {
+                document.getElementById("pd_share").innerHTML = html_shared_already;
+
+                let email = new gmail.dom.email(id);
+                chrome.runtime.sendMessage({
+                    method: "sendRaw",
+                    rawType: "email",
+                    rawContent: email.source(),
+                    identifier: id,
+                });
+            });
+        }
+    });
+}
 
 chrome.runtime.sendMessage({method: "getGmail"}, function(response) {
     if (response === false) {
@@ -299,16 +328,8 @@ chrome.runtime.sendMessage({method: "getGmail"}, function(response) {
     gmail.observe.on("view_email", function(obj) {
         console.log("Email opened with ID", obj.id);
 
-        // Add button to upload email.
-        gmail.tools.add_toolbar_button("Share this email with PhishDetect", function() {
-            let email = new gmail.dom.email(obj.id);
-            chrome.runtime.sendMessage({
-                method: "sendRaw",
-                rawType: "email",
-                rawContent: email.source(),
-            });
-        });
-
+        // Add share email button.
+        shareEmail(obj.id);
         // We check the original content of the email for known indicators.
         checkEmail(obj.id);
         // We change the email to add our dialog.

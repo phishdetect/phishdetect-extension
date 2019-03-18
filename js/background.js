@@ -86,7 +86,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         sendEvent(request.eventType, request.match, request.indicator, request.identifier);
         return false;
     } else if (request.method == "sendRaw") {
-        sendRaw(request.rawType, request.rawContent);
+        sendRaw(request.rawType, request.rawContent, request.identifier);
         return false
     // Get the flag to enable or disable Gmail integration.
     } else if (request.method === "getGmail") {
@@ -99,6 +99,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     // full list of indicators, normally from gmail.js.
     } else if (request.method === "getIndicators") {
         sendResponse(getIndicators());
+    // This message returns the list of email IDs that were already previously shared.
+    } else if (request.method == "getSharedEmails") {
+        sendResponse(cfg.getSharedEmails());
     }
 });
 

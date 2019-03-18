@@ -82,9 +82,18 @@ var Config = function() {
         return JSON.parse(localStorage.getItem("cfg_reported_emails"));
     }
     this.addReportedEmail = function(value) {
-        let emails = JSON.parse(localStorage.getItem("cfg_reported_emails"));
+        let emails = this.getReportedEmails();
         emails.push(value);
         localStorage.setItem("cfg_reported_emails", JSON.stringify(emails));
+    }
+    // List of email IDs that have already be shared (to avoid duplication).
+    this.getSharedEmails = function() {
+        return JSON.parse(localStorage.getItem("cfg_shared_emails"));
+    }
+    this.addSharedEmail = function(value) {
+        let emails = this.getSharedEmails();
+        emails.push(value);
+        localStorage.setItem("cfg_shared_emails", JSON.stringify(emails));
     }
 }
 

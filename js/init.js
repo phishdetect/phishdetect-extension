@@ -40,4 +40,7 @@
     if (localStorage.cfg_reported_emails === undefined) {
         localStorage.cfg_reported_emails = JSON.stringify([]);
     }
+    if (localStorage.cfg_shared_emails === undefined) {
+        localStorage.cfg_shared_emails = JSON.stringify([]);
+    }
 })();

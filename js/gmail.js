@@ -299,8 +299,8 @@ function shareEmail(id) {
         }
 
         // Add button to upload email.
-        let html_share_button = "<span id=\"pd_share\"><span class=\"bg-blue hover:bg-blue-light text-white py-2 px-4 border-b-4 border-blue-dark hover:text-white hover:no-underline hover:border-blue rounded\"><i class=\"fas fa-fish\"></i> Share with PhishDetect</span></span>"
-        let html_shared_already = "<i class=\"fas fa-check-circle text-green mr-2\"></i>Shared with PhishDetect";
+        let html_share_button = "<span id=\"pd_share\" class=\"p-2 rounded-lg hover:bg-grey-lighter\"><i class=\"fas fa-fish text-blue mr-2\"></i>Share with PhishDetect</span>";
+        let html_shared_already = "<span class=\"cursor-pointer\"><i class=\"fas fa-check-circle text-green mr-2\"></i>Shared with PhishDetect</span>";
 
         if (is_shared) {
             gmail.tools.add_toolbar_button(html_shared_already, function() {});

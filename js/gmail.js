@@ -158,8 +158,7 @@ function checkEmail(id) {
 
                         // TODO: Need to make this a lot better.
                         let span = document.createElement("span");
-                        span.innerHTML = " &#9888;";
-                        span.classList.add("text-lg");
+                        span.innerHTML = " <i class=\"fas fa-exclamation-triangle\"></i>";
                         span.classList.add("text-red");
                         span.setAttribute("title", "PhishDetect Warning: this link is malicious!");
                         anchors[i].parentNode.insertBefore(span, anchors[i].nextSibling);
@@ -181,7 +180,7 @@ function checkEmail(id) {
 
             let emailBody = email.dom("body");
             let warning = "<div class=\"bg-black text-grey-lighter p-4 mb-4 rounded-lg tracking-normal\">"
-            warning += "<span class=\"text-lg\"><b>PhishDetect</b> Warning</span><br />"
+            warning += "<span class=\"text-lg\"><i class=\"fas fa-exclamation-triangle\"></i> <b>PhishDetect</b> Warning</span><br />"
             warning += "Please be cautious! "
 
             if (eventType == "email_sender" || eventType == "email_sender_domain") {

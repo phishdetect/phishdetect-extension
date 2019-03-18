@@ -44,6 +44,7 @@
         {
             "matches": ["https://mail.google.com/*", "https://inbox.google.com/*"],
             "js": [
+                "fontawesome/js/all.js",
                 "libs/sha256.js",
                 "dist/gmail.js"
             ],

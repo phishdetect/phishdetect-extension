@@ -32,7 +32,26 @@ window.gmail = gmail;
 const tldts = require("tldts");
 window.tldts = tldts;
 
-// checkEmail
+// This is a helper function to check hashes against the list of
+// malicious indicators.
+function isElementInIndicators(element1, element2, indicators) {
+    for (let i=0; i<indicators.length; i++) {
+        let indicator = indicators[i].toLowerCase();
+        if (indicator == element1 || indicator == element2) {
+            return indicator;
+        }
+    }
+
+    return null;
+}
+
+// checkEmail will try to determine if any element in the email matches a
+// known indicator. In order to do so it will try to:
+//   1. Check the full email sender among the list of blocklisted email addresses.
+//   2. Check the domain of the email sender among the list of blocklisted domains.
+//   3. Check all the anchors in the email among the list of blocklisted domains.
+// If it matches anything, it will display a warning, highlight any bad link,
+// and send an alert through the "sendEvent" message to the background script.
 function checkEmail(id) {
     console.log("Checking email", id)
 
@@ -77,21 +96,15 @@ function checkEmail(id) {
 
         // We check for email addresses, if we have any indicators to check.
         if (indicators.emails !== null) {
-            // We loop through the list of hashed bad email addresses.
-            for (let i=0; i<indicators.emails.length; i++) {
-                let badSenderHash = indicators.emails[i].toLowerCase();
-                // We check if the email sender matches a bad address.
-                if (badSenderHash == fromEmailHash) {
-                    console.log("Detected bad email sender with indicator:", badSenderHash);
+            let matchedIndicator = isElementInIndicators(fromEmailHash, "", indicators.emails);
+            if (matchedIndicator !== null) {
+                console.log("Detected bad email sender with indicator:", matchedIndicator);
 
-                    // Mark email as bad.
-                    isEmailBad = true;
-                    eventType = "email_sender";
-                    eventMatch = fromEmail;
-                    eventIndicator = badSenderHash;
-
-                    break;
-                }
+                // Mark email as bad.
+                isEmailBad = true;
+                eventType = "email_sender";
+                eventMatch = fromEmail;
+                eventIndicator = matchedIndicator;
             }
         }
 
@@ -99,22 +112,16 @@ function checkEmail(id) {
         // We check for domains, if we have any indicators to check.
         if (indicators.domains !== null) {
             // First we check the domain of the email sender.
-            for (let i=0; i<indicators.domains.length; i++) {
-                let badDomainHash = indicators.domains[i].toLowerCase();
+            let matchedIndicator = isElementInIndicators(fromEmailDomainHash, fromEmailTopDomainHash, indicators.domains);
+            if (matchedIndicator !== null) {
+                console.log("Detected email sender domain with indicator:", matchedIndicator);
 
-                // Check if the domain is bad.
-                if (badDomainHash == fromEmailDomainHash || badDomainHash == fromEmailTopDomainHash) {
-                    console.log("Detected email sender domain with indicator:", badDomainHash);
-
-                    // Mark whole email as bad.
-                    // TODO: this is ugly.
-                    isEmailBad = true;
-                    eventType = "email_sender_domain";
-                    eventMatch = fromEmail;
-                    eventIndicator = badDomainHash;
-
-                    break;
-                }
+                // Mark whole email as bad.
+                // TODO: this is ugly.
+                isEmailBad = true;
+                eventType = "email_sender_domain";
+                eventMatch = fromEmail;
+                eventIndicator = matchedIndicator;
             }
 
             // Now we check for links contained in the emails body.
@@ -142,34 +149,35 @@ function checkEmail(id) {
                 let hrefTopDomainHash = sha256(parsed.domain);
 
                 // We loop through the list of hashed bad domains.
-                for (let i=0; i<indicators.domains.length; i++) {
-                    let badDomainHash = indicators.domains[i].toLowerCase();
+                let matchedIndicator = isElementInIndicators(hrefDomainHash, hrefTopDomainHash, indicators.domains);
+                if (matchedIndicator !== null) {
+                    console.log("Detected bad link with indicator:", matchedIndicator);
 
-                    // Check if the domain is bad.
-                    if (badDomainHash == hrefDomainHash || badDomainHash == hrefTopDomainHash) {
-                        console.log("Detected bad link with indicator:", badDomainHash);
+                    // Mark whole email as bad.
+                    // TODO: this is ugly.
+                    isEmailBad = true;
+                    eventType = "email_link";
+                    eventMatch = href;
+                    eventIndicator = matchedIndicator;
 
-                        // Mark whole email as bad.
-                        // TODO: this is ugly.
-                        isEmailBad = true;
-                        eventType = "email_link";
-                        eventMatch = href;
-                        eventIndicator = badDomainHash;
+                    // TODO: Need to make this a lot better.
+                    let span = document.createElement("span");
+                    span.innerHTML = " <i class=\"fas fa-exclamation-triangle\"></i>";
+                    span.classList.add("text-red");
+                    span.setAttribute("title", "PhishDetect Warning: this link is malicious!");
+                    anchors[i].parentNode.insertBefore(span, anchors[i].nextSibling);
 
-                        // TODO: Need to make this a lot better.
-                        let span = document.createElement("span");
-                        span.innerHTML = " <i class=\"fas fa-exclamation-triangle\"></i>";
-                        span.classList.add("text-red");
-                        span.setAttribute("title", "PhishDetect Warning: this link is malicious!");
-                        anchors[i].parentNode.insertBefore(span, anchors[i].nextSibling);
-
-                        break;
-                    }
+                    break;
                 }
             }
         }
 
+        // TODO: this is ugly.
+        // If there is any malicious element we proceed with notifications.
         if (isEmailBad === true) {
+            // First we send an "event" to the PhishDetect Node through the "sendEvent"
+            // message to the background script. This will proceed only if the
+            // appropriate settings option is enabled.
             chrome.runtime.sendMessage({
                 method: "sendEvent",
                 eventType: eventType,
@@ -178,6 +186,7 @@ function checkEmail(id) {
                 identifier: id,
             });
 
+            // Then we display a warning to the user inside the Gmail web interface.
             let emailBody = email.dom("body");
             let warning = "<div class=\"bg-black text-grey-lighter p-4 mb-4 rounded-lg tracking-normal\">"
             warning += "<span class=\"text-lg\"><i class=\"fas fa-exclamation-triangle\"></i> <b>PhishDetect</b> Warning</span><br />"

@@ -42,7 +42,7 @@
     ],
     "content_scripts": [
         {
-            "matches": ["https://mail.google.com/*", "https://inbox.google.com/*"],
+            "matches": ["https://mail.google.com/*"],
             "js": [
                 "fontawesome/js/all.js",
                 "libs/sha256.js",

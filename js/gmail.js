@@ -236,7 +236,7 @@ function modifyEmail(id) {
             // let unsafe_url = event.srcElement.getAttribute("href");
             let unsafe_url = href;
             // Get check URL from config.
-            chrome.runtime.sendMessage({method: "getCheckURL"}, function(response) {
+            chrome.runtime.sendMessage({method: "getLinkCheckURL"}, function(response) {
                 let safe_url = response + window.btoa(unsafe_url);
 
                 // We spawn a dialog.

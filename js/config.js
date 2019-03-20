@@ -32,8 +32,8 @@ var Config = function() {
     }
 
     // Functions to get Node URLs.
-    this.getCheckURL = function() {
-        return this.getNode() + NODE_CHECK_PATH;
+    this.getLinkCheckURL = function() {
+        return this.getNode() + NODE_GUI_LINK_CHECK;
     }
     this.getIndicatorsURL = function() {
         return this.getNode() + NODE_API_INDICATORS_FETCH_PATH;

@@ -66,7 +66,7 @@ function injectRedirect(tabId) {
     chrome.tabs.captureVisibleTab(null, {}, function(img) {
         // Inject some data in the page.
         chrome.tabs.executeScript(tabId, {
-            code: "var screenshot = '" + img + "'; var backend = '" + cfg.getCheckURL() + "';"
+            code: "var screenshot = '" + img + "'; var backend = '" + cfg.getLinkCheckURL() + "';"
         }, function() {
             // Inject our redirector.
             chrome.tabs.executeScript(tabId, {file: "js/pageInject.js"});
@@ -93,8 +93,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         sendResponse(cfg.getGmail());
     // This message is received when a component of the extension is requesting the
     // check URL, normally from gmail.js.
-    } else if (request.method === "getCheckURL") {
-        sendResponse(cfg.getCheckURL());
+    } else if (request.method === "getLinkCheckURL") {
+        sendResponse(cfg.getLinkCheckURL());
     // This message is received when a component of the extension is requesting the
     // full list of indicators, normally from gmail.js.
     } else if (request.method === "getIndicators") {
@@ -135,7 +135,7 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
     // If we're scanning a link, we just open a tab to our service.
     } else if (info.menuItemId === "scan-link") {
         let linkUrl = info.linkUrl;
-        let safeUrl = cfg.getCheckURL() + window.btoa(linkUrl);
+        let safeUrl = cfg.getLinkCheckURL() + window.btoa(linkUrl);
         chrome.tabs.create({"url": safeUrl});
         return false;
     }

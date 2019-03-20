@@ -16,7 +16,7 @@
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
 NODE_DEFAULT_URL = "https://node.phishdetect.io";
-NODE_CHECK_PATH = "/check/";
+NODE_GUI_LINK_CHECK = "/link/";
 NODE_API_INDICATORS_FETCH_PATH = "/api/indicators/fetch/";
 NODE_API_EVENTS_ADD_PATH = "/api/events/add/";
 NODE_API_RAW_ADD = "/api/raw/add/";

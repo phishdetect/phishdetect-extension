@@ -326,14 +326,22 @@ function shareEmail(id) {
             gmail.tools.add_toolbar_button(html_shared_already, function() {});
         } else {
             gmail.tools.add_toolbar_button(html_share_button, function() {
-                document.getElementById("pd_share").innerHTML = html_shared_already;
+                // We ask for confirmation.
+                vex.dialog.confirm({
+                    unsafeMessage: "<b>PhishDetect</b><br />Are you sure you want to share this email with your PhishDetect Node operator?",
+                    callback: function(value) {
+                        if (value) {
+                            document.getElementById("pd_share").innerHTML = html_shared_already;
 
-                let email = new gmail.dom.email(id);
-                chrome.runtime.sendMessage({
-                    method: "sendRaw",
-                    rawType: "email",
-                    rawContent: email.source(),
-                    identifier: id,
+                            let email = new gmail.dom.email(id);
+                            chrome.runtime.sendMessage({
+                                method: "sendRaw",
+                                rawType: "email",
+                                rawContent: email.source(),
+                                identifier: id,
+                            });
+                        }
+                    }
                 });
             });
         }

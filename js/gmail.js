@@ -17,28 +17,34 @@
 
 "use strict";
 
+// jQuery is required by vex.js.
 const jQuery = require("jquery");
 const $ = jQuery;
 
+// vex.js is used to create dialogs inside Gmail.
 const vex = require("vex-js");
 window.vex = vex;
 vex.registerPlugin(require("vex-dialog"));
 vex.defaultOptions.className = "vex-theme-default";
 
+// gmail.js
 const GmailFactory = require("gmail-js");
 const gmail = new GmailFactory.Gmail($);
 window.gmail = gmail;
 
+// tldts is used to parse domain names.
 const tldts = require("tldts");
 window.tldts = tldts;
 
 // This is a helper function to check hashes against the list of
 // malicious indicators.
-function isElementInIndicators(element1, element2, indicators) {
+function isElementInIndicators(elements, indicators) {
     for (let i=0; i<indicators.length; i++) {
         let indicator = indicators[i].toLowerCase();
-        if (indicator == element1 || indicator == element2) {
-            return indicator;
+        for (let j=0; j<elements.length; j++) {
+            if (elements[j] == indicator) {
+                return indicator;
+            }
         }
     }
 
@@ -55,7 +61,9 @@ function isElementInIndicators(element1, element2, indicators) {
 function checkEmail(id) {
     console.log("Checking email", id)
 
+    // Extract the email DOM.
     let email = new gmail.dom.email(id);
+    // Extract from field and prepare hashes.
     let from = email.from();
     let fromEmail = from["email"].toLowerCase()
     let fromEmailHash = sha256(fromEmail);
@@ -96,7 +104,8 @@ function checkEmail(id) {
 
         // We check for email addresses, if we have any indicators to check.
         if (indicators.emails !== null) {
-            let matchedIndicator = isElementInIndicators(fromEmailHash, "", indicators.emails);
+            let elementsToCheck = [fromEmailHash,];
+            let matchedIndicator = isElementInIndicators(elementsToCheck, indicators.emails);
             if (matchedIndicator !== null) {
                 console.log("Detected bad email sender with indicator:", matchedIndicator);
 
@@ -112,7 +121,8 @@ function checkEmail(id) {
         // We check for domains, if we have any indicators to check.
         if (indicators.domains !== null) {
             // First we check the domain of the email sender.
-            let matchedIndicator = isElementInIndicators(fromEmailDomainHash, fromEmailTopDomainHash, indicators.domains);
+            let elementsToCheck = [fromEmailDomainHash, fromEmailTopDomainHash];
+            let matchedIndicator = isElementInIndicators(elementsToCheck, indicators.domains);
             if (matchedIndicator !== null) {
                 console.log("Detected email sender domain with indicator:", matchedIndicator);
 
@@ -149,7 +159,8 @@ function checkEmail(id) {
                 let hrefTopDomainHash = sha256(parsed.domain);
 
                 // We loop through the list of hashed bad domains.
-                let matchedIndicator = isElementInIndicators(hrefDomainHash, hrefTopDomainHash, indicators.domains);
+                let elementsToCheck = [hrefDomainHash, hrefTopDomainHash];
+                let matchedIndicator = isElementInIndicators(elementsToCheck, indicators.domains);
                 if (matchedIndicator !== null) {
                     console.log("Detected bad link with indicator:", matchedIndicator);
 
@@ -315,14 +326,22 @@ function shareEmail(id) {
             gmail.tools.add_toolbar_button(html_shared_already, function() {});
         } else {
             gmail.tools.add_toolbar_button(html_share_button, function() {
-                document.getElementById("pd_share").innerHTML = html_shared_already;
+                // We ask for confirmation.
+                vex.dialog.confirm({
+                    unsafeMessage: "<b>PhishDetect</b><br />Are you sure you want to share this email with your PhishDetect Node operator?",
+                    callback: function(value) {
+                        if (value) {
+                            document.getElementById("pd_share").innerHTML = html_shared_already;
 
-                let email = new gmail.dom.email(id);
-                chrome.runtime.sendMessage({
-                    method: "sendRaw",
-                    rawType: "email",
-                    rawContent: email.source(),
-                    identifier: id,
+                            let email = new gmail.dom.email(id);
+                            chrome.runtime.sendMessage({
+                                method: "sendRaw",
+                                rawType: "email",
+                                rawContent: email.source(),
+                                identifier: id,
+                            });
+                        }
+                    }
                 });
             });
         }

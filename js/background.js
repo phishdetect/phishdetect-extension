@@ -75,34 +75,40 @@ function injectRedirect(tabId) {
 }
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    switch (request.method) {
     // This message is received when the user requests to scan an opened page.
-    if (request.method === "scanPage") {
+    case "scanPage":
         injectRedirect(request.tabId);
-        return false;
+        break;
     // This message is received when a security event was detected and needs to be sent
     // to the PhishDetect node.
-    } else if (request.method == "sendEvent") {
+    case "sendEvent":
         // Send event to REST API server.
         sendEvent(request.eventType, request.match, request.indicator, request.identifier);
-        return false;
-    } else if (request.method == "sendRaw") {
+        break;
+    case "sendRaw":
         sendRaw(request.rawType, request.rawContent, request.identifier);
-        return false
+        break;
     // Get the flag to enable or disable Gmail integration.
-    } else if (request.method === "getGmail") {
+    case "getGmail":
         sendResponse(cfg.getGmail());
+        break;
     // This message is received when a component of the extension is requesting the
     // check URL, normally from gmail.js.
-    } else if (request.method === "getLinkCheckURL") {
+    case "getLinkCheckURL":
         sendResponse(cfg.getLinkCheckURL());
+        break;
     // This message is received when a component of the extension is requesting the
     // full list of indicators, normally from gmail.js.
-    } else if (request.method === "getIndicators") {
+    case "getIndicators":
         sendResponse(getIndicators());
+        break;
     // This message returns the list of email IDs that were already previously shared.
-    } else if (request.method == "getSharedEmails") {
+    case "getSharedEmails":
         sendResponse(cfg.getSharedEmails());
+        break;
     }
+    return false;
 });
 
 // Activate on click of the extension button.

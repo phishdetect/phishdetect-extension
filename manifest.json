@@ -5,20 +5,20 @@
     "description": "Anti-phishing browser extension. Scan suspicious pages and links.",
     "version": "3.2.5",
     "icons": {
-        "16": "ico/icon@16.png",
-        "48": "ico/icon@48.png",
-        "128": "ico/icon@128.png"
+        "16": "icons/icon@16.png",
+        "48": "icons/icon@48.png",
+        "128": "icons/icon@128.png"
     },
     "browser_action": {
-        "default_icon": "ico/icon.png",
-        "default_popup": "popup/popup.html"
+        "default_icon": "icons/icon.png",
+        "default_popup": "ui/popup/popup.html"
     },
     "options_ui" : {
-        "page": "options/options.html"
+        "page": "ui/options/options.html"
     },
     "background": {
         "scripts": [
-            "libs/sha256.js",
+            "lib/sha256.js",
             "dist/utils.js",
             "js/const.js",
             "js/init.js",
@@ -45,9 +45,9 @@
         {
             "matches": ["https://mail.google.com/*"],
             "js": [
-                "libs/raf-fix.js",
+                "lib/raf-fix.js",
                 "fontawesome/js/all.js",
-                "libs/sha256.js",
+                "lib/sha256.js",
                 "dist/gmail.js"
             ],
             "css": [
@@ -60,6 +60,6 @@
     ],
     "web_accessible_resources": [
         "fontawesome/",
-        "warning/warning.html"
+        "ui/warning/warning.html"
     ]
 }

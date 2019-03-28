@@ -22,4 +22,4 @@ NODE_API_EVENTS_ADD_PATH = "/api/events/add/";
 NODE_API_RAW_ADD = "/api/raw/add/";
 // TODO: Is 15 minutes a good frequency?
 INDICATORS_UPDATE_FREQUENCY = 15;
-WARNING_PAGE = "warning/warning.html";
+WARNING_PAGE = "ui/warning/warning.html";

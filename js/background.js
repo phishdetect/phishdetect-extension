@@ -40,17 +40,15 @@ chrome.webRequest.onBeforeRequest.addListener(function(details) {
         return {cancel: false};
     }
 
-    for (let i=0; i<indicators.domains.length; i++) {
-        let badDomainHash = indicators.domains[i].toLowerCase();
+    let elementsToCheck = [domainHash, topDomainHash];
+    let matchedIndicator = window.isElementInIndicators(elementsToCheck, indicators.domains);
+    if (matchedIndicator !== null) {
+        console.log("Bad domain identified:", url);
+        sendEvent("website_visit", url, matchedIndicator, "");
 
-        if (badDomainHash == domainHash || badDomainHash == topDomainHash) {
-            console.log("Bad domain identified:", url);
-            sendEvent("website_visit", url, badDomainHash, "");
-
-            // We redirect to the warning page.
-            let redirect = chrome.extension.getURL(WARNING_PAGE) + "?url=" + encodeURIComponent(url);
-            return {redirectUrl: redirect};
-        }
+        // We redirect to the warning page.
+        let redirect = chrome.extension.getURL(WARNING_PAGE) + "?url=" + encodeURIComponent(url);
+        return {redirectUrl: redirect};
     }
 
     // If nothing suspicious is found, proceed with visit.

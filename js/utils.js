@@ -28,3 +28,18 @@ window.getTopDomainFromURL = function getTopDomainFromURL(url) {
     let urlParsed = tldts.parse(url);
     return urlParsed.domain;
 }
+
+// This is a helper function to check hashes against the list of
+// malicious indicators.
+window.isElementInIndicators = function isElementInIndicators(elements, indicators) {
+    for (let i=0; i<indicators.length; i++) {
+        let indicator = indicators[i].toLowerCase();
+        for (let j=0; j<elements.length; j++) {
+            if (elements[j] == indicator) {
+                return indicator;
+            }
+        }
+    }
+
+    return null;
+}

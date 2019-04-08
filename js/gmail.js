@@ -32,25 +32,6 @@ const GmailFactory = require("gmail-js");
 const gmail = new GmailFactory.Gmail($);
 window.gmail = gmail;
 
-// tldts is used to parse domain names.
-const tldts = require("tldts");
-window.tldts = tldts;
-
-// This is a helper function to check hashes against the list of
-// malicious indicators.
-function isElementInIndicators(elements, indicators) {
-    for (let i=0; i<indicators.length; i++) {
-        let indicator = indicators[i].toLowerCase();
-        for (let j=0; j<elements.length; j++) {
-            if (elements[j] == indicator) {
-                return indicator;
-            }
-        }
-    }
-
-    return null;
-}
-
 // checkEmail will try to determine if any element in the email matches a
 // known indicator. In order to do so it will try to:
 //   1. Check the full email sender among the list of blocklisted email addresses.
@@ -65,7 +46,7 @@ function checkEmail(id) {
     let email = new gmail.dom.email(id);
     // Extract from field and prepare hashes.
     let from = email.from();
-    let fromEmail = from["email"].toLowerCase()
+    let fromEmail = from["email"].toLowerCase();
     let fromEmailHash = sha256(fromEmail);
     let fromEmailDomain = "";
     let fromEmailDomainHash = "";
@@ -75,10 +56,9 @@ function checkEmail(id) {
     // We extract the domain from the email address.
     let parts = fromEmail.split('@');
     if (parts.length === 2) {
-        let parsed = tldts.parse(parts[1]);
-        fromEmailDomain = parsed.host;
+        fromEmailDomain = getDomainFromURL(parts[1]);
         fromEmailDomainHash = sha256(fromEmailDomain);
-        fromEmailTopDomain = parsed.domain;
+        fromEmailTopDomain = getTopDomainFromURL(parts[1]);
         fromEmailTopDomainHash = sha256(fromEmailTopDomain);
     }
 
@@ -152,11 +132,10 @@ function checkEmail(id) {
 
                 console.log("Checking link:", href);
 
-                let parsed = tldts.parse(href);
-                let hrefDomain = parsed.host;
+                let hrefDomain = getDomainFromURL(href);
                 let hrefDomainHash = sha256(hrefDomain);
-                let hrefTopDomain = parsed.domain;
-                let hrefTopDomainHash = sha256(parsed.domain);
+                let hrefTopDomain = getTopDomainFromURL(href);
+                let hrefTopDomainHash = sha256(hrefTopDomain);
 
                 // We loop through the list of hashed bad domains.
                 let elementsToCheck = [hrefDomainHash, hrefTopDomainHash];

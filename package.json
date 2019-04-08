@@ -6,7 +6,7 @@
     "scripts": {
         "deps": "npm install",
         "stage": "mkdir dist || echo ''",
-        "bundle": "browserify -o dist/gmail.js js/gmail.js && browserify -o dist/utils.js js/utils.js",
+        "bundle": "browserify -o dist/gmail.js js/gmail.js && browserify -o dist/utils.js js/utils.js && browserify -o dist/roundcube.js js/roundcube.js",
         "build": "npm run stage && npm run bundle"
     },
     "author": "Claudio Guarnieri",

@@ -31,8 +31,8 @@
     if (localStorage.cfg_report === undefined) {
         localStorage.cfg_report = true;
     }
-    if (localStorage.cfg_gmail === undefined) {
-        localStorage.cfg_gmail = true;
+    if (localStorage.cfg_webmails === undefined) {
+        localStorage.cfg_webmails = true;
     }
     if (localStorage.cfg_contact === undefined) {
         localStorage.cfg_contact = "";

@@ -31,12 +31,20 @@ function checkAllElements(elements) {
 }
 
 (function() {
-    console.log("Checking for any supported webmail...");
+    // Check if the option to integrate with webmails is enabled.
+    chrome.runtime.sendMessage({method: "getWebmails"}, function(response) {
+        // If not, we stop straight away.
+        if (response === false) {
+            return;
+        }
 
-    // We check if there is a Roundcube instance open.
-    let roundcubeElements = ["rcmthreads", "messagelist", "messagemenu"];
-    if (checkAllElements(roundcubeElements)) {
-        console.log("Roundcube detected!")
-        roundcube();
-    }
+        console.log("Checking for any supported webmail...");
+
+        // We check if there is a Roundcube instance open.
+        let roundcubeElements = ["rcmthreads", "messagelist", "messagemenu"];
+        if (checkAllElements(roundcubeElements)) {
+            console.log("Roundcube detected!")
+            roundcube();
+        }
+    });
 })();

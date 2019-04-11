@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-function checkEmail() {
+function roundcubeCheckEmail() {
     let iframe = document.getElementById("messagecontframe");
     if (iframe === null) {
         return;
@@ -66,10 +66,13 @@ function checkEmail() {
         let eventMatch = "";
         let eventIndicator = "";
 
+        // Get email body.
+        let emailBody = innerDoc.getElementById("messagebody");
+
         // We check for email addresses, if we have any indicators to check.
         if (indicators.emails !== null) {
-            let elementsToCheck = [fromEmailHash,];
-            let matchedIndicator = isElementInIndicators(elementsToCheck, indicators.emails);
+            let itemsToCheck = [fromEmailHash,];
+            let matchedIndicator = checkForIndicators(itemsToCheck, indicators.emails);
             if (matchedIndicator !== null) {
                 console.log("Detected bad email sender with indicator:", matchedIndicator);
 
@@ -78,6 +81,64 @@ function checkEmail() {
                 eventType = "email_sender";
                 eventMatch = fromEmail;
                 eventIndicator = matchedIndicator;
+            }
+        }
+
+        if (indicators.domains !== null) {
+            // First we check the domain of the email sender.
+            let itemsToCheck = [fromEmailDomainHash, fromEmailTopDomainHash];
+            let matchedIndicator = checkForIndicators(itemsToCheck, indicators.domains);
+            if (matchedIndicator !== null) {
+                console.log("Detected email sender domain with indicator:", matchedIndicator);
+
+                isEmailBad = true;
+                eventType = "email_sender_domain";
+                eventMatch = fromEmail;
+                eventIndicator = matchedIndicator;
+            }
+
+            // Now we check for links in the email body.
+            let anchors = emailBody.getElementsByTagName("a");
+
+            for (let i=0; i<anchors.length; i++) {
+                // Lowercase the link.
+                let href = anchors[i].href.toLowerCase();
+
+                // Only check for HTTP links.
+                // NOTE: also scanning for mailto: links (currently experimental).
+                if (href.indexOf("http://") != 0 && href.indexOf("https://") != 0 && href.indexOf("mailto:") != 0) {
+                    continue;
+                }
+
+                console.log("Checking link:", href);
+
+                let hrefDomain = getDomainFromURL(href);
+                let hrefDomainHash = sha256(hrefDomain);
+                let hrefTopDomain = getTopDomainFromURL(href);
+                let hrefTopDomainHash = sha256(hrefTopDomain);
+
+                // We loop through the list of hashed bad domains.
+                let elementsToCheck = [hrefDomainHash, hrefTopDomainHash];
+                let matchedIndicator = checkForIndicators(elementsToCheck, indicators.domains);
+                if (matchedIndicator !== null) {
+                    console.log("Detected bad link with indicator:", matchedIndicator);
+
+                    // Mark whole email as bad.
+                    // TODO: this is ugly.
+                    isEmailBad = true;
+                    eventType = "email_link";
+                    eventMatch = href;
+                    eventIndicator = matchedIndicator;
+
+                    // TODO: Need to make this a lot better.
+                    let span = document.createElement("span");
+                    span.innerHTML = " <i class=\"fas fa-exclamation-triangle\"></i>";
+                    span.classList.add("text-red");
+                    span.setAttribute("title", "PhishDetect Warning: this link is malicious!");
+                    anchors[i].parentNode.insertBefore(span, anchors[i].nextSibling);
+
+                    break;
+                }
             }
         }
 
@@ -96,20 +157,11 @@ function checkEmail() {
             // });
 
             // Then we display a warning to the user inside the Gmail web interface.
-            let emailBody = innerDoc.getElementById("messagebody");
-            let warning = "<div class=\"bg-black text-grey-lighter p-4 mb-4 rounded-lg tracking-normal\">"
-            warning += "<span class=\"text-lg\"><i class=\"fas fa-exclamation-triangle\"></i> <b>PhishDetect</b> Warning</span><br />"
-            warning += "Please be cautious! "
-
-            if (eventType == "email_sender" || eventType == "email_sender_domain") {
-                warning += "The email was sent by a known malicious address. "
-            } else if (eventType == "email_link") {
-                warning += "The email contains known malicious links. "
+            let existingWarning = innerDoc.getElementById("phishdetect-warning");
+            if (existingWarning === null || existingWarning === undefined) {
+                let warning = generateWebmailWarning(eventType);
+                emailBody.insertAdjacentHTML("afterbegin", warning);
             }
-
-            warning += "For more information visit our <a class=\"no-underline\" href=\"https://phishdetect.io/help/\"><span class=\"text-blue-light font-bold\">Help</span></a> page."
-            warning += "</div>"
-            emailBody.prepend(warning);
         }
     });
 }
@@ -118,7 +170,7 @@ function roundcube() {
     MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
 
     var observer = new MutationObserver(function(mutations, observer) {
-        checkEmail();
+        roundcubeCheckEmail();
     });
 
     // TODO: Need to find the proper mutation.

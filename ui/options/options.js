@@ -17,7 +17,7 @@
 
 function loadOptions() {
     document.getElementById("server").value = cfg.getNode();
-    document.getElementById("gmail").checked = cfg.getGmail();
+    document.getElementById("webmails").checked = cfg.getWebmails();
 
     let report = cfg.getReport();
     document.getElementById("report").checked = report;
@@ -41,7 +41,7 @@ function saveOptions() {
         cfg.setContact(contact);
     }
     cfg.setReport(document.querySelector("#report").checked);
-    cfg.setGmail(document.querySelector("#gmail").checked);
+    cfg.setWebmails(document.querySelector("#webmails").checked);
 
     document.getElementById("container").innerHTML = "<div class=\"text-center\"><i class=\"fas fa-check-circle text-5xl text-green\"></i><div class=\"mt-4\">Saved!</div></div>";
     // loadOptions();
@@ -49,7 +49,7 @@ function saveOptions() {
 
 function restoreDefaults() {
     cfg.restoreDefaultNode();
-    cfg.setGmail(true);
+    cfg.setWebmails(true);
     cfg.setReport(true);
     cfg.setContact("");
     loadOptions();

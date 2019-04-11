@@ -32,14 +32,14 @@ const GmailFactory = require("gmail-js");
 const gmail = new GmailFactory.Gmail($);
 window.gmail = gmail;
 
-// checkEmail will try to determine if any element in the email matches a
+// gmailCheckEmail will try to determine if any element in the email matches a
 // known indicator. In order to do so it will try to:
 //   1. Check the full email sender among the list of blocklisted email addresses.
 //   2. Check the domain of the email sender among the list of blocklisted domains.
 //   3. Check all the anchors in the email among the list of blocklisted domains.
 // If it matches anything, it will display a warning, highlight any bad link,
 // and send an alert through the "sendEvent" message to the background script.
-function checkEmail(id) {
+function gmailCheckEmail(id) {
     console.log("Checking email", id)
 
     // Extract the email DOM.
@@ -84,8 +84,8 @@ function checkEmail(id) {
 
         // We check for email addresses, if we have any indicators to check.
         if (indicators.emails !== null) {
-            let elementsToCheck = [fromEmailHash,];
-            let matchedIndicator = isElementInIndicators(elementsToCheck, indicators.emails);
+            let itemsToCheck = [fromEmailHash,];
+            let matchedIndicator = checkForIndicators(itemsToCheck, indicators.emails);
             if (matchedIndicator !== null) {
                 console.log("Detected bad email sender with indicator:", matchedIndicator);
 
@@ -101,8 +101,8 @@ function checkEmail(id) {
         // We check for domains, if we have any indicators to check.
         if (indicators.domains !== null) {
             // First we check the domain of the email sender.
-            let elementsToCheck = [fromEmailDomainHash, fromEmailTopDomainHash];
-            let matchedIndicator = isElementInIndicators(elementsToCheck, indicators.domains);
+            let itemsToCheck = [fromEmailDomainHash, fromEmailTopDomainHash];
+            let matchedIndicator = checkForIndicators(itemsToCheck, indicators.domains);
             if (matchedIndicator !== null) {
                 console.log("Detected email sender domain with indicator:", matchedIndicator);
 
@@ -139,7 +139,7 @@ function checkEmail(id) {
 
                 // We loop through the list of hashed bad domains.
                 let elementsToCheck = [hrefDomainHash, hrefTopDomainHash];
-                let matchedIndicator = isElementInIndicators(elementsToCheck, indicators.domains);
+                let matchedIndicator = checkForIndicators(elementsToCheck, indicators.domains);
                 if (matchedIndicator !== null) {
                     console.log("Detected bad link with indicator:", matchedIndicator);
 
@@ -178,26 +178,15 @@ function checkEmail(id) {
 
             // Then we display a warning to the user inside the Gmail web interface.
             let emailBody = email.dom("body");
-            let warning = "<div class=\"bg-black text-grey-lighter p-4 mb-4 rounded-lg tracking-normal\">"
-            warning += "<span class=\"text-lg\"><i class=\"fas fa-exclamation-triangle\"></i> <b>PhishDetect</b> Warning</span><br />"
-            warning += "Please be cautious! "
-
-            if (eventType == "email_sender" || eventType == "email_sender_domain") {
-                warning += "The email was sent by a known malicious address. "
-            } else if (eventType == "email_link") {
-                warning += "The email contains known malicious links. "
-            }
-
-            warning += "For more information visit our <a class=\"no-underline\" href=\"https://phishdetect.io/help/\"><span class=\"text-blue-light font-bold\">Help</span></a> page."
-            warning += "</div>"
+            let warning = generateWebmailWarning(eventType);
             emailBody.prepend(warning);
         }
     });
 }
 
-// modifyEmail will modify the email body and rewrite links to open our
+// gmailModifyEmail will modify the email body and rewrite links to open our
 // confirmation dialog first.
-function modifyEmail(id) {
+function gmailModifyEmail(id) {
     console.log("Modifying email", id);
 
     let email = new gmail.dom.email(id);
@@ -283,10 +272,10 @@ function modifyEmail(id) {
     }
 }
 
-// shareEmail creates a button to share the currently open email with the
+// gmailShareEmail creates a button to share the currently open email with the
 // PhishDetect Node. Shared emails will be marked in the extension's storage
 // and we will avoid duplication.
-function shareEmail(id) {
+function gmailShareEmail(id) {
     chrome.runtime.sendMessage({method: "getSharedEmails"}, function(response) {
         let is_shared = false;
         for (let i=0; i<response.length; i++) {
@@ -327,19 +316,22 @@ function shareEmail(id) {
     });
 }
 
-chrome.runtime.sendMessage({method: "getGmail"}, function(response) {
-    if (response === false) {
-        return;
-    }
+(function() {
+    // Check if the option to integrate with webmails is enabled.
+    chrome.runtime.sendMessage({method: "getWebmails"}, function(response) {
+        if (response === false) {
+            return;
+        }
 
-    gmail.observe.on("view_email", function(obj) {
-        console.log("Email opened with ID", obj.id);
+        gmail.observe.on("view_email", function(obj) {
+            console.log("Email opened with ID", obj.id);
 
-        // Add share email button.
-        shareEmail(obj.id);
-        // We check the original content of the email for known indicators.
-        checkEmail(obj.id);
-        // We change the email to add our dialog.
-        modifyEmail(obj.id);
+            // Add share email button.
+            gmailShareEmail(obj.id);
+            // We check the original content of the email for known indicators.
+            gmailCheckEmail(obj.id);
+            // We change the email to add our dialog.
+            gmailModifyEmail(obj.id);
+        });
     });
-});
+})();

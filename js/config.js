@@ -54,11 +54,11 @@ var Config = function() {
     }
 
     // Flag for Gmail integration.
-    this.getGmail = function() {
-        return localStorage.getItem("cfg_gmail") == "true" ? true : false;
+    this.getWebmails = function() {
+        return localStorage.getItem("cfg_webmails") == "true" ? true : false;
     }
-    this.setGmail = function(value) {
-        localStorage.setItem("cfg_gmail", value);
+    this.setWebmails = function(value) {
+        localStorage.setItem("cfg_webmails", value);
     }
 
     // Indicators stored in local storage.

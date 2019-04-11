@@ -40,8 +40,8 @@ chrome.webRequest.onBeforeRequest.addListener(function(details) {
         return {cancel: false};
     }
 
-    let elementsToCheck = [domainHash, topDomainHash];
-    let matchedIndicator = window.isElementInIndicators(elementsToCheck, indicators.domains);
+    let itemsToCheck = [domainHash, topDomainHash];
+    let matchedIndicator = checkForIndicators(itemsToCheck, indicators.domains);
     if (matchedIndicator !== null) {
         console.log("Bad domain identified:", url);
         sendEvent("website_visit", url, matchedIndicator, "");
@@ -87,17 +87,17 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     case "sendRaw":
         sendRaw(request.rawType, request.rawContent, request.identifier);
         break;
-    // Get the flag to enable or disable Gmail integration.
-    case "getGmail":
-        sendResponse(cfg.getGmail());
+    // Get the flag to enable or disable webmails integration.
+    case "getWebmails":
+        sendResponse(cfg.getWebmails());
         break;
     // This message is received when a component of the extension is requesting the
-    // check URL, normally from gmail.js.
+    // check URL.
     case "getLinkCheckURL":
         sendResponse(cfg.getLinkCheckURL());
         break;
     // This message is received when a component of the extension is requesting the
-    // full list of indicators, normally from gmail.js.
+    // full list of indicators.
     case "getIndicators":
         sendResponse(getIndicators());
         break;

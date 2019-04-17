@@ -15,6 +15,22 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
+function roundcubeGetUIDFromLink(link) {
+    let regex = /.*&_uid=(\d+)&_action=*/g;
+    let match = regex.exec(link);
+    return match[1];
+}
+
+function roundcubeGetOpenEmail() {
+    let listItem = document.getElementsByClassName("message selected focused")[0];
+    if (listItem === null || listItem === undefined) {
+        return null;
+    }
+    let listAnchor = listItem.getElementsByTagName("a")[0];
+    let listHref = listAnchor.getAttribute("href")
+    return roundcubeGetUIDFromLink(listHref);
+}
+
 function roundcubeCheckEmail() {
     let iframe = document.getElementById("messagecontframe");
     if (iframe === null) {
@@ -30,6 +46,11 @@ function roundcubeCheckEmail() {
         return;
     }
 
+    // We get the email UID.
+    let emailUID = roundcubeGetOpenEmail();
+    console.log("Checking email", emailUID);
+
+    // Get email sender.
     let fromEmail = from.href.toLowerCase().replace("mailto:", "");
     console.log("Checking email sender: " + fromEmail);
 
@@ -153,7 +174,7 @@ function roundcubeCheckEmail() {
                 eventType: eventType,
                 match: eventMatch,
                 indicator: eventIndicator,
-                identifier: "",
+                identifier: emailUID,
             });
 
             // Then we display a warning to the user inside the Gmail web interface.
@@ -169,6 +190,7 @@ function roundcubeCheckEmail() {
 function roundcube() {
     MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
 
+    let previousEmailUID = null;
     var observer = new MutationObserver(function(mutations, observer) {
         roundcubeCheckEmail();
     });

@@ -43,18 +43,18 @@ function gmailCheckEmail(id) {
     console.log("Checking email", id)
 
     // Extract the email DOM.
-    let email = new gmail.dom.email(id);
+    var email = new gmail.dom.email(id);
     // Extract from field and prepare hashes.
-    let from = email.from();
-    let fromEmail = from["email"].toLowerCase();
-    let fromEmailHash = sha256(fromEmail);
-    let fromEmailDomain = "";
-    let fromEmailDomainHash = "";
-    let fromEmailTopDomain = "";
-    let fromEmailTopDomainHash = "";
+    var from = email.from();
+    var fromEmail = from["email"].toLowerCase();
+    var fromEmailHash = sha256(fromEmail);
+    var fromEmailDomain = "";
+    var fromEmailDomainHash = "";
+    var fromEmailTopDomain = "";
+    var fromEmailTopDomainHash = "";
 
     // We extract the domain from the email address.
-    let parts = fromEmail.split('@');
+    var parts = fromEmail.split('@');
     if (parts.length === 2) {
         fromEmailDomain = getDomainFromURL(parts[1]);
         fromEmailDomainHash = sha256(fromEmailDomain);
@@ -70,22 +70,22 @@ function gmailCheckEmail(id) {
         if (response == "") {
             return false
         }
-        let indicators = response;
+        var indicators = response;
 
         if (indicators === undefined) {
             return false
         }
 
         // Email status.
-        let isEmailBad = false;
-        let eventType = "";
-        let eventMatch = "";
-        let eventIndicator = "";
+        var isEmailBad = false;
+        var eventType = "";
+        var eventMatch = "";
+        var eventIndicator = "";
 
         // We check for email addresses, if we have any indicators to check.
         if (indicators.emails !== null) {
-            let itemsToCheck = [fromEmailHash,];
-            let matchedIndicator = checkForIndicators(itemsToCheck, indicators.emails);
+            var itemsToCheck = [fromEmailHash,];
+            var matchedIndicator = checkForIndicators(itemsToCheck, indicators.emails);
             if (matchedIndicator !== null) {
                 console.log("Detected bad email sender with indicator:", matchedIndicator);
 
@@ -101,8 +101,8 @@ function gmailCheckEmail(id) {
         // We check for domains, if we have any indicators to check.
         if (indicators.domains !== null) {
             // First we check the domain of the email sender.
-            let itemsToCheck = [fromEmailDomainHash, fromEmailTopDomainHash];
-            let matchedIndicator = checkForIndicators(itemsToCheck, indicators.domains);
+            var itemsToCheck = [fromEmailDomainHash, fromEmailTopDomainHash];
+            var matchedIndicator = checkForIndicators(itemsToCheck, indicators.domains);
             if (matchedIndicator !== null) {
                 console.log("Detected email sender domain with indicator:", matchedIndicator);
 
@@ -116,13 +116,13 @@ function gmailCheckEmail(id) {
 
             // Now we check for links contained in the emails body.
             // We extract all links from the body of the email.
-            let emailBody = email.dom("body");
-            let anchors = $(emailBody).find("a");
+            var emailBody = email.dom("body");
+            var anchors = $(emailBody).find("a");
 
             // TODO: Might want to reverse these loops for performance reasons.
-            for (let i=0; i<anchors.length; i++) {
+            for (var i=0; i<anchors.length; i++) {
                 // Lowercase the link.
-                let href = anchors[i].href.toLowerCase();
+                var href = anchors[i].href.toLowerCase();
 
                 // Only check for HTTP links.
                 // NOTE: also scanning for mailto: links (currently experimental).
@@ -132,14 +132,14 @@ function gmailCheckEmail(id) {
 
                 console.log("Checking link:", href);
 
-                let hrefDomain = getDomainFromURL(href);
-                let hrefDomainHash = sha256(hrefDomain);
-                let hrefTopDomain = getTopDomainFromURL(href);
-                let hrefTopDomainHash = sha256(hrefTopDomain);
+                var hrefDomain = getDomainFromURL(href);
+                var hrefDomainHash = sha256(hrefDomain);
+                var hrefTopDomain = getTopDomainFromURL(href);
+                var hrefTopDomainHash = sha256(hrefTopDomain);
 
                 // We loop through the list of hashed bad domains.
-                let elementsToCheck = [hrefDomainHash, hrefTopDomainHash];
-                let matchedIndicator = checkForIndicators(elementsToCheck, indicators.domains);
+                var elementsToCheck = [hrefDomainHash, hrefTopDomainHash];
+                var matchedIndicator = checkForIndicators(elementsToCheck, indicators.domains);
                 if (matchedIndicator !== null) {
                     console.log("Detected bad link with indicator:", matchedIndicator);
 
@@ -151,7 +151,7 @@ function gmailCheckEmail(id) {
                     eventIndicator = matchedIndicator;
 
                     // TODO: Need to make this a lot better.
-                    let span = document.createElement("span");
+                    var span = document.createElement("span");
                     span.innerHTML = " <i class=\"fas fa-exclamation-triangle\"></i>";
                     span.classList.add("text-red");
                     span.setAttribute("title", "PhishDetect Warning: this link is malicious!");
@@ -177,8 +177,8 @@ function gmailCheckEmail(id) {
             });
 
             // Then we display a warning to the user inside the Gmail web interface.
-            let emailBody = email.dom("body");
-            let warning = generateWebmailWarning(eventType);
+            var emailBody = email.dom("body");
+            var warning = generateWebmailWarning(eventType);
             emailBody.prepend(warning);
         }
     });
@@ -189,12 +189,12 @@ function gmailCheckEmail(id) {
 function gmailModifyEmail(id) {
     console.log("Modifying email", id);
 
-    let email = new gmail.dom.email(id);
-    let emailBody = email.dom("body");
-    let anchors = $(emailBody).find("a");
+    var email = new gmail.dom.email(id);
+    var emailBody = email.dom("body");
+    var anchors = $(emailBody).find("a");
 
-    for (let i=0; i<anchors.length; i++) {
-        let href = anchors[i].href;
+    for (var i=0; i<anchors.length; i++) {
+        var href = anchors[i].href;
 
         // We check if it is an http link.
         if (href.indexOf("http://") != 0 && href.indexOf("https://") != 0) {
@@ -212,11 +212,11 @@ function gmailModifyEmail(id) {
             event.preventDefault();
 
             // Get URLs.
-            // let unsafe_url = event.srcElement.getAttribute("href");
-            let unsafe_url = href;
+            // var unsafe_url = event.srcElement.getAttribute("href");
+            var unsafe_url = href;
             // Get check URL from config.
             chrome.runtime.sendMessage({method: "getLinkCheckURL"}, function(response) {
-                let safe_url = response + window.btoa(unsafe_url);
+                var safe_url = response + window.btoa(unsafe_url);
 
                 // We spawn a dialog.
                 vex.defaultOptions.contentClassName = "w-full";
@@ -277,8 +277,8 @@ function gmailModifyEmail(id) {
 // and we will avoid duplication.
 function gmailShareEmail(id) {
     chrome.runtime.sendMessage({method: "getSharedEmails"}, function(response) {
-        let is_shared = false;
-        for (let i=0; i<response.length; i++) {
+        var is_shared = false;
+        for (var i=0; i<response.length; i++) {
             // If the email was already shared before, no need to
             // report it again.
             if (response[i] == id) {
@@ -287,8 +287,8 @@ function gmailShareEmail(id) {
         }
 
         // Add button to upload email.
-        let html_share_button = "<span id=\"pd_share\" class=\"p-2 rounded-lg hover:bg-grey-lighter\"><i class=\"fas fa-fish text-blue mr-2\"></i>Share with PhishDetect</span>";
-        let html_shared_already = "<span class=\"cursor-pointer\"><i class=\"fas fa-check-circle text-green mr-2\"></i>Shared with PhishDetect</span>";
+        var html_share_button = "<span id=\"pd_share\" class=\"p-2 rounded-lg hover:bg-grey-lighter\"><i class=\"fas fa-fish text-blue mr-2\"></i>Share with PhishDetect</span>";
+        var html_shared_already = "<span class=\"cursor-pointer\"><i class=\"fas fa-check-circle text-green mr-2\"></i>Shared with PhishDetect</span>";
 
         if (is_shared) {
             gmail.tools.add_toolbar_button(html_shared_already, function() {});
@@ -301,7 +301,7 @@ function gmailShareEmail(id) {
                         if (value) {
                             document.getElementById("pd_share").innerHTML = html_shared_already;
 
-                            let email = new gmail.dom.email(id);
+                            var email = new gmail.dom.email(id);
                             chrome.runtime.sendMessage({
                                 method: "sendRaw",
                                 rawType: "email",

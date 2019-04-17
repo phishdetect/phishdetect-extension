@@ -25,8 +25,8 @@ function sendEvent(eventType, match, indicator, identifier) {
         // If an email identifier was provided...
         if (identifier !== undefined && identifier != "") {
             // Get a list of already reported emails.
-            let emails = cfg.getReportedEmails();
-            for (let i=0; i<emails.length; i++) {
+            var emails = cfg.getReportedEmails();
+            for (var i=0; i<emails.length; i++) {
                 // If the email was already reported before, no need to
                 // report it again.
                 if (emails[i] == identifier) {

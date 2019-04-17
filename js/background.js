@@ -23,31 +23,31 @@ chrome.webRequest.onBeforeRequest.addListener(function(details) {
     // }
 
     // We lowercase the link.
-    let url = details.url.toLowerCase();
+    var url = details.url.toLowerCase();
 
-    let domain = window.getDomainFromURL(url);
-    let topDomain = window.getTopDomainFromURL(url);
+    var domain = window.getDomainFromURL(url);
+    var topDomain = window.getTopDomainFromURL(url);
 
     if (domain === null || topDomain === null) {
         return {cancel: false};
     }
 
-    let domainHash = sha256(domain);
-    let topDomainHash = sha256(topDomain);
+    var domainHash = sha256(domain);
+    var topDomainHash = sha256(topDomain);
 
-    let indicators = getIndicators();
+    var indicators = getIndicators();
     if (indicators === undefined || indicators.domains === undefined || indicators.domains === null) {
         return {cancel: false};
     }
 
-    let itemsToCheck = [domainHash, topDomainHash];
-    let matchedIndicator = checkForIndicators(itemsToCheck, indicators.domains);
+    var itemsToCheck = [domainHash, topDomainHash];
+    var matchedIndicator = checkForIndicators(itemsToCheck, indicators.domains);
     if (matchedIndicator !== null) {
         console.log("Bad domain identified:", url);
         sendEvent("website_visit", url, matchedIndicator, "");
 
         // We redirect to the warning page.
-        let redirect = chrome.extension.getURL(WARNING_PAGE) + "?url=" + encodeURIComponent(url);
+        var redirect = chrome.extension.getURL(WARNING_PAGE) + "?url=" + encodeURIComponent(url);
         return {redirectUrl: redirect};
     }
 
@@ -138,8 +138,8 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
         return false;
     // If we're scanning a link, we just open a tab to our service.
     } else if (info.menuItemId === "scan-link") {
-        let linkUrl = info.linkUrl;
-        let safeUrl = cfg.getLinkCheckURL() + window.btoa(linkUrl);
+        var linkUrl = info.linkUrl;
+        var safeUrl = cfg.getLinkCheckURL() + window.btoa(linkUrl);
         chrome.tabs.create({"url": safeUrl});
         return false;
     }

@@ -16,52 +16,63 @@
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
 function roundcubeGetUIDFromLink(link) {
-    let regex = /.*&_uid=(\d+)&_action=*/g;
-    let match = regex.exec(link);
+    var regex = /.*&_uid=(\d+)&_action=*/g;
+    var match = regex.exec(link);
     return match[1];
 }
 
-function roundcubeGetOpenEmail() {
-    let listItem = document.getElementsByClassName("message selected focused")[0];
+function rouncubeGetOpenEmailUID() {
+    var listItem = document.getElementsByClassName("message selected focused")[0];
     if (listItem === null || listItem === undefined) {
         return null;
     }
-    let listAnchor = listItem.getElementsByTagName("a")[0];
-    let listHref = listAnchor.getAttribute("href")
+    var listAnchor = listItem.getElementsByTagName("a")[0];
+    var listHref = listAnchor.getAttribute("href")
     return roundcubeGetUIDFromLink(listHref);
 }
 
+function roundcubeGetEmailDocument() {
+    var iframe = document.getElementById("messagecontframe");
+    if (iframe === null || iframe === undefined) {
+        return null;
+    }
+
+    var doc = (iframe.contentDocument) ? iframe.contentDocument : iframe.contentWindow.document;
+    if (doc === null || doc === undefined) {
+        return null;
+    }
+
+    return doc;
+}
+
 function roundcubeCheckEmail() {
-    let iframe = document.getElementById("messagecontframe");
-    if (iframe === null) {
+    var email = roundcubeGetEmailDocument();
+    if (email === null) {
         return;
     }
 
-    // We get the document from the iframe.
-    let innerDoc = (iframe.contentDocument) ? iframe.contentDocument : iframe.contentWindow.document;
-
-    let from = innerDoc.getElementsByClassName("rcmContactAddress")[0];
+    var from = email.getElementsByClassName("rcmContactAddress")[0];
     // If we do not find any sender, we might not have any email open.
     if (from === null || from === undefined) {
         return;
     }
 
     // We get the email UID.
-    let emailUID = roundcubeGetOpenEmail();
-    console.log("Checking email", emailUID);
+    var uid = rouncubeGetOpenEmailUID();
+    console.log("Checking email", uid);
 
     // Get email sender.
-    let fromEmail = from.href.toLowerCase().replace("mailto:", "");
+    var fromEmail = from.href.toLowerCase().replace("mailto:", "");
     console.log("Checking email sender: " + fromEmail);
 
-    let fromEmailHash = sha256(fromEmail);
-    let fromEmailDomain = "";
-    let fromEmailDomainHash = "";
-    let fromEmailTopDomain = "";
-    let fromEmailTopDomainHash = "";
+    var fromEmailHash = sha256(fromEmail);
+    var fromEmailDomain = "";
+    var fromEmailDomainHash = "";
+    var fromEmailTopDomain = "";
+    var fromEmailTopDomainHash = "";
 
     // We extract the domain from the email address.
-    let parts = fromEmail.split('@');
+    var parts = fromEmail.split('@');
     if (parts.length === 2) {
         fromEmailDomain = getDomainFromURL(parts[1]);
         fromEmailDomainHash = sha256(fromEmailDomain);
@@ -73,27 +84,27 @@ function roundcubeCheckEmail() {
     chrome.runtime.sendMessage({method: "getIndicators"}, function(response) {
         // Fail if we don't have any indicators.
         if (response == "") {
-            return false
+            return false;
         }
-        let indicators = response;
+        var indicators = response;
 
         if (indicators === undefined) {
-            return false
+            return false;
         }
 
         // Email status.
-        let isEmailBad = false;
-        let eventType = "";
-        let eventMatch = "";
-        let eventIndicator = "";
+        var isEmailBad = false;
+        var eventType = "";
+        var eventMatch = "";
+        var eventIndicator = "";
 
         // Get email body.
-        let emailBody = innerDoc.getElementById("messagebody");
+        var emailBody = email.getElementById("messagebody");
 
         // We check for email addresses, if we have any indicators to check.
         if (indicators.emails !== null) {
-            let itemsToCheck = [fromEmailHash,];
-            let matchedIndicator = checkForIndicators(itemsToCheck, indicators.emails);
+            var itemsToCheck = [fromEmailHash,];
+            var matchedIndicator = checkForIndicators(itemsToCheck, indicators.emails);
             if (matchedIndicator !== null) {
                 console.log("Detected bad email sender with indicator:", matchedIndicator);
 
@@ -107,8 +118,8 @@ function roundcubeCheckEmail() {
 
         if (indicators.domains !== null) {
             // First we check the domain of the email sender.
-            let itemsToCheck = [fromEmailDomainHash, fromEmailTopDomainHash];
-            let matchedIndicator = checkForIndicators(itemsToCheck, indicators.domains);
+            var itemsToCheck = [fromEmailDomainHash, fromEmailTopDomainHash];
+            var matchedIndicator = checkForIndicators(itemsToCheck, indicators.domains);
             if (matchedIndicator !== null) {
                 console.log("Detected email sender domain with indicator:", matchedIndicator);
 
@@ -119,11 +130,11 @@ function roundcubeCheckEmail() {
             }
 
             // Now we check for links in the email body.
-            let anchors = emailBody.getElementsByTagName("a");
+            var anchors = emailBody.getElementsByTagName("a");
 
-            for (let i=0; i<anchors.length; i++) {
+            for (var i=0; i<anchors.length; i++) {
                 // Lowercase the link.
-                let href = anchors[i].href.toLowerCase();
+                var href = anchors[i].href.toLowerCase();
 
                 // Only check for HTTP links.
                 // NOTE: also scanning for mailto: links (currently experimental).
@@ -133,14 +144,14 @@ function roundcubeCheckEmail() {
 
                 console.log("Checking link:", href);
 
-                let hrefDomain = getDomainFromURL(href);
-                let hrefDomainHash = sha256(hrefDomain);
-                let hrefTopDomain = getTopDomainFromURL(href);
-                let hrefTopDomainHash = sha256(hrefTopDomain);
+                var hrefDomain = getDomainFromURL(href);
+                var hrefDomainHash = sha256(hrefDomain);
+                var hrefTopDomain = getTopDomainFromURL(href);
+                var hrefTopDomainHash = sha256(hrefTopDomain);
 
                 // We loop through the list of hashed bad domains.
-                let elementsToCheck = [hrefDomainHash, hrefTopDomainHash];
-                let matchedIndicator = checkForIndicators(elementsToCheck, indicators.domains);
+                var elementsToCheck = [hrefDomainHash, hrefTopDomainHash];
+                var matchedIndicator = checkForIndicators(elementsToCheck, indicators.domains);
                 if (matchedIndicator !== null) {
                     console.log("Detected bad link with indicator:", matchedIndicator);
 
@@ -152,7 +163,7 @@ function roundcubeCheckEmail() {
                     eventIndicator = matchedIndicator;
 
                     // TODO: Need to make this a lot better.
-                    let span = document.createElement("span");
+                    var span = document.createElement("span");
                     span.innerHTML = " <i class=\"fas fa-exclamation-triangle\"></i>";
                     span.classList.add("text-red");
                     span.setAttribute("title", "PhishDetect Warning: this link is malicious!");
@@ -174,25 +185,40 @@ function roundcubeCheckEmail() {
                 eventType: eventType,
                 match: eventMatch,
                 indicator: eventIndicator,
-                identifier: emailUID,
+                identifier: uid,
             });
 
             // Then we display a warning to the user inside the Gmail web interface.
-            let existingWarning = innerDoc.getElementById("phishdetect-warning");
+            var existingWarning = innerDoc.getElementById("phishdetect-warning");
             if (existingWarning === null || existingWarning === undefined) {
-                let warning = generateWebmailWarning(eventType);
+                var warning = generateWebmailWarning(eventType);
                 emailBody.insertAdjacentHTML("afterbegin", warning);
             }
         }
     });
 }
 
+function roundcubeModifyEmail() {
+    var email = roundcubeGetEmailDocument();
+    var emailBody = email.getElementById("messagebody");
+    var anchors = emailBody.getElementsByTagName("a");
+
+    var email = new gmail.dom.email(id);
+    var emailBody = email.dom("body");
+    var anchors = $(emailBody).find("a");
+
+    for (var i=0; i<anchors.length; i++) {
+        
+    }
+}
+
 function roundcube() {
     MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
 
-    let previousEmailUID = null;
+    var previousEmailUID = null;
     var observer = new MutationObserver(function(mutations, observer) {
         roundcubeCheckEmail();
+        roundcubeModifyEmail();
     });
 
     // TODO: Need to find the proper mutation.

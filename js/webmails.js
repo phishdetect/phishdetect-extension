@@ -16,8 +16,8 @@
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
 function checkAllElements(elements) {
-    let counter = 0;
-    for (let i=0; i<elements.length; i++) {
+    var counter = 0;
+    for (var i=0; i<elements.length; i++) {
         if (document.getElementById(elements[i]) !== null) {
             counter++;
         }
@@ -41,7 +41,7 @@ function checkAllElements(elements) {
         console.log("Checking for any supported webmail...");
 
         // We check if there is a Roundcube instance open.
-        let roundcubeElements = ["rcmthreads", "messagelist", "messagemenu"];
+        var roundcubeElements = ["rcmthreads", "messagelist", "messagemenu"];
         if (checkAllElements(roundcubeElements)) {
             console.log("Roundcube detected!")
             roundcube();

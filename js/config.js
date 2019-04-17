@@ -18,7 +18,7 @@
 var Config = function() {
     // Functions to set and get the PhishDetect Node.
     this.getNode = function() {
-        let server = localStorage.getItem("cfg_node");
+        var server = localStorage.getItem("cfg_node");
         if (!server.startsWith("http")) {
             return "https://" + server;
         }
@@ -82,7 +82,7 @@ var Config = function() {
         return JSON.parse(localStorage.getItem("cfg_reported_emails"));
     }
     this.addReportedEmail = function(value) {
-        let emails = this.getReportedEmails();
+        var emails = this.getReportedEmails();
         emails.push(value);
         localStorage.setItem("cfg_reported_emails", JSON.stringify(emails));
     }
@@ -91,7 +91,7 @@ var Config = function() {
         return JSON.parse(localStorage.getItem("cfg_shared_emails"));
     }
     this.addSharedEmail = function(value) {
-        let emails = this.getSharedEmails();
+        var emails = this.getSharedEmails();
         emails.push(value);
         localStorage.setItem("cfg_shared_emails", JSON.stringify(emails));
     }

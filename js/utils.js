@@ -18,9 +18,9 @@
 // This is a helper function to check hashes against the list of
 // malicious indicators.
 function checkForIndicators(items, indicators) {
-    for (let i=0; i<indicators.length; i++) {
-        let indicator = indicators[i].toLowerCase();
-        for (let j=0; j<items.length; j++) {
+    for (var i=0; i<indicators.length; i++) {
+        var indicator = indicators[i].toLowerCase();
+        for (var j=0; j<items.length; j++) {
             if (items[j] == indicator) {
                 return indicator;
             }
@@ -33,7 +33,7 @@ function checkForIndicators(items, indicators) {
 // generateWebmailWarning is a helper function used to generate the HTML
 // needed to show a warning message inside the supported webmails.
 function generateWebmailWarning(eventType) {
-    let warning = "<div id=\"phishdetect-warning\" class=\"bg-black text-grey-lighter p-4 pt-0 mb-4 rounded-lg tracking-normal\" style=\"padding-top: 1rem;\">";
+    var warning = "<div id=\"phishdetect-warning\" class=\"bg-black text-grey-lighter p-4 pt-0 mb-4 rounded-lg tracking-normal\" style=\"padding-top: 1rem;\">";
     warning += "<span class=\"text-lg\"><i class=\"fas fa-exclamation-triangle\"></i> <b>PhishDetect</b> Warning</span><br />";
     warning += "Please be cautious! ";
 
@@ -47,4 +47,82 @@ function generateWebmailWarning(eventType) {
     warning += "</div>";
 
     return warning;
+}
+
+function generateWebmailDialog(anchor) {
+    var href = anchor.href;
+
+    // We check if it is an http link.
+    if (href.indexOf("http://") != 0 && href.indexOf("https://") != 0) {
+        continue;
+    }
+
+    // We delete data-saferedirecturl.
+    // Maybe we should make this optional, but the value of it seems
+    // mostly duplicated by using phishdetect.io anyway.
+    anchor.removeAttribute("data-saferedirecturl");
+
+    // We add a listener so we can catch the clicks.
+    anchor.addEventListener("click", function(event) {
+        // We prevent the link from opening.
+        event.preventDefault();
+
+        // Get URLs.
+        // var unsafe_url = event.srcElement.getAttribute("href");
+        var unsafe_url = href;
+        // Get check URL from config.
+        chrome.runtime.sendMessage({method: "getLinkCheckURL"}, function(response) {
+            var safe_url = response + window.btoa(unsafe_url);
+
+            // We spawn a dialog.
+            vex.defaultOptions.contentClassName = "w-full";
+            vex.dialog.open({
+                unsafeMessage: "<b>PhishDetect</b><br />How do you want to open this link?",
+                buttons: [
+                    // Button to open "Safely".
+                    $.extend({}, vex.dialog.buttons.YES, {
+                        text: "Safely",
+                        className: "text-white bg-green",
+                        click: function($vexContent, event) {
+                            this.value = "safe";
+                            this.close();
+                            return false;
+                        }
+                    }),
+                    // Button to open "Directly" / "Unsafely".
+                    $.extend({}, vex.dialog.buttons.YES, {
+                        text: "Directly",
+                        className: "text-white bg-red",
+                        click: function($vexContent, event) {
+                            this.value = "unsafe";
+                            this.close();
+                            return false
+                        }
+                    }),
+                    // Button to open help page.
+                    $.extend({}, vex.dialog.buttons.YES, {
+                        text: "?",
+                        click: function($vexContent, event) {
+                            this.value = "help";
+                            return false
+                        }
+                    })
+                ],
+                // Callback to handle button actions.
+                callback: function(value) {
+                    if (value) {
+                        // Open the URL through our service.
+                        if (value == "safe") {
+                            window.open(safe_url);
+                        // Open the URL directly.
+                        } else if (value == "unsafe") {
+                            window.open(unsafe_url);
+                        } else if (value == "help") {
+                            window.open("https://phishdetect.io/help/");
+                        }
+                    }
+                }
+            });
+        });
+    });
 }

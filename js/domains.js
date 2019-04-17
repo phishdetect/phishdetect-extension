@@ -20,11 +20,11 @@
 const tldts = require("tldts");
 
 window.getDomainFromURL = function getDomainFromURL(url) {
-    let urlParsed = tldts.parse(url);
+    var urlParsed = tldts.parse(url);
     return urlParsed.host;
 }
 
 window.getTopDomainFromURL = function getTopDomainFromURL(url) {
-    let urlParsed = tldts.parse(url);
+    var urlParsed = tldts.parse(url);
     return urlParsed.domain;
 }

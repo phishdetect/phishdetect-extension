@@ -15,12 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-function roundcubeGetUIDFromLink(link) {
-    var regex = /.*&_uid=(\d+)&_action=*/g;
-    var match = regex.exec(link);
-    return match[1];
-}
-
 function rouncubeGetOpenEmailUID() {
     var listItem = document.getElementsByClassName("message selected focused")[0];
     if (listItem === null || listItem === undefined) {
@@ -28,21 +22,30 @@ function rouncubeGetOpenEmailUID() {
     }
     var listAnchor = listItem.getElementsByTagName("a")[0];
     var listHref = listAnchor.getAttribute("href")
-    return roundcubeGetUIDFromLink(listHref);
+
+    var regex = /.*&_uid=(\d+)&_action=*/g;
+    var match = regex.exec(listHref);
+    return match[1];
 }
 
 function roundcubeGetEmailDocument() {
-    var iframe = document.getElementById("messagecontframe");
-    if (iframe === null || iframe === undefined) {
-        return null;
-    }
+    var iframe = $("#messagecontframe").get(0);
+    console.log(iframe);
+    if (iframe !== null && iframe !== undefined) {    
+        var doc = (iframe.contentDocument) ? iframe.contentDocument : iframe.contentWindow.document;
+        if (doc === null || doc === undefined) {
+            return null;
+        }
 
-    var doc = (iframe.contentDocument) ? iframe.contentDocument : iframe.contentWindow.document;
-    if (doc === null || doc === undefined) {
-        return null;
-    }
+        return doc;
+    } else {
+        var email = $("#mainscreencontent #mailview-right").get(0);
+        if (email === null || email === undefined) {
+            return null;
+        }
 
-    return doc;
+        return email;
+    }
 }
 
 function roundcubeCheckEmail() {

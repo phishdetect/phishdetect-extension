@@ -41,7 +41,7 @@ function checkAllElements(elements) {
         console.log("Checking for any supported webmail...");
 
         // We check if there is a Roundcube instance open.
-        var roundcubeElements = ["rcmthreads", "messagelist", "messagemenu"];
+        var roundcubeElements = ["rcmbtn101", "rcmbtn102", "messagemenu"];
         if (checkAllElements(roundcubeElements)) {
             console.log("Roundcube detected!")
             roundcube();

@@ -148,13 +148,13 @@ function roundcubeCheckEmail() {
             // First we send an "event" to the PhishDetect Node through the "sendEvent"
             // message to the background script. This will proceed only if the
             // appropriate settings option is enabled.
-            // chrome.runtime.sendMessage({
-            //     method: "sendEvent",
-            //     eventType: eventType,
-            //     match: eventMatch,
-            //     indicator: eventIndicator,
-            //     identifier: "",
-            // });
+            chrome.runtime.sendMessage({
+                method: "sendEvent",
+                eventType: eventType,
+                match: eventMatch,
+                indicator: eventIndicator,
+                identifier: "",
+            });
 
             // Then we display a warning to the user inside the Gmail web interface.
             let existingWarning = innerDoc.getElementById("phishdetect-warning");

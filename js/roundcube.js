@@ -189,7 +189,7 @@ function roundcubeCheckEmail() {
             });
 
             // Then we display a warning to the user inside the Gmail web interface.
-            var existingWarning = innerDoc.getElementById("phishdetect-warning");
+            var existingWarning = email.getElementById("phishdetect-warning");
             if (existingWarning === null || existingWarning === undefined) {
                 var warning = generateWebmailWarning(eventType);
                 emailBody.insertAdjacentHTML("afterbegin", warning);
@@ -200,15 +200,17 @@ function roundcubeCheckEmail() {
 
 function roundcubeModifyEmail() {
     var email = roundcubeGetEmailDocument();
+    if (email === null) {
+        return;
+    }
     var emailBody = email.getElementById("messagebody");
+    if (emailBody === null || emailBody === undefined) {
+        return;
+    }
+
     var anchors = emailBody.getElementsByTagName("a");
-
-    var email = new gmail.dom.email(id);
-    var emailBody = email.dom("body");
-    var anchors = $(emailBody).find("a");
-
     for (var i=0; i<anchors.length; i++) {
-        
+        generateWebmailDialog(anchors[i]);
     }
 }
 

@@ -30,8 +30,8 @@ function checkAllElements(elements) {
     return false;
 }
 
-(function() {
-    // Check if the option to integrate with webmails is enabled.
+// Check if the option to integrate with webmails is enabled.
+$(document).ready(function() {
     chrome.runtime.sendMessage({method: "getWebmails"}, function(response) {
         // If not, we stop straight away.
         if (response === false) {
@@ -41,10 +41,10 @@ function checkAllElements(elements) {
         console.log("Checking for any supported webmail...");
 
         // We check if there is a Roundcube instance open.
-        var roundcubeElements = ["rcmbtn101", "rcmbtn102", "messagemenu"];
+        var roundcubeElements = ["rcmbtn100", "rcmbtn101", "rcmbtn102"];
         if (checkAllElements(roundcubeElements)) {
             console.log("Roundcube detected!")
             roundcube();
         }
     });
-})();
+});

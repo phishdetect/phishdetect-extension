@@ -43,10 +43,11 @@ window.generateWebmailWarning = function generateWebmailWarning(eventType) {
 }
 
 window.generateWebmailLinkWarning = function generateWebmailLinkWarning(anchor) {
-    var span = $(document.createElement("span"));
-    span.addClass("text-red");
-    span.attr("title", "PhishDetect Warning: this link is malicious!");
-    span.html(" <i class=\"fas fa-exclamation-triangle\"></i>");
+    var span = $("<span>")
+        .addClass("text-red")
+        .attr("title", "PhishDetect Warning: this link is malicious!")
+        .html(" <i class=\"fas fa-exclamation-triangle\"></i>");
+
     anchor.parentNode.insertBefore(span.get(0), anchor.nextSibling);
 }
 

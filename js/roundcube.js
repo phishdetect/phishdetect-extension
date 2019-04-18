@@ -16,15 +16,9 @@
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
 function rouncubeGetOpenEmailUID() {
-    var listItem = $(".message.selected.focused");
-    if (!listItem.length) {
-        return null;
-    }
-    var listAnchor = listItem.find("a");
-    var listHref = listAnchor.attr("href");
-
-    var regex = /.*&_uid=(\d+)&_action=*/g;
-    var match = regex.exec(listHref);
+    var url = window.location.href;
+    var regex = /.*&_uid=(\d+)&*/g;
+    var match = regex.exec(url);
     return match[1];
 }
 
@@ -45,22 +39,20 @@ function roundcubeGetEmailDocument() {
 }
 
 function roundcubeCheckEmail() {
-    console.log("Checking email...");
-
     var email = roundcubeGetEmailDocument();
     if (email === null) {
         return;
     }
+
+    // We get the email UID.
+    var uid = rouncubeGetOpenEmailUID();
+    console.log("Checking email with UID", uid);
 
     var from = email.find(".rcmContactAddress");
     // If we do not find any sender, we might not have any email open.
     if (from === null || from === undefined) {
         return;
     }
-
-    // We get the email UID.
-    var uid = rouncubeGetOpenEmailUID();
-    console.log("Email has UID", uid);
 
     // Get email sender.
     var fromEmail = from.attr("href").toLowerCase().replace("mailto:", "");
@@ -156,19 +148,15 @@ function roundcubeCheckEmail() {
                 if (matchedIndicator !== null) {
                     console.log("Detected bad link with indicator:", matchedIndicator);
 
+                    // We add a warning sign to the link.
+                    generateWebmailLinkWarning(anchors[i]);
+
                     // Mark whole email as bad.
                     // TODO: this is ugly.
                     isEmailBad = true;
                     eventType = "email_link";
                     eventMatch = href;
                     eventIndicator = matchedIndicator;
-
-                    // TODO: Need to make this a lot better.
-                    var span = document.createElement("span");
-                    span.innerHTML = " <i class=\"fas fa-exclamation-triangle\"></i>";
-                    span.classList.add("text-red");
-                    span.setAttribute("title", "PhishDetect Warning: this link is malicious!");
-                    anchors[i].parentNode.insertBefore(span, anchors[i].nextSibling);
 
                     break;
                 }

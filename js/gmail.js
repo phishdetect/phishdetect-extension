@@ -133,19 +133,15 @@ function gmailCheckEmail(id) {
                 if (matchedIndicator !== null) {
                     console.log("Detected bad link with indicator:", matchedIndicator);
 
+                    // We add a warning sign to the link.
+                    generateWebmailLinkWarning(anchors[i]);
+
                     // Mark whole email as bad.
                     // TODO: this is ugly.
                     isEmailBad = true;
                     eventType = "email_link";
                     eventMatch = href;
                     eventIndicator = matchedIndicator;
-
-                    // TODO: Need to make this a lot better.
-                    var span = document.createElement("span");
-                    span.innerHTML = " <i class=\"fas fa-exclamation-triangle\"></i>";
-                    span.classList.add("text-red");
-                    span.setAttribute("title", "PhishDetect Warning: this link is malicious!");
-                    anchors[i].parentNode.insertBefore(span, anchors[i].nextSibling);
 
                     break;
                 }

@@ -42,6 +42,14 @@ window.generateWebmailWarning = function generateWebmailWarning(eventType) {
     return warning;
 }
 
+window.generateWebmailLinkWarning = function generateWebmailLinkWarning(anchor) {
+    var span = $(document.createElement("span"));
+    span.addClass("text-red");
+    span.attr("title", "PhishDetect Warning: this link is malicious!");
+    span.html(" <i class=\"fas fa-exclamation-triangle\"></i>");
+    anchor.parentNode.insertBefore(span.get(0), anchor.nextSibling);
+}
+
 window.generateWebmailDialog = function generateWebmailDialog(anchor) {
     var href = anchor.href;
 
@@ -67,10 +75,16 @@ window.generateWebmailDialog = function generateWebmailDialog(anchor) {
         chrome.runtime.sendMessage({method: "getLinkCheckURL"}, function(response) {
             var safe_url = response + window.btoa(unsafe_url);
 
+            // We sanitize the link and preview it in the dialog.
+            var sanitizedLink = $("<span>").text(unsafe_url).html();
+            var message = $("<span>").html(
+                "<b>PhishDetect</b><br />How do you want to open this link?<br />" +
+                "<span class=\"font-mono text-blue-dark\">" + sanitizedLink + "</span>");
+
             // We spawn a dialog.
             vex.defaultOptions.contentClassName = "w-full";
             vex.dialog.open({
-                unsafeMessage: "<b>PhishDetect</b><br />How do you want to open this link?",
+                unsafeMessage: message.html(),
                 buttons: [
                     // Button to open "Safely".
                     $.extend({}, vex.dialog.buttons.YES, {

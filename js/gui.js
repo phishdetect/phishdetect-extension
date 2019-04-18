@@ -26,31 +26,39 @@ vex.defaultOptions.className = "vex-theme-default";
 // generateWebmailWarning is a helper function used to generate the HTML
 // needed to show a warning message inside the supported webmails.
 window.generateWebmailWarning = function generateWebmailWarning(eventType) {
-    var warning = "<div id=\"phishdetect-warning\" class=\"bg-black text-grey-lighter p-4 pt-0 mb-4 rounded-lg tracking-normal\" style=\"padding-top: 1rem;\">";
-    warning += "<span class=\"text-lg\"><i class=\"fas fa-exclamation-triangle\"></i> <b>PhishDetect</b> Warning</span><br />";
-    warning += "Please be cautious! ";
+    var warningText = $("<span>")
+        .append($("<span>").addClass("text-lg").html("<i class=\"fas fa-exclamation-triangle\"></i> <b>PhishDetect</b> Warning"))
+        .append("<br />Please be cautious! ");
 
     if (eventType == "email_sender" || eventType == "email_sender_domain") {
-        warning += "The email was sent by a known malicious address. ";
+        warningText.append("The email was sent by a known malicious address. ");
     } else if (eventType == "email_link") {
-        warning += "The email contains known malicious links. ";
+        warningText.append("The email contains known malicious links. ");
     }
 
-    warning += "For more information visit our <a class=\"no-underline\" href=\"https://phishdetect.io/help/\"><span class=\"text-blue-light font-bold\">Help</span></a> page.";
-    warning += "</div>";
+    warningText.append("For more information visit our <a class=\"no-underline\" href=\"https://phishdetect.io/help/\"><span class=\"text-blue-light font-bold\">Help</span></a> page.")
+
+    var warning = $("<div>", {id: "phishdetect-warning"})
+        .addClass("bg-black text-grey-lighter p-4 pt-0 mb-4 rounded-lg tracking-normal")
+        .css("padding-top", "1rem")
+        .append(warningText);
 
     return warning;
 }
 
-window.generateWebmailLinkWarning = function generateWebmailLinkWarning(anchor) {
+// generateWebmailLinkWarning appends a red warning sign to an HTML element
+// (normally a link) to alert the user that what's contained is malicious.
+window.generateWebmailLinkWarning = function generateWebmailLinkWarning(element) {
     var span = $("<span>")
         .addClass("text-red")
         .attr("title", "PhishDetect Warning: this link is malicious!")
         .html(" <i class=\"fas fa-exclamation-triangle\"></i>");
 
-    anchor.parentNode.insertBefore(span.get(0), anchor.nextSibling);
+    element.parentNode.insertBefore(span.get(0), element.nextSibling);
 }
 
+// generateWebmailDialog adds a click event handler to the given anchor
+// in order to display a dialog offering to open the link safely.
 window.generateWebmailDialog = function generateWebmailDialog(anchor) {
     var href = anchor.href;
 

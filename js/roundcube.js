@@ -205,7 +205,7 @@ function roundcubeModifyEmail() {
         return;
     }
     var emailBody = email.find("#messagebody");
-    if (emailBody === null || emailBody === undefined) {
+    if (!emailBody.length) {
         return;
     }
 

@@ -17,7 +17,6 @@
     },
     "dependencies": {
         "gmail-js": "^0.9.1",
-        "jquery": "^3.3.1",
         "npm": "^6.5.0",
         "tailwindcss": "^0.7.3",
         "tldts": "^3.1.2",

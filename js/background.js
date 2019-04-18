@@ -23,34 +23,32 @@ chrome.webRequest.onBeforeRequest.addListener(function(details) {
     // }
 
     // We lowercase the link.
-    let url = details.url.toLowerCase();
+    var url = details.url.toLowerCase();
 
-    let domain = window.getDomainFromURL(url);
-    let topDomain = window.getTopDomainFromURL(url);
+    var domain = window.getDomainFromURL(url);
+    var topDomain = window.getTopDomainFromURL(url);
 
     if (domain === null || topDomain === null) {
         return {cancel: false};
     }
 
-    let domainHash = sha256(domain);
-    let topDomainHash = sha256(topDomain);
+    var domainHash = sha256(domain);
+    var topDomainHash = sha256(topDomain);
 
-    let indicators = getIndicators();
+    var indicators = getIndicators();
     if (indicators === undefined || indicators.domains === undefined || indicators.domains === null) {
         return {cancel: false};
     }
 
-    for (let i=0; i<indicators.domains.length; i++) {
-        let badDomainHash = indicators.domains[i].toLowerCase();
+    var itemsToCheck = [domainHash, topDomainHash];
+    var matchedIndicator = checkForIndicators(itemsToCheck, indicators.domains);
+    if (matchedIndicator !== null) {
+        console.log("Bad domain identified:", url);
+        sendEvent("website_visit", url, matchedIndicator, "");
 
-        if (badDomainHash == domainHash || badDomainHash == topDomainHash) {
-            console.log("Bad domain identified:", url);
-            sendEvent("website_visit", url, badDomainHash, "");
-
-            // We redirect to the warning page.
-            let redirect = chrome.extension.getURL(WARNING_PAGE) + "?url=" + encodeURIComponent(url);
-            return {redirectUrl: redirect};
-        }
+        // We redirect to the warning page.
+        var redirect = chrome.extension.getURL(WARNING_PAGE) + "?url=" + encodeURIComponent(url);
+        return {redirectUrl: redirect};
     }
 
     // If nothing suspicious is found, proceed with visit.
@@ -89,17 +87,17 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     case "sendRaw":
         sendRaw(request.rawType, request.rawContent, request.identifier);
         break;
-    // Get the flag to enable or disable Gmail integration.
-    case "getGmail":
-        sendResponse(cfg.getGmail());
+    // Get the flag to enable or disable webmails integration.
+    case "getWebmails":
+        sendResponse(cfg.getWebmails());
         break;
     // This message is received when a component of the extension is requesting the
-    // check URL, normally from gmail.js.
+    // check URL.
     case "getLinkCheckURL":
         sendResponse(cfg.getLinkCheckURL());
         break;
     // This message is received when a component of the extension is requesting the
-    // full list of indicators, normally from gmail.js.
+    // full list of indicators.
     case "getIndicators":
         sendResponse(getIndicators());
         break;
@@ -140,8 +138,8 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
         return false;
     // If we're scanning a link, we just open a tab to our service.
     } else if (info.menuItemId === "scan-link") {
-        let linkUrl = info.linkUrl;
-        let safeUrl = cfg.getLinkCheckURL() + window.btoa(linkUrl);
+        var linkUrl = info.linkUrl;
+        var safeUrl = cfg.getLinkCheckURL() + window.btoa(linkUrl);
         chrome.tabs.create({"url": safeUrl});
         return false;
     }

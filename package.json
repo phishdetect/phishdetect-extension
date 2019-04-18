@@ -1,12 +1,12 @@
 {
     "name": "phishdetect",
-    "version": "3.2.5",
+    "version": "4.0.0",
     "description": "",
     "main": "",
     "scripts": {
         "deps": "npm install",
         "stage": "mkdir dist || echo ''",
-        "bundle": "browserify -o dist/gmail.js js/gmail.js && browserify -o dist/utils.js js/utils.js",
+        "bundle": "browserify -o dist/gmail.js js/gmail.js && browserify -o dist/domains.js js/domains.js && browserify -o dist/gui.js js/gui.js",
         "build": "npm run stage && npm run bundle"
     },
     "author": "Claudio Guarnieri",
@@ -17,7 +17,6 @@
     },
     "dependencies": {
         "gmail-js": "^0.9.1",
-        "jquery": "^3.3.1",
         "npm": "^6.5.0",
         "tailwindcss": "^0.7.3",
         "tldts": "^3.1.2",

@@ -15,28 +15,49 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-"use strict";
+function rouncubeGetOpenEmailUID() {
+    var url = window.location.href;
+    var regex = /.*&_uid=(\d+)&*/g;
+    var match = regex.exec(url);
+    return match[1];
+}
 
-// gmail.js
-const GmailFactory = require("gmail-js");
-const gmail = new GmailFactory.Gmail($);
-window.gmail = gmail;
+function roundcubeGetEmailDocument() {
+    var iframe = $(".iframe.fullheight");
+    if (iframe.length) {
+        console.log("Found the iframe. This is likely the two panes view.");
+        return iframe;
+    } else {
+        var email = $("#mainscreencontent #mailview-right");
+        if (email.length) {
+            console.log("Found the full mailview. This is likely the single pane view.");
+            return email;
+        }
+    }
 
-// gmailCheckEmail will try to determine if any element in the email matches a
-// known indicator. In order to do so it will try to:
-//   1. Check the full email sender among the list of blocklisted email addresses.
-//   2. Check the domain of the email sender among the list of blocklisted domains.
-//   3. Check all the anchors in the email among the list of blocklisted domains.
-// If it matches anything, it will display a warning, highlight any bad link,
-// and send an alert through the "sendEvent" message to the background script.
-function gmailCheckEmail(id) {
-    console.log("Checking email", id)
+    return null;
+}
 
-    // Extract the email DOM.
-    var email = new gmail.dom.email(id);
-    // Extract from field and prepare hashes.
-    var from = email.from();
-    var fromEmail = from["email"].toLowerCase();
+function roundcubeCheckEmail() {
+    var email = roundcubeGetEmailDocument();
+    if (email === null) {
+        return;
+    }
+
+    // We get the email UID.
+    var uid = rouncubeGetOpenEmailUID();
+    console.log("Checking email with UID", uid);
+
+    var from = email.find(".rcmContactAddress");
+    // If we do not find any sender, we might not have any email open.
+    if (from === null || from === undefined) {
+        return;
+    }
+
+    // Get email sender.
+    var fromEmail = from.attr("href").toLowerCase().replace("mailto:", "");
+    console.log("Checking email sender: " + fromEmail);
+
     var fromEmailHash = sha256(fromEmail);
     var fromEmailDomain = "";
     var fromEmailDomainHash = "";
@@ -52,18 +73,16 @@ function gmailCheckEmail(id) {
         fromEmailTopDomainHash = sha256(fromEmailTopDomain);
     }
 
-    console.log("Checking email sender:", fromEmail);
-
     // First we get the list of indicators.
     chrome.runtime.sendMessage({method: "getIndicators"}, function(response) {
         // Fail if we don't have any indicators.
         if (response == "") {
-            return false
+            return false;
         }
         var indicators = response;
 
         if (indicators === undefined) {
-            return false
+            return false;
         }
 
         // Email status.
@@ -71,6 +90,9 @@ function gmailCheckEmail(id) {
         var eventType = "";
         var eventMatch = "";
         var eventIndicator = "";
+
+        // Get email body.
+        var emailBody = email.find("#messagebody");
 
         // We check for email addresses, if we have any indicators to check.
         if (indicators.emails !== null) {
@@ -87,8 +109,6 @@ function gmailCheckEmail(id) {
             }
         }
 
-        // TODO: Need to review the performance of this.
-        // We check for domains, if we have any indicators to check.
         if (indicators.domains !== null) {
             // First we check the domain of the email sender.
             var itemsToCheck = [fromEmailDomainHash, fromEmailTopDomainHash];
@@ -96,20 +116,15 @@ function gmailCheckEmail(id) {
             if (matchedIndicator !== null) {
                 console.log("Detected email sender domain with indicator:", matchedIndicator);
 
-                // Mark whole email as bad.
-                // TODO: this is ugly.
                 isEmailBad = true;
                 eventType = "email_sender_domain";
                 eventMatch = fromEmail;
                 eventIndicator = matchedIndicator;
             }
 
-            // Now we check for links contained in the emails body.
-            // We extract all links from the body of the email.
-            var emailBody = email.dom("body");
-            var anchors = $(emailBody).find("a");
+            // Now we check for links in the email body.
+            var anchors = emailBody.find("a");
 
-            // TODO: Might want to reverse these loops for performance reasons.
             for (var i=0; i<anchors.length; i++) {
                 // Lowercase the link.
                 var href = anchors[i].href.toLowerCase();
@@ -159,91 +174,38 @@ function gmailCheckEmail(id) {
                 eventType: eventType,
                 match: eventMatch,
                 indicator: eventIndicator,
-                identifier: id,
+                identifier: uid,
             });
 
             // Then we display a warning to the user inside the Gmail web interface.
-            var emailBody = email.dom("body");
-            var warning = generateWebmailWarning(eventType);
-            emailBody.prepend(warning);
+            var existingWarning = emailBody.find("#phishdetect-warning");
+            if (!existingWarning.length) {
+                var warning = generateWebmailWarning(eventType);
+                emailBody.prepend(warning);
+            }
         }
     });
 }
 
-// gmailModifyEmail will modify the email body and rewrite links to open our
-// confirmation dialog first.
-function gmailModifyEmail(id) {
-    console.log("Modifying email", id);
+function roundcubeModifyEmail() {
+    var email = roundcubeGetEmailDocument();
+    if (email === null) {
+        return;
+    }
+    var emailBody = email.find("#messagebody");
+    if (!emailBody.length) {
+        return;
+    }
 
-    var email = new gmail.dom.email(id);
-    var emailBody = email.dom("body");
-    var anchors = $(emailBody).find("a");
-
+    var anchors = emailBody.find("a");
     for (var i=0; i<anchors.length; i++) {
         generateWebmailDialog(anchors[i]);
     }
 }
 
-// gmailShareEmail creates a button to share the currently open email with the
-// PhishDetect Node. Shared emails will be marked in the extension's storage
-// and we will avoid duplication.
-function gmailShareEmail(id) {
-    chrome.runtime.sendMessage({method: "getSharedEmails"}, function(response) {
-        var is_shared = false;
-        for (var i=0; i<response.length; i++) {
-            // If the email was already shared before, no need to
-            // report it again.
-            if (response[i] == id) {
-                is_shared = true;
-            }
-        }
-
-        // Add button to upload email.
-        var html_share_button = "<span id=\"pd_share\" class=\"p-2 rounded-lg hover:bg-grey-lighter\"><i class=\"fas fa-fish text-blue mr-2\"></i>Share with PhishDetect</span>";
-        var html_shared_already = "<span class=\"cursor-pointer\"><i class=\"fas fa-check-circle text-green mr-2\"></i>Shared with PhishDetect</span>";
-
-        if (is_shared) {
-            gmail.tools.add_toolbar_button(html_shared_already, function() {});
-        } else {
-            gmail.tools.add_toolbar_button(html_share_button, function() {
-                // We ask for confirmation.
-                vex.dialog.confirm({
-                    unsafeMessage: "<b>PhishDetect</b><br />Are you sure you want to share this email with your PhishDetect Node operator?",
-                    callback: function(value) {
-                        if (value) {
-                            document.getElementById("pd_share").innerHTML = html_shared_already;
-
-                            var email = new gmail.dom.email(id);
-                            chrome.runtime.sendMessage({
-                                method: "sendRaw",
-                                rawType: "email",
-                                rawContent: email.source(),
-                                identifier: id,
-                            });
-                        }
-                    }
-                });
-            });
-        }
-    });
+function roundcube() {
+    // NOTE: Currently this is executed inside the main frame as well
+    // as the message iframe for the two panes view.
+    roundcubeCheckEmail();
+    roundcubeModifyEmail();
 }
-
-(function() {
-    // Check if the option to integrate with webmails is enabled.
-    chrome.runtime.sendMessage({method: "getWebmails"}, function(response) {
-        if (response === false) {
-            return;
-        }
-
-        gmail.observe.on("view_email", function(obj) {
-            console.log("Email opened with ID", obj.id);
-
-            // Add share email button.
-            gmailShareEmail(obj.id);
-            // We check the original content of the email for known indicators.
-            gmailCheckEmail(obj.id);
-            // We change the email to add our dialog.
-            gmailModifyEmail(obj.id);
-        });
-    });
-})();

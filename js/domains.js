@@ -15,17 +15,16 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-// This is a helper function to check hashes against the list of
-// malicious indicators.
-function checkForIndicators(items, indicators) {
-    for (var i=0; i<indicators.length; i++) {
-        var indicator = indicators[i].toLowerCase();
-        for (var j=0; j<items.length; j++) {
-            if (items[j] == indicator) {
-                return indicator;
-            }
-        }
-    }
+"use strict";
 
-    return null;
+const tldts = require("tldts");
+
+window.getDomainFromURL = function getDomainFromURL(url) {
+    var urlParsed = tldts.parse(url);
+    return urlParsed.host;
+}
+
+window.getTopDomainFromURL = function getTopDomainFromURL(url) {
+    var urlParsed = tldts.parse(url);
+    return urlParsed.domain;
 }

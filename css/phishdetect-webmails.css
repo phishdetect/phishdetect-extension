@@ -1,0 +1,23 @@
+.pd-webmail-dialog-red-button {
+    color: #fff;
+    background-color: #e3342f;
+}
+.pd-webmail-dialog-green-button {
+    color: #fff;
+    background-color: #38c172;
+}
+.pd-webmail-warning {
+    background-color: #22292f;
+    color: #f1f5f8;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: .5rem;
+    letter-spacing: 0;
+}
+.pd-webmail-share {
+    padding: .5rem;
+    border-radius: .5rem;
+}
+.pd-webmail-share:hover {
+    background-color: #f1f5f8;
+}

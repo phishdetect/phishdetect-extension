@@ -199,8 +199,8 @@ function gmailShareEmail(id) {
         }
 
         // Add button to upload email.
-        var html_share_button = "<span id=\"pd_share\" class=\"p-2 rounded-lg hover:bg-grey-lighter\"><i class=\"fas fa-fish text-blue mr-2\"></i>Share with PhishDetect</span>";
-        var html_shared_already = "<span class=\"cursor-pointer\"><i class=\"fas fa-check-circle text-green mr-2\"></i>Shared with PhishDetect</span>";
+        var html_share_button = "<span id=\"pd-share\" class=\"pd-webmail-share\"><i class=\"fas fa-fish\" style=\"color: #3490dc;margin-right: .5rem;\"></i>Share with PhishDetect</span>";
+        var html_shared_already = "<span style=\"cursor: pointer;\"><i class=\"fas fa-check-circle\" style=\"color: #38c172;margin-right: .5rem;\"></i>Shared with PhishDetect</span>";
 
         if (is_shared) {
             gmail.tools.add_toolbar_button(html_shared_already, function() {});
@@ -211,7 +211,7 @@ function gmailShareEmail(id) {
                     unsafeMessage: "<b>PhishDetect</b><br />Are you sure you want to share this email with your PhishDetect Node operator?",
                     callback: function(value) {
                         if (value) {
-                            document.getElementById("pd_share").innerHTML = html_shared_already;
+                            $("#pd-share").html(html_shared_already);
 
                             var email = new gmail.dom.email(id);
                             chrome.runtime.sendMessage({

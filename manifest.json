@@ -58,7 +58,7 @@
             "css": [
                 "css/vex.css",
                 "css/vex-theme-default.css",
-                "css/tailwind.min.css"
+                "css/phishdetect-webmails.css"
             ],
             "run_at": "document_end"
         },
@@ -78,7 +78,7 @@
             "css": [
                 "css/vex.css",
                 "css/vex-theme-default.css",
-                "css/tailwind.min.css"
+                "css/phishdetect-webmails.css"
             ],
             "run_at": "document_end",
             "all_frames": true

@@ -30,8 +30,8 @@ function checkAllElements(elements) {
     return false;
 }
 
-// Check if the option to integrate with webmails is enabled.
 $(document).ready(function() {
+    // Check if the option to integrate with webmails is enabled.
     chrome.runtime.sendMessage({method: "getWebmails"}, function(response) {
         // If not, we stop straight away.
         if (response === false) {

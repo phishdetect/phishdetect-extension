@@ -27,7 +27,7 @@ vex.defaultOptions.className = "vex-theme-default";
 // needed to show a warning message inside the supported webmails.
 window.generateWebmailWarning = function generateWebmailWarning(eventType) {
     var warningText = $("<span>")
-        .append($("<span>").addClass("text-lg").html("<i class=\"fas fa-exclamation-triangle\"></i> <b>PhishDetect</b> Warning"))
+        .append($("<span>").css("font-size", "1.125rem").html("<i class=\"fas fa-exclamation-triangle\"></i> <b>PhishDetect</b> Warning"))
         .append("<br />Please be cautious! ");
 
     if (eventType == "email_sender" || eventType == "email_sender_domain") {
@@ -36,11 +36,10 @@ window.generateWebmailWarning = function generateWebmailWarning(eventType) {
         warningText.append("The email contains known malicious links. ");
     }
 
-    warningText.append("For more information visit our <a class=\"no-underline\" href=\"https://phishdetect.io/help/\"><span class=\"text-blue-light font-bold\">Help</span></a> page.")
+    warningText.append("For more information visit our <a style=\"text-decoration: none;\" href=\"https://phishdetect.io/help/\"><span style=\"color: #6cb2eb\"><b>Help</b></span></a> page.")
 
     var warning = $("<div>", {id: "phishdetect-warning"})
-        .addClass("bg-black text-grey-lighter p-4 pt-0 mb-4 rounded-lg tracking-normal")
-        .css("padding-top", "1rem")
+        .addClass("pd-webmail-warning")
         .append(warningText);
 
     return warning;
@@ -50,7 +49,7 @@ window.generateWebmailWarning = function generateWebmailWarning(eventType) {
 // (normally a link) to alert the user that what's contained is malicious.
 window.generateWebmailLinkWarning = function generateWebmailLinkWarning(element) {
     var span = $("<span>")
-        .addClass("text-red")
+        .css("color", "#e3342f")
         .attr("title", "PhishDetect Warning: this link is malicious!")
         .html(" <i class=\"fas fa-exclamation-triangle\"></i>");
 
@@ -88,7 +87,7 @@ window.generateWebmailDialog = function generateWebmailDialog(anchor) {
             var sanitizedLink = $("<span>").text(unsafe_url).html();
             var message = $("<span>").html(
                 "<b>PhishDetect</b><br />How do you want to open this link?<br />" +
-                "<span class=\"font-mono text-blue-dark\">" + sanitizedLink + "</span>");
+                "<span style=\"font-family: Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace; color: #2779bd;\">" + sanitizedLink + "</span>");
 
             // We spawn a dialog.
             vex.defaultOptions.contentClassName = "w-full";
@@ -98,7 +97,7 @@ window.generateWebmailDialog = function generateWebmailDialog(anchor) {
                     // Button to open "Safely".
                     $.extend({}, vex.dialog.buttons.YES, {
                         text: "Safely",
-                        className: "text-white bg-green",
+                        className: "pd-webmail-dialog-green-button",
                         click: function($vexContent, event) {
                             this.value = "safe";
                             this.close();
@@ -108,7 +107,7 @@ window.generateWebmailDialog = function generateWebmailDialog(anchor) {
                     // Button to open "Directly" / "Unsafely".
                     $.extend({}, vex.dialog.buttons.YES, {
                         text: "Directly",
-                        className: "text-white bg-red",
+                        className: "pd-webmail-dialog-red-button",
                         click: function($vexContent, event) {
                             this.value = "unsafe";
                             this.close();

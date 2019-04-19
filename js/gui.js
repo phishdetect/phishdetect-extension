@@ -40,6 +40,7 @@ window.generateWebmailWarning = function generateWebmailWarning(eventType) {
 
     var warning = $("<div>", {id: "phishdetect-warning"})
         .addClass("pd-webmail-warning")
+        .css("padding-top", "1rem")
         .append(warningText);
 
     return warning;

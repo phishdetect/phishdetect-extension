@@ -38,12 +38,7 @@ function roundcubeGetEmailDocument() {
     return null;
 }
 
-function roundcubeCheckEmail() {
-    var email = roundcubeGetEmailDocument();
-    if (email === null) {
-        return;
-    }
-
+function roundcubeCheckEmail(email) {
     // We get the email UID.
     var uid = rouncubeGetOpenEmailUID();
     console.log("Checking email with UID", uid);
@@ -187,11 +182,7 @@ function roundcubeCheckEmail() {
     });
 }
 
-function roundcubeModifyEmail() {
-    var email = roundcubeGetEmailDocument();
-    if (email === null) {
-        return;
-    }
+function roundcubeModifyEmail(email) {
     var emailBody = email.find("#messagebody");
     if (!emailBody.length) {
         return;
@@ -203,9 +194,74 @@ function roundcubeModifyEmail() {
     }
 }
 
+function roundcubeShareEmail(email) {
+    var uid = rouncubeGetOpenEmailUID();
+
+    chrome.runtime.sendMessage({method: "getSharedEmails"}, function(response) {
+        var is_shared = false;
+        for (var i=0; i<response.length; i++) {
+            // If the email was already shared before, no need to
+            // report it again.
+            if (response[i] == uid) {
+                is_shared = true;
+            }
+        }
+
+        var emailHeader = email.find("#messageheader");
+        if (!emailHeader.length) {
+            return;
+        }
+
+        var html_shared_already = $("<div>")
+            .css({
+                "font-size": ".85rem",
+                "cursor": "auto",
+                "padding": ".5rem"
+            })
+            .html("<i class=\"fas fa-check-circle\" style=\"color: #38c172;margin-right: .5rem;\"></i>Shared with PhishDetect")
+
+        if (is_shared) {
+            emailHeader.append(html_shared_already);
+        } else {
+            var html_share_button = $("<div>", {id: "pd-share"})
+                .addClass("pd-webmail-share")
+                .css({
+                    "font-size": ".85rem",
+                    "cursor": "pointer"
+                })
+                .html("<i class=\"fas fa-fish\" style=\"color: #3490dc;margin-right: .5rem;\"></i>Share with PhishDetect")
+                .bind("click", function() {
+                    vex.dialog.confirm({
+                        unsafeMessage: "<b>PhishDetect</b><br />Are you sure you want to share this email with your PhishDetect Node operator?",
+                        callback: function(value) {
+                            if (value) {
+                                $("#pd-share").html(html_shared_already);
+
+                                chrome.runtime.sendMessage({
+                                    method: "sendRaw",
+                                    rawType: "email",
+                                    rawContent: "EMAIL CONTENT",
+                                    identifier: uid,
+                                });
+                            }
+                        }
+                    });
+                });
+
+            emailHeader.append(html_share_button);
+        }
+    });
+}
+
 function roundcube() {
     // NOTE: Currently this is executed inside the main frame as well
     // as the message iframe for the two panes view.
-    roundcubeCheckEmail();
-    roundcubeModifyEmail();
+    var email = roundcubeGetEmailDocument();
+    if (email === null) {
+        return;
+    }
+
+    roundcubeShareEmail(email);
+    roundcubeCheckEmail(email);
+    roundcubeModifyEmail(email);
 }

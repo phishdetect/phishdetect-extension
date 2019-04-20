@@ -15,11 +15,39 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-function rouncubeGetOpenEmailUID() {
+function roundcubeGetOpenEmailUID() {
     var url = window.location.href;
     var regex = /.*&_uid=(\d+)&*/g;
     var match = regex.exec(url);
     return match[1];
+}
+
+function roundcubeGetOpenEmailMailbox() {
+    var url = window.location.href;
+    var regex = /.*&_mbox=(\w+)&*/g;
+    var match = regex.exec(url);
+    return match[1];
+}
+
+function roundcubeGetEmailSource() {
+    var uid = roundcubeGetOpenEmailUID();
+    var mbox = roundcubeGetOpenEmailMailbox();
+
+    var url = (window.location.origin +
+               window.location.pathname +
+               "?_task=mail&_uid=" + uid +
+               "&_mbox=" + mbox +
+               "&_action=viewsource&_extwin=1");
+
+    fetch(url)
+    .then(function(response) {
+        var text = response.text();
+        console.log(text);
+    })
+    .catch(error => {
+        console.log(error);
+        return null;
+    })
 }
 
 function roundcubeGetEmailDocument() {
@@ -40,7 +68,7 @@ function roundcubeGetEmailDocument() {
 
 function roundcubeCheckEmail(email) {
     // We get the email UID.
-    var uid = rouncubeGetOpenEmailUID();
+    var uid = roundcubeGetOpenEmailUID();
     console.log("Checking email with UID", uid);
 
     var from = email.find(".rcmContactAddress");
@@ -195,7 +223,7 @@ function roundcubeModifyEmail(email) {
 }
 
 function roundcubeShareEmail(email) {
-    var uid = rouncubeGetOpenEmailUID();
+    var uid = roundcubeGetOpenEmailUID();
 
     chrome.runtime.sendMessage({method: "getSharedEmails"}, function(response) {
         var is_shared = false;
@@ -235,12 +263,18 @@ function roundcubeShareEmail(email) {
                         unsafeMessage: "<b>PhishDetect</b><br />Are you sure you want to share this email with your PhishDetect Node operator?",
                         callback: function(value) {
                             if (value) {
-                                $("#pd-share").html(html_shared_already);
+                                var source = roundcubeGetEmailSource();
+                                if (source === null) {
+                                    // TODO: Show some alert?
+                                    return;
+                                }
+
+                                $("#pd-share").html(html_shared_already.css("padding", "0"));
 
                                 chrome.runtime.sendMessage({
                                     method: "sendRaw",
                                     rawType: "email",
-                                    rawContent: "EMAIL CONTENT",
+                                    rawContent: source,
                                     identifier: uid,
                                 });
                             }

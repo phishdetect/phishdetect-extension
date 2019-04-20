@@ -209,18 +209,20 @@ function gmailShareEmail(id) {
                 // We ask for confirmation.
                 vex.dialog.confirm({
                     unsafeMessage: "<b>PhishDetect</b><br />Are you sure you want to share this email with your PhishDetect Node operator?",
-                    callback: function(value) {
-                        if (value) {
-                            $("#pd-share").html(html_shared_already);
-
-                            var email = new gmail.dom.email(id);
-                            chrome.runtime.sendMessage({
-                                method: "sendRaw",
-                                rawType: "email",
-                                rawContent: email.source(),
-                                identifier: id,
-                            });
+                    callback: function(ok) {
+                        if (!ok) {
+                            return;
                         }
+
+                        $("#pd-share").html(html_shared_already);
+
+                        var email = new gmail.dom.email(id);
+                        chrome.runtime.sendMessage({
+                            method: "sendRaw",
+                            rawType: "email",
+                            rawContent: email.source(),
+                            identifier: id,
+                        });
                     }
                 });
             });

@@ -270,7 +270,10 @@ function roundcubeShareEmail(email) {
                             var promise = roundcubeGetEmailSource();
                             if (promise) {
                                 promise.then(function(result) {
-                                    $("#pd-share").html(html_shared_already.css("padding", "0"));
+                                    $("#pd-share")
+                                        .removeClass("pd-webmail-share")
+                                        .html(html_shared_already)
+                                        .unbind("click");
 
                                     chrome.runtime.sendMessage({
                                         method: "sendRaw",

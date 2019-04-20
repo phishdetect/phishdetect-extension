@@ -242,7 +242,7 @@ function roundcubeShareEmail(email) {
 
         var html_shared_already = $("<div>")
             .css({
-                "font-size": ".85rem",
+                "font-size": ".82rem",
                 "cursor": "auto",
                 "padding": ".5rem"
             })
@@ -254,7 +254,7 @@ function roundcubeShareEmail(email) {
             var html_share_button = $("<div>", {id: "pd-share"})
                 .addClass("pd-webmail-share")
                 .css({
-                    "font-size": ".85rem",
+                    "font-size": ".82rem",
                     "cursor": "pointer"
                 })
                 .html("<i class=\"fas fa-fish\" style=\"color: #3490dc;margin-right: .5rem;\"></i>Share with PhishDetect")

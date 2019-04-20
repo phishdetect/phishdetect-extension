@@ -39,15 +39,15 @@ function roundcubeGetEmailSource() {
                "&_mbox=" + mbox +
                "&_action=viewsource&_extwin=1");
 
-    fetch(url)
-    .then(function(response) {
-        var text = response.text();
-        console.log(text);
-    })
-    .catch(error => {
-        console.log(error);
-        return null;
-    })
+    return new Promise(function(resolve, reject) {
+        fetch(url)
+        .then(function(response) {
+            resolve(response.text())
+        })
+        .catch(error => {
+            reject(error);
+        })
+    });
 }
 
 function roundcubeGetEmailDocument() {
@@ -261,21 +261,23 @@ function roundcubeShareEmail(email) {
                 .bind("click", function() {
                     vex.dialog.confirm({
                         unsafeMessage: "<b>PhishDetect</b><br />Are you sure you want to share this email with your PhishDetect Node operator?",
-                        callback: function(value) {
-                            if (value) {
-                                var source = roundcubeGetEmailSource();
-                                if (source === null) {
-                                    // TODO: Show some alert?
-                                    return;
-                                }
+                        callback: function(ok) {
+                            // If user clicked cancel, end.
+                            if (!ok) {
+                                return;
+                            }
 
-                                $("#pd-share").html(html_shared_already.css("padding", "0"));
+                            var promise = roundcubeGetEmailSource();
+                            if (promise) {
+                                promise.then(function(result) {
+                                    $("#pd-share").html(html_shared_already.css("padding", "0"));
 
-                                chrome.runtime.sendMessage({
-                                    method: "sendRaw",
-                                    rawType: "email",
-                                    rawContent: source,
-                                    identifier: uid,
+                                    chrome.runtime.sendMessage({
+                                        method: "sendRaw",
+                                        rawType: "email",
+                                        rawContent: result,
+                                        identifier: uid,
+                                    });
                                 });
                             }
                         }

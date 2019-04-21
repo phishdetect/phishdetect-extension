@@ -87,7 +87,13 @@ window.generateWebmailDialog = function generateWebmailDialog(anchor) {
             // We sanitize the link and preview it in the dialog.
             var sanitizedLink = $("<span>").text(unsafe_url).html();
             var message = $("<span>")
-                .css("word-break", "break-all")
+                .css({
+                    "overflow-wrap": "break-word",
+                    "word-wrap": "break-word",
+                    "-ms-word-break": "break-all",
+                    "word-break": "break-all",
+                    "word-break": "break-word"
+                })
                 .html("<b>PhishDetect</b><br />How do you want to open this link?<br />" +
                 "<span style=\"font-family: Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace; color: #2779bd;\">" + sanitizedLink + "</span>");
 

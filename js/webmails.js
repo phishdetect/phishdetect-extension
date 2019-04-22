@@ -47,6 +47,10 @@ $(document).ready(function() {
         if (checkAllElements(roundcubeElements)) {
             console.log("Roundcube detected!");
             roundcube();
+        // Rainloop.
+        } else if (checkAllElements(rainloopElements)) {
+            console.log("Rainloop detected!");
+            rainloop();
         }
     });
 });

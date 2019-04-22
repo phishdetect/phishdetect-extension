@@ -45,7 +45,7 @@ $(document).ready(function() {
             console.log("Roundcube detected!");
             roundcube();
         // Rainloop.
-        } else if (checkAllElements(rainloopElements)) {
+        } else if (checkAllElements(["rl-app", "rl-left", "rl-right", "rl-content"])) {
             console.log("Rainloop detected!");
             rainloop();
         }

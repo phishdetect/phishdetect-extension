@@ -40,11 +40,8 @@ $(document).ready(function() {
 
         console.log("Checking for any supported webmail...");
 
-        var roundcubeElements = ["rcmbtn100", "rcmbtn101", "rcmbtn102"];
-        var rainloopElements = ["rl-app", "rl-left", "rl-right", "rl-content"];
-
         // Roundcube.
-        if (checkAllElements(roundcubeElements)) {
+        if (checkAllElements(["rcmbtn100", "rcmbtn101", "rcmbtn102"])) {
             console.log("Roundcube detected!");
             roundcube();
         }

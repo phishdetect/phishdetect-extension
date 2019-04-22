@@ -16,17 +16,13 @@
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
 function roundcubeGetOpenEmailUID() {
-    var url = window.location.href;
-    var regex = /.*&_uid=(\d+)&*/g;
-    var match = regex.exec(url);
-    return match[1];
+    var url = new URL(location.href);
+    return url.searchParams.get("_uid");
 }
 
 function roundcubeGetOpenEmailMailbox() {
-    var url = window.location.href;
-    var regex = /.*&_mbox=(\w+)&*/g;
-    var match = regex.exec(url);
-    return match[1];
+    var url = new URL(location.href);
+    return url.searchParams.get("_mbox");
 }
 
 function roundcubeGetEmailSource() {

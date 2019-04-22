@@ -44,6 +44,10 @@ $(document).ready(function() {
         if (checkAllElements(["rcmbtn100", "rcmbtn101", "rcmbtn102"])) {
             console.log("Roundcube detected!");
             roundcube();
+        // Rainloop.
+        } else if (checkAllElements(rainloopElements)) {
+            console.log("Rainloop detected!");
+            rainloop();
         }
     });
 });

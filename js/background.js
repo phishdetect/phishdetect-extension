@@ -47,7 +47,7 @@ chrome.webRequest.onBeforeRequest.addListener(function(details) {
         sendEvent("website_visit", url, matchedIndicator, "");
 
         // We redirect to the warning page.
-        var redirect = chrome.extension.getURL(WARNING_PAGE) + "?url=" + encodeURIComponent(url);
+        var redirect = chrome.extension.getURL(WARNING_PAGE) + "?url=" + encodeURIComponent(url) + "&indicator=" + matchedIndicator;
         return {redirectUrl: redirect};
     }
 

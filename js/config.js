@@ -35,6 +35,9 @@ var Config = function() {
     this.getLinkCheckURL = function() {
         return this.getNode() + NODE_GUI_LINK_CHECK;
     }
+    this.getReviewURL = function() {
+        return this.getNode() + NODE_GUI_REVIEW;
+    }
     this.getIndicatorsURL = function() {
         return this.getNode() + NODE_API_INDICATORS_FETCH_PATH;
     }

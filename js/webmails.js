@@ -40,10 +40,12 @@ $(document).ready(function() {
 
         console.log("Checking for any supported webmail...");
 
-        // We check if there is a Roundcube instance open.
         var roundcubeElements = ["rcmbtn100", "rcmbtn101", "rcmbtn102"];
+        var rainloopElements = ["rl-app", "rl-left", "rl-right", "rl-content"];
+
+        // Roundcube.
         if (checkAllElements(roundcubeElements)) {
-            console.log("Roundcube detected!")
+            console.log("Roundcube detected!");
             roundcube();
         }
     });

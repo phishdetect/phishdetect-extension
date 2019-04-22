@@ -46,7 +46,7 @@ function roundcubeGetEmailSource() {
     });
 }
 
-function roundcubeGetEmailDocument() {
+function roundcubeGetEmail() {
     var iframe = $(".iframe.fullheight");
     if (iframe.length) {
         console.log("Found the iframe. This is likely the two panes view.");
@@ -63,6 +63,15 @@ function roundcubeGetEmailDocument() {
 }
 
 function roundcubeCheckEmail(email) {
+    // Get email body.
+    var emailBody = email.find("#messagebody");
+    // If there is already a PhishDetect warning, we presume that there is no
+    // need to proceed scanning the email.
+    var existingWarning = emailBody.find("#phishdetect-warning");
+    if (existingWarning.length) {
+        return
+    }
+
     // We get the email UID.
     var uid = roundcubeGetOpenEmailUID();
     console.log("Checking email with UID", uid);
@@ -109,9 +118,6 @@ function roundcubeCheckEmail(email) {
         var eventType = "";
         var eventMatch = "";
         var eventIndicator = "";
-
-        // Get email body.
-        var emailBody = email.find("#messagebody");
 
         // We check for email addresses, if we have any indicators to check.
         if (indicators.emails !== null) {
@@ -197,11 +203,8 @@ function roundcubeCheckEmail(email) {
             });
 
             // Then we display a warning to the user inside the Gmail web interface.
-            var existingWarning = emailBody.find("#phishdetect-warning");
-            if (!existingWarning.length) {
-                var warning = generateWebmailWarning(eventType);
-                emailBody.prepend(warning);
-            }
+            var warning = generateWebmailWarning(eventType);
+            emailBody.prepend(warning);
         }
     });
 }
@@ -291,7 +294,7 @@ function roundcubeShareEmail(email) {
 function roundcube() {
     // NOTE: Currently this is executed inside the main frame as well
     // as the message iframe for the two panes view.
-    var email = roundcubeGetEmailDocument();
+    var email = roundcubeGetEmail();
     if (email === null) {
         return;
     }

@@ -22,3 +22,6 @@
 .pd-webmail-share:hover {
     background-color: #f1f5f8;
 }
+.pd-webmail-link-warning {
+    color: #e3342f;
+}

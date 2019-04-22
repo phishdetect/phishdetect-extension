@@ -50,7 +50,7 @@ window.generateWebmailWarning = function generateWebmailWarning(eventType) {
 // (normally a link) to alert the user that what's contained is malicious.
 window.generateWebmailLinkWarning = function generateWebmailLinkWarning(element) {
     var span = $("<span>")
-        .css("color", "#e3342f")
+        .addClass("pd-webmail-link-warning")
         .attr("title", "PhishDetect Warning: this link is malicious!")
         .html(" <i class=\"fas fa-exclamation-triangle\"></i>");
 

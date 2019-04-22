@@ -16,18 +16,17 @@
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
 function loadContent() {
-    let href = new URL(location.href);
-    let url = href.searchParams.get("url");
-    // TODO: This is a super hacky converstion to HTML entities.
-    // https://stackoverflow.com/questions/18749591/encode-html-entities-in-javascript
-    let cleanURL = url.replace(/[\u00A0-\u9999<>\&]/gim, function(i) {
-        return '&#'+i.charCodeAt(0)+';';
-    });
+    var href = new URL(location.href);
+    var url = href.searchParams.get("url");
 
-    document.getElementById("badURL").innerHTML = cleanURL;
+    var cleanURL = $("<span>").text(url).html();
+    $("#badURL").html(cleanURL);
 
-    let takeMeAway = document.getElementById("takeMeAway");
-    takeMeAway.href = "about:blank";
+    var indicator = href.searchParams.get("indicator");
+    var reviewURL = cfg.getReviewURL() + indicator;
+    $("#report").attr("href", reviewURL);
+
+    $("#takeMeAway").attr("href", "about:blank");
 }
 
 document.addEventListener("DOMContentLoaded", loadContent);

@@ -40,10 +40,21 @@ $(document).ready(function() {
 
         console.log("Checking for any supported webmail...");
 
+        var handler = null;
         // Roundcube.
         if (checkAllElements(["rcmbtn100", "rcmbtn101", "rcmbtn102"])) {
             console.log("Roundcube detected!");
-            roundcube();
+            handler = "roundcube";
+        }
+
+        if (handler !== null) {
+            chrome.runtime.sendMessage({method: "loadFontAwesome"}, function(response) {
+                switch (handler) {
+                case "roundcube":
+                    roundcube();
+                    break;
+                }
+            });
         }
     });
-});
+})();

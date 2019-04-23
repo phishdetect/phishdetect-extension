@@ -4,11 +4,15 @@ This is a browser extension for Mozilla Firefox and Google Chrome. It is a clien
 
 - It regularly fetches a list of bad indicators from the configured PhishDetect Node.
 - It blocks any visits to websites whose domains match a known indicator (inspired by the [Blockade](https://github.com/blockadeio) project).
-- It integrates in Gmail's web interface (https://mail.google.com) and everytime an email is opened it checks for known bad senders as well as known bad links inside the body.
+- It integrates in various supported webmails. Everytime an email is opened it checks for known bad senders as well as known bad links inside the body.
 - It modifies the links contained in the body in order to display a dialog prompt that offers the user the possibility of scanning the links with PhishDetect.
-- It creates a button in Gmail's web interface to allow to share the full source email with the Node operators.
+- It creates a button in the webmails' web interface to allow to share the full source email with the Node operators.
 - It creates context menus and a toolbar button that allow to either send a link or directly the HTML content of the opened page to a PhishDetect backend in order to be scanned for phishing.
 
+Currently supported webmails:
+
+- Gmail
+- Roundcube
 
 ## How to use
 

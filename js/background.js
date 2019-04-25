@@ -105,6 +105,11 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     case "getSharedEmails":
         sendResponse(cfg.getSharedEmails());
         break;
+    case "loadFontAwesome":
+        chrome.tabs.executeScript(sender.tab.id, {frameId: sender.frameId, file: "../fontawesome/js/all.js",}, function() {
+            sendResponse(true);
+        });
+        break;
     }
     return false;
 });

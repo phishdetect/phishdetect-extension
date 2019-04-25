@@ -3,7 +3,7 @@
 
     "name": "PhishDetect",
     "description": "Anti-phishing browser extension. Scan suspicious pages and links.",
-    "version": "4.0.0",
+    "version": "4.0.1",
     "icons": {
         "16": "icons/icon@16.png",
         "48": "icons/icon@48.png",
@@ -68,11 +68,9 @@
                 "lib/sha256.js",
                 "lib/raf-fix.js",
                 "lib/jquery-3.4.0.js",
-                "fontawesome/js/all.js",
                 "dist/domains.js",
                 "dist/gui.js",
                 "js/utils.js",
-                "js/rainloop.js",
                 "js/roundcube.js",
                 "js/webmails.js"
             ],

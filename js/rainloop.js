@@ -15,6 +15,11 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
+"use strict";
+
+const arrive = require("arrive");
+window.arrive = arrive;
+
 function rainloopGetEmail() {
     var email = $("#rl-sub-right .b-content")
     if (email.length) {
@@ -179,11 +184,10 @@ function rainloopModifyEmail(email) {
     }
 }
 
-function rainloop() {
-    // We check for clicks in the messages list.
-    $(document).on("click", ".messageListPlace", function() {
-        console.log("Clicked menu");
-
+window.rainloop = function rainloop() {
+    console.log("antani");
+    $(document).arrive("#rl-sub-right .b-content .messageItemHeader .informationShort .from a", {fireOnAttributesModification: true}, function () {
+        console.log("antani2");
         var email = rainloopGetEmail();
         if (email === null) {
             return;

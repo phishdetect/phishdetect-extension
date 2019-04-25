@@ -71,6 +71,7 @@
                 "dist/domains.js",
                 "dist/gui.js",
                 "js/utils.js",
+                "dist/rainloop.js",
                 "js/roundcube.js",
                 "js/webmails.js"
             ],

@@ -6,7 +6,7 @@
     "scripts": {
         "deps": "npm install",
         "stage": "mkdir dist || echo ''",
-        "bundle": "browserify -o dist/gmail.js js/gmail.js && browserify -o dist/domains.js js/domains.js && browserify -o dist/gui.js js/gui.js",
+        "bundle": "browserify -o dist/gmail.js js/gmail.js && browserify -o dist/rainloop.js js/rainloop.js && browserify -o dist/domains.js js/domains.js && browserify -o dist/gui.js js/gui.js",
         "build": "npm run stage && npm run bundle"
     },
     "author": "Claudio Guarnieri",
@@ -16,8 +16,10 @@
         "url": "https://github.com/phishdetect/phishdetect-extension.git"
     },
     "dependencies": {
+        "arrive": "^2.4.1",
         "gmail-js": "^0.9.1",
         "npm": "^6.5.0",
+        "tar": "^4.4.8",
         "tldts": "^3.1.2",
         "vex-dialog": "^1.1.0",
         "vex-js": "^4.1.0"

@@ -185,10 +185,24 @@ function rainloopModifyEmail(email) {
 }
 
 window.rainloop = function rainloop() {
-    console.log("antani");
-    $(document).arrive("#rl-sub-right .b-content .messageItemHeader .informationShort .from a", {fireOnAttributesModification: true}, function () {
-        console.log("antani2");
+    // console.log($("#rl-sub-right .b-content .bodyText"))
+    // $(document).arrive("#rl-sub-right .b-content .bodyText", {fireOnAttributesModification: true}, function () {
+    //     var email = rainloopGetEmail();
+    //     if (email === null) {
+    //         return;
+    //     }
+
+    //     rainloopCheckEmail(email);
+    //     rainloopModifyEmail(email);
+    // });
+    $(".informationShort").bind("DOMSubtreeModified",function(){
+        console.log("Changed email");
+
+        $(".pd-webmail-warning").remove();
+        $(".pd-webmail-link-warning").remove();
+
         var email = rainloopGetEmail();
+        console.log(email);
         if (email === null) {
             return;
         }

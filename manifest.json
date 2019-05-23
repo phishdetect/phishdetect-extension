@@ -48,7 +48,7 @@
             "js": [
                 "lib/sha256.js",
                 "lib/raf-fix.js",
-                "lib/jquery-3.4.0.js",
+                "lib/jquery-3.4.1.js",
                 "fontawesome/js/all.js",
                 "dist/domains.js",
                 "dist/gui.js",
@@ -67,7 +67,7 @@
             "js": [
                 "lib/sha256.js",
                 "lib/raf-fix.js",
-                "lib/jquery-3.4.0.js",
+                "lib/jquery-3.4.1.js",
                 "dist/domains.js",
                 "dist/gui.js",
                 "js/utils.js",

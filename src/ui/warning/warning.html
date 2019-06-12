@@ -9,12 +9,17 @@
 <body class="bg-black text-grey-lighter p-20">
 <div class="container mx-auto">
     <div class="text-5xl mb-4 text-center"><i class="fas fa-exclamation-triangle"></i></div>
-    <div class="text-3xl mb-4 text-center"><b>PhishDetect</b> Warning</div>
+    <div class="text-3xl mb-4 text-center"><b>PhishDetect</b> <span
+         data-resource="warningWarning">Warning</span></div>
     <div class="leading-normal text-lg">
         <p>You tried to visit <span class="font-bold font-mono" id="badURL"></span>. PhishDetect reported it as <b>not safe</b>.</p>
         <p>PhishDetect prevented you from visiting this page and, if you have this option enabled, alerted the administrator of your configured PhishDetect Node. For more information about this warning read the <a class="text-blue-light" target="_blank" href="https://phishdetect.io/help/">PhishDetect Help Page</a>.</p>
 
-        <a class="no-underline" id="takeMeAway" href="#"><div class="mt-8 py-3 px-3 bg-blue hover:bg-blue-light border-b-4 border-blue-dark hover:border-blue rounded cursor-pointer text-center text-blue-lightest no-underline text-base font-bold">TAKE ME AWAY</div></a>
+        <a class="no-underline" id="takeMeAway" href="#"><div class="mt-8 py-3
+            px-3 bg-blue hover:bg-blue-light border-b-4 border-blue-dark
+            hover:border-blue rounded cursor-pointer text-center
+        text-blue-lightest no-underline text-base font-bold"
+        data-resource="warningAway">TAKE ME AWAY</div></a>
 
         <!-- <p class="mt-12 text-sm text-red-lighter">If you want to visit this link anyway, you can do so <a id="continueAnyway" class="text-red-lighter" href="">at your own risk</a>.</p> -->
 
@@ -22,6 +27,7 @@
     </div>
 </div>
 <script src="../../lib/jquery.min.js"></script>
+<script src="../../js/i18n.js"></script>
 <script src="../../js/const.js"></script>
 <script src="../../js/config.js"></script>
 <script src="warning.js"></script>

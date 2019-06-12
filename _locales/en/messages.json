@@ -1,0 +1,74 @@
+{
+    "popupScanThisPage": {
+      "message": "Scan this page!",
+      "description": "Displayed on the popup page button."
+    },
+    "popupSettings": {
+      "message": "Settings",
+      "description": "Label for a button on the popup page to open the settings page."
+    },
+    "popupHelp": {
+      "message": "Help",
+      "description": "Help link on popup page."
+    },
+    "optionsDescription": {
+      "message": "Through this form you can decide which PhishDetect Node to connect to.",
+      "description": "Description shown at the top of the options page"
+    },
+    "optionsNode": {
+      "message": "Your preferred PhishDetect Node:",
+      "description": "Label for the PhishDetect node form field on the options page"
+    },
+    "optionsEnableWebmail": {
+      "message": "Enable Webmails integration",
+      "description": "Label for checkbox to enable webmail integration."
+    },
+    "optionsReportAlerts": {
+      "message": "Report alerts to PhishDetect Node",
+      "description": "Label for checkbox to enable reporting of alerts."
+    },
+    "optionsContact": {
+      "message": "If you wish, you can leave your contact details:",
+      "description": "Label for contact details field."
+    },
+    "optionsSave": {
+      "message": "Save",
+      "description": "Label for save button on options page."
+    },
+    "optionsRestore": {
+      "message": "Restore Defaults",
+      "description": "Link to restore default values on the options page."
+    },
+    "warningWarning": {
+      "message": "Warning",
+      "description": "Title for a warning page when opening a dangerous url."
+    },
+    "warningAway": {
+      "message": "TAKE ME AWAY",
+      "description": "Text for button to abort opening a dangerous url"
+    },
+    "apikeyThankyou": {
+      "message": "Thank you for participating to PhishDetect closed beta program!",
+      "description": "Paragraph text thanking the user."
+    },
+    "apikeyGetToken": {
+      "message": "In order to continue using the PhishDetect Browser Extension, you will be required to enter a valid secret token. You don't have one yet?",
+      "description": "Paragraph text. Following this text is a link to register for a token"
+    },
+    "apikeyRegister": {
+      "message": "Register here!",
+      "description": "Text for a link to the registration page"
+    },
+    "apikeyNode": {
+      "message": "Your preferred PhishDetect Node:",
+      "description": "Label for a text input for the url of your PhishDetect node"
+    },
+    "apikeyToken": {
+      "message": "Enter your secret token:",
+      "description": "Label for a text input for your secret token"
+    },
+    "apikeySave": {
+      "message": "Save",
+      "description": "Text for button to save api token and node settings"
+    }
+}

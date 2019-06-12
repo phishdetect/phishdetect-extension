@@ -11,26 +11,37 @@
 <div id="container">
     <h2 class="text-grey-black">PhishDetect</h2>
 
-    <p class="mt-4 mb-4 leading-normal">Through this form you can decide which PhishDetect Node to connect to.</p>
+    <p class="mt-4 mb-4 leading-normal" data-resource="optionsDescription">Through this form you can decide which PhishDetect Node to connect to.</p>
 
     <form>
-        <label for="server" class="font-bold">Your preferred PhishDetect Node:</label>
+        <label for="server" class="font-bold" data-resource="optionsNode">Your preferred PhishDetect Node:</label>
         <div class="mt-2 mb-6"><input type="text" class="block appearance-none w-full bg-white border border-grey-light px-4 py-4 rounded focus:border-blue-light" id="server" /></div>
 
         <div id="keySection"><label for="key" id="keyLabel" class="font-bold">Your secret token:</label>
         <input type="text" class="block appearance-none w-full bg-white border border-grey-light px-4 py-4 rounded focus:border-blue-light" id="key" /></div>
 
-        <div class="mt-6"><input type="checkbox" id="webmails" /> <label for="webmails" class="font-bold ml-2">Enable Webmails integration</label></div>
+        <div class="mt-6"><input type="checkbox" id="webmails" /> <label
+            for="webmails" class="font-bold ml-2"
+            data-resource="optionsEnableWebmail">Enable Webmails integration</label></div>
 
-        <div class="mt-6 mb-2"><input type="checkbox" id="report" /> <label for="report" class="font-bold ml-2">Report alerts to PhishDetect Node</label></div>
+        <div class="mt-6 mb-2"><input type="checkbox" id="report" /> <label
+            for="report" class="font-bold ml-2"
+            data-resource="optionsReportAlerts">Report alerts to PhishDetect Node</label></div>
 
-        <label for="contact" id="contactLabel" class="leading-normal">If you wish, you can leave your contact details:</label>
+        <label for="contact" id="contactLabel" class="leading-normal" data-resource="optionsContact">If you wish, you can leave your contact details:</label>
         <div class="mt-2"><input type="text" class="block appearance-none w-full bg-white border border-grey-light px-4 py-4 rounded focus:border-blue-light" id="contact" /></div>
 
-        <div class="mt-6"><button type="submit" class="bg-blue hover:bg-blue-light text-white py-2 px-4 border-b-4 border-blue-dark hover:text-white hover:no-underline hover:border-blue rounded cursor-pointer"><i class="fas fa-save"></i> Save</button> <a id="restoreDefaults" class="bg-grey hover:bg-grey-light py-2 px-4 border-b-4 border-grey-dark hover:no-underline hover:border-grey rounded cursor-pointer font-normal text-grey-darkest"><i class="fas fa-history"></i> Restore Defaults</a></div>
+        <div class="mt-6"><button type="submit" class="bg-blue
+            hover:bg-blue-light text-white py-2 px-4 border-b-4 border-blue-dark
+            hover:text-white hover:no-underline hover:border-blue rounded
+        cursor-pointer" data-resource="optionsSave"><i class="fas fa-save"></i>
+        Save</button> <a id="restoreDefaults" class="bg-grey hover:bg-grey-light
+    py-2 px-4 border-b-4 border-grey-dark hover:no-underline hover:border-grey
+    rounded cursor-pointer font-normal text-grey-darkest" data-resource="optionsRestore"><i class="fas fa-history"></i> Restore Defaults</a></div>
     </form>
 </div>
 <script src="../../lib/jquery.min.js"></script>
+<script src="../../js/i18n.js"></script>
 <script src="../../js/const.js"></script>
 <script src="../../js/config.js"></script>
 <script src="options.js"></script>

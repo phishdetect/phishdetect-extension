@@ -48,11 +48,10 @@ function saveOptions() {
 }
 
 function restoreDefaults() {
-    cfg.restoreDefaultNode();
-    cfg.setWebmails(true);
-    cfg.setReport(true);
-    cfg.setContact("");
-    loadOptions();
+    document.getElementById("server").value = cfg.getDefaultNode();
+    document.getElementById("webmails").checked = true;
+    document.getElementById("report").checked = true;
+    document.getElementById("contact").value = "";
 }
 
 document.addEventListener("DOMContentLoaded", loadOptions);

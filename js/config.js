@@ -27,6 +27,9 @@ var Config = function() {
     this.setNode = function(domain) {
         localStorage.setItem("cfg_node", domain);
     }
+    this.getDefaultNode = function() {
+        return NODE_DEFAULT_URL;
+    }
     this.restoreDefaultNode = function() {
         localStorage.setItem("cfg_node", NODE_DEFAULT_URL);
     }

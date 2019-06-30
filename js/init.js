@@ -15,6 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
+// Check if configuration values are set. If not, create a default
+// configuration.
 (function() {
     if (localStorage.cfg_node === undefined) {
         localStorage.cfg_node = NODE_DEFAULT_URL;

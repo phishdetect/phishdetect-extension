@@ -30,6 +30,7 @@ function getIndicators() {
     return JSON.parse(cfg.getIndicators());
 }
 
+// Update indicators at launch.
 (function() {
     updateIndicators();
 })();

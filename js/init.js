@@ -16,9 +16,6 @@
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
 (function() {
-    if (localStorage.cfg_init === undefined) {
-        localStorage.cfg_init = true;
-    }
     if (localStorage.cfg_node === undefined) {
         localStorage.cfg_node = NODE_DEFAULT_URL;
     }

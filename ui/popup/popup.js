@@ -24,10 +24,18 @@ function getTab(callback) {
     chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => callback(tabs[0]));
 }
 
+function reportPage() {
+    getTab(function(tab) {
+        chrome.runtime.sendMessage({method: "reportPage", url: tab.url}, function(response) {
+            document.getElementById("div-reportpage").innerHTML = "Reported!";
+        });
+    });
+}
+
 function scanPage() {
     getTab(function(tab) {
         chrome.runtime.sendMessage({method: "scanPage", tabId: tab.id}, function(response) {
-            document.getElementById("div-scanpage").innerHTML = "<span class=\"bg-teal text-white py-2 px-4 border-b-4 border-teal-dark hover:text-white hover:no-underline rounded text-lg cursor-default\">Scanning...</span>";
+            document.getElementById("div-scanpage").innerHTML = "Scanning...";
         });
     });
 }
@@ -38,9 +46,15 @@ document.addEventListener("DOMContentLoaded", function () {
         let backendURL = new URL(cfg.getNode());
         // We disable the scan this page button for the node site and for Gmail.
         if (url.hostname == backendURL.hostname || url.hostname == "mail.google.com") {
+            document.getElementById("div-reportpage").innerHTML = "";
             document.getElementById("div-scanpage").innerHTML = "";
         }
     });
+
+    var btnReport = document.getElementById("button-reportpage");
+    btnReport.addEventListener("click", function() {
+        reportPage();
+    })
 
     var btnScan = document.getElementById("button-scanpage");
     btnScan.addEventListener("click", function() {

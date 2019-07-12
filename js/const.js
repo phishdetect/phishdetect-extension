@@ -18,6 +18,7 @@
 NODE_DEFAULT_URL = "https://node.phishdetect.io";
 NODE_GUI_LINK_CHECK = "/link/";
 NODE_GUI_REVIEW = "/review/";
+NODE_GUI_REPORT = "/report/";
 NODE_API_INDICATORS_FETCH_PATH = "/api/indicators/fetch/";
 NODE_API_EVENTS_ADD_PATH = "/api/events/add/";
 NODE_API_RAW_ADD = "/api/raw/add/";

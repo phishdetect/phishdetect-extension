@@ -41,6 +41,9 @@ var Config = function() {
     this.getReviewURL = function() {
         return this.getNode() + NODE_GUI_REVIEW;
     }
+    this.getReportURL = function() {
+        return this.getNode() + NODE_GUI_REPORT;
+    }
     this.getIndicatorsURL = function() {
         return this.getNode() + NODE_API_INDICATORS_FETCH_PATH;
     }

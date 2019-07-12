@@ -78,6 +78,11 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     case "scanPage":
         injectRedirect(request.tabId);
         break;
+    // This message is received when the user wants to report a suspicious opened page.
+    case "reportPage":
+        var nodeUrl = cfg.getReportURL() + window.btoa(request.url)
+        chrome.tabs.create({"url": nodeUrl});
+        break;
     // This message is received when a security event was detected and needs to be sent
     // to the PhishDetect node.
     case "sendEvent":
@@ -123,6 +128,11 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 // Context menus.
 function loadContextMenus() {
     chrome.contextMenus.create({
+        "title": "Report this page as suspicious",
+        "id": "report-page",
+        "contexts": ["page", "frame"]
+    });
+    chrome.contextMenus.create({
         "title": "Scan this page for phishing",
         "id": "scan-page",
         "contexts": ["page", "frame"]
@@ -133,21 +143,34 @@ function loadContextMenus() {
         "id": "scan-link",
         "contexts": ["link"]
     });
+
+    chrome.contextMenus.create({
+        "title": "Report this link as suspicious",
+        "id": "report-link",
+        "contexts": ["link"]
+    });
 }
 
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
-    // If we're scanning a page, we inject a JavaScript that collects the HTML
-    // and returns it to us.
-    if (info.menuItemId === "scan-page") {
+    switch (info.menuItemId) {
+    case "scan-page":
         injectRedirect(tab.id);
-        return false;
-    // If we're scanning a link, we just open a tab to our service.
-    } else if (info.menuItemId === "scan-link") {
-        var linkUrl = info.linkUrl;
-        var safeUrl = cfg.getLinkCheckURL() + window.btoa(linkUrl);
-        chrome.tabs.create({"url": safeUrl});
-        return false;
+        break;
+    case "scan-link":
+        var nodeUrl = cfg.getLinkCheckURL() + window.btoa(info.linkUrl);
+        chrome.tabs.create({"url": nodeUrl});
+        break;
+    case "report-page":
+        var nodeUrl = cfg.getReportURL() + window.btoa(info.pageUrl)
+        chrome.tabs.create({"url": nodeUrl});
+        break;
+    case "report-link":
+        var nodeUrl = cfg.getReportURL() + window.btoa(info.linkUrl);
+        chrome.tabs.create({"url": nodeUrl});
+        break;
     }
+
+    return false;
 });
 
 chrome.runtime.onInstalled.addListener(loadContextMenus);

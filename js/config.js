@@ -18,14 +18,21 @@
 var Config = function() {
     // Functions to set and get the PhishDetect Node.
     this.getNode = function() {
-        var server = localStorage.getItem("cfg_node");
-        if (!server.startsWith("http")) {
-            return "https://" + server;
+        var address = localStorage.getItem("cfg_node");
+        if (!address.startsWith("http")) {
+            return "https://" + address;
         }
-        return server;
+        return address;
     }
-    this.setNode = function(domain) {
-        localStorage.setItem("cfg_node", domain);
+    this.setNode = function(newAddress) {
+        var currentAddress = this.getNode()
+        if (newAddress == currentAddress) {
+            return;
+        }
+        localStorage.setItem("cfg_node", newAddress);
+        // If we are actually changing to a new node, we are going to
+        // reset the last update time.
+        localStorage.setItem("cfg_last_update", "")
     }
     this.getDefaultNode = function() {
         return NODE_DEFAULT_URL;
@@ -85,7 +92,7 @@ var Config = function() {
     // Record of last update.
     this.getLastUpdateTime = function() {
         var lastUpdate = localStorage.getItem("cfg_last_update")
-        if (lastUpdate == "null") {
+        if (lastUpdate == "") {
             return null;
         }
 

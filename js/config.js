@@ -47,6 +47,9 @@ var Config = function() {
     this.getIndicatorsURL = function() {
         return this.getNode() + NODE_API_INDICATORS_FETCH_PATH;
     }
+    this.getRecentIndicatorsURL = function() {
+        return this.getNode() + NODE_API_RECENT_INDICATORS_FETCH_PATH;
+    }
     this.getEventsURL = function() {
         return this.getNode() + NODE_API_EVENTS_ADD_PATH;
     }
@@ -72,10 +75,24 @@ var Config = function() {
 
     // Indicators stored in local storage.
     this.getIndicators = function() {
-        return localStorage.getItem("cfg_indicators");
+        return JSON.parse(localStorage.getItem("cfg_indicators"));
     }
     this.setIndicators = function(value) {
-        localStorage.setItem("cfg_indicators", value);
+        localStorage.setItem("cfg_indicators", JSON.stringify(value));
+        // We update the last update time.
+        this.setLastUpdateTime();
+    }
+    // Record of last update.
+    this.getLastUpdateTime = function() {
+        var lastUpdate = localStorage.getItem("cfg_last_update")
+        if (lastUpdate == "null") {
+            return null;
+        }
+
+        return Date(lastUpdate);
+    }
+    this.setLastUpdateTime = function() {
+        localStorage.setItem("cfg_last_update", getCurrentISODate())
     }
 
     // User contact details.

@@ -20,8 +20,9 @@ NODE_GUI_LINK_CHECK = "/link/";
 NODE_GUI_REVIEW = "/review/";
 NODE_GUI_REPORT = "/report/";
 NODE_API_INDICATORS_FETCH_PATH = "/api/indicators/fetch/";
+NODE_API_RECENT_INDICATORS_FETCH_PATH = "/api/indicators/fetch/recent/";
 NODE_API_EVENTS_ADD_PATH = "/api/events/add/";
 NODE_API_RAW_ADD = "/api/raw/add/";
-// TODO: Is 15 minutes a good frequency?
 INDICATORS_UPDATE_FREQUENCY = 15;
 WARNING_PAGE = "ui/warning/warning.html";
+ONE_DAY_TIME = 24 * 60 * 60 * 1000;

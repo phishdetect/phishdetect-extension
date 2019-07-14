@@ -35,7 +35,7 @@ chrome.webRequest.onBeforeRequest.addListener(function(details) {
     var domainHash = sha256(domain);
     var topDomainHash = sha256(topDomain);
 
-    var indicators = getIndicators();
+    var indicators = cfg.getIndicators();
     if (indicators === undefined || indicators.domains === undefined || indicators.domains === null) {
         return {cancel: false};
     }
@@ -104,7 +104,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     // This message is received when a component of the extension is requesting the
     // full list of indicators.
     case "getIndicators":
-        sendResponse(getIndicators());
+        sendResponse(cfg.getIndicators());
         break;
     // This message returns the list of email IDs that were already previously shared.
     case "getSharedEmails":

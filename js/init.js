@@ -27,6 +27,9 @@
     if (localStorage.cfg_indicators === undefined) {
         localStorage.cfg_indicators = JSON.stringify({});
     }
+    if (localStorage.cfg_last_update === undefined) {
+        localStorage.cfg_last_update = "";
+    }
     if (localStorage.cfg_report === undefined) {
         localStorage.cfg_report = true;
     }

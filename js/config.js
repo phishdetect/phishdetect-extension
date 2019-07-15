@@ -111,6 +111,15 @@ var Config = function() {
     }
 
     // List of email IDs that have already been reported (to avoid duplication).
+    this.getDetectedEmails = function() {
+        return JSON.parse(localStorage.getItem("cfg_detected_emails"));
+    }
+    this.addDetectedEmail = function(value) {
+        var emails = this.getDetectedEmails();
+        emails.push(value);
+        localStorage.setItem("cfg_detected_emails", JSON.stringify(emails));
+    }
+    // List of email IDs that have already be shared (to avoid duplication).
     this.getReportedEmails = function() {
         return JSON.parse(localStorage.getItem("cfg_reported_emails"));
     }
@@ -118,15 +127,6 @@ var Config = function() {
         var emails = this.getReportedEmails();
         emails.push(value);
         localStorage.setItem("cfg_reported_emails", JSON.stringify(emails));
-    }
-    // List of email IDs that have already be shared (to avoid duplication).
-    this.getSharedEmails = function() {
-        return JSON.parse(localStorage.getItem("cfg_shared_emails"));
-    }
-    this.addSharedEmail = function(value) {
-        var emails = this.getSharedEmails();
-        emails.push(value);
-        localStorage.setItem("cfg_shared_emails", JSON.stringify(emails));
     }
 }
 

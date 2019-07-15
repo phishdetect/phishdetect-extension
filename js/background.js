@@ -107,8 +107,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         sendResponse(cfg.getIndicators());
         break;
     // This message returns the list of email IDs that were already previously shared.
-    case "getSharedEmails":
-        sendResponse(cfg.getSharedEmails());
+    case "getReportedEmails":
+        sendResponse(cfg.getReportedEmails());
         break;
     case "loadFontAwesome":
         chrome.tabs.executeScript(sender.tab.id, {frameId: sender.frameId, file: "../fontawesome/js/all.js",}, function() {

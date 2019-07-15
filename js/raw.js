@@ -21,7 +21,7 @@ function sendRaw(rawType, rawContent, identifier) {
         // If an email identifier was provided...
         if (identifier !== undefined && identifier != "") {
             // Get a list of already shared emails.
-            var emails = cfg.getSharedEmails();
+            var emails = cfg.getReportedEmails();
             for (var i=0; i<emails.length; i++) {
                 // If the email was already shared before, no need to
                 // report it again.
@@ -49,7 +49,7 @@ function sendRaw(rawType, rawContent, identifier) {
         // We do this to avoid re-sharing already shared emails.
         if (rawType == "email") {
             if (identifier !== undefined && identifier != "") {
-                cfg.addSharedEmail(identifier);
+                cfg.addReportedEmail(identifier);
             }
         }
     })

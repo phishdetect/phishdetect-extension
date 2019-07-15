@@ -15,11 +15,11 @@
     border-radius: .5rem;
     letter-spacing: 0;
 }
-.pd-webmail-share {
+.pd-webmail-report {
     padding: .5rem;
     border-radius: .5rem;
 }
-.pd-webmail-share:hover {
+.pd-webmail-report:hover {
     background-color: #f1f5f8;
 }
 .pd-webmail-link-warning {

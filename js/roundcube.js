@@ -221,16 +221,16 @@ function roundcubeModifyEmail(email) {
     }
 }
 
-function roundcubeShareEmail(email) {
+function roundcubeReportEmail(email) {
     var uid = roundcubeGetOpenEmailUID();
 
-    chrome.runtime.sendMessage({method: "getSharedEmails"}, function(response) {
-        var is_shared = false;
+    chrome.runtime.sendMessage({method: "getReportedEmails"}, function(response) {
+        var isReported = false;
         for (var i=0; i<response.length; i++) {
             // If the email was already shared before, no need to
             // report it again.
             if (response[i] == uid) {
-                is_shared = true;
+                isReported = true;
             }
         }
 
@@ -239,7 +239,7 @@ function roundcubeShareEmail(email) {
             return;
         }
 
-        var html_shared_already = $("<div>")
+        var htmlSharedAlready = $("<div>")
             .css({
                 "font-size": ".82rem",
                 "cursor": "auto",
@@ -247,10 +247,10 @@ function roundcubeShareEmail(email) {
             })
             .html("<i class=\"fas fa-check-circle\" style=\"color: #38c172;margin-right: .5rem;\"></i>Shared with PhishDetect")
 
-        if (is_shared) {
-            emailHeader.append(html_shared_already);
+        if (isReported) {
+            emailHeader.append(htmlSharedAlready);
         } else {
-            var html_share_button = $("<div>", {id: "pd-share"})
+            var htmlShareButton = $("<div>", {id: "pd-share"})
                 .addClass("pd-webmail-share")
                 .css({
                     "font-size": ".82rem",
@@ -259,7 +259,7 @@ function roundcubeShareEmail(email) {
                 .html("<i class=\"fas fa-fish\" style=\"color: #3490dc;margin-right: .5rem;\"></i>Share with PhishDetect")
                 .bind("click", function() {
                     vex.dialog.confirm({
-                        unsafeMessage: "<b>PhishDetect</b><br />Are you sure you want to share this email with your PhishDetect Node operator?",
+                        unsafeMessage: "<b>PhishDetect</b><br />Are you sure you want to share this email to your PhishDetect Node operator?",
                         callback: function(ok) {
                             // If user clicked cancel, end.
                             if (!ok) {
@@ -271,7 +271,7 @@ function roundcubeShareEmail(email) {
                                 promise.then(function(result) {
                                     $("#pd-share")
                                         .removeClass("pd-webmail-share")
-                                        .html(html_shared_already)
+                                        .html(htmlSharedAlready)
                                         .unbind("click");
 
                                     chrome.runtime.sendMessage({
@@ -286,7 +286,7 @@ function roundcubeShareEmail(email) {
                     });
                 });
 
-            emailHeader.append(html_share_button);
+            emailHeader.append(htmlShareButton);
         }
     });
 }
@@ -299,7 +299,7 @@ function roundcube() {
         return;
     }
 
-    roundcubeShareEmail(email);
+    roundcubeReportEmail(email);
     roundcubeCheckEmail(email);
     roundcubeModifyEmail(email);
 }

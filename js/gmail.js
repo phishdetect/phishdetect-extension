@@ -184,37 +184,37 @@ function gmailModifyEmail(id) {
     }
 }
 
-// gmailShareEmail creates a button to share the currently open email with the
-// PhishDetect Node. Shared emails will be marked in the extension's storage
+// gmailReportEmail creates a button to report the currently open email with the
+// PhishDetect Node. Reported emails will be marked in the extension's storage
 // and we will avoid duplication.
-function gmailShareEmail(id) {
-    chrome.runtime.sendMessage({method: "getSharedEmails"}, function(response) {
-        var is_shared = false;
+function gmailReportEmail(id) {
+    chrome.runtime.sendMessage({method: "getReportedEmails"}, function(response) {
+        var isReported = false;
         for (var i=0; i<response.length; i++) {
-            // If the email was already shared before, no need to
+            // If the email was already reported before, no need to
             // report it again.
             if (response[i] == id) {
-                is_shared = true;
+                isReported = true;
             }
         }
 
         // Add button to upload email.
-        var html_share_button = "<span id=\"pd-share\" class=\"pd-webmail-share\"><i class=\"fas fa-fish\" style=\"color: #3490dc;margin-right: .5rem;\"></i>Share with PhishDetect</span>";
-        var html_shared_already = "<span style=\"cursor: pointer;\"><i class=\"fas fa-check-circle\" style=\"color: #38c172;margin-right: .5rem;\"></i>Shared with PhishDetect</span>";
+        var htmlReportButton = "<span id=\"pd-report\" class=\"pd-webmail-report\"><i class=\"fas fa-fish\" style=\"color: #3490dc;margin-right: .5rem;\"></i>Report to PhishDetect</span>";
+        var htmlReportedAlready = "<span style=\"cursor: pointer;\"><i class=\"fas fa-check-circle\" style=\"color: #38c172;margin-right: .5rem;\"></i>Reported to PhishDetect</span>";
 
-        if (is_shared) {
-            gmail.tools.add_toolbar_button(html_shared_already, function() {});
+        if (isReported) {
+            gmail.tools.add_toolbar_button(htmlReportedAlready, function() {});
         } else {
-            gmail.tools.add_toolbar_button(html_share_button, function() {
+            gmail.tools.add_toolbar_button(htmlReportButton, function() {
                 // We ask for confirmation.
                 vex.dialog.confirm({
-                    unsafeMessage: "<b>PhishDetect</b><br />Are you sure you want to share this email with your PhishDetect Node operator?",
+                    unsafeMessage: "<b>PhishDetect</b><br />Are you sure you want to report this email to your PhishDetect Node operator?",
                     callback: function(ok) {
                         if (!ok) {
                             return;
                         }
 
-                        $("#pd-share").html(html_shared_already);
+                        $("#pd-report").html(htmlReportedAlready);
 
                         var email = new gmail.dom.email(id);
                         chrome.runtime.sendMessage({
@@ -240,8 +240,8 @@ function gmailShareEmail(id) {
         gmail.observe.on("view_email", function(obj) {
             console.log("Email opened with ID", obj.id);
 
-            // Add share email button.
-            gmailShareEmail(obj.id);
+            // Add report email button.
+            gmailReportEmail(obj.id);
             // We check the original content of the email for known indicators.
             gmailCheckEmail(obj.id);
             // We change the email to add our dialog.

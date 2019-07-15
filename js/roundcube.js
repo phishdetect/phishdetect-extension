@@ -239,27 +239,27 @@ function roundcubeReportEmail(email) {
             return;
         }
 
-        var htmlSharedAlready = $("<div>")
+        var htmlReportedAlready = $("<div>")
             .css({
                 "font-size": ".82rem",
                 "cursor": "auto",
                 "padding": ".5rem"
             })
-            .html("<i class=\"fas fa-check-circle\" style=\"color: #38c172;margin-right: .5rem;\"></i>Shared with PhishDetect")
+            .html("<i class=\"fas fa-check-circle\" style=\"color: #38c172;margin-right: .5rem;\"></i>Reported to PhishDetect")
 
         if (isReported) {
-            emailHeader.append(htmlSharedAlready);
+            emailHeader.append(htmlReportedAlready);
         } else {
-            var htmlShareButton = $("<div>", {id: "pd-share"})
-                .addClass("pd-webmail-share")
+            var htmlReportButton = $("<div>", {id: "pd-report"})
+                .addClass("pd-webmail-report")
                 .css({
                     "font-size": ".82rem",
                     "cursor": "pointer"
                 })
-                .html("<i class=\"fas fa-fish\" style=\"color: #3490dc;margin-right: .5rem;\"></i>Share with PhishDetect")
+                .html("<i class=\"fas fa-fish\" style=\"color: #3490dc;margin-right: .5rem;\"></i>Report to PhishDetect")
                 .bind("click", function() {
                     vex.dialog.confirm({
-                        unsafeMessage: "<b>PhishDetect</b><br />Are you sure you want to share this email to your PhishDetect Node operator?",
+                        unsafeMessage: "<b>PhishDetect</b><br />Are you sure you want to report this email to your PhishDetect Node operator?",
                         callback: function(ok) {
                             // If user clicked cancel, end.
                             if (!ok) {
@@ -269,9 +269,9 @@ function roundcubeReportEmail(email) {
                             var promise = roundcubeGetEmailSource();
                             if (promise) {
                                 promise.then(function(result) {
-                                    $("#pd-share")
-                                        .removeClass("pd-webmail-share")
-                                        .html(htmlSharedAlready)
+                                    $("#pd-report")
+                                        .removeClass("pd-webmail-report")
+                                        .html(htmlReportedAlready)
                                         .unbind("click");
 
                                     chrome.runtime.sendMessage({
@@ -286,7 +286,7 @@ function roundcubeReportEmail(email) {
                     });
                 });
 
-            emailHeader.append(htmlShareButton);
+            emailHeader.append(htmlReportButton);
         }
     });
 }

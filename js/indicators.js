@@ -22,9 +22,10 @@ function updateIndicators(full = false) {
     var nowUTC = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 
         now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds());
 
-    // Check if there was never any update or if there wasn't any update
-    // in the last 24 hours.
-    if ((cfg.getLastUpdateTime() === null) || ((cfg.getLastUpdateTime() - nowUTC) > ONE_DAY_TIME)) {
+    // Check if there was never any update or if there wasn't any full
+    // update in the last 24 hours.
+    if ((cfg.getLastFullUpdateTime() === null) ||
+       ((cfg.getLastFullUpdateTime() - nowUTC) > ONE_DAY_TIME)) {
         console.log("Performing a full update...");
         var updateURL = cfg.getIndicatorsURL();
         full = true;
@@ -40,6 +41,7 @@ function updateIndicators(full = false) {
         // Otherwise we only append the updates.
         if (full == true) {
             cfg.setIndicators(data);
+            cfg.setLastFullUpdateTime();
         } else {
             // First we get the current list.
             indicators = cfg.getIndicators();

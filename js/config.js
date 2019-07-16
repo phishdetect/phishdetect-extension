@@ -86,20 +86,18 @@ var Config = function() {
     }
     this.setIndicators = function(value) {
         localStorage.setItem("cfg_indicators", JSON.stringify(value));
-        // We update the last update time.
-        this.setLastUpdateTime();
     }
     // Record of last update.
-    this.getLastUpdateTime = function() {
-        var lastUpdate = localStorage.getItem("cfg_last_update")
+    this.getLastFullUpdateTime = function() {
+        var lastUpdate = localStorage.getItem("cfg_last_full_update")
         if (lastUpdate == "") {
             return null;
         }
 
         return Date(lastUpdate);
     }
-    this.setLastUpdateTime = function() {
-        localStorage.setItem("cfg_last_update", getCurrentISODate())
+    this.setLastFullUpdateTime = function() {
+        localStorage.setItem("cfg_last_full_update", getCurrentISODate())
     }
 
     // User contact details.

@@ -179,9 +179,17 @@ function gmailModifyEmail(id) {
     var emailBody = email.dom("body");
     var anchors = $(emailBody).find("a");
 
-    for (var i=0; i<anchors.length; i++) {
-        generateWebmailDialog(anchors[i]);
-    }
+    chrome.runtime.sendMessage({method: "getNodeDisableAnalysis"}, function(response) {
+        for (var i=0; i<anchors.length; i++) {
+            // If the configured Node has analysis disabled, we only display a
+            // a preview. Otherwise we display the full dialog with the options.
+            if (response === true) {
+                generateWebmailPreview(anchors[i]);
+            } else {
+                generateWebmailDialog(anchors[i]);
+            }
+        }
+    });
 }
 
 // gmailReportEmail creates a button to report the currently open email with the

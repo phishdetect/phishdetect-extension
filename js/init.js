@@ -21,6 +21,12 @@
     if (localStorage.cfg_node === undefined) {
         localStorage.cfg_node = NODE_DEFAULT_URL;
     }
+    if (localStorage.cfg_node_disable_analysis === undefined) {
+        localStorage.cfg_node_disable_analysis = false;
+    }
+    if (localStorage.cfg_node_contacts === undefined) {
+        localStorage.cfg_node_contacts = "";
+    }
     if (localStorage.cfg_update_frequency === undefined) {
         localStorage.cfg_update_frequency = 30;
     }
@@ -45,4 +51,27 @@
     if (localStorage.cfg_shared_emails === undefined) {
         localStorage.cfg_shared_emails = JSON.stringify([]);
     }
+})();
+
+// We connect to the Node to pull the configuration details of the server
+// and initialize the local configuration for it.
+(function() {
+    console.log("Fetching config...");
+
+    var url = localStorage.getItem("cfg_node") + NODE_API_CONFIG;
+
+    fetch(url)
+    .then((response) => response.json())
+    .then(function(data) {
+        localStorage.setItem("cfg_node_disable_analysis", data.disable_analysis);
+
+        var contacts = data.operators_contacts;
+        if (contacts === undefined || contacts === null) {
+            contacts = "";
+        }
+        localStorage.setItem("cfg_node_contacts", contacts);
+    })
+    .catch(error => {
+        console.log(error);
+    })
 })();

@@ -216,9 +216,18 @@ function roundcubeModifyEmail(email) {
     }
 
     var anchors = emailBody.find("a");
-    for (var i=0; i<anchors.length; i++) {
-        generateWebmailDialog(anchors[i]);
-    }
+
+    chrome.runtime.sendMessage({method: "getNodeDisableAnalysis"}, function(response) {
+        for (var i=0; i<anchors.length; i++) {
+            // If the configured Node has analysis disabled, we only display a
+            // a preview. Otherwise we display the full dialog with the options.
+            if (response === true) {
+                generateWebmailPreview(anchors[i]);
+            } else {
+                generateWebmailDialog(anchors[i]);
+            }
+        }
+    });
 }
 
 function roundcubeReportEmail(email) {

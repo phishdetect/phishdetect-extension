@@ -41,6 +41,14 @@ var Config = function() {
         localStorage.setItem("cfg_node", NODE_DEFAULT_URL);
     }
 
+    // Functions to get configuration details retrieved from the Node itself.
+    this.getNodeDisableAnalysis = function() {
+        return localStorage.getItem("cfg_node_disable_analysis") == "true" ? true : false;
+    }
+    this.getNodeContacts = function() {
+        return localStorage.getItem("cfg_node_contacts");
+    }
+
     // Functions to get Node URLs.
     this.getLinkCheckURL = function() {
         return this.getNode() + NODE_GUI_LINK_CHECK;
@@ -50,6 +58,9 @@ var Config = function() {
     }
     this.getReportURL = function() {
         return this.getNode() + NODE_GUI_REPORT;
+    }
+    this.getConfigURL = function() {
+        return this.getNode() + NODE_API_CONFIG;
     }
     this.getIndicatorsURL = function() {
         return this.getNode() + NODE_API_INDICATORS_FETCH_PATH;
@@ -85,6 +96,11 @@ var Config = function() {
         return JSON.parse(localStorage.getItem("cfg_indicators"));
     }
     this.setIndicators = function(value) {
+        // If the domains and emails are undefined, something went wrong.
+        if (value.domains === undefined || value.emails === undefined) {
+            return;
+        }
+
         localStorage.setItem("cfg_indicators", JSON.stringify(value));
     }
     // Record of last update.

@@ -110,6 +110,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     case "getReportedEmails":
         sendResponse(cfg.getReportedEmails());
         break;
+    case "getNodeDisableAnalysis":
+        sendResponse(cfg.getNodeDisableAnalysis());
+        break;
     case "loadFontAwesome":
         chrome.tabs.executeScript(sender.tab.id, {frameId: sender.frameId, file: "../fontawesome/js/all.js",}, function() {
             sendResponse(true);

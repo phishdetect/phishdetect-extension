@@ -49,6 +49,14 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("div-reportpage").innerHTML = "";
             document.getElementById("div-scanpage").innerHTML = "";
         }
+
+        // We disable the scan this page button if the Node doesn't support
+        // scanning.
+        chrome.runtime.sendMessage({method: "getNodeDisableAnalysis", tabId: tab.id}, function(response) {
+            if (response === true) {
+                document.getElementById("div-scanpage").innerHTML = "";
+            }
+        });
     });
 
     var btnReport = document.getElementById("button-reportpage");

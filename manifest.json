@@ -3,7 +3,7 @@
 
     "name": "PhishDetect",
     "description": "Anti-phishing browser extension. Scan suspicious pages and links.",
-    "version": "4.1.2",
+    "version": "4.2.0",
     "icons": {
         "16": "icons/icon@16.png",
         "48": "icons/icon@48.png",
@@ -63,6 +63,7 @@
             "run_at": "document_end"
         },
         {
+            "exclude_matches": ["https://mail.google.com/*"],
             "matches": ["http://*/*", "https://*/*"],
             "js": [
                 "lib/sha256.js",

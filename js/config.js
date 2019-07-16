@@ -32,7 +32,7 @@ var Config = function() {
         localStorage.setItem("cfg_node", newAddress);
         // If we are actually changing to a new node, we are going to
         // reset the last update time.
-        localStorage.setItem("cfg_last_update", "")
+        localStorage.setItem("cfg_last_full_update", "")
     }
     this.getDefaultNode = function() {
         return NODE_DEFAULT_URL;

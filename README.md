@@ -1,5 +1,3 @@
-![](icons/icon@64.png)
-
 # PhishDetect Extension
 
 This is a browser extension for Mozilla Firefox and Google Chrome. It is a client for PhishDetect and it is currently capable of the following functionality:

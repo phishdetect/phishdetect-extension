@@ -54,7 +54,7 @@ function updateIndicators(full = false) {
             }
             // We look for any updates in email indicators.
             for (var i=0; i<data.emails.length; i++) {
-                if (checkForIndicators([data.emails[i],], indicators.emaisl) === null) {
+                if (checkForIndicators([data.emails[i],], indicators.emails) === null) {
                     indicators.emails.push(data.emails[i]);
                 }
             }

@@ -1,4 +1,4 @@
-build:
+build: clean
 	@echo "Installing dependencies..."
 	npm install
 

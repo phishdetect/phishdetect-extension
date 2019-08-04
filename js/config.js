@@ -32,7 +32,7 @@ var Config = function() {
         localStorage.setItem("cfg_node", newAddress);
         // If we are actually changing to a new node, we are going to
         // reset the last update time.
-        localStorage.setItem("cfg_last_full_update", "")
+        localStorage.setItem("cfg_last_update", "")
     }
     this.getDefaultNode = function() {
         return NODE_DEFAULT_URL;
@@ -105,7 +105,7 @@ var Config = function() {
     }
     // Record of last update.
     this.getLastFullUpdateTime = function() {
-        var lastUpdate = localStorage.getItem("cfg_last_full_update")
+        var lastUpdate = localStorage.getItem("cfg_last_update")
         if (lastUpdate == "") {
             return null;
         }
@@ -113,7 +113,7 @@ var Config = function() {
         return Date(lastUpdate);
     }
     this.setLastFullUpdateTime = function() {
-        localStorage.setItem("cfg_last_full_update", getCurrentISODate())
+        localStorage.setItem("cfg_last_update", getCurrentISODate())
     }
 
     // User contact details.

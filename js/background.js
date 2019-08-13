@@ -74,6 +74,11 @@ function injectRedirect(tabId) {
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     switch (request.method) {
+    // This message is received when a component of the extension is requesting the
+    // full list of indicators.
+    case "getIndicators":
+        sendResponse(cfg.getIndicators());
+        break;
     // This message is received when the user requests to scan an opened page.
     case "scanPage":
         injectRedirect(request.tabId);
@@ -101,17 +106,12 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     case "getLinkCheckURL":
         sendResponse(cfg.getLinkCheckURL());
         break;
-    // This message is received when a component of the extension is requesting the
-    // full list of indicators.
-    case "getIndicators":
-        sendResponse(cfg.getIndicators());
-        break;
     // This message returns the list of email IDs that were already previously shared.
     case "getReportedEmails":
         sendResponse(cfg.getReportedEmails());
         break;
-    case "getNodeDisableAnalysis":
-        sendResponse(cfg.getNodeDisableAnalysis());
+    case "getNodeEnableAnalysis":
+        sendResponse(cfg.getNodeEnableAnalysis());
         break;
     case "loadFontAwesome":
         chrome.tabs.executeScript(sender.tab.id, {frameId: sender.frameId, file: "../fontawesome/js/all.js",}, function() {
@@ -124,8 +124,13 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
 // Activate on click of the extension button.
 chrome.browserAction.onClicked.addListener(function(tab) {
-    const url = chrome.extension.getURL("/popup/index.html?tabId=" + tab.id);
-    chrome.tabs.create({url});
+    if (cfg.getNodeEnforceUserAuth() == true && cfg.getAPIKey() == "") {
+        const url = chrome.extension.getURL("/ui/apikey/apikey.html");
+        chrome.tabs.create({url});
+    } else {
+        const url = chrome.extension.getURL("/ui/popup/popup.html");
+        chrome.browserAction.setPopup({popup: url});
+    }
 });
 
 // Context menus.

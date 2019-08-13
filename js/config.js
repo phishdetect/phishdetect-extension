@@ -15,87 +15,222 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-var Config = function() {
-    // Functions to set and get the PhishDetect Node.
-    this.getNode = function() {
+class Config {
+
+    //=========================================================================
+    // Local Storage
+    //=========================================================================
+    initLocalStorage() {
+        console.log("Initializing storage...");
+
+        if (localStorage.cfg_node === undefined) {
+            localStorage.cfg_node = NODE_DEFAULT_URL;
+        }
+        if (localStorage.cfg_api_key === undefined) {
+            localStorage.cfg_api_key = "";
+        }
+        if (localStorage.cfg_node_enforce_user_auth === undefined) {
+            localStorage.cfg_node_enforce_user_auth = true;
+        }
+        if (localStorage.cfg_node_enable_analysis === undefined) {
+            localStorage.cfg_node_enable_analysis = false;
+        }
+        if (localStorage.cfg_node_contacts === undefined) {
+            localStorage.cfg_node_contacts = "";
+        }
+        if (localStorage.cfg_update_frequency === undefined) {
+            localStorage.cfg_update_frequency = 30;
+        }
+        if (localStorage.cfg_indicators === undefined) {
+            localStorage.cfg_indicators = JSON.stringify({});
+        }
+        if (localStorage.cfg_last_update === undefined) {
+            localStorage.cfg_last_update = "";
+        }
+        if (localStorage.cfg_report === undefined) {
+            localStorage.cfg_report = true;
+        }
+        if (localStorage.cfg_webmails === undefined) {
+            localStorage.cfg_webmails = true;
+        }
+        if (localStorage.cfg_contact === undefined) {
+            localStorage.cfg_contact = "";
+        }
+        if (localStorage.cfg_reported_emails === undefined) {
+            localStorage.cfg_reported_emails = JSON.stringify([]);
+        }
+        if (localStorage.cfg_shared_emails === undefined) {
+            localStorage.cfg_shared_emails = JSON.stringify([]);
+        }
+
+        console.log("Storage initialization completed.");
+    }
+
+    //=========================================================================
+    // Node
+    //=========================================================================
+    getNode() {
         var address = localStorage.getItem("cfg_node");
         if (!address.startsWith("http")) {
             return "https://" + address;
         }
         return address;
     }
-    this.setNode = function(newAddress) {
+    setNode(newAddress) {
         var currentAddress = this.getNode()
         if (newAddress == currentAddress) {
             return;
         }
+
+        console.log("Attention! Reconfiguring PhishDetect Node...");
+
+        // If we are changing the server, we also reset all the localStorage.
+        localStorage.clear();
+        // Then we set the new node.
         localStorage.setItem("cfg_node", newAddress);
-        // If we are actually changing to a new node, we are going to
-        // reset the last update time.
-        localStorage.setItem("cfg_last_update", "")
+        // We reinitialize the storage.
+        this.initLocalStorage();
+        // And we pull the new config.
+        this.fetchNodeConfig(function() {});
     }
-    this.getDefaultNode = function() {
-        return NODE_DEFAULT_URL;
-    }
-    this.restoreDefaultNode = function() {
-        localStorage.setItem("cfg_node", NODE_DEFAULT_URL);
+    restoreDefaultNode() {
+        this.setNode(NODE_DEFAULT_URL);
     }
 
-    // Functions to get configuration details retrieved from the Node itself.
-    this.getNodeDisableAnalysis = function() {
-        return localStorage.getItem("cfg_node_disable_analysis") == "true" ? true : false;
+    //=========================================================================
+    // API Keys
+    //=========================================================================
+    getAPIKey() {
+        return localStorage.getItem("cfg_api_key");
     }
-    this.getNodeContacts = function() {
-        return localStorage.getItem("cfg_node_contacts");
+    setAPIKey(newAPIKey) {
+        localStorage.setItem("cfg_api_key", newAPIKey);
     }
 
-    // Functions to get Node URLs.
-    this.getLinkCheckURL = function() {
-        return this.getNode() + NODE_GUI_LINK_CHECK;
+    //=========================================================================
+    // Node configuration
+    //=========================================================================
+    fetchNodeConfig(callback) {
+        console.log("Fetching configuration from Node...");
+
+        var url = this.getConfigURL()
+
+        fetch(url)
+        .then((response) => response.json())
+        .then(data => {
+            this.setNodeEnableAnalysis(data.disable_analysis);
+            this.setNodeEnforceUserAuth(data.enforce_user_auth);
+
+            console.log("Configuration fetched successfully.");
+        })
+        .then(function() {
+            callback();
+        })
+        .catch(error => {
+            console.log(error);
+        });
     }
-    this.getReviewURL = function() {
-        return this.getNode() + NODE_GUI_REVIEW;
+    getNodeEnableAnalysis() {
+        return localStorage.getItem("cfg_node_enable_analysis") == "true" ? true : false;
     }
-    this.getReportURL = function() {
-        return this.getNode() + NODE_GUI_REPORT;
+    setNodeEnableAnalysis(value) {
+        localStorage.setItem("cfg_node_enable_analysis", value);
     }
-    this.getConfigURL = function() {
+    getNodeEnforceUserAuth() {
+        return localStorage.getItem("cfg_node_enforce_user_auth") == "true" ? true : false;
+    }
+    setNodeEnforceUserAuth(value) {
+        localStorage.setItem("cfg_node_enforce_user_auth", value);
+    }
+
+    //=========================================================================
+    // Node URLs
+    //=========================================================================
+    getConfigURL() {
         return this.getNode() + NODE_API_CONFIG;
     }
-    this.getIndicatorsURL = function() {
-        return this.getNode() + NODE_API_INDICATORS_FETCH_PATH;
+    getAuthURL(apiKey) {
+        return this.getNode() + NODE_API_AUTH + "?key=" + apiKey;
     }
-    this.getRecentIndicatorsURL = function() {
-        return this.getNode() + NODE_API_RECENT_INDICATORS_FETCH_PATH;
+    getLinkCheckURL() {
+        var url = this.getNode() + NODE_GUI_LINK_CHECK;
+        if (this.getNodeEnforceUserAuth() == true) {
+            url += "?key=" + this.getAPIKey()
+        }
+        return url;
     }
-    this.getEventsURL = function() {
-        return this.getNode() + NODE_API_EVENTS_ADD_PATH;
+    getReviewURL() {
+        var url = this.getNode() + NODE_GUI_REVIEW;
+        if (this.getNodeEnforceUserAuth() == true) {
+            url += "?key=" + this.getAPIKey()
+        }
+        return url;
     }
-    this.getRawURL = function() {
-        return this.getNode() + NODE_API_RAW_ADD;
+    getReportURL() {
+        var url = this.getNode() + NODE_GUI_REPORT;
+        if (this.getNodeEnforceUserAuth() == true) {
+            url += "?key=" + this.getAPIKey()
+        }
+        return url;
+    }
+    getIndicatorsURL() {
+        var url = this.getNode() + NODE_API_INDICATORS_FETCH_PATH;
+        if (this.getNodeEnforceUserAuth() == true) {
+            url += "?key=" + this.getAPIKey()
+        }
+        return url;
+    }
+    getRecentIndicatorsURL() {
+        var url = this.getNode() + NODE_API_RECENT_INDICATORS_FETCH_PATH;
+        if (this.getNodeEnforceUserAuth() == true) {
+            url += "?key=" + this.getAPIKey()
+        }
+        return url;
+    }
+    getEventsURL() {
+        var url = this.getNode() + NODE_API_EVENTS_ADD_PATH;
+        if (this.getNodeEnforceUserAuth() == true) {
+            url += "?key=" + this.getAPIKey()
+        }
+        return url;
+    }
+    getRawURL() {
+        var url = this.getNode() + NODE_API_RAW_ADD;
+        if (this.getNodeEnforceUserAuth() == true) {
+            url += "?key=" + this.getAPIKey()
+        }
+        return url;
     }
 
-    // Flag for reporting events to Node.
-    this.getReport = function() {
+    //=========================================================================
+    // Report (events).
+    // TODO: rename this to something more descriptive.
+    //=========================================================================
+    getReport() {
         return localStorage.getItem("cfg_report") == "true" ? true : false;
     }
-    this.setReport = function(value) {
+    setReport(value) {
         localStorage.setItem("cfg_report", value);
     }
 
-    // Flag for Gmail integration.
-    this.getWebmails = function() {
+    //=========================================================================
+    // Webmails integration.
+    // TODO: rename this to something more descriptive.
+    //=========================================================================
+    getWebmails() {
         return localStorage.getItem("cfg_webmails") == "true" ? true : false;
     }
-    this.setWebmails = function(value) {
+    setWebmails(value) {
         localStorage.setItem("cfg_webmails", value);
     }
 
-    // Indicators stored in local storage.
-    this.getIndicators = function() {
+    //=========================================================================
+    // Indicators
+    //=========================================================================
+    getIndicators() {
         return JSON.parse(localStorage.getItem("cfg_indicators"));
     }
-    this.setIndicators = function(value) {
+    setIndicators(value) {
         // If the domains and emails are undefined, something went wrong.
         if (value.domains === undefined || value.emails === undefined) {
             return;
@@ -103,8 +238,11 @@ var Config = function() {
 
         localStorage.setItem("cfg_indicators", JSON.stringify(value));
     }
-    // Record of last update.
-    this.getLastFullUpdateTime = function() {
+
+    //=========================================================================
+    // Update time
+    //=========================================================================
+    getLastFullUpdateTime() {
         var lastUpdate = localStorage.getItem("cfg_last_update")
         if (lastUpdate == "") {
             return null;
@@ -112,33 +250,40 @@ var Config = function() {
 
         return Date(lastUpdate);
     }
-    this.setLastFullUpdateTime = function() {
+    setLastFullUpdateTime() {
         localStorage.setItem("cfg_last_update", getCurrentISODate())
     }
 
-    // User contact details.
-    this.getContact = function() {
+    //=========================================================================
+    // User contact details
+    //=========================================================================
+    getContact() {
         return localStorage.getItem("cfg_contact");
     }
-    this.setContact = function(value) {
+    setContact(value) {
         localStorage.setItem("cfg_contact", value);
     }
 
-    // List of email IDs that have already been reported (to avoid duplication).
-    this.getDetectedEmails = function() {
+    //=========================================================================
+    // Emails that were detected in webmail
+    //=========================================================================
+    getDetectedEmails() {
         return JSON.parse(localStorage.getItem("cfg_detected_emails"));
     }
-    this.addDetectedEmail = function(value) {
-        var emails = this.getDetectedEmails();
+    addDetectedEmail(value) {
+        var emails = getDetectedEmails();
         emails.push(value);
         localStorage.setItem("cfg_detected_emails", JSON.stringify(emails));
     }
-    // List of email IDs that have already be shared (to avoid duplication).
-    this.getReportedEmails = function() {
+
+    //=========================================================================
+    // Emails that were reported by the user to the Node
+    //=========================================================================
+    getReportedEmails() {
         return JSON.parse(localStorage.getItem("cfg_reported_emails"));
     }
-    this.addReportedEmail = function(value) {
-        var emails = this.getReportedEmails();
+    addReportedEmail(value) {
+        var emails = getReportedEmails();
         emails.push(value);
         localStorage.setItem("cfg_reported_emails", JSON.stringify(emails));
     }

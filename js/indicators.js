@@ -16,6 +16,8 @@
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
 function updateIndicators(full = false) {
+    var cfg = new Config();
+
     // JavaScript's date/timezone handling is ridiculous.
     // Did you know that Date.getMonth() returns a value from 0-11?
     var now = new Date();
@@ -34,9 +36,16 @@ function updateIndicators(full = false) {
         var updateURL = cfg.getRecentIndicatorsURL();
     }
 
+    console.log("Fetching indicators from:", updateURL);
+
     fetch(updateURL)
     .then((response) => response.json())
     .then(function(data) {
+        if ("error" in data) {
+            console.log("ERROR: The indicators update failed:", data.error);
+            return;
+        }
+
         // If it's a full update, we store the whole indicators feed.
         // Otherwise we only append the updates.
         if (full == true) {
@@ -62,13 +71,10 @@ function updateIndicators(full = false) {
             // Now we update indicators in the storage.
             cfg.setIndicators(indicators);
         }
+
+        console.log("Indicators updated successfully.");
     })
     .catch(error => {
-        console.log(error);
+        console.log("ERROR: Fetching indicators failed:", error);
     })
 }
-
-// Update indicators at launch.
-(function() {
-    updateIndicators();
-})();

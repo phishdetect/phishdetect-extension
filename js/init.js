@@ -15,63 +15,21 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-// Check if configuration values are set. If not, create a default
-// configuration.
 (function() {
-    if (localStorage.cfg_node === undefined) {
-        localStorage.cfg_node = NODE_DEFAULT_URL;
-    }
-    if (localStorage.cfg_node_disable_analysis === undefined) {
-        localStorage.cfg_node_disable_analysis = false;
-    }
-    if (localStorage.cfg_node_contacts === undefined) {
-        localStorage.cfg_node_contacts = "";
-    }
-    if (localStorage.cfg_update_frequency === undefined) {
-        localStorage.cfg_update_frequency = 30;
-    }
-    if (localStorage.cfg_indicators === undefined) {
-        localStorage.cfg_indicators = JSON.stringify({});
-    }
-    if (localStorage.cfg_last_update === undefined) {
-        localStorage.cfg_last_update = "";
-    }
-    if (localStorage.cfg_report === undefined) {
-        localStorage.cfg_report = true;
-    }
-    if (localStorage.cfg_webmails === undefined) {
-        localStorage.cfg_webmails = true;
-    }
-    if (localStorage.cfg_contact === undefined) {
-        localStorage.cfg_contact = "";
-    }
-    if (localStorage.cfg_reported_emails === undefined) {
-        localStorage.cfg_reported_emails = JSON.stringify([]);
-    }
-    if (localStorage.cfg_shared_emails === undefined) {
-        localStorage.cfg_shared_emails = JSON.stringify([]);
-    }
-})();
+    console.log("*** PhishDetect init ***")
 
-// We connect to the Node to pull the configuration details of the server
-// and initialize the local configuration for it.
-(function() {
-    console.log("Fetching config...");
+    var cfg = new Config();
 
-    var url = localStorage.getItem("cfg_node") + NODE_API_CONFIG;
-
-    fetch(url)
-    .then((response) => response.json())
-    .then(function(data) {
-        localStorage.setItem("cfg_node_disable_analysis", data.disable_analysis);
-
-        var contacts = data.operators_contacts;
-        if (contacts === undefined || contacts === null) {
-            contacts = "";
+    cfg.initLocalStorage();
+    cfg.fetchNodeConfig(function() {
+        // If the node enforces authentication, but we don't have an API key,
+        // we show an error icon in the toolbar.
+        if (cfg.getNodeEnforceUserAuth() === true && cfg.getAPIKey() == "") {
+            console.log("The user does not appear to have configured a required API key!");
+            browser.browserAction.setIcon({path: browser.extension.getURL("icons/icon_error.png")});
+        } else {
+            // If everything is fine, we launch an update of indicators.
+            updateIndicators();
         }
-        localStorage.setItem("cfg_node_contacts", contacts);
-    })
-    .catch(error => {
-        console.log(error);
-    })
+    });
 })();

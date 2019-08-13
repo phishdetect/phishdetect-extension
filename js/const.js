@@ -26,6 +26,7 @@ NODE_API_INDICATORS_FETCH_PATH        = "/api/indicators/fetch/";
 NODE_API_RECENT_INDICATORS_FETCH_PATH = "/api/indicators/fetch/recent/";
 NODE_API_EVENTS_ADD_PATH              = "/api/events/add/";
 NODE_API_RAW_ADD                      = "/api/raw/add/";
+NODE_API_AUTH                         = "/api/auth/";
 
 INDICATORS_UPDATE_FREQUENCY           = 15;
 WARNING_PAGE                          = "ui/warning/warning.html";

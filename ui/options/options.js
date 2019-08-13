@@ -16,54 +16,63 @@
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
 function loadOptions() {
-    document.getElementById("server").value = cfg.getNode();
-    document.getElementById("webmails").checked = cfg.getWebmails();
+    $("#server").val(cfg.getNode());
+    $("#webmails").prop("checked", cfg.getWebmails());
 
-    let report = cfg.getReport();
-    document.getElementById("report").checked = report;
-    document.getElementById("contact").value = cfg.getContact();
+    var report = cfg.getReport();
+    $("#report").prop("checked", cfg.getReport());
+    $("#contact").val(cfg.getContact());
     if (report) {
-        document.getElementById("contactLabel").classList.remove("text-grey");
-        document.getElementById("contact").disabled = false;
+        $("#contactLabel").removeClass("text-grey");
+        $("#contact").prop("disabled", false);
     } else {
-        document.getElementById("contactLabel").classList.add("text-grey");
-        document.getElementById("contact").disabled = true;
+        $("#contactLabel").addClass("text-grey");
+        $("#contact").prop("disabled", true);
+    }
+
+    var enforceAuth = cfg.getNodeEnforceUserAuth();
+    $("#key").val(cfg.getAPIKey());
+    if (enforceAuth) {
+        $("#keyLabel").removeClass("text-grey");
+        $("#key").prop("disabled", false);
+    } else {
+        $("#keyLabel").addClass("text-grey");
+        $("#key").prop("disabled", true);
     }
 }
 
 function saveOptions() {
-	let node = document.querySelector("#server").value.trim();
+	var node = $("#server").val().trim();
 	if (node != "") {
 		cfg.setNode(node);
 	}
-    let contact = document.querySelector("#contact").value.trim();
+    var contact = $("#contact").val().trim();
     if (contact != "") {
         cfg.setContact(contact);
     }
-    cfg.setReport(document.querySelector("#report").checked);
-    cfg.setWebmails(document.querySelector("#webmails").checked);
+    cfg.setReport($("#report").is(":checked"));
+    cfg.setWebmails($("#webmails").is(":checked"));
 
-    document.getElementById("container").innerHTML = "<div class=\"text-center\"><i class=\"fas fa-check-circle text-5xl text-green\"></i><div class=\"mt-4\">Saved!</div></div>";
-    // loadOptions();
+    $("#container").html("<div class=\"text-center\"><i class=\"fas fa-check-circle text-5xl text-green\"></i><div class=\"mt-4\">Saved!</div></div>");
 }
 
 function restoreDefaults() {
-    document.getElementById("server").value = cfg.getDefaultNode();
-    document.getElementById("webmails").checked = true;
-    document.getElementById("report").checked = true;
-    document.getElementById("contact").value = "";
+    $("#server").val(cfg.getDefaultNode());
+    $("#webmails").prop("checked", true);
+    $("#report").prop("checked", true);
+    $("#contact").val("");
 }
 
 document.addEventListener("DOMContentLoaded", loadOptions);
-document.querySelector("form").addEventListener("submit", saveOptions);
-document.querySelector("#restoreDefaults").addEventListener("click", restoreDefaults);
+$("form").submit(saveOptions);
+$("#restoreDefaults").click(restoreDefaults);
 
-document.querySelector("#report").addEventListener("change", function() {
+$("#report").change(function() {
     if (this.checked) {
-        document.getElementById("contactLabel").classList.remove("text-grey");
-        document.getElementById("contact").disabled = false;
+        $("#contactLabel").removeClass("text-grey");
+        $("#contact").prop("disabled", false);
     } else {
-        document.getElementById("contactLabel").classList.add("text-grey");
-        document.getElementById("contact").disabled = true;
+        $("#contactLabel").addClass("text-grey");
+        $("#contact").prop("disabled", true);
     }
 });

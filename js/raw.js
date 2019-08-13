@@ -16,6 +16,8 @@
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
 function sendRaw(rawType, rawContent, identifier) {
+    var cfg = new Config();
+
     // Check if the event type is email_*.
     if (rawType == "email") {
         // If an email identifier was provided...

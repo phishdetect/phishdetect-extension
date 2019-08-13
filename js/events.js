@@ -16,6 +16,8 @@
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
 function sendEvent(eventType, match, indicator, identifier) {
+    var cfg = new Config();
+
     if (cfg.getReport() === false) {
         return;
     }

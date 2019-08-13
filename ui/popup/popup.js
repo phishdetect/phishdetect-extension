@@ -27,7 +27,7 @@ function getTab(callback) {
 function reportPage() {
     getTab(function(tab) {
         chrome.runtime.sendMessage({method: "reportPage", url: tab.url}, function(response) {
-            document.getElementById("div-reportpage").innerHTML = "Reported!";
+            $("#div-reportpage").html("Reported!");
         });
     });
 }
@@ -35,7 +35,7 @@ function reportPage() {
 function scanPage() {
     getTab(function(tab) {
         chrome.runtime.sendMessage({method: "scanPage", tabId: tab.id}, function(response) {
-            document.getElementById("div-scanpage").innerHTML = "Scanning...";
+            $("#div-scanpage").html("Scanning...");
         });
     });
 }
@@ -46,26 +46,24 @@ document.addEventListener("DOMContentLoaded", function () {
         let backendURL = new URL(cfg.getNode());
         // We disable the scan this page button for the node site and for Gmail.
         if (url.hostname == backendURL.hostname || url.hostname == "mail.google.com") {
-            document.getElementById("div-reportpage").innerHTML = "";
-            document.getElementById("div-scanpage").innerHTML = "";
+            $("#div-reportpage").html("");
+            $("#div-scanpage").html("");
         }
 
         // We disable the scan this page button if the Node doesn't support
         // scanning.
-        chrome.runtime.sendMessage({method: "getNodeDisableAnalysis", tabId: tab.id}, function(response) {
-            if (response === true) {
-                document.getElementById("div-scanpage").innerHTML = "";
+        chrome.runtime.sendMessage({method: "getNodeEnableAnalysis", tabId: tab.id}, function(response) {
+            if (response === false) {
+                $("#div-scanpage").html("");
             }
         });
     });
 
-    var btnReport = document.getElementById("button-reportpage");
-    btnReport.addEventListener("click", function() {
+    $("#button-reportpage").on("click", function() {
         reportPage();
     })
 
-    var btnScan = document.getElementById("button-scanpage");
-    btnScan.addEventListener("click", function() {
+    $("#button-scanpage").on("click", function() {
         scanPage();
     });
 });

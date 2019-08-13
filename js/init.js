@@ -24,7 +24,7 @@
     cfg.fetchNodeConfig(function() {
         // If the node enforces authentication, but we don't have an API key,
         // we show an error icon in the toolbar.
-        if (cfg.getNodeEnforceUserAuth() === true && cfg.getAPIKey() == "") {
+        if (cfg.getNodeEnforceUserAuth() === true && cfg.getApiKey() == "") {
             console.log("The user does not appear to have configured a required API key!");
             browser.browserAction.setIcon({path: browser.extension.getURL("icons/icon_error.png")});
         } else {

@@ -124,7 +124,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
 // Activate on click of the extension button.
 chrome.browserAction.onClicked.addListener(function(tab) {
-    if (cfg.getNodeEnforceUserAuth() == true && cfg.getAPIKey() == "") {
+    if (cfg.getNodeEnforceUserAuth() == true && cfg.getApiKey() == "") {
         const url = chrome.extension.getURL("/ui/apikey/apikey.html");
         chrome.tabs.create({url});
     } else {

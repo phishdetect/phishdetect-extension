@@ -28,7 +28,7 @@ $("form").submit(function() {
     var apiKey = $("#key").val().trim()
     if (apiKey != "") {
         console.log("NEW API KEY");
-        cfg.setAPIKey(apiKey);
+        cfg.setApiKey(apiKey);
         // chrome.runtime.sendMessage({method: "auth", apiKey: apiKey}, function(response) {
         //     var promise = response;
         //     promise.then((response) => response.json())

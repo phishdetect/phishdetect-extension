@@ -100,10 +100,10 @@ class Config {
     //=========================================================================
     // API Keys
     //=========================================================================
-    getAPIKey() {
+    getApiKey() {
         return localStorage.getItem("cfg_api_key");
     }
-    setAPIKey(newAPIKey) {
+    setApiKey(newAPIKey) {
         localStorage.setItem("cfg_api_key", newAPIKey);
     }
 
@@ -155,49 +155,49 @@ class Config {
     getLinkCheckURL() {
         var url = this.getNode() + NODE_GUI_LINK_CHECK;
         if (this.getNodeEnforceUserAuth() == true) {
-            url += "?key=" + this.getAPIKey()
+            url += "?key=" + this.getApiKey()
         }
         return url;
     }
     getReviewURL() {
         var url = this.getNode() + NODE_GUI_REVIEW;
         if (this.getNodeEnforceUserAuth() == true) {
-            url += "?key=" + this.getAPIKey()
+            url += "?key=" + this.getApiKey()
         }
         return url;
     }
     getReportURL() {
         var url = this.getNode() + NODE_GUI_REPORT;
         if (this.getNodeEnforceUserAuth() == true) {
-            url += "?key=" + this.getAPIKey()
+            url += "?key=" + this.getApiKey()
         }
         return url;
     }
     getIndicatorsURL() {
         var url = this.getNode() + NODE_API_INDICATORS_FETCH_PATH;
         if (this.getNodeEnforceUserAuth() == true) {
-            url += "?key=" + this.getAPIKey()
+            url += "?key=" + this.getApiKey()
         }
         return url;
     }
     getRecentIndicatorsURL() {
         var url = this.getNode() + NODE_API_RECENT_INDICATORS_FETCH_PATH;
         if (this.getNodeEnforceUserAuth() == true) {
-            url += "?key=" + this.getAPIKey()
+            url += "?key=" + this.getApiKey()
         }
         return url;
     }
     getEventsURL() {
         var url = this.getNode() + NODE_API_EVENTS_ADD_PATH;
         if (this.getNodeEnforceUserAuth() == true) {
-            url += "?key=" + this.getAPIKey()
+            url += "?key=" + this.getApiKey()
         }
         return url;
     }
     getRawURL() {
         var url = this.getNode() + NODE_API_RAW_ADD;
         if (this.getNodeEnforceUserAuth() == true) {
-            url += "?key=" + this.getAPIKey()
+            url += "?key=" + this.getApiKey()
         }
         return url;
     }

@@ -31,7 +31,7 @@ function loadOptions() {
     }
 
     var enforceAuth = cfg.getNodeEnforceUserAuth();
-    $("#key").val(cfg.getAPIKey());
+    $("#key").val(cfg.getApiKey());
     if (enforceAuth) {
         $("#keyLabel").removeClass("text-grey");
         $("#key").prop("disabled", false);

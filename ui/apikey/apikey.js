@@ -15,10 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-document.addEventListener("DOMContentLoaded", function() {
-    $("#server").val(cfg.getNode());
-});
-
 $("form").submit(function() {
     var node = $("#server").val().trim();
     if (node != "") {
@@ -33,4 +29,10 @@ $("form").submit(function() {
     } else {
         $("#errors").html("You did not provide a valid API key.");
     }
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    var link = cfg.getRegisterURL();
+    $("#link-register").attr("href", link);
+    $("#server").val(cfg.getNode());
 });

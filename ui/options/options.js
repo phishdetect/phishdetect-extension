@@ -30,14 +30,9 @@ function loadOptions() {
         $("#contact").prop("disabled", true);
     }
 
-    var enforceAuth = cfg.getNodeEnforceUserAuth();
     $("#key").val(cfg.getApiKey());
-    if (enforceAuth) {
-        $("#keyLabel").removeClass("text-grey");
-        $("#key").prop("disabled", false);
-    } else {
-        $("#keyLabel").addClass("text-grey");
-        $("#key").prop("disabled", true);
+    if (!enforceAuth) {
+        $("#keySection").hide();
     }
 }
 

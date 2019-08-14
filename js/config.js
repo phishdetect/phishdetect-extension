@@ -157,6 +157,9 @@ class Config {
     getAuthURL(apiKey) {
         return this.getNode() + NODE_API_AUTH + "?key=" + apiKey;
     }
+    getRegisterURL() {
+        return this.getNode() + NODE_GUI_REGISTER;
+    }
     getLinkCheckURL(link) {
         var url = this.getNode() + NODE_GUI_LINK_CHECK;
         url += link + "/";

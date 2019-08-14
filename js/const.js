@@ -20,6 +20,7 @@ NODE_DEFAULT_URL                      = "https://node.phishdetect.io";
 NODE_GUI_LINK_CHECK                   = "/link/";
 NODE_GUI_REVIEW                       = "/review/";
 NODE_GUI_REPORT                       = "/report/";
+NODE_GUI_REGISTER                     = "/register/";
 
 NODE_API_CONFIG                       = "/api/config/";
 NODE_API_INDICATORS_FETCH_PATH        = "/api/indicators/fetch/";

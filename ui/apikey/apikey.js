@@ -27,21 +27,10 @@ $("form").submit(function() {
 
     var apiKey = $("#key").val().trim()
     if (apiKey != "") {
-        console.log("NEW API KEY");
         cfg.setApiKey(apiKey);
-        // chrome.runtime.sendMessage({method: "auth", apiKey: apiKey}, function(response) {
-        //     var promise = response;
-        //     promise.then((response) => response.json())
-        //     .then(function(data) {
-        //         console.log("GOOD API KEY");
-        //     })
-        //     .catch(error => {
-        //         console.log("BAD API KEY");
-        //     });
-        // });
-        $("#container").html("Saved!");
+
+        $("#container").html("<div class=\"text-center\"><i class=\"fas fa-check-circle text-5xl text-green\"></i><div class=\"mt-4\">Saved!</div></div>");
     } else {
-        console.log("NO API KEY");
         $("#errors").html("You did not provide a valid API key.");
     }
 });

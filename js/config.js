@@ -62,6 +62,9 @@ class Config {
         if (localStorage.cfg_shared_emails === undefined) {
             localStorage.cfg_shared_emails = JSON.stringify([]);
         }
+        if (localStorage.cfg_last_error === undefined) {
+            localStorage.cfg_last_error = "";
+        }
 
         console.log("Storage initialization completed.");
     }
@@ -76,9 +79,9 @@ class Config {
         }
         return address;
     }
-    setNode(newAddress) {
+    setNode(value) {
         var currentAddress = this.getNode()
-        if (newAddress == currentAddress) {
+        if (value == currentAddress) {
             return;
         }
 
@@ -87,7 +90,7 @@ class Config {
         // If we are changing the server, we also reset all the localStorage.
         localStorage.clear();
         // Then we set the new node.
-        localStorage.setItem("cfg_node", newAddress);
+        localStorage.setItem("cfg_node", value);
         // We reinitialize the storage.
         this.initLocalStorage();
         // And we pull the new config.
@@ -103,8 +106,10 @@ class Config {
     getApiKey() {
         return localStorage.getItem("cfg_api_key");
     }
-    setApiKey(newAPIKey) {
-        localStorage.setItem("cfg_api_key", newAPIKey);
+    setApiKey(value) {
+        localStorage.setItem("cfg_api_key", value);
+        // We restore the good icon.
+        chrome.browserAction.setIcon({path: chrome.extension.getURL("icons/icon@34.png")});
     }
 
     //=========================================================================
@@ -118,7 +123,7 @@ class Config {
         fetch(url)
         .then((response) => response.json())
         .then(data => {
-            this.setNodeEnableAnalysis(data.disable_analysis);
+            this.setNodeEnableAnalysis(data.enable_analysis);
             this.setNodeEnforceUserAuth(data.enforce_user_auth);
 
             console.log("Configuration fetched successfully.");

@@ -1,14 +1,12 @@
 html, body {
     background-color: #fff;
     font-family: "Lucida Grande", "Segoe UI", Tahoma, "DejaVu Sans", Arial, sans-serif;
-    /*font-size: 90%;*/
 }
 
 #container {
     padding: 2em;
     min-width: 300px;
 }
-
 
 h2 {
     line-height: 1;

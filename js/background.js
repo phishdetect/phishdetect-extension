@@ -122,17 +122,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     return false;
 });
 
-// Activate on click of the extension button.
-chrome.browserAction.onClicked.addListener(function(tab) {
-    if (cfg.getNodeEnforceUserAuth() == true && cfg.getApiKey() == "") {
-        const url = chrome.extension.getURL("/ui/apikey/apikey.html");
-        chrome.tabs.create({url});
-    } else {
-        const url = chrome.extension.getURL("/ui/popup/popup.html");
-        chrome.browserAction.setPopup({popup: url});
-    }
-});
-
 // Context menus.
 function loadContextMenus() {
     chrome.contextMenus.create({

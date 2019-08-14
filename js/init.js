@@ -26,7 +26,7 @@
         // we show an error icon in the toolbar.
         if (cfg.getNodeEnforceUserAuth() === true && cfg.getApiKey() == "") {
             console.log("The user does not appear to have configured a required API key!");
-            browser.browserAction.setIcon({path: browser.extension.getURL("icons/icon_error.png")});
+            chrome.browserAction.setIcon({path: chrome.extension.getURL("icons/icon_error@34.png")});
         } else {
             // If everything is fine, we launch an update of indicators.
             updateIndicators();

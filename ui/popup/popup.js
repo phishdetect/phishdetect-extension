@@ -41,6 +41,11 @@ function scanPage() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+    if (cfg.getNodeEnforceUserAuth() === true && cfg.getApiKey() == "") {
+        $("#content").html("You need an API key! <a href=\"/ui/apikey/apikey.html\">Register your API key!</a>");
+        return;
+    }
+
     getTab(function(tab) {
         let url = new URL(tab.url);
         let backendURL = new URL(cfg.getNode());

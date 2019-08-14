@@ -46,6 +46,10 @@ function saveOptions() {
 	if (node != "") {
 		cfg.setNode(node);
 	}
+    var key = $("#key").val().trim();
+    if (key != "") {
+        cfg.setApiKey(key);
+    }
     var contact = $("#contact").val().trim();
     if (contact != "") {
         cfg.setContact(contact);

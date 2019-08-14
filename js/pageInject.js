@@ -15,13 +15,20 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
+function base64encode(str) {
+    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
+        return String.fromCharCode('0x' + p1);
+    }));
+}
+
 var url = location.href;
 var html = document.documentElement.outerHTML;
-var htmlEncoded = btoa(unescape(encodeURIComponent(html)));
+var htmlEncoded = base64encode(html);
+var actionURL = backend.replace("{{URL}}", base64encode(url));
 
 var form = document.createElement("div");
 form.innerHTML = "<div style=\"display: none;\">" +
-"<form id=\"phishdetect-form\" action=\"" + backend + window.btoa(url) + "\" method=\"POST\">" +
+"<form id=\"phishdetect-form\" action=\"" + actionURL + "\" method=\"POST\">" +
 "<textarea name=\"html\">" + htmlEncoded + "</textarea>" +
 "<textarea name=\"screenshot\">" + screenshot + "</textarea>" +
 "</form>" +

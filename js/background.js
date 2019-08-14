@@ -63,8 +63,9 @@ function injectRedirect(tabId) {
     // Capture screenshot of page.
     chrome.tabs.captureVisibleTab(null, {}, function(img) {
         // Inject some data in the page.
+        var code = "var screenshot = '" + img + "'; var backend = '" + cfg.getLinkCheckURL("{{URL}}") + "';";
         chrome.tabs.executeScript(tabId, {
-            code: "var screenshot = '" + img + "'; var backend = '" + cfg.getLinkCheckURL() + "';"
+            code: code
         }, function() {
             // Inject our redirector.
             chrome.tabs.executeScript(tabId, {file: "js/pageInject.js"});

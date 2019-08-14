@@ -41,6 +41,7 @@ function sendRaw(rawType, rawContent, identifier) {
             "type": rawType,
             "content": rawContent,
             "user_contact": cfg.getContact(),
+            "key": cfg.getApiKey(),
         }),
         headers: {"Content-Type": "application/json"},
     };
@@ -54,6 +55,8 @@ function sendRaw(rawType, rawContent, identifier) {
                 cfg.addReportedEmail(identifier);
             }
         }
+
+        console.log("Reported raw message of type", rawType, "to PhishDetect Node.");
     })
     .catch(error => {
         console.log(error);

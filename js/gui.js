@@ -78,14 +78,14 @@ window.generateWebmailDialog = function generateWebmailDialog(anchor) {
         event.preventDefault();
 
         // Get URLs.
-        // var unsafe_url = event.srcElement.getAttribute("href");
-        var unsafe_url = href;
+        // var unsafeUrl = event.srcElement.getAttribute("href");
+        var unsafeUrl = href;
         // Get check URL from config.
-        chrome.runtime.sendMessage({method: "getLinkCheckURL", link: unsafe_url}, function(response) {
-            var safe_url = response;
+        chrome.runtime.sendMessage({method: "getLinkCheckURL", url: unsafeUrl}, function(response) {
+            var safeUrl = response;
 
             // We sanitize the link and preview it in the dialog.
-            var sanitizedLink = $("<span>").text(unsafe_url).html();
+            var sanitizedLink = $("<span>").text(unsafeUrl).html();
             var message = $("<span>")
                 .css({
                     "overflow-wrap": "break-word",
@@ -136,10 +136,10 @@ window.generateWebmailDialog = function generateWebmailDialog(anchor) {
                     if (value) {
                         // Open the URL through our service.
                         if (value == "safe") {
-                            window.open(safe_url);
+                            window.open(safeUrl);
                         // Open the URL directly.
                         } else if (value == "unsafe") {
-                            window.open(unsafe_url);
+                            window.open(unsafeUrl);
                         } else if (value == "help") {
                             window.open("https://phishdetect.io/help/");
                         }
@@ -172,10 +172,10 @@ window.generateWebmailPreview = function generateWebmailPreview(anchor) {
         event.preventDefault();
 
         // Get URLs.
-        // var unsafe_url = event.srcElement.getAttribute("href");
-        var unsafe_url = href;
+        // var unsafeUrl = event.srcElement.getAttribute("href");
+        var unsafeUrl = href;
         // We sanitize the link and preview it in the dialog.
-        var sanitizedLink = $("<span>").text(unsafe_url).html();
+        var sanitizedLink = $("<span>").text(unsafeUrl).html();
         var message = $("<span>")
             .css({
                 "overflow-wrap": "break-word",
@@ -214,7 +214,7 @@ window.generateWebmailPreview = function generateWebmailPreview(anchor) {
             callback: function(value) {
                 if (value) {
                     if (value == "continue") {
-                        window.open(unsafe_url);
+                        window.open(unsafeUrl);
                     } else if (value == "help") {
                         window.open("https://phishdetect.io/help/");
                     }

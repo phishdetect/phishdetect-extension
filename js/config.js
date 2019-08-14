@@ -56,11 +56,11 @@ class Config {
         if (localStorage.cfg_contact === undefined) {
             localStorage.cfg_contact = "";
         }
+        if (localStorage.cfg_detected_emails === undefined) {
+            localStorage.cfg_detected_emails = JSON.stringify([]);
+        }
         if (localStorage.cfg_reported_emails === undefined) {
             localStorage.cfg_reported_emails = JSON.stringify([]);
-        }
-        if (localStorage.cfg_shared_emails === undefined) {
-            localStorage.cfg_shared_emails = JSON.stringify([]);
         }
         if (localStorage.cfg_last_error === undefined) {
             localStorage.cfg_last_error = "";
@@ -279,7 +279,7 @@ class Config {
         return JSON.parse(localStorage.getItem("cfg_detected_emails"));
     }
     addDetectedEmail(value) {
-        var emails = getDetectedEmails();
+        var emails = this.getDetectedEmails();
         emails.push(value);
         localStorage.setItem("cfg_detected_emails", JSON.stringify(emails));
     }
@@ -291,7 +291,7 @@ class Config {
         return JSON.parse(localStorage.getItem("cfg_reported_emails"));
     }
     addReportedEmail(value) {
-        var emails = getReportedEmails();
+        var emails = this.getReportedEmails();
         emails.push(value);
         localStorage.setItem("cfg_reported_emails", JSON.stringify(emails));
     }

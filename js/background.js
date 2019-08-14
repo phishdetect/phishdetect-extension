@@ -115,7 +115,12 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         sendResponse(cfg.getNodeEnableAnalysis());
         break;
     case "loadFontAwesome":
-        chrome.tabs.executeScript(sender.tab.id, {frameId: sender.frameId, file: "../fontawesome/js/all.js",}, function() {
+        console.log("Injecting FontAwesome into tab...");
+        chrome.tabs.executeScript(sender.tab.id, {file: "../fontawesome/js/all.js", allFrames: true, runAt: "document_end"}, function(result) {
+            console.log(result);
+            if (chrome.runtime.lastError) {
+                console.log("ERROR: FontAwesome injection failed:", chrome.runtime.lastError.message);
+            }
             sendResponse(true);
         });
         break;

@@ -46,6 +46,7 @@ function sendEvent(eventType, match, indicator, identifier) {
             "match": match,
             "indicator": indicator,
             "user_contact": cfg.getContact(),
+            "key": cfg.getApiKey(),
         }),
         headers: {"Content-Type": "application/json"},
     };
@@ -60,6 +61,8 @@ function sendEvent(eventType, match, indicator, identifier) {
                 cfg.addDetectedEmail(identifier);
             }
         }
+
+        console.log("Sent notification", eventType, "to PhishDetect Node.");
     })
     .catch(error => {
         console.log(error);

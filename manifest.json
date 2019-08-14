@@ -64,8 +64,8 @@
             "run_at": "document_end"
         },
         {
-            "exclude_matches": ["https://mail.google.com/*"],
             "matches": ["http://*/*", "https://*/*"],
+            "exclude_matches": ["https://mail.google.com/*"],
             "js": [
                 "lib/sha256.js",
                 "lib/raf-fix.js",

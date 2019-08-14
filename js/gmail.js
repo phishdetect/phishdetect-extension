@@ -245,6 +245,8 @@ function gmailReportEmail(id) {
             return;
         }
 
+        console.log("Integrating in Gmail...")
+
         gmail.observe.on("view_email", function(obj) {
             console.log("Email opened with ID", obj.id);
 

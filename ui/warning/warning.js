@@ -23,7 +23,7 @@ function loadContent() {
     $("#badURL").html(cleanURL);
 
     var indicator = href.searchParams.get("indicator");
-    var reviewURL = cfg.getReviewURL() + indicator;
+    var reviewURL = cfg.getReviewURL(indicator);
     $("#report").attr("href", reviewURL);
 
     $("#takeMeAway").attr("href", "about:blank");

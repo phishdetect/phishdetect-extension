@@ -81,8 +81,8 @@ window.generateWebmailDialog = function generateWebmailDialog(anchor) {
         // var unsafe_url = event.srcElement.getAttribute("href");
         var unsafe_url = href;
         // Get check URL from config.
-        chrome.runtime.sendMessage({method: "getLinkCheckURL"}, function(response) {
-            var safe_url = response + window.btoa(unsafe_url);
+        chrome.runtime.sendMessage({method: "getLinkCheckURL", link: unsafe_url}, function(response) {
+            var safe_url = response;
 
             // We sanitize the link and preview it in the dialog.
             var sanitizedLink = $("<span>").text(unsafe_url).html();

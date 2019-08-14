@@ -157,22 +157,25 @@ class Config {
     getAuthURL(apiKey) {
         return this.getNode() + NODE_API_AUTH + "?key=" + apiKey;
     }
-    getLinkCheckURL() {
+    getLinkCheckURL(link) {
         var url = this.getNode() + NODE_GUI_LINK_CHECK;
+        url += link + "/";
         if (this.getNodeEnforceUserAuth() == true) {
             url += "?key=" + this.getApiKey()
         }
         return url;
     }
-    getReviewURL() {
+    getReviewURL(ioc) {
         var url = this.getNode() + NODE_GUI_REVIEW;
+        url += ioc + "/";
         if (this.getNodeEnforceUserAuth() == true) {
             url += "?key=" + this.getApiKey()
         }
         return url;
     }
-    getReportURL() {
+    getReportURL(link) {
         var url = this.getNode() + NODE_GUI_REPORT;
+        url += link + "/";
         if (this.getNodeEnforceUserAuth() == true) {
             url += "?key=" + this.getApiKey()
         }

@@ -85,7 +85,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         break;
     // This message is received when the user wants to report a suspicious opened page.
     case "reportPage":
-        var nodeUrl = cfg.getReportURL() + window.btoa(request.url)
+        var nodeUrl = cfg.getReportURL(window.btoa(request.url));
         chrome.tabs.create({"url": nodeUrl});
         break;
     // This message is received when a security event was detected and needs to be sent
@@ -104,7 +104,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     // This message is received when a component of the extension is requesting the
     // check URL.
     case "getLinkCheckURL":
-        sendResponse(cfg.getLinkCheckURL());
+        sendResponse(cfg.getLinkCheckURL(window.btoa(request.url)));
         break;
     // This message returns the list of email IDs that were already previously shared.
     case "getReportedEmails":
@@ -154,15 +154,15 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
         injectRedirect(tab.id);
         break;
     case "scan-link":
-        var nodeUrl = cfg.getLinkCheckURL() + window.btoa(info.linkUrl);
+        var nodeUrl = cfg.getLinkCheckURL(window.btoa(info.linkUrl));
         chrome.tabs.create({"url": nodeUrl});
         break;
     case "report-page":
-        var nodeUrl = cfg.getReportURL() + window.btoa(info.pageUrl)
+        var nodeUrl = cfg.getReportURL(window.btoa(info.pageUrl));
         chrome.tabs.create({"url": nodeUrl});
         break;
     case "report-link":
-        var nodeUrl = cfg.getReportURL() + window.btoa(info.linkUrl);
+        var nodeUrl = cfg.getReportURL(window.btoa(info.linkUrl));
         chrome.tabs.create({"url": nodeUrl});
         break;
     }

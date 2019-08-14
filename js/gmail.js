@@ -216,7 +216,7 @@ function gmailReportEmail(id) {
             gmail.tools.add_toolbar_button(htmlReportButton, function() {
                 // We ask for confirmation.
                 vex.dialog.confirm({
-                    unsafeMessage: "<b>PhishDetect</b><br />Are you sure you want to report this email to your PhishDetect Node operator?",
+                    unsafeMessage: "<b>PhishDetect</b><br />Are you sure you want to report this email to your PhishDetect Node administrator?",
                     callback: function(ok) {
                         if (!ok) {
                             return;

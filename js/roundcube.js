@@ -268,7 +268,7 @@ function roundcubeReportEmail(email) {
                 .html("<i class=\"fas fa-fish\" style=\"color: #3490dc;margin-right: .5rem;\"></i>Report to PhishDetect")
                 .bind("click", function() {
                     vex.dialog.confirm({
-                        unsafeMessage: "<b>PhishDetect</b><br />Are you sure you want to report this email to your PhishDetect Node operator?",
+                        unsafeMessage: "<b>PhishDetect</b><br />Are you sure you want to report this email to your PhishDetect Node administrator?",
                         callback: function(ok) {
                             // If user clicked cancel, end.
                             if (!ok) {

@@ -27,7 +27,7 @@ $("form").submit(function() {
 
         $("#container").html("<div class=\"text-center\"><i class=\"fas fa-check-circle text-5xl text-green\"></i><div class=\"mt-4\">Saved!</div></div>");
     } else {
-        $("#errors").html("You did not provide a valid API key.");
+        $("#errors").html("You did not provide a valid secret token.");
     }
 });
 

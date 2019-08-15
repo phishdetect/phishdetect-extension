@@ -42,7 +42,7 @@ function scanPage() {
 
 document.addEventListener("DOMContentLoaded", function () {
     if (cfg.getNodeEnforceUserAuth() === true && cfg.getApiKey() == "") {
-        $("#content").html("<p class=\"mt-4 leading-normal\">We now require PhishDetect users to register an API key. <a href=\"/ui/apikey/apikey.html\">Continue here to activate your browser!</a> <i class=\"far fa-smile text-blue\"></i></p>");
+        $("#content").html("<p class=\"mt-4 leading-normal\">We now require PhishDetect users to register a secret token. <a href=\"/ui/apikey/apikey.html\">Continue here to activate your browser!</a> <i class=\"far fa-smile text-blue\"></i></p>");
         return;
     }
 

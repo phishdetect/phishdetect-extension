@@ -68,7 +68,7 @@ function scanPage(tabId) {
             console.log("Got DOM from target tab.");
             var html = response.dom;
             var url = response.url;
-            chrome.tabs.update(tabId, {url: "ui/analyze/analyze.html"}, function(tab) {
+            chrome.tabs.update(tabId, {url: chrome.extension.getURL(ANALYZE_PAGE)}, function(tab) {
                 chrome.tabs.onUpdated.addListener(function(tabId , info) {
                     if (tabId == tab.id && info.status === "complete") {
                         console.log("Sending request to analyze page...");
@@ -89,7 +89,7 @@ function scanPage(tabId) {
 // Analyze a link (coming from webmail and context menu).
 function scanLink(link) {
     console.log("Received request to analyze link", link);
-    chrome.tabs.create({url: "ui/analyze/analyze.html"}, function(tab) {
+    chrome.tabs.create({url: chrome.extension.getURL(ANALYZE_PAGE)}, function(tab) {
         chrome.tabs.onUpdated.addListener(function(tabId , info) {
             if (tabId == tab.id && info.status === "complete") {
                 if (tabId == tab.id && info.status === "complete") {

@@ -31,4 +31,6 @@ NODE_API_AUTH                         = "/api/auth/";
 
 INDICATORS_UPDATE_FREQUENCY           = 15;
 WARNING_PAGE                          = "ui/warning/warning.html";
+APIKEY_PAGE                           = "ui/apikey/apikey.html";
+ANALYZE_PAGE                          = "ui/analyze/analyze.html";
 ONE_DAY_TIME                          = 24 * 60 * 60 * 1000;

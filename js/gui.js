@@ -77,75 +77,67 @@ window.generateWebmailDialog = function generateWebmailDialog(anchor) {
         // We prevent the link from opening.
         event.preventDefault();
 
-        // Get URLs.
-        // var unsafeUrl = event.srcElement.getAttribute("href");
-        var unsafeUrl = href;
-        // Get check URL from config.
-        chrome.runtime.sendMessage({method: "getLinkCheckURL", url: unsafeUrl}, function(response) {
-            var safeUrl = response;
+        // We sanitize the link and preview it in the dialog.
+        var sanitizedLink = $("<span>").text(href).html();
+        var message = $("<span>")
+            .css({
+                "overflow-wrap": "break-word",
+                "word-wrap": "break-word",
+                "-ms-word-break": "break-all",
+                "word-break": "break-all",
+                "word-break": "break-word"
+            })
+            .html("<b>PhishDetect</b><br />How do you want to open this link?<br />" +
+            "<span style=\"font-family: Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace; color: #2779bd;\">" + sanitizedLink + "</span>");
 
-            // We sanitize the link and preview it in the dialog.
-            var sanitizedLink = $("<span>").text(unsafeUrl).html();
-            var message = $("<span>")
-                .css({
-                    "overflow-wrap": "break-word",
-                    "word-wrap": "break-word",
-                    "-ms-word-break": "break-all",
-                    "word-break": "break-all",
-                    "word-break": "break-word"
+        // We spawn a dialog.
+        vex.defaultOptions.contentClassName = "w-full";
+        vex.dialog.open({
+            unsafeMessage: message.html(),
+            buttons: [
+                // Button to open "Safely".
+                $.extend({}, vex.dialog.buttons.YES, {
+                    text: "Safely",
+                    className: "pd-webmail-dialog-green-button",
+                    click: function($vexContent, event) {
+                        this.value = "safe";
+                        this.close();
+                        return false;
+                    }
+                }),
+                // Button to open "Directly" / "Unsafely".
+                $.extend({}, vex.dialog.buttons.YES, {
+                    text: "Directly",
+                    className: "pd-webmail-dialog-red-button",
+                    click: function($vexContent, event) {
+                        this.value = "unsafe";
+                        this.close();
+                        return false
+                    }
+                }),
+                // Button to open help page.
+                $.extend({}, vex.dialog.buttons.YES, {
+                    text: "?",
+                    click: function($vexContent, event) {
+                        this.value = "help";
+                        return false
+                    }
                 })
-                .html("<b>PhishDetect</b><br />How do you want to open this link?<br />" +
-                "<span style=\"font-family: Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace; color: #2779bd;\">" + sanitizedLink + "</span>");
-
-            // We spawn a dialog.
-            vex.defaultOptions.contentClassName = "w-full";
-            vex.dialog.open({
-                unsafeMessage: message.html(),
-                buttons: [
-                    // Button to open "Safely".
-                    $.extend({}, vex.dialog.buttons.YES, {
-                        text: "Safely",
-                        className: "pd-webmail-dialog-green-button",
-                        click: function($vexContent, event) {
-                            this.value = "safe";
-                            this.close();
-                            return false;
-                        }
-                    }),
-                    // Button to open "Directly" / "Unsafely".
-                    $.extend({}, vex.dialog.buttons.YES, {
-                        text: "Directly",
-                        className: "pd-webmail-dialog-red-button",
-                        click: function($vexContent, event) {
-                            this.value = "unsafe";
-                            this.close();
-                            return false
-                        }
-                    }),
-                    // Button to open help page.
-                    $.extend({}, vex.dialog.buttons.YES, {
-                        text: "?",
-                        click: function($vexContent, event) {
-                            this.value = "help";
-                            return false
-                        }
-                    })
-                ],
-                // Callback to handle button actions.
-                callback: function(value) {
-                    if (value) {
-                        // Open the URL through our service.
-                        if (value == "safe") {
-                            chrome.runtime.sendMessage({method: "scanLink", link: unsafeUrl});
-                        // Open the URL directly.
-                        } else if (value == "unsafe") {
-                            window.open(unsafeUrl);
-                        } else if (value == "help") {
-                            window.open("https://phishdetect.io/help/");
-                        }
+            ],
+            // Callback to handle button actions.
+            callback: function(value) {
+                if (value) {
+                    // Open the URL through our service.
+                    if (value == "safe") {
+                        chrome.runtime.sendMessage({method: "scanLink", link: href});
+                    // Open the URL directly.
+                    } else if (value == "unsafe") {
+                        window.open(href);
+                    } else if (value == "help") {
+                        window.open("https://phishdetect.io/help/");
                     }
                 }
-            });
+            }
         });
     });
 }

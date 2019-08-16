@@ -148,15 +148,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         break;
 
     //=========================================================================
-    // Messages requesting Node URLs.
-    //=========================================================================
-    // This message is received when a component of the extension is requesting the
-    // check URL.
-    case "getLinkCheckURL":
-        sendResponse(cfg.getLinkCheckURL(base64encode(request.url)));
-        break;
-
-    //=========================================================================
     // Messages requesting configuration options.
     //=========================================================================
     // Get the flag to enable or disable webmails integration.

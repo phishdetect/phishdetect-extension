@@ -136,7 +136,7 @@ window.generateWebmailDialog = function generateWebmailDialog(anchor) {
                     if (value) {
                         // Open the URL through our service.
                         if (value == "safe") {
-                            window.open(safeUrl);
+                            chrome.runtime.sendMessage({method: "scanLink", link: unsafeUrl});
                         // Open the URL directly.
                         } else if (value == "unsafe") {
                             window.open(unsafeUrl);

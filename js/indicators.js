@@ -17,6 +17,10 @@
 
 function updateIndicators(full = false) {
     var cfg = new Config();
+    if (cfg.getNodeEnforceUserAuth() === true && cfg.getApiKey() == "") {
+        console.log("Node enforces user authentication and no API key is provided. Skipping indicators update.");
+        return;
+    }
 
     // JavaScript's date/timezone handling is ridiculous.
     // Did you know that Date.getMonth() returns a value from 0-11?

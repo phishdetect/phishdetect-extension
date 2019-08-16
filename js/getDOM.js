@@ -18,10 +18,10 @@
 console.log("*** Loaded getDOM ***");
 
 chrome.extension.onMessage.addListener(
-	function(request, sender, sendResponse) {
-		if (request.method && (request.method == "getDOM")) {
+    function(request, sender, sendResponse) {
+        if (request.method && (request.method == "getDOM")) {
             console.log("Received request to extract DOM...");
-			sendResponse({dom: document.body.innertHTML, url: location.href});
-		}
-	}
+            sendResponse({dom: document.body.innertHTML, url: location.href});
+        }
+    }
 );

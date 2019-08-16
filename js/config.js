@@ -161,12 +161,7 @@ class Config {
         return this.getNode() + NODE_GUI_REGISTER;
     }
     getLinkCheckURL(link) {
-        var url = this.getNode() + NODE_GUI_LINK_CHECK;
-        url += link + "/";
-        if (this.getNodeEnforceUserAuth() == true) {
-            url += "?key=" + this.getApiKey()
-        }
-        return url;
+        return this.getNode() + NODE_GUI_LINK_CHECK + link + "/";
     }
     getReviewURL(ioc) {
         var url = this.getNode() + NODE_GUI_REVIEW;

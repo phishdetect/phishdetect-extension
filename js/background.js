@@ -58,35 +58,84 @@ chrome.webRequest.onBeforeRequest.addListener(function(details) {
 ["blocking"]
 );
 
-// Events.
-function injectRedirect(tabId) {
-    // Capture screenshot of page.
+// Analyze an HTML page (taken from an open tab).
+function scanPage(tabId) {
+    // TODO: this is inception hell.
+    console.log("Received request to analyze page at tab", tabId);
     chrome.tabs.captureVisibleTab(null, {}, function(img) {
-        // Inject some data in the page.
-        var code = "var screenshot = '" + img + "'; var backend = '" + cfg.getLinkCheckURL("{{URL}}") + "';";
-        chrome.tabs.executeScript(tabId, {
-            code: code
-        }, function() {
-            // Inject our redirector.
-            chrome.tabs.executeScript(tabId, {file: "js/pageInject.js"});
+        console.log("Captured screenshot.");
+        chrome.tabs.sendMessage(tabId, {method: "getDOM"}, null, function(response) {
+            console.log("Got DOM from target tab.");
+            var html = response.dom;
+            var url = response.url;
+            chrome.tabs.update(tabId, {url: "ui/analyze/analyze.html"}, function(tab) {
+
+                chrome.tabs.onUpdated.addListener(function(tabId , info) {
+                    if (tabId == tab.id && info.status === "complete") {
+                        console.log("Sending request to analyze page...");
+                        chrome.tabs.sendMessage(tab.id, {
+                            method: "analyzeThis",
+                            html: base64encode(html),
+                            screenshot: img,
+                            key: cfg.getApiKey(),
+                            actionURL: cfg.getLinkCheckURL(base64encode(url)),
+                        });
+                    }
+                });
+            });
+        });
+    });
+}
+
+// Analyze a link (coming from webmail and context menu).
+function scanLink(link) {
+    console.log("Received request to analyze link", link);
+    chrome.tabs.create({url: "ui/analyze/analyze.html"}, function(tab) {
+        chrome.tabs.onUpdated.addListener(function(tabId , info) {
+            if (tabId == tab.id && info.status === "complete") {
+                if (tabId == tab.id && info.status === "complete") {
+                    console.log("Sending request to analyze page...");
+                    chrome.tabs.sendMessage(tab.id, {
+                        method: "analyzeThis",
+                        html: "",
+                        screenshot: "",
+                        key: cfg.getApiKey(),
+                        actionURL: cfg.getLinkCheckURL(base64encode(link)),
+                    });
+                }
+            }
         });
     });
 }
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     switch (request.method) {
+    //=========================================================================
+    // Messages related to indicators.
+    //=========================================================================
     // This message is received when a component of the extension is requesting the
     // full list of indicators.
     case "getIndicators":
         sendResponse(cfg.getIndicators());
         break;
+
+    //=========================================================================
+    // Messages related to link and page analysis.
+    //=========================================================================
     // This message is received when the user requests to scan an opened page.
     case "scanPage":
-        injectRedirect(request.tabId);
+        scanPage(request.tabId);
         break;
+    case "scanLink":
+        scanLink(request.link);
+        break;
+
+    //=========================================================================
+    // Messages sending data to the Node.
+    //=========================================================================
     // This message is received when the user wants to report a suspicious opened page.
     case "reportPage":
-        var nodeUrl = cfg.getReportURL(window.btoa(request.url));
+        var nodeUrl = cfg.getReportURL(base64encode(request.url));
         chrome.tabs.create({"url": nodeUrl});
         break;
     // This message is received when a security event was detected and needs to be sent
@@ -98,21 +147,33 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     case "sendRaw":
         sendRaw(request.rawType, request.rawContent, request.identifier);
         break;
+
+    //=========================================================================
+    // Messages requesting Node URLs.
+    //=========================================================================
+    // This message is received when a component of the extension is requesting the
+    // check URL.
+    case "getLinkCheckURL":
+        sendResponse(cfg.getLinkCheckURL(base64encode(request.url)));
+        break;
+
+    //=========================================================================
+    // Messages requesting configuration options.
+    //=========================================================================
     // Get the flag to enable or disable webmails integration.
     case "getWebmails":
         sendResponse(cfg.getWebmails());
         break;
-    // This message is received when a component of the extension is requesting the
-    // check URL.
-    case "getLinkCheckURL":
-        sendResponse(cfg.getLinkCheckURL(window.btoa(request.url)));
+    case "getNodeEnableAnalysis":
+        sendResponse(cfg.getNodeEnableAnalysis());
         break;
+
+    //=========================================================================
+    // Extras
+    //=========================================================================
     // This message returns the list of email IDs that were already previously shared.
     case "getReportedEmails":
         sendResponse(cfg.getReportedEmails());
-        break;
-    case "getNodeEnableAnalysis":
-        sendResponse(cfg.getNodeEnableAnalysis());
         break;
     case "loadFontAwesome":
         console.log("Injecting FontAwesome into tab...");
@@ -157,18 +218,17 @@ function loadContextMenus() {
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
     switch (info.menuItemId) {
     case "scan-page":
-        injectRedirect(tab.id);
+        scanPage(tab.id);
         break;
     case "scan-link":
-        var nodeUrl = cfg.getLinkCheckURL(window.btoa(info.linkUrl));
-        chrome.tabs.create({"url": nodeUrl});
+        scanLink(info.linkUrl);
         break;
     case "report-page":
-        var nodeUrl = cfg.getReportURL(window.btoa(info.pageUrl));
+        var nodeUrl = cfg.getReportURL(base64encode(info.pageUrl));
         chrome.tabs.create({"url": nodeUrl});
         break;
     case "report-link":
-        var nodeUrl = cfg.getReportURL(window.btoa(info.linkUrl));
+        var nodeUrl = cfg.getReportURL(base64encode(info.linkUrl));
         chrome.tabs.create({"url": nodeUrl});
         break;
     }

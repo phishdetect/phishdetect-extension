@@ -65,6 +65,13 @@
         },
         {
             "matches": ["http://*/*", "https://*/*"],
+            "js": [
+                "js/getDOM.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": ["http://*/*", "https://*/*"],
             "exclude_matches": ["https://mail.google.com/*"],
             "js": [
                 "lib/jquery-3.4.1.js",
@@ -74,8 +81,7 @@
                 "dist/gui.js",
                 "js/utils.js",
                 "js/roundcube.js",
-                "js/webmails.js",
-                "js/getDOM.js"
+                "js/webmails.js"
             ],
             "css": [
                 "css/vex.css",

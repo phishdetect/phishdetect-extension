@@ -15,16 +15,25 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-chrome.runtime.onMessage.addListener(
-    function(request, sender, sendResponse) {
-        if (request.method && (request.method == "analyzeThis")) {
-            console.log("Received request to analyze page/link...");
+$(document).ready(function() {
+    chrome.runtime.onMessage.addListener(
+        function(request, sender, sendResponse) {
+            if (request.method && (request.method == "analyzeThis")) {
+                console.log("Received request to analyze page/link...");
+                sendResponse(true);
 
-            $("#phishdetect-form").attr("action", request.actionURL);
-            $("#html").text(request.html);
-            $("#screenshot").text(request.screenshot);
-            $("#key").val(request.key);
-            $("#phishdetect-form").submit();
+                var form = $("<form></form>", {
+                    action: request.actionURL,
+                    method: "POST",
+                }).append(
+                    $("<textarea></textarea>", {id: "html", name: "html", }).text(request.html),
+                    $("<textarea></textarea>", {id: "screenshot", name: "screenshot"}).text(request.screenshot),
+                    $("<input />", {id: "key", name: "key", value: request.key}),
+                );
+                var block = $("#formBlock");
+                $("#formBlock").append(form);
+                form.submit();
+            }
         }
-    }
-);
+    );
+});

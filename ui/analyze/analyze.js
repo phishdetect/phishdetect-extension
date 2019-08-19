@@ -22,17 +22,26 @@ $(document).ready(function() {
                 console.log("Received request to analyze page/link...");
                 sendResponse(true);
 
-                var form = $("<form></form>", {
-                    action: request.actionURL,
-                    method: "POST",
-                }).append(
-                    $("<textarea></textarea>", {id: "html", name: "html", }).text(request.html),
-                    $("<textarea></textarea>", {id: "screenshot", name: "screenshot"}).text(request.screenshot),
-                    $("<input />", {id: "key", name: "key", value: request.key}),
-                );
-                var block = $("#formBlock");
-                $("#formBlock").append(form);
-                form.submit();
+                // For links we send a GET request.
+                if (request.html == "") {
+                    var url = request.actionURL + "?key=" + request.key;
+                    window.location = url;
+                // For opened pages we sent a POST request.
+                // TODO: This is currently broken in Firefox because of this:
+                // https://bugzilla.mozilla.org/show_bug.cgi?id=1344465
+                } else {
+                    var form = $("<form></form>", {
+                        action: request.actionURL,
+                        method: "POST",
+                    }).append(
+                        $("<textarea></textarea>", {id: "html", name: "html", }).text(request.html),
+                        $("<textarea></textarea>", {id: "screenshot", name: "screenshot"}).text(request.screenshot),
+                        $("<input />", {id: "key", name: "key", value: request.key}),
+                    );
+                    var block = $("#formBlock");
+                    $("#formBlock").append(form);
+                    form.submit();
+                }
             }
         }
     );

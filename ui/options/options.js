@@ -56,7 +56,8 @@ function saveOptions() {
 }
 
 function restoreDefaults() {
-    $("#server").val(cfg.getDefaultNode());
+    $("#server").val(NODE_DEFAULT_URL);
+    $("#key").val("");
     $("#webmails").prop("checked", true);
     $("#report").prop("checked", true);
     $("#contact").val("");

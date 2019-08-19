@@ -15,14 +15,14 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-chrome.extension.onMessage.addListener(
+chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         if (request.method && (request.method == "analyzeThis")) {
             console.log("Received request to analyze page/link...");
 
             $("#phishdetect-form").attr("action", request.actionURL);
-            $("#html").val(request.html);
-            $("#screenshot").val(request.screenshot);
+            $("#html").text(request.html);
+            $("#screenshot").text(request.screenshot);
             $("#key").val(request.key);
             $("#phishdetect-form").submit();
         }

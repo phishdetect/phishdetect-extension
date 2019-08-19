@@ -72,6 +72,7 @@ function scanPage(tabId) {
                 chrome.tabs.onUpdated.addListener(function(tabId , info) {
                     if (tabId == tab.id && info.status === "complete") {
                         console.log("Sending request to analyze page...");
+
                         chrome.tabs.sendMessage(tab.id, {
                             method: "analyzeThis",
                             html: base64encode(html),

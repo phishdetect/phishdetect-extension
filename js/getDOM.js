@@ -15,13 +15,43 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
+// @author Rob W <http://stackoverflow.com/users/938089/rob-w>
+// Demo: var serialized_html = DOMtoString(document);
+
+function DOMtoString(document_root) {
+    var html = '',
+        node = document_root.firstChild;
+    while (node) {
+        switch (node.nodeType) {
+        case Node.ELEMENT_NODE:
+            html += node.outerHTML;
+            break;
+        case Node.TEXT_NODE:
+            html += node.nodeValue;
+            break;
+        case Node.CDATA_SECTION_NODE:
+            html += '<![CDATA[' + node.nodeValue + ']]>';
+            break;
+        case Node.COMMENT_NODE:
+            html += '<!--' + node.nodeValue + '-->';
+            break;
+        case Node.DOCUMENT_TYPE_NODE:
+            // (X)HTML documents are identified by public identifiers
+            html += "<!DOCTYPE " + node.name + (node.publicId ? ' PUBLIC "' + node.publicId + '"' : '') + (!node.publicId && node.systemId ? ' SYSTEM' : '') + (node.systemId ? ' "' + node.systemId + '"' : '') + '>\n';
+            break;
+        }
+        node = node.nextSibling;
+    }
+    return html;
+}
+
 console.log("*** Loaded getDOM ***");
 
-chrome.extension.onMessage.addListener(
+chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         if (request.method && (request.method == "getDOM")) {
             console.log("Received request to extract DOM...");
-            sendResponse({dom: document.body.innertHTML, url: location.href});
+            sendResponse({dom: DOMtoString(document), url: location.href});
         }
     }
 );

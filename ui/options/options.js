@@ -31,7 +31,7 @@ function loadOptions() {
     }
 
     $("#key").val(cfg.getApiKey());
-    if (!enforceAuth) {
+    if (!cfg.getNodeEnforceUserAuth()) {
         $("#keySection").hide();
     }
 }

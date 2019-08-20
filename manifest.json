@@ -83,7 +83,6 @@
                 "dist/gui.js",
                 "js/utils.js",
                 "js/roundcube.js",
-                "js/scanPage.js"
                 "js/webmails.js"
             ],
             "css": [

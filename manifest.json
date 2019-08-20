@@ -71,7 +71,7 @@
                 "js/scanPage.js"
             ],
             "run_at": "document_end"
-        }
+        },
         {
             "matches": ["http://*/*", "https://*/*"],
             "exclude_matches": ["https://mail.google.com/*"],

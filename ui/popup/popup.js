@@ -34,7 +34,7 @@ function reportPage() {
 
 function scanPage() {
     getTab(function(tab) {
-        chrome.runtime.sendMessage({method: "scanPage", tabId: tab.id}, function(response) {
+        chrome.runtime.sendMessage({method: "scanPage", tabId: tab.id, tabUrl: tab.url}, function(response) {
             $("#div-scanpage").html("Scanning...");
         });
     });

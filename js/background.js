@@ -59,30 +59,16 @@ chrome.webRequest.onBeforeRequest.addListener(function(details) {
 );
 
 // Analyze an HTML page (taken from an open tab).
-function scanPage(tabId) {
+function scanPage(tabId, tabUrl) {
     // TODO: this is inception hell.
-    console.log("Received request to analyze page at tab", tabId);
+    console.log("Received request to analyze page at tab", tabId, "with URL", tabUrl);
     chrome.tabs.captureVisibleTab(null, {}, function(img) {
         console.log("Captured screenshot.");
-        chrome.tabs.sendMessage(tabId, {method: "getDOM"}, null, function(response) {
-            console.log("Got DOM from target tab.");
-            var html = response.dom;
-            var url = response.url;
-            chrome.tabs.update(tabId, {url: chrome.extension.getURL(ANALYZE_PAGE)}, function(tab) {
-                chrome.tabs.onUpdated.addListener(function(tabId , info) {
-                    if (tabId == tab.id && info.status === "complete") {
-                        console.log("Sending request to analyze page...");
-
-                        chrome.tabs.sendMessage(tab.id, {
-                            method: "analyzeThis",
-                            html: base64encode(html),
-                            screenshot: img,
-                            key: cfg.getApiKey(),
-                            actionURL: cfg.getLinkCheckURL(base64encode(url)),
-                        });
-                    }
-                });
-            });
+        chrome.tabs.sendMessage(tabId, {
+            method: "sendPageToNode",
+            actionUrl: cfg.getLinkCheckURL(base64encode(tabUrl)),
+            screenshot: img,
+            key: cfg.getApiKey(),
         });
     });
 }
@@ -90,22 +76,8 @@ function scanPage(tabId) {
 // Analyze a link (coming from webmail and context menu).
 function scanLink(link) {
     console.log("Received request to analyze link", link);
-    chrome.tabs.create({url: chrome.extension.getURL(ANALYZE_PAGE)}, function(tab) {
-        chrome.tabs.onUpdated.addListener(function(tabId , info) {
-            if (tabId == tab.id && info.status === "complete") {
-                if (tabId == tab.id && info.status === "complete") {
-                    console.log("Sending request to analyze page...");
-                    chrome.tabs.sendMessage(tab.id, {
-                        method: "analyzeThis",
-                        html: "",
-                        screenshot: "",
-                        key: cfg.getApiKey(),
-                        actionURL: cfg.getLinkCheckURL(base64encode(link)),
-                    });
-                }
-            }
-        });
-    });
+    var url = cfg.getLinkCheckURL(base64encode(link)) + "?key=" + cfg.getApiKey();
+    chrome.tabs.create({url: url});
 }
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
@@ -124,7 +96,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     //=========================================================================
     // This message is received when the user requests to scan an opened page.
     case "scanPage":
-        scanPage(request.tabId);
+        scanPage(request.tabId, request.tabUrl);
         break;
     case "scanLink":
         scanLink(request.link);
@@ -209,7 +181,7 @@ function loadContextMenus() {
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
     switch (info.menuItemId) {
     case "scan-page":
-        scanPage(tab.id);
+        scanPage(tab.id, tab.url);
         break;
     case "scan-link":
         scanLink(info.linkUrl);

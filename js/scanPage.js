@@ -45,13 +45,30 @@ function DOMtoString(document_root) {
     return html;
 }
 
-console.log("*** Loaded getDOM ***");
+console.log("*** Loaded scanPage ***");
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-        if (request.method && (request.method == "getDOM")) {
-            console.log("Received request to extract DOM...");
-            sendResponse({dom: DOMtoString(document), url: location.href});
+        if (request.method && (request.method == "sendPageToNode")) {
+            console.log("Received request to extract DOM and send it for analysis...");
+
+            var actionUrl = request.actionUrl;
+            var html = base64encode(DOMtoString(document));
+            var screenshot = request.screenshot;
+            var key = request.key;
+
+            var form = $("<form></form>", {
+                action: actionUrl,
+                method: "POST",
+            })
+            .css("display", "none")
+            .append(
+                $("<textarea></textarea>", {id: "html", name: "html"}).text(html),
+                $("<textarea></textarea>", {id: "screenshot", name: "screenshot"}).text(screenshot),
+                $("<input />", {id: "key", name: "key", value: key}),
+            );
+            $(document.body).append(form);
+            form.submit();
         }
     }
 );

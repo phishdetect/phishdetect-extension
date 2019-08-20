@@ -60,7 +60,6 @@ chrome.webRequest.onBeforeRequest.addListener(function(details) {
 
 // Analyze an HTML page (taken from an open tab).
 function scanPage(tabId, tabUrl) {
-    // TODO: this is inception hell.
     console.log("Received request to analyze page at tab", tabId, "with URL", tabUrl);
     chrome.tabs.captureVisibleTab(null, {}, function(img) {
         console.log("Captured screenshot.");

@@ -208,7 +208,13 @@ function gmailReportEmail(id) {
 
         // Add button to upload email.
         var htmlReportButton = "<span id=\"pd-report\" class=\"pd-webmail-report\"><i class=\"fas fa-fish\" style=\"color: #3490dc;margin-right: .5rem;\"></i>Report to PhishDetect</span>";
-        var htmlReportedAlready = "<span style=\"cursor: pointer;\"><i class=\"fas fa-check-circle\" style=\"color: #38c172;margin-right: .5rem;\"></i>Reported to PhishDetect</span>";
+        var htmlReportedAlready = "<span id=\"pd-reported\" style=\"cursor: pointer;\"><i class=\"fas fa-check-circle\" style=\"color: #38c172;margin-right: .5rem;\"></i>Reported to PhishDetect</span>";
+
+        // We delete existing buttons (this normally would happen in the case
+        // of Gmail's conversation view).
+        // TODO: Review this choice. It might actually not be help and should
+        // instead be changed to place the button elsewhere.
+        $("[id^='pd-report']").parent().parent().remove();
 
         if (isReported) {
             gmail.tools.add_toolbar_button(htmlReportedAlready, function() {});

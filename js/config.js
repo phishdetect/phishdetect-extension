@@ -128,11 +128,11 @@ class Config {
 
             console.log("Configuration fetched successfully.");
         })
-        .then(function() {
-            callback();
-        })
         .catch(error => {
             console.log(error);
+        })
+        .finally(function() {
+            callback();
         });
     }
     getNodeEnableAnalysis() {

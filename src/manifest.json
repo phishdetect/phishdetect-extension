@@ -2,8 +2,6 @@
     "manifest_version": 2,
 
     "name": "PhishDetect",
-    "description": "Anti-phishing browser extension. Scan suspicious pages and links.",
-    "version": "5.0.2",
     "icons": {
         "16": "icons/icon@16.png",
         "34": "icons/icon@34.png",

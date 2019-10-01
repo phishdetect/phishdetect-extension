@@ -3,11 +3,11 @@ build: clean
 	npm install
 
 	@echo "Building files..."
-	npm run build
+	NODE_ENV=production npm run build
 
 package:
 	@echo "Packaging the extension..."
-	@zip -r -FS phishdetect.zip css/ dist/ fontawesome/ icons/ js/ lib/ ui/ manifest.json
+	@zip -r -FS phishdetect.zip build/*
 
 clean:
-	rm -rf dist/
+	rm -rf build/

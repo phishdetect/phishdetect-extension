@@ -17,7 +17,7 @@
     },
     "background": {
         "scripts": [
-            "lib/sha256.js",
+            "lib/sha256.min.js",
             "dist/domains.js",
             "js/utils.js",
             "js/const.js",
@@ -45,8 +45,8 @@
         {
             "matches": ["https://mail.google.com/*"],
             "js": [
-                "lib/jquery-3.4.1.js",
-                "lib/sha256.js",
+                "lib/jquery.min.js",
+                "lib/sha256.min.js",
                 "lib/raf-fix.js",
                 "fontawesome/js/all.js",
                 "dist/domains.js",
@@ -64,7 +64,7 @@
         {
             "matches": ["http://*/*", "https://*/*"],
             "js": [
-                "lib/jquery-3.4.1.js",
+                "lib/jquery.min.js",
                 "js/utils.js",
                 "js/scanPage.js"
             ],
@@ -74,8 +74,8 @@
             "matches": ["http://*/*", "https://*/*"],
             "exclude_matches": ["https://mail.google.com/*"],
             "js": [
-                "lib/jquery-3.4.1.js",
-                "lib/sha256.js",
+                "lib/jquery.min.js",
+                "lib/sha256.min.js",
                 "lib/raf-fix.js",
                 "dist/domains.js",
                 "dist/gui.js",

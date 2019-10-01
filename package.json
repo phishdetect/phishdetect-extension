@@ -14,8 +14,12 @@
         "url": "https://github.com/phishdetect/phishdetect-extension.git"
     },
     "dependencies": {
+        "@fortawesome/fontawesome-free": "^5.11.2",
         "gmail-js": "^0.9.1",
+        "jquery": "^3.4.1",
+        "js-sha256": "^0.9.0",
         "npm": "^6.10.1",
+        "tailwindcss": "^1.1.2",
         "tldts": "^3.1.2",
         "vex-dialog": "^1.1.0",
         "vex-js": "^4.1.0"
@@ -30,8 +34,8 @@
         "html-webpack-plugin": "3.2.0",
         "style-loader": "^0.23.1",
         "webpack": "4.28.4",
+        "webpack-cli": "^3.2.1",
         "webpack-dev-server": "3.1.14",
-        "write-file-webpack-plugin": "4.5.0",
-        "webpack-cli": "^3.2.1"
+        "write-file-webpack-plugin": "4.5.0"
     }
 }

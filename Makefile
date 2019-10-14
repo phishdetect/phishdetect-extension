@@ -7,7 +7,7 @@ build: clean
 
 package:
 	@echo "Packaging the extension..."
-	@zip -r -FS phishdetect.zip build/*
+	@cd build/; zip -r -FS ../phishdetect.zip .
 
 clean:
 	rm -rf build/

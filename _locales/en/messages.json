@@ -86,5 +86,25 @@
     "contextMenuScanLink": {
       "message": "Scan this link for phishing",
       "description": "Text for context menu option to scan a link"
+    },
+    "webmailWarningWarning": {
+      "message": "Warning",
+      "description": "Label for a warning message"
+    },
+    "webmailWarningPleaseBeCautious": {
+      "message": "Please be cautious!",
+      "description": "Secondary text for a warning message"
+    },
+    "webmailWarningSender": {
+      "message": "The email was sent by a known malicious address.",
+      "description": "Explanation of a webmail warning event"
+    },
+    "webmailWarningLinks": {
+      "message": "The email contains known malicious links.",
+      "description": "Explanation of a webmail warning event"
+    },
+    "webmailWarningHelp": {
+      "message": "For more information visit our help page:",
+      "description": "Label for a link to the help page."
     }
 }

@@ -27,16 +27,24 @@ vex.defaultOptions.className = "vex-theme-default";
 // needed to show a warning message inside the supported webmails.
 window.generateWebmailWarning = function generateWebmailWarning(eventType) {
     var warningText = $("<span>")
-        .append($("<span>").css("font-size", "1.125rem").html("<i class=\"fas fa-exclamation-triangle\"></i> <b>PhishDetect</b> Warning"))
-        .append("<br />Please be cautious! ");
+        .append(
+            $("<span>")
+              .css("font-size", "1.125rem")
+              .html("<i class=\"fas fa-exclamation-triangle\"></i> <b>PhishDetect</b>")
+              .append(chrome.i18n.getMessage("webmailWarningWarning"))
+        )
+        .append("<br />")
+        .append(chrome.i18n.getMessage("webmailWarningPleaseBeCautious"));
 
     if (eventType == "email_sender" || eventType == "email_sender_domain") {
-        warningText.append("The email was sent by a known malicious address. ");
+        warningText.append(chrome.i18n.getMessage("webmailWarningSender"));
     } else if (eventType == "email_link") {
-        warningText.append("The email contains known malicious links. ");
+        warningText.append(chrome.i18n.getMessage("webmailWarningLinks"));
     }
 
-    warningText.append("For more information visit our <a style=\"text-decoration: none;\" href=\"https://phishdetect.io/help/\"><span style=\"color: #6cb2eb\"><b>Help</b></span></a> page.")
+    warningText
+      .append(chrome.i18n.getMessage("webmailWarningHelp"))
+      .append("<a style=\"text-decoration: none;\" href=\"https://phishdetect.io/help/\"><span style=\"color: #6cb2eb\"><b>phishdetect.io/help</b></span></a>")
 
     var warning = $("<div>", {id: "phishdetect-warning"})
         .addClass("pd-webmail-warning")

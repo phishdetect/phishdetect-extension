@@ -59,7 +59,7 @@ window.generateWebmailWarning = function generateWebmailWarning(eventType) {
 window.generateWebmailLinkWarning = function generateWebmailLinkWarning(element) {
     var span = $("<span>")
         .addClass("pd-webmail-link-warning")
-        .attr("title", "PhishDetect Warning: this link is malicious!")
+        .attr("title", chrome.i18n.getMessage("webmailLinkWarning"))
         .html(" <i class=\"fas fa-exclamation-triangle\"></i>");
 
     element.parentNode.insertBefore(span.get(0), element.nextSibling);

@@ -106,5 +106,9 @@
     "webmailWarningHelp": {
       "message": "For more information visit our help page:",
       "description": "Label for a link to the help page."
+    },
+    "webmailLinkWarning": {
+      "message": "PhishDetect Warning: this link is malicious!",
+      "description": "Warning text for a known malicious link"
     }
 }

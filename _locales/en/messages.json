@@ -70,5 +70,21 @@
     "apikeySave": {
       "message": "Save",
       "description": "Text for button to save api token and node settings"
+    },
+    "contextMenuReportPage": {
+      "message": "Report this page as suspicious",
+      "description": "Text for context menu option to report a page"
+    },
+    "contextMenuReportLink": {
+      "message": "Report this link as suspicious",
+      "description": "Text for context menu option to report a link"
+    },
+    "contextMenuScanPage": {
+      "message": "Scan this page for phishing",
+      "description": "Text for context menu option to scan a page"
+    },
+    "contextMenuScanLink": {
+      "message": "Scan this link for phishing",
+      "description": "Text for context menu option to scan a link"
     }
 }

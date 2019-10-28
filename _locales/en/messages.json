@@ -110,5 +110,25 @@
     "webmailLinkWarning": {
       "message": "PhishDetect Warning: this link is malicious!",
       "description": "Warning text for a known malicious link"
+    },
+    "webmailDialog": {
+      "message": "How do you want to open this link?",
+      "description": "Warning text for a known malicious link"
+    },
+    "webmailDialogDirectly": {
+      "message": "Directly",
+      "description": "Button to open a link 'Directly' / 'Unsafely'"
+    },
+    "webmailDialogSafely": {
+      "message": "Safely",
+      "description": "Button to open a link 'Safely'"
+    },
+    "webmailPreview": {
+      "message": "You are about to open this link. Do you want to continue?",
+      "description": "Confirmation dialog text when opening a link"
+    },
+    "webmailPreviewContinue": {
+      "message": "Continue",
+      "description": "Button text to continue with safely previewing a link"
     }
 }

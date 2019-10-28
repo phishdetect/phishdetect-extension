@@ -95,7 +95,7 @@ window.generateWebmailDialog = function generateWebmailDialog(anchor) {
                 "word-break": "break-all",
                 "word-break": "break-word"
             })
-            .html("<b>PhishDetect</b><br />How do you want to open this link?<br />" +
+            .html(`<b>PhishDetect</b><br />${chrome.i18n.getMessage("webmailDialog")}<br />` +
             "<span style=\"font-family: Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace; color: #2779bd;\">" + sanitizedLink + "</span>");
 
         // We spawn a dialog.
@@ -105,7 +105,7 @@ window.generateWebmailDialog = function generateWebmailDialog(anchor) {
             buttons: [
                 // Button to open "Safely".
                 $.extend({}, vex.dialog.buttons.YES, {
-                    text: "Safely",
+                    text: chrome.i18n.getMessage("webmailDialogSafely"),
                     className: "pd-webmail-dialog-green-button",
                     click: function($vexContent, event) {
                         this.value = "safe";
@@ -115,7 +115,7 @@ window.generateWebmailDialog = function generateWebmailDialog(anchor) {
                 }),
                 // Button to open "Directly" / "Unsafely".
                 $.extend({}, vex.dialog.buttons.YES, {
-                    text: "Directly",
+                    text: chrome.i18n.getMessage("webmailDialogDirectly"),
                     className: "pd-webmail-dialog-red-button",
                     click: function($vexContent, event) {
                         this.value = "unsafe";
@@ -184,7 +184,7 @@ window.generateWebmailPreview = function generateWebmailPreview(anchor) {
                 "word-break": "break-all",
                 "word-break": "break-word"
             })
-            .html("<b>PhishDetect</b><br />You are about to open this link. Do you want to continue?<br />" +
+            .html(`<b>PhishDetect</b><br />${chrome.i18n.getMessage("webmailPreview")}<br />` +
             "<span style=\"font-family: Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace; color: #2779bd;\">" + sanitizedLink + "</span>");
 
         // We spawn a dialog.
@@ -193,7 +193,7 @@ window.generateWebmailPreview = function generateWebmailPreview(anchor) {
             unsafeMessage: message.html(),
             buttons: [
                 $.extend({}, vex.dialog.buttons.YES, {
-                    text: "Continue",
+                    text: chrome.i18n.getMessage("webmailPreviewContinue"),
                     className: "pd-webmail-dialog-red-button",
                     click: function($vexContent, event) {
                         this.value = "continue";

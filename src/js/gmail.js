@@ -207,8 +207,8 @@ function gmailReportEmail(id) {
         }
 
         // Add button to upload email.
-        var htmlReportButton = "<span id=\"pd-report\" class=\"pd-webmail-report\"><i class=\"fas fa-fish\" style=\"color: #3490dc;margin-right: .5rem;\"></i>Report to PhishDetect</span>";
-        var htmlReportedAlready = "<span id=\"pd-reported\" style=\"cursor: pointer;\"><i class=\"fas fa-check-circle\" style=\"color: #38c172;margin-right: .5rem;\"></i>Reported to PhishDetect</span>";
+        var htmlReportButton = "<span id=\"pd-report\" class=\"pd-webmail-report\"><i class=\"fas fa-fish\" style=\"color: #3490dc;margin-right: .5rem;\"></i>" + chrome.i18n.getMessage("reportEmailReport") + "</span>";
+        var htmlReportedAlready = "<span id=\"pd-reported\" style=\"cursor: pointer;\"><i class=\"fas fa-check-circle\" style=\"color: #38c172;margin-right: .5rem;\"></i>" + chrome.i18n.getMessage("reportEmailReportedAlready") + "</span>";
 
         // We delete existing buttons (this normally would happen in the case
         // of Gmail's conversation view).
@@ -222,7 +222,7 @@ function gmailReportEmail(id) {
             gmail.tools.add_toolbar_button(htmlReportButton, function() {
                 // We ask for confirmation.
                 vex.dialog.confirm({
-                    unsafeMessage: "<b>PhishDetect</b><br />Are you sure you want to report this email to your PhishDetect Node administrator?",
+                    unsafeMessage: "<b>PhishDetect</b><br />" + chrome.i18n.getMessage("reportEmailConfirm"),
                     callback: function(ok) {
                         if (!ok) {
                             return;

@@ -130,5 +130,17 @@
     "webmailPreviewContinue": {
       "message": "Continue",
       "description": "Button text to continue with safely previewing a link"
+    },
+    "reportEmailReportedAlready": {
+      "message": "Reported to PhishDetect",
+      "description": "Text shown when trying to report an email that was already reported."
+    },
+    "reportEmailReport": {
+      "message": "Report to PhishDetect",
+      "description": "Label for the report button"
+    },
+    "reportEmailConfirm": {
+      "message": "Are you sure you want to report this email to your PhishDetect Node administrator?",
+      "description": "Confirmation message when reporting an email"
     }
 }

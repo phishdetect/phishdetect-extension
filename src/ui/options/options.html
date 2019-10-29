@@ -31,13 +31,20 @@
         <label for="contact" id="contactLabel" class="leading-normal" data-resource="optionsContact">If you wish, you can leave your contact details:</label>
         <div class="mt-2"><input type="text" class="block appearance-none w-full bg-white border border-grey-light px-4 py-4 rounded focus:border-blue-light" id="contact" /></div>
 
-        <div class="mt-6"><button type="submit" class="bg-blue
-            hover:bg-blue-light text-white py-2 px-4 border-b-4 border-blue-dark
-            hover:text-white hover:no-underline hover:border-blue rounded
-        cursor-pointer" data-resource="optionsSave"><i class="fas fa-save"></i>
-        Save</button> <a id="restoreDefaults" class="bg-grey hover:bg-grey-light
-    py-2 px-4 border-b-4 border-grey-dark hover:no-underline hover:border-grey
-    rounded cursor-pointer font-normal text-grey-darkest" data-resource="optionsRestore"><i class="fas fa-history"></i> Restore Defaults</a></div>
+        <div class="mt-6">
+            <button type="submit" class="bg-blue hover:bg-blue-light text-white
+                py-2 px-4 border-b-4 border-blue-dark hover:text-white
+                hover:no-underline hover:border-blue rounded cursor-pointer" >
+                <i class="fas fa-save"></i>
+                <span data-resource="optionsSave">Save</span>
+            </button>
+            <a id="restoreDefaults" class="bg-grey hover:bg-grey-light py-2 px-4
+                border-b-4 border-grey-dark hover:no-underline hover:border-grey
+                rounded cursor-pointer font-normal text-grey-darkest" >
+                <i class="fas fa-history"></i>
+                <span data-resource="optionsRestore">Restore Defaults</span>
+            </a>
+        </div>
     </form>
 </div>
 <script src="../../lib/jquery.min.js"></script>

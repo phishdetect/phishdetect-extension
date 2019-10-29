@@ -51,6 +51,22 @@
       "message": "TAKE ME AWAY",
       "description": "Text for button to abort opening a dangerous url"
     },
+    "warningPrevented": {
+      "message": "PhishDetect prevented you from visiting this page and, if you have this option enabled, alerted the administrator of your configured PhishDetect Node. For more information about this warning read the PhishDetect Help Page:",
+      "description": "Text displayed when PhishDetect prevents you from visiting a page"
+    },
+    "warningReportedNotSafe": {
+      "message": "PhishDetect reported it as not safe",
+      "description": "Text displayed when PhishDetect prevents you from visiting a page"
+    },
+    "warningWrongfullyBlocked": {
+      "message": "If you think this website was wrongfully blocked, please report the mistake here:",
+      "description": "Text displayed when PhishDetect prevents you from visiting a page"
+    },
+    "warningReportMistake": {
+      "message": "Report mistake",
+      "description": "Link text to report a wrongfully blocked page"
+    },
     "apikeyThankyou": {
       "message": "Thank you for participating to PhishDetect closed beta program!",
       "description": "Paragraph text thanking the user."
@@ -147,6 +163,10 @@
       "message": "Are you sure you want to report this email to your PhishDetect Node administrator?",
       "description": "Confirmation message when reporting an email"
     },
+    "popupReportThisPage": {
+      "message": "Report this page",
+      "description": "Button to report the page from a popup"
+    },
     "popupReported": {
       "message": "Reported!",
       "description": "Shown in a popup when an email is reported."
@@ -170,5 +190,9 @@
     "apikeySaved": {
       "message": "Saved!",
       "description": "Displayed when an apikey is saved succesfully"
+    },
+    "optionsSaved": {
+      "message": "Saved!",
+      "description": "Displayed when settings are saved succesfully"
     }
 }

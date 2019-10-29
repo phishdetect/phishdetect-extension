@@ -2,6 +2,7 @@
     "manifest_version": 2,
 
     "name": "PhishDetect",
+    "description": "__MSG_manifestDescription__",
     "default_locale": "en",
     "icons": {
         "16": "icons/icon@16.png",

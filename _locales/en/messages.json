@@ -1,4 +1,8 @@
 {
+    "manifestDescription": {
+      "message": "Anti-phishing browser extension. Scan suspicious pages and links.",
+      "description": "Displayed in the Chrome/FF store and about:extensions"
+    },
     "popupScanThisPage": {
       "message": "Scan this page!",
       "description": "Displayed on the popup page button."

@@ -51,7 +51,6 @@ var options = {
             transform: function (content, path) {
                 // generates the manifest file using the package.json informations
                 return Buffer.from(JSON.stringify({
-                    description: process.env.npm_package_description,
                     version: process.env.npm_package_version,
                     // enable unsafe-eval in development for webpack
                     content_security_policy: (

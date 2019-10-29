@@ -25,9 +25,15 @@ $("form").submit(function() {
     if (apiKey != "") {
         cfg.setApiKey(apiKey);
 
-        $("#container").html("<div class=\"text-center\"><i class=\"fas fa-check-circle text-5xl text-green\"></i><div class=\"mt-4\">Saved!</div></div>");
+        $("#container").empty().append(
+            $("<div class=\"text-center\">")
+                .append($("<i class=\"fas fa-check-circle text-5xl text-green\">"))
+                .append($("<div class=\"mt-4\">")
+                    .text(chrome.i18n.getMessage("apikeySaved"))
+                )
+        );
     } else {
-        $("#errors").html("You did not provide a valid secret token.");
+        $("#errors").text(chrome.i18n.getMessage("apikeyErrorSecretToken"));
     }
 });
 

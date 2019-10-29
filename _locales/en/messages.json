@@ -162,5 +162,13 @@
     "popupActivate": {
       "message": "Continue here to activate your browser!",
       "description": "Link text to register for a secret token to activate PhishDetect"
+    },
+    "apikeyErrorSecretToken": {
+      "message": "You did not provide a valid secret token.",
+      "description": "Error text when no secret token is entered in the apikey form"
+    },
+    "apikeySaved": {
+      "message": "Saved!",
+      "description": "Displayed when an apikey is saved succesfully"
     }
 }

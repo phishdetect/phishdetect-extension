@@ -31,19 +31,19 @@ window.generateWebmailWarning = function generateWebmailWarning(eventType) {
             $("<span>")
               .css("font-size", "1.125rem")
               .html("<i class=\"fas fa-exclamation-triangle\"></i> <b>PhishDetect</b>")
-              .append(chrome.i18n.getMessage("webmailWarningWarning"))
+              .append(i18nHtmlSafe("webmailWarningWarning"))
         )
         .append("<br />")
-        .append(chrome.i18n.getMessage("webmailWarningPleaseBeCautious"));
+        .append(i18nHtmlSafe("webmailWarningPleaseBeCautious"));
 
     if (eventType == "email_sender" || eventType == "email_sender_domain") {
-        warningText.append(chrome.i18n.getMessage("webmailWarningSender"));
+        warningText.append(i18nHtmlSafe("webmailWarningSender"));
     } else if (eventType == "email_link") {
-        warningText.append(chrome.i18n.getMessage("webmailWarningLinks"));
+        warningText.append(i18nHtmlSafe("webmailWarningLinks"));
     }
 
     warningText
-      .append(chrome.i18n.getMessage("webmailWarningHelp"))
+      .append(i18nHtmlSafe("webmailWarningHelp"))
       .append("<a style=\"text-decoration: none;\" href=\"https://phishdetect.io/help/\"><span style=\"color: #6cb2eb\"><b>phishdetect.io/help</b></span></a>")
 
     var warning = $("<div>", {id: "phishdetect-warning"})
@@ -95,7 +95,7 @@ window.generateWebmailDialog = function generateWebmailDialog(anchor) {
                 "word-break": "break-all",
                 "word-break": "break-word"
             })
-            .html(`<b>PhishDetect</b><br />${chrome.i18n.getMessage("webmailDialog")}<br />` +
+            .html(`<b>PhishDetect</b><br />${i18nHtmlSafe("webmailDialog")}<br />` +
             "<span style=\"font-family: Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace; color: #2779bd;\">" + sanitizedLink + "</span>");
 
         // We spawn a dialog.
@@ -184,7 +184,7 @@ window.generateWebmailPreview = function generateWebmailPreview(anchor) {
                 "word-break": "break-all",
                 "word-break": "break-word"
             })
-            .html(`<b>PhishDetect</b><br />${chrome.i18n.getMessage("webmailPreview")}<br />` +
+            .html(`<b>PhishDetect</b><br />${i18nHtmlSafe("webmailPreview")}<br />` +
             "<span style=\"font-family: Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace; color: #2779bd;\">" + sanitizedLink + "</span>");
 
         // We spawn a dialog.

@@ -255,7 +255,7 @@ function roundcubeReportEmail(email) {
                 "padding": ".5rem"
             })
             .html("<i class=\"fas fa-check-circle\" style=\"color: #38c172;margin-right: .5rem;\"></i>")
-            .append(chrome.i18n.getMessage("reportEmailReported"));
+            .append(i18nHtmlSafe("reportEmailReported"));
 
         if (isReported) {
             emailHeader.append(htmlReportedAlready);
@@ -267,10 +267,10 @@ function roundcubeReportEmail(email) {
                     "cursor": "pointer"
                 })
                 .html("<i class=\"fas fa-fish\" style=\"color: #3490dc;margin-right: .5rem;\"></i>")
-                .append(chrome.i18n.getMessage("reportEmailReport"))
+                .append(i18nHtmlSafe("reportEmailReport"))
                 .bind("click", function() {
                     vex.dialog.confirm({
-                        unsafeMessage: "<b>PhishDetect</b><br />" + chrome.i18n.getMessage("reportEmailConfirm"),
+                        unsafeMessage: "<b>PhishDetect</b><br />" + i18nHtmlSafe("reportEmailConfirm"),
                         callback: function(ok) {
                             // If user clicked cancel, end.
                             if (!ok) {

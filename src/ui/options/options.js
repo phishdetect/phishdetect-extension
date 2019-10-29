@@ -38,10 +38,10 @@ function loadOptions() {
 
 function saveOptions(event) {
     event.preventDefault();
-	var node = $("#server").val().trim();
-	if (node != "") {
-		cfg.setNode(node);
-	}
+    var node = $("#server").val().trim();
+    if (node != "") {
+        cfg.setNode(node);
+    }
     var key = $("#key").val().trim();
     if (key != "") {
         cfg.setApiKey(key);

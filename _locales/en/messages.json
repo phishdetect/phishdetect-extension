@@ -146,5 +146,21 @@
     "reportEmailConfirm": {
       "message": "Are you sure you want to report this email to your PhishDetect Node administrator?",
       "description": "Confirmation message when reporting an email"
+    },
+    "popupReported": {
+      "message": "Reported!",
+      "description": "Shown in a popup when an email is reported."
+    },
+    "popupScanning": {
+      "message": "Scanning...",
+      "description": "Shown in a popup when an email is being scanned."
+    },
+    "popupTokenRequired": {
+      "message": "We now require PhishDetect users to register a secret token.",
+      "description": "Paragraph in a popup explaining the need for a token"
+    },
+    "popupActivate": {
+      "message": "Continue here to activate your browser!",
+      "description": "Link text to register for a secret token to activate PhishDetect"
     }
 }

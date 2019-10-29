@@ -27,7 +27,7 @@ function getTab(callback) {
 function reportPage() {
     getTab(function(tab) {
         chrome.runtime.sendMessage({method: "reportPage", url: tab.url}, function(response) {
-            $("#div-reportpage").html("Reported!");
+            $("#div-reportpage").text(chrome.i18n.getMessage("popupReported"));
         });
     });
 }
@@ -35,14 +35,22 @@ function reportPage() {
 function scanPage() {
     getTab(function(tab) {
         chrome.runtime.sendMessage({method: "scanPage", tabId: tab.id, tabUrl: tab.url}, function(response) {
-            $("#div-scanpage").html("Scanning...");
+            $("#div-scanpage").text(chrome.i18n.getMessage("popupScanning"));
         });
     });
 }
 
 document.addEventListener("DOMContentLoaded", function () {
     if (cfg.getNodeEnforceUserAuth() === true && cfg.getApiKey() == "") {
-        $("#content").html("<p class=\"mt-4 leading-normal\">We now require PhishDetect users to register a secret token. <a href=\"/ui/apikey/apikey.html\">Continue here to activate your browser!</a> <i class=\"far fa-smile text-blue\"></i></p>");
+        $("#content").empty().append(
+            $("<p class=\"mt-4 leading-normal\">")
+                .text(chrome.i18n.getMessage("popupTokenRequired") + " ")
+                .append(
+                    $("<a href=\"/ui/apikey/apikey.html\">")
+                        .text(chrome.i18n.getMessage("popupActivate"))
+                )
+                .append(" <i class=\"far fa-smile text-blue\"></i>")
+        );
         return;
     }
 

@@ -36,7 +36,8 @@ function loadOptions() {
     }
 }
 
-function saveOptions() {
+function saveOptions(event) {
+    event.preventDefault();
 	var node = $("#server").val().trim();
 	if (node != "") {
 		cfg.setNode(node);

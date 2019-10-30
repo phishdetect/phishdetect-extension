@@ -51,7 +51,6 @@ var options = {
             transform: function (content, path) {
                 // generates the manifest file using the package.json informations
                 return Buffer.from(JSON.stringify({
-                    description: process.env.npm_package_description,
                     version: process.env.npm_package_version,
                     // enable unsafe-eval in development for webpack
                     content_security_policy: (
@@ -68,6 +67,7 @@ var options = {
             {from: 'src/js',to:'js'},
             {from: 'src/lib',to:'lib'},
             {from: 'src/ui',to:'ui'},
+            {from: '_locales/',to:'_locales'},
             {from: 'node_modules/vex-js/dist/css/vex.css',to:'css'},
             {from: 'node_modules/vex-js/dist/css/vex-theme-default.css',to:'css'},
             {from: 'node_modules/tailwindcss/dist/tailwind.min.css',to:'css'},

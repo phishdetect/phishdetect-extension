@@ -52,3 +52,11 @@ function base64encode(str) {
         return String.fromCharCode('0x' + p1);
     }));
 }
+
+function i18nHtmlSafe(key) {
+    // Returns html-safe content for `key`
+    // Use this when embedding translation strings in html markup
+    let translation = chrome.i18n.getMessage(key);
+    let textNode = $('<div>').text(translation);
+    return textNode.html(); // return html content
+}

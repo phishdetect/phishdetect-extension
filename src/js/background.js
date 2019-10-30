@@ -154,24 +154,24 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 // Context menus.
 function loadContextMenus() {
     chrome.contextMenus.create({
-        "title": "Report this page as suspicious",
+        "title": chrome.i18n.getMessage("contextMenuReportPage"),
         "id": "report-page",
         "contexts": ["page", "frame"]
     });
     chrome.contextMenus.create({
-        "title": "Scan this page for phishing",
+        "title": chrome.i18n.getMessage("contextMenuScanPage"),
         "id": "scan-page",
         "contexts": ["page", "frame"]
     });
 
     chrome.contextMenus.create({
-        "title": "Scan this link for phishing",
+        "title": chrome.i18n.getMessage("contextMenuScanLink"),
         "id": "scan-link",
         "contexts": ["link"]
     });
 
     chrome.contextMenus.create({
-        "title": "Report this link as suspicious",
+        "title": chrome.i18n.getMessage("contextMenuReportLink"),
         "id": "report-link",
         "contexts": ["link"]
     });

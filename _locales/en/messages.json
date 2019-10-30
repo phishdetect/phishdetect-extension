@@ -1,198 +1,198 @@
 {
     "manifestDescription": {
-      "message": "Anti-phishing browser extension. Scan suspicious pages and links.",
-      "description": "Displayed in the Chrome/FF store and about:extensions"
+        "message": "Anti-phishing browser extension. Scan suspicious pages and links.",
+        "description": "Displayed in the Chrome/FF store and about:extensions"
     },
     "popupScanThisPage": {
-      "message": "Scan this page!",
-      "description": "Displayed on the popup page button."
+        "message": "Scan this page!",
+        "description": "Displayed on the popup page button."
     },
     "popupSettings": {
-      "message": "Settings",
-      "description": "Label for a button on the popup page to open the settings page."
+        "message": "Settings",
+        "description": "Label for a button on the popup page to open the settings page."
     },
     "popupHelp": {
-      "message": "Help",
-      "description": "Help link on popup page."
+        "message": "Help",
+        "description": "Help link on popup page."
     },
     "optionsDescription": {
-      "message": "Through this form you can decide which PhishDetect Node to connect to.",
-      "description": "Description shown at the top of the options page"
+        "message": "Through this form you can decide which PhishDetect Node to connect to.",
+        "description": "Description shown at the top of the options page"
     },
     "optionsNode": {
-      "message": "Your preferred PhishDetect Node:",
-      "description": "Label for the PhishDetect node form field on the options page"
+        "message": "Your preferred PhishDetect Node:",
+        "description": "Label for the PhishDetect node form field on the options page"
     },
     "optionsEnableWebmail": {
-      "message": "Enable Webmails integration",
-      "description": "Label for checkbox to enable webmail integration."
+        "message": "Enable Webmails integration",
+        "description": "Label for checkbox to enable webmail integration."
     },
     "optionsReportAlerts": {
-      "message": "Report alerts to PhishDetect Node",
-      "description": "Label for checkbox to enable reporting of alerts."
+        "message": "Report alerts to PhishDetect Node",
+        "description": "Label for checkbox to enable reporting of alerts."
     },
     "optionsContact": {
-      "message": "If you wish, you can leave your contact details:",
-      "description": "Label for contact details field."
+        "message": "If you wish, you can leave your contact details:",
+        "description": "Label for contact details field."
     },
     "optionsSave": {
-      "message": "Save",
-      "description": "Label for save button on options page."
+        "message": "Save",
+        "description": "Label for save button on options page."
     },
     "optionsRestore": {
-      "message": "Restore Defaults",
-      "description": "Link to restore default values on the options page."
+        "message": "Restore Defaults",
+        "description": "Link to restore default values on the options page."
     },
     "warningWarning": {
-      "message": "Warning",
-      "description": "Title for a warning page when opening a dangerous url."
+        "message": "Warning",
+        "description": "Title for a warning page when opening a dangerous url."
     },
     "warningAway": {
-      "message": "TAKE ME AWAY",
-      "description": "Text for button to abort opening a dangerous url"
+        "message": "TAKE ME AWAY",
+        "description": "Text for button to abort opening a dangerous url"
     },
     "warningPrevented": {
-      "message": "PhishDetect prevented you from visiting this page and, if you have this option enabled, alerted the administrator of your configured PhishDetect Node. For more information about this warning read the PhishDetect Help Page:",
-      "description": "Text displayed when PhishDetect prevents you from visiting a page"
+        "message": "PhishDetect prevented you from visiting this page and, if you have this option enabled, alerted the administrator of your configured PhishDetect Node. For more information about this warning read the PhishDetect Help Page:",
+        "description": "Text displayed when PhishDetect prevents you from visiting a page"
     },
     "warningReportedNotSafe": {
-      "message": "PhishDetect reported it as not safe",
-      "description": "Text displayed when PhishDetect prevents you from visiting a page"
+        "message": "PhishDetect reported it as not safe",
+        "description": "Text displayed when PhishDetect prevents you from visiting a page"
     },
     "warningWrongfullyBlocked": {
-      "message": "If you think this website was wrongfully blocked, please report the mistake here:",
-      "description": "Text displayed when PhishDetect prevents you from visiting a page"
+        "message": "If you think this website was wrongfully blocked, please report the mistake here:",
+        "description": "Text displayed when PhishDetect prevents you from visiting a page"
     },
     "warningReportMistake": {
-      "message": "Report mistake",
-      "description": "Link text to report a wrongfully blocked page"
+        "message": "Report mistake",
+        "description": "Link text to report a wrongfully blocked page"
     },
     "apikeyThankyou": {
-      "message": "Thank you for participating to PhishDetect closed beta program!",
-      "description": "Paragraph text thanking the user."
+        "message": "Thank you for participating to PhishDetect closed beta program!",
+        "description": "Paragraph text thanking the user."
     },
     "apikeyGetToken": {
-      "message": "In order to continue using the PhishDetect Browser Extension, you will be required to enter a valid secret token. You don't have one yet?",
-      "description": "Paragraph text. Following this text is a link to register for a token"
+        "message": "In order to continue using the PhishDetect Browser Extension, you will be required to enter a valid secret token. You don't have one yet?",
+        "description": "Paragraph text. Following this text is a link to register for a token"
     },
     "apikeyRegister": {
-      "message": "Register here!",
-      "description": "Text for a link to the registration page"
+        "message": "Register here!",
+        "description": "Text for a link to the registration page"
     },
     "apikeyNode": {
-      "message": "Your preferred PhishDetect Node:",
-      "description": "Label for a text input for the url of your PhishDetect node"
+        "message": "Your preferred PhishDetect Node:",
+        "description": "Label for a text input for the url of your PhishDetect node"
     },
     "apikeyToken": {
-      "message": "Enter your secret token:",
-      "description": "Label for a text input for your secret token"
+        "message": "Enter your secret token:",
+        "description": "Label for a text input for your secret token"
     },
     "apikeySave": {
-      "message": "Save",
-      "description": "Text for button to save api token and node settings"
+        "message": "Save",
+        "description": "Text for button to save api token and node settings"
     },
     "contextMenuReportPage": {
-      "message": "Report this page as suspicious",
-      "description": "Text for context menu option to report a page"
+        "message": "Report this page as suspicious",
+        "description": "Text for context menu option to report a page"
     },
     "contextMenuReportLink": {
-      "message": "Report this link as suspicious",
-      "description": "Text for context menu option to report a link"
+        "message": "Report this link as suspicious",
+        "description": "Text for context menu option to report a link"
     },
     "contextMenuScanPage": {
-      "message": "Scan this page for phishing",
-      "description": "Text for context menu option to scan a page"
+        "message": "Scan this page for phishing",
+        "description": "Text for context menu option to scan a page"
     },
     "contextMenuScanLink": {
-      "message": "Scan this link for phishing",
-      "description": "Text for context menu option to scan a link"
+        "message": "Scan this link for phishing",
+        "description": "Text for context menu option to scan a link"
     },
     "webmailWarningWarning": {
-      "message": "Warning",
-      "description": "Label for a warning message"
+        "message": "Warning",
+        "description": "Label for a warning message"
     },
     "webmailWarningPleaseBeCautious": {
-      "message": "Please be cautious!",
-      "description": "Secondary text for a warning message"
+        "message": "Please be cautious!",
+        "description": "Secondary text for a warning message"
     },
     "webmailWarningSender": {
-      "message": "The email was sent by a known malicious address.",
-      "description": "Explanation of a webmail warning event"
+        "message": "The email was sent by a known malicious address.",
+        "description": "Explanation of a webmail warning event"
     },
     "webmailWarningLinks": {
-      "message": "The email contains known malicious links.",
-      "description": "Explanation of a webmail warning event"
+        "message": "The email contains known malicious links.",
+        "description": "Explanation of a webmail warning event"
     },
     "webmailWarningHelp": {
-      "message": "For more information visit our help page:",
-      "description": "Label for a link to the help page."
+        "message": "For more information visit our help page:",
+        "description": "Label for a link to the help page."
     },
     "webmailLinkWarning": {
-      "message": "PhishDetect Warning: this link is malicious!",
-      "description": "Warning text for a known malicious link"
+        "message": "PhishDetect Warning: this link is malicious!",
+        "description": "Warning text for a known malicious link"
     },
     "webmailDialog": {
-      "message": "How do you want to open this link?",
-      "description": "Warning text for a known malicious link"
+        "message": "How do you want to open this link?",
+        "description": "Warning text for a known malicious link"
     },
     "webmailDialogDirectly": {
-      "message": "Directly",
-      "description": "Button to open a link 'Directly' / 'Unsafely'"
+        "message": "Directly",
+        "description": "Button to open a link 'Directly' / 'Unsafely'"
     },
     "webmailDialogSafely": {
-      "message": "Safely",
-      "description": "Button to open a link 'Safely'"
+        "message": "Safely",
+        "description": "Button to open a link 'Safely'"
     },
     "webmailPreview": {
-      "message": "You are about to open this link. Do you want to continue?",
-      "description": "Confirmation dialog text when opening a link"
+        "message": "You are about to open this link. Do you want to continue?",
+        "description": "Confirmation dialog text when opening a link"
     },
     "webmailPreviewContinue": {
-      "message": "Continue",
-      "description": "Button text to continue with safely previewing a link"
+        "message": "Continue",
+        "description": "Button text to continue with safely previewing a link"
     },
     "reportEmailReportedAlready": {
-      "message": "Reported to PhishDetect",
-      "description": "Text shown when trying to report an email that was already reported."
+        "message": "Reported to PhishDetect",
+        "description": "Text shown when trying to report an email that was already reported."
     },
     "reportEmailReport": {
-      "message": "Report to PhishDetect",
-      "description": "Label for the report button"
+        "message": "Report to PhishDetect",
+        "description": "Label for the report button"
     },
     "reportEmailConfirm": {
-      "message": "Are you sure you want to report this email to your PhishDetect Node administrator?",
-      "description": "Confirmation message when reporting an email"
+        "message": "Are you sure you want to report this email to your PhishDetect Node administrator?",
+        "description": "Confirmation message when reporting an email"
     },
     "popupReportThisPage": {
-      "message": "Report this page",
-      "description": "Button to report the page from a popup"
+        "message": "Report this page",
+        "description": "Button to report the page from a popup"
     },
     "popupReported": {
-      "message": "Reported!",
-      "description": "Shown in a popup when an email is reported."
+        "message": "Reported!",
+        "description": "Shown in a popup when an email is reported."
     },
     "popupScanning": {
-      "message": "Scanning...",
-      "description": "Shown in a popup when an email is being scanned."
+        "message": "Scanning...",
+        "description": "Shown in a popup when an email is being scanned."
     },
     "popupTokenRequired": {
-      "message": "We now require PhishDetect users to register a secret token.",
-      "description": "Paragraph in a popup explaining the need for a token"
+        "message": "We now require PhishDetect users to register a secret token.",
+        "description": "Paragraph in a popup explaining the need for a token"
     },
     "popupActivate": {
-      "message": "Continue here to activate your browser!",
-      "description": "Link text to register for a secret token to activate PhishDetect"
+        "message": "Continue here to activate your browser!",
+        "description": "Link text to register for a secret token to activate PhishDetect"
     },
     "apikeyErrorSecretToken": {
-      "message": "You did not provide a valid secret token.",
-      "description": "Error text when no secret token is entered in the apikey form"
+        "message": "You did not provide a valid secret token.",
+        "description": "Error text when no secret token is entered in the apikey form"
     },
     "apikeySaved": {
-      "message": "Saved!",
-      "description": "Displayed when an apikey is saved succesfully"
+        "message": "Saved!",
+        "description": "Displayed when an apikey is saved succesfully"
     },
     "optionsSaved": {
-      "message": "Saved!",
-      "description": "Displayed when settings are saved succesfully"
+        "message": "Saved!",
+        "description": "Displayed when settings are saved succesfully"
     }
 }

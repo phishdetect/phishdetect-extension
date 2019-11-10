@@ -19,12 +19,18 @@
         "jquery": "^3.4.1",
         "js-sha256": "^0.9.0",
         "npm": "^6.12.1",
+        "react": "^16.11.0",
+        "react-dom": "^16.11.0",
         "tailwindcss": "^0.7.4",
         "tldts": "^3.1.2",
         "vex-dialog": "^1.1.0",
         "vex-js": "^4.1.0"
     },
     "devDependencies": {
+        "babel-core": "^6.26.3",
+        "babel-loader": "7",
+        "babel-preset-env": "^1.7.0",
+        "babel-preset-react": "^6.24.1",
         "clean-webpack-plugin": "^1.0.0",
         "copy-webpack-plugin": "^4.6.0",
         "css-loader": "2.1.0",

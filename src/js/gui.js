@@ -23,35 +23,18 @@ window.vex = vex;
 vex.registerPlugin(require("vex-dialog"));
 vex.defaultOptions.className = "vex-theme-default";
 
+import React from 'react';
+import { renderToString } from 'react-dom/server';
+import WebmailWarning from "../components/WebmailWarning";
+
+function render(element, options) {
+    return renderToString(React.createElement(element, options));
+}
+
 // generateWebmailWarning is a helper function used to generate the HTML
 // needed to show a warning message inside the supported webmails.
 window.generateWebmailWarning = function generateWebmailWarning(eventType) {
-    var warningText = $("<span>")
-        .append(
-            $("<span>")
-              .css("font-size", "1.125rem")
-              .html("<i class=\"fas fa-exclamation-triangle\"></i> <b>PhishDetect</b>")
-              .append(i18nHtmlSafe("webmailWarningWarning"))
-        )
-        .append("<br />")
-        .append(i18nHtmlSafe("webmailWarningPleaseBeCautious"));
-
-    if (eventType == "email_sender" || eventType == "email_sender_domain") {
-        warningText.append(i18nHtmlSafe("webmailWarningSender"));
-    } else if (eventType == "email_link") {
-        warningText.append(i18nHtmlSafe("webmailWarningLinks"));
-    }
-
-    warningText
-      .append(i18nHtmlSafe("webmailWarningHelp"))
-      .append("<a style=\"text-decoration: none;\" href=\"https://phishdetect.io/help/\"><span style=\"color: #6cb2eb\"><b>phishdetect.io/help</b></span></a>")
-
-    var warning = $("<div>", {id: "phishdetect-warning"})
-        .addClass("pd-webmail-warning")
-        .css("padding-top", "1rem")
-        .append(warningText);
-
-    return warning;
+    return render(WebmailWarning, {eventType: eventType});
 }
 
 // generateWebmailLinkWarning appends a red warning sign to an HTML element

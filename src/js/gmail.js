@@ -228,15 +228,20 @@ function gmailReportEmail(id) {
                             return;
                         }
 
-                        $("#pd-report").html(htmlReportedAlready);
+                        var promise = gmail.get.email_source_promise(id);
+                        if (promise) {
+                            promise.then(function(result) {
+                                $("#pd-report").html(htmlReportedAlready);
 
-                        var email = new gmail.dom.email(id);
-                        chrome.runtime.sendMessage({
-                            method: "sendRaw",
-                            rawType: "email",
-                            rawContent: email.source(),
-                            identifier: id,
-                        });
+                                chrome.runtime.sendMessage({
+                                    method: "sendRaw",
+                                    rawType: "email",
+                                    rawContent: result,
+                                    identifier: id,
+                                });
+                            });
+                        }
+
                     }
                 });
             });

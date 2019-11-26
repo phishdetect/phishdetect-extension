@@ -248,29 +248,17 @@ function roundcubeReportEmail(email) {
             return;
         }
 
-        var htmlReportedAlready = $("<div>")
-            .css({
-                "font-size": ".82rem",
-                "cursor": "auto",
-                "padding": ".5rem"
-            })
-            .html("<i class=\"fas fa-check-circle\" style=\"color: #38c172;margin-right: .5rem;\"></i>")
-            .append(i18nHtmlSafe("reportEmailReported"));
+        var htmlReportedAlready = $.parseHTML(generateReportedAlreadyButton())
+            .addClass('roundcube');
 
         if (isReported) {
             emailHeader.append(htmlReportedAlready);
         } else {
-            var htmlReportButton = $("<div>", {id: "pd-report"})
-                .addClass("pd-webmail-report")
-                .css({
-                    "font-size": ".82rem",
-                    "cursor": "pointer"
-                })
-                .html("<i class=\"fas fa-fish\" style=\"color: #3490dc;margin-right: .5rem;\"></i>")
-                .append(i18nHtmlSafe("reportEmailReport"))
+            var button = $.parseHTML(generateReportEmailButton())
+                .addClass('roundcube')
                 .bind("click", function() {
                     vex.dialog.confirm({
-                        unsafeMessage: "<b>PhishDetect</b><br />" + i18nHtmlSafe("reportEmailConfirm"),
+                        unsafeMessage: generateConfirmationDialog(),
                         callback: function(ok) {
                             // If user clicked cancel, end.
                             if (!ok) {
@@ -281,9 +269,8 @@ function roundcubeReportEmail(email) {
                             if (promise) {
                                 promise.then(function(result) {
                                     $("#pd-report")
-                                        .removeClass("pd-webmail-report")
-                                        .html(htmlReportedAlready)
-                                        .unbind("click");
+                                        .unbind("click")
+                                        .replaceWith(htmlReportedAlready)
 
                                     chrome.runtime.sendMessage({
                                         method: "sendRaw",
@@ -297,7 +284,7 @@ function roundcubeReportEmail(email) {
                     });
                 });
 
-            emailHeader.append(htmlReportButton);
+            emailHeader.append(button);
         }
     });
 }

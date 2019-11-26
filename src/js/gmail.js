@@ -207,8 +207,8 @@ function gmailReportEmail(id) {
         }
 
         // Add button to upload email.
-        var htmlReportButton = "<span id=\"pd-report\" class=\"pd-webmail-report\"><i class=\"fas fa-fish\" style=\"color: #3490dc;margin-right: .5rem;\"></i>" + i18nHtmlSafe("reportEmailReport") + "</span>";
-        var htmlReportedAlready = "<span id=\"pd-reported\" style=\"cursor: pointer;\"><i class=\"fas fa-check-circle\" style=\"color: #38c172;margin-right: .5rem;\"></i>" + i18nHtmlSafe("reportEmailReportedAlready") + "</span>";
+        var htmlReportButton = generateReportEmailButton();
+        var htmlReportedAlready = generateReportedAlreadyButton();
 
         // We delete existing buttons (this normally would happen in the case
         // of Gmail's conversation view).
@@ -222,7 +222,7 @@ function gmailReportEmail(id) {
             gmail.tools.add_toolbar_button(htmlReportButton, function() {
                 // We ask for confirmation.
                 vex.dialog.confirm({
-                    unsafeMessage: "<b>PhishDetect</b><br />" + i18nHtmlSafe("reportEmailConfirm"),
+                    unsafeMessage: generateConfirmationDialog(),
                     callback: function(ok) {
                         if (!ok) {
                             return;
@@ -231,7 +231,7 @@ function gmailReportEmail(id) {
                         var promise = gmail.get.email_source_promise(id);
                         if (promise) {
                             promise.then(function(result) {
-                                $("#pd-report").html(htmlReportedAlready);
+                                $("#pd-report").replaceWith(htmlReportedAlready);
 
                                 chrome.runtime.sendMessage({
                                     method: "sendRaw",

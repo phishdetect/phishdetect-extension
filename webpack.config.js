@@ -10,6 +10,9 @@ var webpack = require("webpack"),
 
 var fileExtensions = ["jpg", "jpeg", "png", "gif", "eot", "otf", "svg", "ttf", "woff", "woff2"];
 var options = {
+    devServer: {
+        publicPath: '/'
+    },
     mode: process.env.NODE_ENV || "development",
     entry: {
         gmail: path.join(__dirname, "src", "js", "gmail.js"),

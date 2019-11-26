@@ -26,6 +26,10 @@ vex.defaultOptions.className = "vex-theme-default";
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import WebmailWarning from "../components/WebmailWarning";
+import WebmailLinkWarning from "../components/WebmailLinkWarning";
+import WebmailLinkDialog from '../components/WebmailLinkDialog';
+import ReportEmailButton from '../components/ReportEmailButton';
+import ConfirmationDialog from '../components/ConfirmationDialog';
 
 function render(element, options) {
     return renderToString(React.createElement(element, options));
@@ -36,16 +40,20 @@ function render(element, options) {
 window.generateWebmailWarning = function generateWebmailWarning(eventType) {
     return render(WebmailWarning, {eventType: eventType});
 }
+window.generateReportEmailButton = function() {
+    return render(ReportEmailButton, {reported: false});
+}
+window.generateReportedAlreadyButton = function() {
+    return render(ReportEmailButton, {reported: true});
+}
+window.generateConfirmationDialog = function() {
+    return render(ConfirmationDialog);
+}
 
 // generateWebmailLinkWarning appends a red warning sign to an HTML element
 // (normally a link) to alert the user that what's contained is malicious.
 window.generateWebmailLinkWarning = function generateWebmailLinkWarning(element) {
-    var span = $("<span>")
-        .addClass("pd-webmail-link-warning")
-        .attr("title", chrome.i18n.getMessage("webmailLinkWarning"))
-        .html(" <i class=\"fas fa-exclamation-triangle\"></i>");
-
-    element.parentNode.insertBefore(span.get(0), element.nextSibling);
+    element.insertAdjacentHTML('afterend', renderHTML(WebmailLinkWarning));
 }
 
 // generateWebmailDialog adds a click event handler to the given anchor
@@ -68,23 +76,16 @@ window.generateWebmailDialog = function generateWebmailDialog(anchor) {
         // We prevent the link from opening.
         event.preventDefault();
 
-        // We sanitize the link and preview it in the dialog.
-        var sanitizedLink = $("<span>").text(href).html();
-        var message = $("<span>")
-            .css({
-                "overflow-wrap": "break-word",
-                "word-wrap": "break-word",
-                "-ms-word-break": "break-all",
-                "word-break": "break-all",
-                "word-break": "break-word"
-            })
-            .html(`<b>PhishDetect</b><br />${i18nHtmlSafe("webmailDialog")}<br />` +
-            "<span style=\"font-family: Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace; color: #2779bd;\">" + sanitizedLink + "</span>");
+        // We safely render the link and preview it in the dialog.
+        var message = render(WebmailLinkDialog, {
+            content: chrome.i18n.getMessage("webmailDialog"),
+            href: href
+        });
 
         // We spawn a dialog.
         vex.defaultOptions.contentClassName = "w-full";
         vex.dialog.open({
-            unsafeMessage: message.html(),
+            unsafeMessage: message,
             buttons: [
                 // Button to open "Safely".
                 $.extend({}, vex.dialog.buttons.YES, {
@@ -158,22 +159,15 @@ window.generateWebmailPreview = function generateWebmailPreview(anchor) {
         // var unsafeUrl = event.srcElement.getAttribute("href");
         var unsafeUrl = href;
         // We sanitize the link and preview it in the dialog.
-        var sanitizedLink = $("<span>").text(unsafeUrl).html();
-        var message = $("<span>")
-            .css({
-                "overflow-wrap": "break-word",
-                "word-wrap": "break-word",
-                "-ms-word-break": "break-all",
-                "word-break": "break-all",
-                "word-break": "break-word"
-            })
-            .html(`<b>PhishDetect</b><br />${i18nHtmlSafe("webmailPreview")}<br />` +
-            "<span style=\"font-family: Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace; color: #2779bd;\">" + sanitizedLink + "</span>");
+        var message = render(WebmailLinkDialog, {
+            content: chrome.i18n.getMessage("webmailPreview"),
+            href: href
+        });
 
         // We spawn a dialog.
         vex.defaultOptions.contentClassName = "w-full";
         vex.dialog.open({
-            unsafeMessage: message.html(),
+            unsafeMessage: message,
             buttons: [
                 $.extend({}, vex.dialog.buttons.YES, {
                     text: chrome.i18n.getMessage("webmailPreviewContinue"),

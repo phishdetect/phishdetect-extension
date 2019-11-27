@@ -16,6 +16,7 @@ var options = {
     mode: process.env.NODE_ENV || "development",
     entry: {
         gmail: path.join(__dirname, "src", "js", "gmail.js"),
+        roundcube: path.join(__dirname, "src", "js", "roundcube.js"),
         domains: path.join(__dirname, "src", "js", "domains.js"),
         gui: path.join(__dirname, "src", "js", "gui.js")
     },

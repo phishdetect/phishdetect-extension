@@ -15,7 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-$("form").submit(function() {
+$("form").submit(function(event) {
+    event.preventDefault();
     var node = $("#server").val().trim();
     if (node != "") {
         cfg.setNode(node);

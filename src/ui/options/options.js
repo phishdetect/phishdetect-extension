@@ -36,11 +36,12 @@ function loadOptions() {
     }
 }
 
-function saveOptions() {
-	var node = $("#server").val().trim();
-	if (node != "") {
-		cfg.setNode(node);
-	}
+function saveOptions(event) {
+    event.preventDefault();
+    var node = $("#server").val().trim();
+    if (node != "") {
+        cfg.setNode(node);
+    }
     var key = $("#key").val().trim();
     if (key != "") {
         cfg.setApiKey(key);

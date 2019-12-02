@@ -1,4 +1,6 @@
 const React = require('react');
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons'
 export default class WebmailWarning extends React.Component {
     getWarningText(eventType) {
         switch(eventType) {
@@ -15,7 +17,7 @@ export default class WebmailWarning extends React.Component {
             <div id="phishdetect-warning" className="pd-webmail-warning"
                  style={ {paddingTop: '1rem'} }>
                 <span style={ {fontSize: '1.125rem'} }>
-                    <i className="fas fa-exclamation-triangle"></i> <b>PhishDetect</b>
+                    <FontAwesomeIcon icon={faExclamationTriangle} /> <b>PhishDetect</b>
                     {' '}
                     {chrome.i18n.getMessage("webmailWarningWarning")}
                 </span>

@@ -24,6 +24,7 @@ vex.registerPlugin(require("vex-dialog"));
 vex.defaultOptions.className = "vex-theme-default";
 
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { renderToString } from 'react-dom/server';
 import WebmailWarning from "../components/WebmailWarning";
 import WebmailLinkWarning from "../components/WebmailLinkWarning";
@@ -31,23 +32,30 @@ import WebmailLinkDialog from '../components/WebmailLinkDialog';
 import ReportEmailButton from '../components/ReportEmailButton';
 import ConfirmationDialog from '../components/ConfirmationDialog';
 
-function render(element, options) {
-    return renderToString(React.createElement(element, options));
+// A helper to render HTML strings from React components
+function renderHTML(component, options) {
+    return renderToString(React.createElement(component, options));
+}
+// A helper to render a React component directly into a DOM element
+// This includes attaching any behaviors defined by the component
+function renderDOM(component, options, element) {
+    ReactDOM.render(React.createElement(component, options), element);
 }
 
 // generateWebmailWarning is a helper function used to generate the HTML
 // needed to show a warning message inside the supported webmails.
 window.generateWebmailWarning = function generateWebmailWarning(eventType) {
-    return render(WebmailWarning, {eventType: eventType});
+    return renderHTML(WebmailWarning, {eventType: eventType});
 }
-window.generateReportEmailButton = function() {
-    return render(ReportEmailButton, {reported: false});
-}
-window.generateReportedAlreadyButton = function() {
-    return render(ReportEmailButton, {reported: true});
+// Renders a button into an existing DOM element and attachs a click handler
+// element: the container DOM element
+// getEmailPromise: a function that returns a promise resolving to an email
+// uid: the unique identifier for the email
+window.generateReportEmailButton = function(element, options) {
+    return renderDOM(ReportEmailButton, options, element);
 }
 window.generateConfirmationDialog = function() {
-    return render(ConfirmationDialog);
+    return renderHTML(ConfirmationDialog);
 }
 
 // generateWebmailLinkWarning appends a red warning sign to an HTML element
@@ -77,7 +85,7 @@ window.generateWebmailDialog = function generateWebmailDialog(anchor) {
         event.preventDefault();
 
         // We safely render the link and preview it in the dialog.
-        var message = render(WebmailLinkDialog, {
+        var message = renderHTML(WebmailLinkDialog, {
             content: chrome.i18n.getMessage("webmailDialog"),
             href: href
         });
@@ -159,7 +167,7 @@ window.generateWebmailPreview = function generateWebmailPreview(anchor) {
         // var unsafeUrl = event.srcElement.getAttribute("href");
         var unsafeUrl = href;
         // We sanitize the link and preview it in the dialog.
-        var message = render(WebmailLinkDialog, {
+        var message = renderHTML(WebmailLinkDialog, {
             content: chrome.i18n.getMessage("webmailPreview"),
             href: href
         });

@@ -34,14 +34,14 @@
 .pd-webmail-link-warning {
     color: #e3342f;
 }
-.pd-webmail-button.roundcube {
+.roundcube .pd-webmail-button {
     display: block;
     font-size: .82rem;
 }
 .pd-webmail-reported {
     cursor: auto;
 }
-.pd-webmail-report.pd-webmail-button.roundcube {
+.roundcube .pd-webmail-report.pd-webmail-button {
     cursor: pointer;
     padding: .5rem;
 }

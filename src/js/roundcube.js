@@ -129,44 +129,13 @@ function roundcubeReportEmail(email) {
             return;
         }
 
-        var htmlReportedAlready = $.parseHTML(generateReportedAlreadyButton())
-            .addClass('roundcube');
-
-        if (isReported) {
-            emailHeader.append(htmlReportedAlready);
-        } else {
-            var button = $.parseHTML(generateReportEmailButton())
-                .addClass('roundcube')
-                .bind("click", function() {
-                    vex.dialog.confirm({
-                        unsafeMessage: generateConfirmationDialog(),
-                        callback: function(ok) {
-                            // If user clicked cancel, end.
-                            if (!ok) {
-                                return;
-                            }
-
-                            var promise = roundcubeGetEmailSource();
-                            if (promise) {
-                                promise.then(function(result) {
-                                    $("#pd-report")
-                                        .unbind("click")
-                                        .replaceWith(htmlReportedAlready)
-
-                                    chrome.runtime.sendMessage({
-                                        method: "sendRaw",
-                                        rawType: "email",
-                                        rawContent: result,
-                                        identifier: uid,
-                                    });
-                                });
-                            }
-                        }
-                    });
-                });
-
-            emailHeader.append(button);
-        }
+        var element = $('<div>').addClass('roundcube').get(0);
+        generateReportEmailButton(element, {
+            uid: uid,
+            reported: isReported,
+            getEmailPromise: roundcubeGetEmailSource
+        });
+        emailHeader.append(element);
     });
 }
 

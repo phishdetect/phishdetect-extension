@@ -62,20 +62,18 @@ function gmailModifyEmail(id) {
 // gmailReportEmail creates a button to report the currently open email with the
 // PhishDetect Node. Reported emails will be marked in the extension's storage
 // and we will avoid duplication.
-function gmailReportEmail(id) {
+function gmailReportEmail(uid) {
     chrome.runtime.sendMessage({method: "getReportedEmails"}, function(response) {
         var isReported = false;
         for (var i=0; i<response.length; i++) {
             // If the email was already reported before, no need to
             // report it again.
-            if (response[i] == id) {
+            if (response[i] == uid) {
                 isReported = true;
             }
         }
 
         // Add button to upload email.
-        var htmlReportButton = generateReportEmailButton();
-        var htmlReportedAlready = generateReportedAlreadyButton();
 
         // We delete existing buttons (this normally would happen in the case
         // of Gmail's conversation view).
@@ -83,36 +81,15 @@ function gmailReportEmail(id) {
         // instead be changed to place the button elsewhere.
         $("[id^='pd-report']").parent().parent().remove();
 
-        if (isReported) {
-            gmail.tools.add_toolbar_button(htmlReportedAlready, function() {});
-        } else {
-            gmail.tools.add_toolbar_button(htmlReportButton, function() {
-                // We ask for confirmation.
-                vex.dialog.confirm({
-                    unsafeMessage: generateConfirmationDialog(),
-                    callback: function(ok) {
-                        if (!ok) {
-                            return;
-                        }
-
-                        var promise = gmail.get.email_source_promise(id);
-                        if (promise) {
-                            promise.then(function(result) {
-                                $("#pd-report").replaceWith(htmlReportedAlready);
-
-                                chrome.runtime.sendMessage({
-                                    method: "sendRaw",
-                                    rawType: "email",
-                                    rawContent: result,
-                                    identifier: id,
-                                });
-                            });
-                        }
-
-                    }
-                });
-            });
-        }
+        var element = $('<div>').get(0);
+        generateReportEmailButton(element, {
+            uid: uid,
+            reported: isReported,
+            getEmailPromise: function() {
+              return gmail.get.email_source_promise(uid);
+            }
+        });
+        gmail.tools.add_toolbar_button(element);
     });
 }
 

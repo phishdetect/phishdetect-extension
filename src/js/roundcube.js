@@ -151,3 +151,4 @@ function roundcube() {
     roundcubeCheckEmail(email);
     roundcubeModifyEmail(email);
 }
+window.roundcube = roundcube;

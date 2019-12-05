@@ -15,6 +15,9 @@ var options = {
     },
     mode: process.env.NODE_ENV || "development",
     entry: {
+        popup: path.join(__dirname, "src", "ui", "popup", "popup.js"),
+        options: path.join(__dirname, "src", "ui", "options", "options.js"),
+        apikey: path.join(__dirname, "src", "ui", "apikey", "apikey.js"),
         gmail: path.join(__dirname, "src", "js", "gmail.js"),
         roundcube: path.join(__dirname, "src", "js", "roundcube.js"),
         domains: path.join(__dirname, "src", "js", "domains.js"),

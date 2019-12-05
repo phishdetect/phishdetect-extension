@@ -15,6 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { PopupActivate } from '../../components/Popup.js'
+
 function getTab(callback) {
     let url = new URL(window.location.href);
     if (url.searchParams.has("tabId")) {
@@ -42,15 +46,8 @@ function scanPage() {
 
 document.addEventListener("DOMContentLoaded", function () {
     if (cfg.getNodeEnforceUserAuth() === true && cfg.getApiKey() == "") {
-        $("#content").empty().append(
-            $("<p class=\"mt-4 leading-normal\">")
-                .text(chrome.i18n.getMessage("popupTokenRequired") + " ")
-                .append(
-                    $("<a href=\"/ui/apikey/apikey.html\">")
-                        .text(chrome.i18n.getMessage("popupActivate"))
-                )
-                .append(" <i class=\"far fa-smile text-blue\"></i>")
-        );
+        var container = $("#content").empty();
+        ReactDOM.render(React.createElement(PopupActivate), container.get(0));
         return;
     }
 

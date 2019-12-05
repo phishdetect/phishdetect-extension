@@ -15,6 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { ApiKeySaved } from '../../components/ApiKey.js'
+
 $("form").submit(function(event) {
     event.preventDefault();
     var node = $("#server").val().trim();
@@ -26,13 +30,8 @@ $("form").submit(function(event) {
     if (apiKey != "") {
         cfg.setApiKey(apiKey);
 
-        $("#container").empty().append(
-            $("<div class=\"text-center\">")
-                .append($("<i class=\"fas fa-check-circle text-5xl text-green\">"))
-                .append($("<div class=\"mt-4\">")
-                    .text(chrome.i18n.getMessage("apikeySaved"))
-                )
-        );
+        var container = $("#container").empty();
+        ReactDOM.render(React.createElement(ApiKeySaved), container.get(0));
     } else {
         $("#errors").text(chrome.i18n.getMessage("apikeyErrorSecretToken"));
     }

@@ -15,6 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { OptionsSaved } from '../../components/Options.js';
+
 function loadOptions() {
     $("#server").val(cfg.getNode());
     $("#webmails").prop("checked", cfg.getWebmails());
@@ -53,13 +57,8 @@ function saveOptions(event) {
     cfg.setReport($("#report").is(":checked"));
     cfg.setWebmails($("#webmails").is(":checked"));
 
-    $("#container").empty().append(
-        $("<div class=\"text-center\">")
-            .append($("<i class=\"fas fa-check-circle text-5xl text-green\">"))
-            .append($("<div class=\"mt-4\">")
-                .text(chrome.i18n.getMessage("optionsSaved"))
-            )
-    );
+    var container = $("#container").empty();
+    ReactDOM.render(React.createElement(OptionsSaved), container.get(0));
 }
 
 function restoreDefaults() {

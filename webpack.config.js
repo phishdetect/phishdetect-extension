@@ -10,9 +10,16 @@ var webpack = require("webpack"),
 
 var fileExtensions = ["jpg", "jpeg", "png", "gif", "eot", "otf", "svg", "ttf", "woff", "woff2"];
 var options = {
+    devServer: {
+        publicPath: '/'
+    },
     mode: process.env.NODE_ENV || "development",
     entry: {
+        popup: path.join(__dirname, "src", "ui", "popup", "popup.js"),
+        options: path.join(__dirname, "src", "ui", "options", "options.js"),
+        apikey: path.join(__dirname, "src", "ui", "apikey", "apikey.js"),
         gmail: path.join(__dirname, "src", "js", "gmail.js"),
+        roundcube: path.join(__dirname, "src", "js", "roundcube.js"),
         domains: path.join(__dirname, "src", "js", "domains.js"),
         gui: path.join(__dirname, "src", "js", "gui.js")
     },
@@ -22,6 +29,11 @@ var options = {
     },
     module: {
         rules: [
+            {
+                test: /\.js$/,
+                loader: "babel-loader",
+                exclude: /node_modules/
+            },
             {
                 test: /\.css$/,
                 loader: "style-loader!css-loader",

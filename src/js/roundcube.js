@@ -15,6 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
+import checkEmail from './checkEmail.js'
+
 function roundcubeGetOpenEmailUID() {
     var url = new URL(location.href);
     return url.searchParams.get("_uid");
@@ -84,129 +86,8 @@ function roundcubeCheckEmail(email) {
 
     // Get email sender.
     var fromEmail = from.attr("href").toLowerCase().replace("mailto:", "");
-    console.log("Checking email sender: " + fromEmail);
 
-    var fromEmailHash = sha256(fromEmail);
-    var fromEmailDomain = "";
-    var fromEmailDomainHash = "";
-    var fromEmailTopDomain = "";
-    var fromEmailTopDomainHash = "";
-
-    // We extract the domain from the email address.
-    var parts = fromEmail.split('@');
-    if (parts.length === 2) {
-        fromEmailDomain = getDomainFromURL(parts[1]);
-        fromEmailDomainHash = sha256(fromEmailDomain);
-        fromEmailTopDomain = getTopDomainFromURL(parts[1]);
-        fromEmailTopDomainHash = sha256(fromEmailTopDomain);
-    }
-
-    // First we get the list of indicators.
-    chrome.runtime.sendMessage({method: "getIndicators"}, function(response) {
-        // Fail if we don't have any indicators.
-        if (response == "") {
-            return false;
-        }
-        var indicators = response;
-
-        if (indicators === undefined) {
-            return false;
-        }
-
-        // Email status.
-        var isEmailBad = false;
-        var eventType = "";
-        var eventMatch = "";
-        var eventIndicator = "";
-
-        // We check for email addresses, if we have any indicators to check.
-        if (indicators.emails !== null) {
-            var itemsToCheck = [fromEmailHash,];
-            var matchedIndicator = checkForIndicators(itemsToCheck, indicators.emails);
-            if (matchedIndicator !== null) {
-                console.log("Detected bad email sender with indicator:", matchedIndicator);
-
-                // Mark email as bad.
-                isEmailBad = true;
-                eventType = "email_sender";
-                eventMatch = fromEmail;
-                eventIndicator = matchedIndicator;
-            }
-        }
-
-        if (indicators.domains !== null) {
-            // First we check the domain of the email sender.
-            var itemsToCheck = [fromEmailDomainHash, fromEmailTopDomainHash];
-            var matchedIndicator = checkForIndicators(itemsToCheck, indicators.domains);
-            if (matchedIndicator !== null) {
-                console.log("Detected email sender domain with indicator:", matchedIndicator);
-
-                isEmailBad = true;
-                eventType = "email_sender_domain";
-                eventMatch = fromEmail;
-                eventIndicator = matchedIndicator;
-            }
-
-            // Now we check for links in the email body.
-            var anchors = emailBody.find("a");
-
-            for (var i=0; i<anchors.length; i++) {
-                // Lowercase the link.
-                var href = anchors[i].href.toLowerCase();
-
-                // Only check for HTTP links.
-                // NOTE: also scanning for mailto: links (currently experimental).
-                if (href.indexOf("http://") != 0 && href.indexOf("https://") != 0 && href.indexOf("mailto:") != 0) {
-                    continue;
-                }
-
-                console.log("Checking link:", href);
-
-                var hrefDomain = getDomainFromURL(href);
-                var hrefDomainHash = sha256(hrefDomain);
-                var hrefTopDomain = getTopDomainFromURL(href);
-                var hrefTopDomainHash = sha256(hrefTopDomain);
-
-                // We loop through the list of hashed bad domains.
-                var elementsToCheck = [hrefDomainHash, hrefTopDomainHash];
-                var matchedIndicator = checkForIndicators(elementsToCheck, indicators.domains);
-                if (matchedIndicator !== null) {
-                    console.log("Detected bad link with indicator:", matchedIndicator);
-
-                    // We add a warning sign to the link.
-                    generateWebmailLinkWarning(anchors[i]);
-
-                    // Mark whole email as bad.
-                    // TODO: this is ugly.
-                    isEmailBad = true;
-                    eventType = "email_link";
-                    eventMatch = href;
-                    eventIndicator = matchedIndicator;
-
-                    break;
-                }
-            }
-        }
-
-        // TODO: this is ugly.
-        // If there is any malicious element we proceed with notifications.
-        if (isEmailBad === true) {
-            // First we send an "event" to the PhishDetect Node through the "sendEvent"
-            // message to the background script. This will proceed only if the
-            // appropriate settings option is enabled.
-            chrome.runtime.sendMessage({
-                method: "sendEvent",
-                eventType: eventType,
-                match: eventMatch,
-                indicator: eventIndicator,
-                identifier: uid,
-            });
-
-            // Then we display a warning to the user inside the Gmail web interface.
-            var warning = generateWebmailWarning(eventType);
-            emailBody.prepend(warning);
-        }
-    });
+    return checkEmail(fromEmail, emailBody, uid);
 }
 
 function roundcubeModifyEmail(email) {
@@ -248,57 +129,13 @@ function roundcubeReportEmail(email) {
             return;
         }
 
-        var htmlReportedAlready = $("<div>")
-            .css({
-                "font-size": ".82rem",
-                "cursor": "auto",
-                "padding": ".5rem"
-            })
-            .html("<i class=\"fas fa-check-circle\" style=\"color: #38c172;margin-right: .5rem;\"></i>")
-            .append(i18nHtmlSafe("reportEmailReported"));
-
-        if (isReported) {
-            emailHeader.append(htmlReportedAlready);
-        } else {
-            var htmlReportButton = $("<div>", {id: "pd-report"})
-                .addClass("pd-webmail-report")
-                .css({
-                    "font-size": ".82rem",
-                    "cursor": "pointer"
-                })
-                .html("<i class=\"fas fa-fish\" style=\"color: #3490dc;margin-right: .5rem;\"></i>")
-                .append(i18nHtmlSafe("reportEmailReport"))
-                .bind("click", function() {
-                    vex.dialog.confirm({
-                        unsafeMessage: "<b>PhishDetect</b><br />" + i18nHtmlSafe("reportEmailConfirm"),
-                        callback: function(ok) {
-                            // If user clicked cancel, end.
-                            if (!ok) {
-                                return;
-                            }
-
-                            var promise = roundcubeGetEmailSource();
-                            if (promise) {
-                                promise.then(function(result) {
-                                    $("#pd-report")
-                                        .removeClass("pd-webmail-report")
-                                        .html(htmlReportedAlready)
-                                        .unbind("click");
-
-                                    chrome.runtime.sendMessage({
-                                        method: "sendRaw",
-                                        rawType: "email",
-                                        rawContent: result,
-                                        identifier: uid,
-                                    });
-                                });
-                            }
-                        }
-                    });
-                });
-
-            emailHeader.append(htmlReportButton);
-        }
+        var element = $('<div>').addClass('roundcube').get(0);
+        generateReportEmailButton(element, {
+            uid: uid,
+            reported: isReported,
+            getEmailPromise: roundcubeGetEmailSource
+        });
+        emailHeader.append(element);
     });
 }
 
@@ -314,3 +151,4 @@ function roundcube() {
     roundcubeCheckEmail(email);
     roundcubeModifyEmail(email);
 }
+window.roundcube = roundcube;

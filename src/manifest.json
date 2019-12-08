@@ -82,7 +82,7 @@
                 "dist/domains.js",
                 "dist/gui.js",
                 "js/utils.js",
-                "js/roundcube.js",
+                "dist/roundcube.js",
                 "js/webmails.js"
             ],
             "css": [

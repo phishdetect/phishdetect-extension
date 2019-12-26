@@ -15,11 +15,11 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-function sendRaw(rawType, rawContent, identifier) {
+function sendReport(reportType, reportContent, identifier) {
     var cfg = new Config();
 
     // Check if the event type is email_*.
-    if (rawType == "email") {
+    if (reportType == "email") {
         // If an email identifier was provided...
         if (identifier !== undefined && identifier != "") {
             // Get a list of already shared emails.
@@ -38,8 +38,8 @@ function sendRaw(rawType, rawContent, identifier) {
     var properties = {
         method: "POST",
         body: JSON.stringify({
-            "type": rawType,
-            "content": rawContent,
+            "type": reportType,
+            "content": reportContent,
             "user_contact": cfg.getContact(),
             "key": cfg.getApiKey(),
         }),
@@ -50,13 +50,13 @@ function sendRaw(rawType, rawContent, identifier) {
     .then((response) => response.json())
     .then(function(data) {
         // We do this to avoid re-sharing already shared emails.
-        if (rawType == "email") {
+        if (reportType == "email") {
             if (identifier !== undefined && identifier != "") {
                 cfg.addReportedEmail(identifier);
             }
         }
 
-        console.log("Reported raw message of type", rawType, "to PhishDetect Node.");
+        console.log("Reported report of type", reportType, "to PhishDetect Node.");
     })
     .catch(error => {
         console.log(error);

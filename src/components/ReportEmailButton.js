@@ -47,9 +47,9 @@ export default class ReportEmailButton extends React.Component {
         this.setState({reported: true});
 
         chrome.runtime.sendMessage({
-            method: "sendRaw",
-            rawType: "email",
-            rawContent: result,
+            method: "sendReport",
+            reportType: "email",
+            reportContent: result,
             identifier: this.state.uid,
         });
     }

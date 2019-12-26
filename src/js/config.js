@@ -152,7 +152,7 @@ class Config {
     // Node URLs
     //=========================================================================
     getConfigURL() {
-        return this.getNode() + NODE_API_CONFIG;
+        return this.getNode() + NODE_API_CONFIG_PATH;
     }
     getAuthURL(apiKey) {
         return this.getNode() + NODE_API_AUTH + "?key=" + apiKey;
@@ -201,7 +201,7 @@ class Config {
         return url;
     }
     getRawURL() {
-        var url = this.getNode() + NODE_API_RAW_ADD;
+        var url = this.getNode() + NODE_API_REPORTS_ADD_PATH;
         if (this.getNodeEnforceUserAuth() == true) {
             url += "?key=" + this.getApiKey()
         }

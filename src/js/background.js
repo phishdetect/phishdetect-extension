@@ -115,8 +115,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         // Send event to REST API server.
         sendEvent(request.eventType, request.match, request.indicator, request.identifier);
         break;
-    case "sendRaw":
-        sendRaw(request.rawType, request.rawContent, request.identifier);
+    case "sendReport":
+        sendReport(request.reportType, request.reportContent, request.identifier);
         break;
 
     //=========================================================================

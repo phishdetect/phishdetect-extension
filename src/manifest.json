@@ -25,7 +25,7 @@
             "js/const.js",
             "js/indicators.js",
             "js/events.js",
-            "js/raw.js",
+            "js/reports.js",
             "js/alarms.js",
             "js/config.js",
             "js/background.js",

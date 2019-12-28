@@ -46,7 +46,7 @@ function sendReport(reportType, reportContent, identifier) {
         headers: {"Content-Type": "application/json"},
     };
 
-    fetch(cfg.getRawURL(), properties)
+    fetch(cfg.getReportsURL(), properties)
     .then((response) => response.json())
     .then(function(data) {
         // We do this to avoid re-sharing already shared emails.

@@ -200,7 +200,7 @@ class Config {
         }
         return url;
     }
-    getRawURL() {
+    getReportsURL() {
         var url = this.getNode() + NODE_API_REPORTS_ADD_PATH;
         if (this.getNodeEnforceUserAuth() == true) {
             url += "?key=" + this.getApiKey()

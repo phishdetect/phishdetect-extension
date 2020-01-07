@@ -66,6 +66,11 @@ class Config {
             localStorage.cfg_last_error = "";
         }
 
+        // TODO: This is a temporary migration. Eventually get rid of this.
+        if (this.getNode() == "https://node.phishdetect.io" && this.getApiKey() != "") {
+            localStorage.cfg_node = "https://phishdetect.amnesty.tech";
+        }
+
         console.log("Storage initialization completed.");
     }
 

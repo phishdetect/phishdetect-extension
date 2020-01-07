@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-NODE_DEFAULT_URL                      = "https://node.phishdetect.io";
+NODE_DEFAULT_URL                      = "https://phishdetect.securitywithoutborders.org";
 
 NODE_GUI_LINK_CHECK                   = "/link/";
 NODE_GUI_REVIEW                       = "/review/";

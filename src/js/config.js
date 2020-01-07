@@ -68,7 +68,20 @@ class Config {
 
         // TODO: This is a temporary migration. Eventually get rid of this.
         if (this.getNode() == "https://node.phishdetect.io" && this.getApiKey() != "") {
-            localStorage.cfg_node = "https://phishdetect.amnesty.tech";
+            fetch(this.getAuthURL())
+            .then(function(response) {
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
+                return response;
+            })
+            .then(function(data) {
+                localStorage.cfg_node = "https://phishdetect.amnesty.tech"
+            })
+            .catch(error => {
+                console.log("The user is not activated.")
+                this.restoreDefaultNode();
+            });
         }
 
         console.log("Storage initialization completed.");
@@ -159,8 +172,12 @@ class Config {
     getConfigURL() {
         return this.getNode() + NODE_API_CONFIG_PATH;
     }
-    getAuthURL(apiKey) {
-        return this.getNode() + NODE_API_AUTH + "?key=" + apiKey;
+    getAuthURL() {
+        var url = this.getNode() + NODE_API_AUTH;
+        if (this.getNodeEnforceUserAuth() == true) {
+            url += "?key=" + this.getApiKey()
+        }
+        return url;
     }
     getRegisterURL() {
         return this.getNode() + NODE_GUI_REGISTER;

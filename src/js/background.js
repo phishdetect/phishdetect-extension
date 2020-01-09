@@ -159,22 +159,23 @@ function loadContextMenus() {
         "contexts": ["page", "frame"]
     });
     chrome.contextMenus.create({
-        "title": chrome.i18n.getMessage("contextMenuScanPage"),
-        "id": "scan-page",
-        "contexts": ["page", "frame"]
-    });
-
-    chrome.contextMenus.create({
-        "title": chrome.i18n.getMessage("contextMenuScanLink"),
-        "id": "scan-link",
-        "contexts": ["link"]
-    });
-
-    chrome.contextMenus.create({
         "title": chrome.i18n.getMessage("contextMenuReportLink"),
         "id": "report-link",
         "contexts": ["link"]
     });
+
+    if (cfg.getNodeEnableAnalysis() === true) {
+        chrome.contextMenus.create({
+            "title": chrome.i18n.getMessage("contextMenuScanPage"),
+            "id": "scan-page",
+            "contexts": ["page", "frame"]
+        });
+        chrome.contextMenus.create({
+            "title": chrome.i18n.getMessage("contextMenuScanLink"),
+            "id": "scan-link",
+            "contexts": ["link"]
+        });
+    }
 }
 
 chrome.contextMenus.onClicked.addListener(function(info, tab) {

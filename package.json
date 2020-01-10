@@ -1,6 +1,6 @@
 {
     "name": "phishdetect",
-    "version": "5.2.3",
+    "version": "5.2.4",
     "description": "Anti-phishing browser extension. Scan suspicious pages and links.",
     "main": "",
     "scripts": {

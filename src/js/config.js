@@ -67,7 +67,7 @@ class Config {
         }
 
         // TODO: This is a temporary migration. Eventually get rid of this.
-        if (this.getNode() == "https://node.phishdetect.io" && this.getApiKey() != "") {
+        if (this.getNode() == "https://node.phishdetect.io") {
             fetch(this.getAuthURL())
             .then(function(response) {
                 if (!response.ok) {

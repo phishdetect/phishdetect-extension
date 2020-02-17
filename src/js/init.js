@@ -34,5 +34,6 @@
     });
 
     // Check browsing history.
+    // TODO: This should be moved to a post-installation welcome routine.
     checkBrowsingHistory();
 })();

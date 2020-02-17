@@ -24,6 +24,7 @@
             "js/utils.js",
             "js/const.js",
             "js/indicators.js",
+            "js/history.js",
             "js/events.js",
             "js/reports.js",
             "js/alarms.js",
@@ -41,6 +42,7 @@
         "unlimitedStorage",
         "webRequest",
         "webRequestBlocking",
+        "history",
         "<all_urls>"
     ],
     "content_scripts": [

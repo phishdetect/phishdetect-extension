@@ -32,4 +32,7 @@
             updateIndicators();
         }
     });
+
+    // Check browsing history.
+    checkBrowsingHistory();
 })();

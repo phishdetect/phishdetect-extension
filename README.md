@@ -21,9 +21,11 @@ For details on how to install, configure and use the PhishDetect Extension you c
 
 ## Build
 
-First install node.js and npm:
+First install node.js:
 
-    $ sudo apt-get install nodejs npm
+    $ sudo apt-get install nodejs
+
+Then install yarn as explained by the [official instructions](https://classic.yarnpkg.com/en/docs/install#debian-stable).
 
 Then we can run the build command, which will pull dependencies and compile a
 single JavaScript file:

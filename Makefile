@@ -1,9 +1,9 @@
 build: clean
 	@echo "Installing dependencies..."
-	npm install
+	yarn install
 
 	@echo "Building files..."
-	NODE_ENV=production npm run build
+	NODE_ENV=production yarn run build
 
 package:
 	@echo "Packaging the extension..."

@@ -194,5 +194,9 @@
     "optionsSaved": {
         "message": "Saved!",
         "description": "Displayed when settings are saved succesfully"
+    },
+    "optionsSettings": {
+        "message": "Settings",
+        "description": "Heading for the form on the settings page."
     }
 }

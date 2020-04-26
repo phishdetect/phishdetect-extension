@@ -53,9 +53,12 @@ function updateIndicators(full = false) {
         // If it's a full update, we store the whole indicators feed.
         // Otherwise we only append the updates.
         if (full == true) {
+            console.log("Replacing local indicators with remote list...");
             cfg.setIndicators(data);
             cfg.setLastFullUpdateTime();
         } else {
+            console.log("Updating local indicators with only new ones...");
+
             // First we get the current list.
             indicators = cfg.getIndicators();
 

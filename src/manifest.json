@@ -27,6 +27,7 @@
             "js/events.js",
             "js/reports.js",
             "js/alarms.js",
+            "js/scanHistory.js",
             "js/config.js",
             "js/background.js",
             "js/init.js"

@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-import checkEmail from './checkEmail.js'
+import scanEmail from './scanEmail.js'
 
 function roundcubeGetOpenEmailUID() {
     var url = new URL(location.href);
@@ -87,7 +87,7 @@ function roundcubeCheckEmail(email) {
     // Get email sender.
     var fromEmail = from.attr("href").toLowerCase().replace("mailto:", "");
 
-    return checkEmail(fromEmail, emailBody, uid);
+    return scanEmail(fromEmail, emailBody, uid);
 }
 
 function roundcubeModifyEmail(email) {

@@ -22,7 +22,7 @@ const GmailFactory = require("gmail-js");
 const gmail = new GmailFactory.Gmail($);
 window.gmail = gmail;
 
-import checkEmail from './checkEmail.js'
+import scanEmail from './scanEmail.js'
 
 function gmailCheckEmail(uid) {
     console.log("Checking email", uid)
@@ -34,7 +34,7 @@ function gmailCheckEmail(uid) {
     var from = email.from();
     var fromEmail = from["email"].toLowerCase();
 
-    return checkEmail(fromEmail, emailBody, uid);
+    return scanEmail(fromEmail, emailBody, uid);
 }
 
 // gmailModifyEmail will modify the email body and rewrite links to open our

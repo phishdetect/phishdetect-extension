@@ -15,14 +15,15 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-function checkBrowsingHistory() {
-    console.log("Checking browsing history...");
+function scanBrowsingHistory() {
+    console.log("Scanning browsing history...");
 
     var indicators = cfg.getIndicators();
     if (indicators.domains === undefined || indicators.domains.length == 0) {
         return;
     }
 
+    var matches = [];
     chrome.history.search({text: "", startTime: 0}, function(items) {
         for (var i=0; i<items.length; i++) {
             var url = items[i].url;
@@ -49,13 +50,12 @@ function checkBrowsingHistory() {
             var matchedIndicator = checkForIndicators(elementsToCheck, indicators.domains);
             if (matchedIndicator !== null) {
                 console.log("FOUND MATCH!", url, matchedIndicator);
-                $("#alerts").append("<div>MATCH: " + url + " (indicator: " + matchedIndicator + ")</div>\n");
                 sendEvent("browsing_history", url, matchedIndicator, "");
+                matches.push({url: url, indicator: indicator, lastVisit: items[i].lastVisitTime});
             }
         }
     });
 
     console.log("Browsing history scan completed.");
+    return matches;
 }
-
-document.addEventListener("DOMContentLoaded", checkBrowsingHistory);

@@ -1,11 +1,11 @@
-// checkEmail will try to determine if any element in the email matches a
+// scanEmail will try to determine if any element in the email matches a
 // known indicator. In order to do so it will try to:
 //   1. Check the full email sender among the list of blocklisted email addresses.
 //   2. Check the domain of the email sender among the list of blocklisted domains.
 //   3. Check all the anchors in the email among the list of blocklisted domains.
 // If it matches anything, it will display a warning, highlight any bad link,
 // and send an alert through the "sendEvent" message to the background script.
-export default function checkEmail(fromEmail, emailBody, uid) {
+export default function scanEmail(fromEmail, emailBody, uid) {
 
     console.log("Checking email sender:", fromEmail);
 

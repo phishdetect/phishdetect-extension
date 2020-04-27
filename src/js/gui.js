@@ -23,14 +23,14 @@ window.vex = vex;
 vex.registerPlugin(require("vex-dialog"));
 vex.defaultOptions.className = "vex-theme-default";
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { renderToString } from 'react-dom/server';
+import React from "react";
+import ReactDOM from "react-dom";
+import { renderToString } from "react-dom/server";
 import WebmailWarning from "../components/WebmailWarning";
 import WebmailLinkWarning from "../components/WebmailLinkWarning";
-import WebmailLinkDialog from '../components/WebmailLinkDialog';
-import ReportEmailButton from '../components/ReportEmailButton';
-import ConfirmationDialog from '../components/ConfirmationDialog';
+import WebmailLinkDialog from "../components/WebmailLinkDialog";
+import ReportEmailButton from "../components/ReportEmailButton";
+import ConfirmationDialog from "../components/ConfirmationDialog";
 
 // A helper to render HTML strings from React components
 function renderHTML(component, options) {

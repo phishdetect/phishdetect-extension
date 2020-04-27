@@ -22,7 +22,7 @@ const GmailFactory = require("gmail-js");
 const gmail = new GmailFactory.Gmail($);
 window.gmail = gmail;
 
-import scanEmail from './scanEmail.js'
+import scanEmail from "./scanEmail.js";
 
 function gmailCheckEmail(uid) {
     console.log("Checking email", uid)

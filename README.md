@@ -8,6 +8,7 @@ This is a browser extension for Mozilla Firefox and Google Chrome. It is a clien
 - It modifies the links contained in the body in order to display a dialog prompt that offers the user the possibility of scanning the links with PhishDetect.
 - It creates a button in the webmails' web interface to allow to share the full source email with the Node operators.
 - It creates context menus and a toolbar button that allow to either send a link or directly the HTML content of the opened page to a PhishDetect backend in order to be scanned for phishing.
+- It allows to scan the browsing history to identify visits to blocklisted domains.
 
 Currently supported webmails:
 
@@ -35,11 +36,6 @@ single JavaScript file:
 Finally, we can create the package that we can use for distribution:
 
     $ make package
-
-
-## Known Issues
-
-- Using the service in localhost through the Mozilla Firefox browser on Linux has issues and it will likely not work. Other browsers seem to work fine.
 
 
 ## License

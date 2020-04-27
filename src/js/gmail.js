@@ -81,7 +81,7 @@ function gmailReportEmail(uid) {
         // instead be changed to place the button elsewhere.
         $("[id^='pd-report']").parent().parent().remove();
 
-        var element = $('<div>').get(0);
+        var element = $("<div>").get(0);
         generateReportEmailButton(element, {
             uid: uid,
             reported: isReported,

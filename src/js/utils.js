@@ -60,3 +60,13 @@ function i18nHtmlSafe(key) {
     let textNode = $('<div>').text(translation);
     return textNode.html(); // return html content
 }
+
+// This function is used by UI pages to obtain their tab ID.
+function getTab(callback) {
+    let url = new URL(window.location.href);
+    if (url.searchParams.has("tabId")) {
+        let parentId = Number(url.searchParams.get("tabId"));
+        return chrome.tabs.get(parentId, callback);
+    }
+    chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => callback(tabs[0]));
+}

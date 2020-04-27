@@ -100,6 +100,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     case "scanLink":
         scanLink(request.link);
         break;
+    case "scanHistory":
+        sendResponse(scanBrowsingHistory(request.tabId));
+        break;
 
     //=========================================================================
     // Messages sending data to the Node.

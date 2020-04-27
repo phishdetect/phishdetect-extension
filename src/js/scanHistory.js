@@ -15,15 +15,15 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-function scanBrowsingHistory() {
+function scanBrowsingHistory(tabId) {
     console.log("Scanning browsing history...");
 
     var indicators = cfg.getIndicators();
     if (indicators.domains === undefined || indicators.domains.length == 0) {
+        console.log("No indicators to use for scanning browsing history. Skip.");
         return;
     }
 
-    var matches = [];
     chrome.history.search({text: "", startTime: 0}, function(items) {
         for (var i=0; i<items.length; i++) {
             var url = items[i].url;
@@ -49,13 +49,18 @@ function scanBrowsingHistory() {
 
             var matchedIndicator = checkForIndicators(elementsToCheck, indicators.domains);
             if (matchedIndicator !== null) {
-                console.log("FOUND MATCH!", url, matchedIndicator);
+                console.log("WARNING! Found match at link " + url + " (indicator: " + matchedIndicator + "). Sending notification to tab with ID: " + tabId);
                 sendEvent("browsing_history", url, matchedIndicator, "");
-                matches.push({url: url, indicator: indicator, lastVisit: items[i].lastVisitTime});
+                chrome.tabs.sendMessage(tabId, {
+                    method: "historyMatchFound",
+                    match: {url: url, indicator: matchedIndicator, visitTime: items[i].lastVisitTime},
+                });
             }
         }
-    });
 
-    console.log("Browsing history scan completed.");
-    return matches;
+        console.log("Browsing history scan completed.");
+        chrome.tabs.sendMessage(tabId, {
+            method: "historyScanCompleted",
+        });
+    });
 }

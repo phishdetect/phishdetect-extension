@@ -8,6 +8,10 @@ html, body {
     min-width: 300px;
 }
 
+h1 {
+    margin-bottom: 1em;
+}
+
 h2 {
     line-height: 1;
     font-size: 1.3em;

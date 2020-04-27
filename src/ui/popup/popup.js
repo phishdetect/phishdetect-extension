@@ -19,15 +19,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { PopupActivate } from '../../components/Popup.js'
 
-function getTab(callback) {
-    let url = new URL(window.location.href);
-    if (url.searchParams.has("tabId")) {
-        let parentId = Number(url.searchParams.get("tabId"));
-        return chrome.tabs.get(parentId, callback);
-    }
-    chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => callback(tabs[0]));
-}
-
 function reportPage() {
     getTab(function(tab) {
         chrome.runtime.sendMessage({method: "reportPage", url: tab.url}, function(response) {

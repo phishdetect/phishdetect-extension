@@ -151,6 +151,13 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     return false;
 });
 
+// Welcome page.
+function openWelcomePage(details) {
+    if (details.reason === "install") { // 'install' or 'upgrade'
+        window.open("/ui/options/options.html");
+    }
+}
+
 // Context menus.
 function loadContextMenus() {
     chrome.contextMenus.create({
@@ -178,12 +185,6 @@ function loadContextMenus() {
     }
 }
 
-function openWelcomePage(details) {
-  if (details.reason === 'install') { // 'install' or 'upgrade'
-    window.open("/ui/options/options.html");
-  }
-}
-
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
     switch (info.menuItemId) {
     case "scan-page":
@@ -205,6 +206,6 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
     return false;
 });
 
-chrome.runtime.onInstalled.addListener(loadContextMenus);
 chrome.runtime.onInstalled.addListener(openWelcomePage);
+chrome.runtime.onInstalled.addListener(loadContextMenus);
 chrome.runtime.onStartup.addListener(loadContextMenus);

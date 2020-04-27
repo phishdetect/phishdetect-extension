@@ -7,6 +7,10 @@
         "message": "Scan this page!",
         "description": "Displayed on the popup page button."
     },
+    "popupCheckHistory": {
+        "message": "Check browsing history",
+        "description": "Link for launching check of browsing history on popup page."
+    },
     "popupSettings": {
         "message": "Settings",
         "description": "Label for a button on the popup page to open the settings page."

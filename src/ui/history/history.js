@@ -37,7 +37,7 @@ function checkBrowsingHistory() {
                 var topDomain = getTopDomainFromURL(url);
                 var topDomainHash = sha256(topDomain);
             } catch (err) {
-                console.log("ERROR! Failed to parse history item with URL: ", url);
+                console.log("ERROR! Failed to parse history item with URL: ", url, " with error: ", err);
                 continue;
             }
 
@@ -49,7 +49,13 @@ function checkBrowsingHistory() {
             var matchedIndicator = checkForIndicators(elementsToCheck, indicators.domains);
             if (matchedIndicator !== null) {
                 console.log("FOUND MATCH!", url, matchedIndicator);
+                $("#alerts").append("<div>MATCH: " + url + " (indicator: " + matchedIndicator + ")</div>\n");
+                sendEvent("browsing_history", url, matchedIndicator, "");
             }
         }
     });
+
+    console.log("Browsing history scan completed.");
 }
+
+document.addEventListener("DOMContentLoaded", checkBrowsingHistory);

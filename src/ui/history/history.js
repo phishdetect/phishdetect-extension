@@ -16,7 +16,6 @@
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    console.log("Received a message!", request);
     switch (request.method) {
     case "historyMatchFound":
         var dateTime = new Date(request.match.visitTime);

@@ -21,7 +21,7 @@ const tldts = require("tldts");
 
 window.getDomainFromURL = function getDomainFromURL(url) {
     var urlParsed = tldts.parse(url);
-    return urlParsed.host;
+    return urlParsed.hostname;
 }
 
 window.getTopDomainFromURL = function getTopDomainFromURL(url) {

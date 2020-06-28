@@ -186,6 +186,13 @@ window.generateWebmailPreview = function generateWebmailPreview(anchor) {
                         return false
                     }
                 }),
+                $.extend({}, vex.dialog.buttons.NO, {
+                    text: chrome.i18n.getMessage("webmailPreviewCancel"),
+                    click: function($vexContent, event) {
+                        this.close();
+                        return false
+                    }
+                }),
                 // Button to open help page.
                 $.extend({}, vex.dialog.buttons.YES, {
                     text: "?",

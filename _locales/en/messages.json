@@ -153,7 +153,11 @@
     },
     "webmailPreviewContinue": {
         "message": "Continue",
-        "description": "Button text to continue with safely previewing a link"
+        "description": "Button text to continue visit to a link"
+    },
+    "webmailPreviewCancel": {
+        "message": "No",
+        "description": "Button text to cancel visit to a link"
     },
     "reportEmailReportedAlready": {
         "message": "Reported to PhishDetect",

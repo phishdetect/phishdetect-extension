@@ -72,7 +72,7 @@
         "description": "Link text to report a wrongfully blocked page"
     },
     "apikeyThankyou": {
-        "message": "Thank you for participating to PhishDetect closed beta program!",
+        "message": "Thank you for registering!",
         "description": "Paragraph text thanking the user."
     },
     "apikeyGetToken": {

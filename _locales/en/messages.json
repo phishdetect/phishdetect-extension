@@ -71,10 +71,6 @@
         "message": "Report mistake",
         "description": "Link text to report a wrongfully blocked page"
     },
-    "apikeyThankyou": {
-        "message": "Thank you for registering!",
-        "description": "Paragraph text thanking the user."
-    },
     "apikeyGetToken": {
         "message": "In order to continue using the PhishDetect Browser Extension, you will be required to enter a valid secret token. You don't have one yet?",
         "description": "Paragraph text. Following this text is a link to register for a token"

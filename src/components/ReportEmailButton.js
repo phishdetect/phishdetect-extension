@@ -1,7 +1,7 @@
-const React = require('react');
-const vex = require('vex-js');
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFish, faCheckCircle } from '@fortawesome/free-solid-svg-icons'
+const React = require("react");
+const vex = require("vex-js");
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faFish, faCheckCircle } from "@fortawesome/free-solid-svg-icons"
 
 function WebmailButton(props) {
     let { className, icon, message, onClick } = props;
@@ -57,12 +57,12 @@ export default class ReportEmailButton extends React.Component {
     render() {
         if (this.state.reported) {
             return (
-                <WebmailButton className='pd-webmail-reported' icon={faCheckCircle}
+                <WebmailButton className="pd-webmail-reported" icon={faCheckCircle}
                     message={chrome.i18n.getMessage("reportEmailReportedAlready")} />
             );
         } else {
             return (
-                <WebmailButton className='pd-webmail-report' icon={faFish}
+                <WebmailButton className="pd-webmail-report" icon={faFish}
                     message={chrome.i18n.getMessage("reportEmailReport")}
                     onClick={this.onClick.bind(this)} />
             );

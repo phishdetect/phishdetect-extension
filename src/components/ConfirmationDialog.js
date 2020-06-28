@@ -1,4 +1,4 @@
-const React = require('react');
+const React = require("react");
 export default function ConfirmationDialog(props) {
     return (
         <span>

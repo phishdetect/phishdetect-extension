@@ -60,7 +60,7 @@
         "description": "Text displayed when PhishDetect prevents you from visiting a page"
     },
     "warningReportedNotSafe": {
-        "message": "PhishDetect reported it as not safe",
+        "message": "PhishDetect reported it as not safe.",
         "description": "Text displayed when PhishDetect prevents you from visiting a page"
     },
     "warningWrongfullyBlocked": {

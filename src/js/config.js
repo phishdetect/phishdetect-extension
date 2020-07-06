@@ -66,24 +66,6 @@ class Config {
             localStorage.cfg_last_error = "";
         }
 
-        // TODO: This is a temporary migration. Eventually get rid of this.
-        if (this.getNode() == "https://node.phishdetect.io") {
-            fetch(this.getAuthURL())
-            .then(function(response) {
-                if (!response.ok) {
-                    throw Error(response.statusText);
-                }
-                return response;
-            })
-            .then(function(data) {
-                localStorage.cfg_node = "https://phishdetect.amnesty.tech"
-            })
-            .catch(error => {
-                console.log("The user is not activated.")
-                this.restoreDefaultNode();
-            });
-        }
-
         console.log("Storage initialization completed.");
     }
 

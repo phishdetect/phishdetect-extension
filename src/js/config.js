@@ -145,12 +145,11 @@ class Config {
             this.setNodeEnforceUserAuth(data.enforce_user_auth);
 
             console.log("Configuration fetched successfully.");
+            // Calling callback only if successful.
+            callback();
         })
         .catch(error => {
             console.log(error);
-        })
-        .finally(function() {
-            callback();
         });
     }
     getNodeEnableAnalysis() {

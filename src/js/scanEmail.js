@@ -21,7 +21,7 @@
 //   2. Check the domain of the email sender among the list of blocklisted domains.
 //   3. Check all the anchors in the email among the list of blocklisted domains.
 // If it matches anything, it will display a warning, highlight any bad link,
-// and send an alert through the "sendEvent" message to the background script.
+// and send an alert through the "sendAlert" message to the background script.
 export default function scanEmail(fromEmail, emailBody, uid) {
 
     console.log("Checking email sender:", fromEmail);
@@ -55,9 +55,9 @@ export default function scanEmail(fromEmail, emailBody, uid) {
 
         // Email status.
         var isEmailBad = false;
-        var eventType = "";
-        var eventMatch = "";
-        var eventIndicator = "";
+        var alertType = "";
+        var alertMatch = "";
+        var alertIndicator = "";
 
         // We check for email addresses, if we have any indicators to check.
         if (indicators.emails !== null) {
@@ -68,9 +68,9 @@ export default function scanEmail(fromEmail, emailBody, uid) {
 
                 // Mark email as bad.
                 isEmailBad = true;
-                eventType = "email_sender";
-                eventMatch = fromEmail;
-                eventIndicator = matchedIndicator;
+                alertType = "email_sender";
+                alertMatch = fromEmail;
+                alertIndicator = matchedIndicator;
             }
         }
 
@@ -86,9 +86,9 @@ export default function scanEmail(fromEmail, emailBody, uid) {
                 // Mark whole email as bad.
                 // TODO: this is ugly.
                 isEmailBad = true;
-                eventType = "email_sender_domain";
-                eventMatch = fromEmail;
-                eventIndicator = matchedIndicator;
+                alertType = "email_sender_domain";
+                alertMatch = fromEmail;
+                alertIndicator = matchedIndicator;
             }
 
             // Now we check for links contained in the emails body.
@@ -125,9 +125,9 @@ export default function scanEmail(fromEmail, emailBody, uid) {
                     // Mark whole email as bad.
                     // TODO: this is ugly.
                     isEmailBad = true;
-                    eventType = "email_link";
-                    eventMatch = href;
-                    eventIndicator = matchedIndicator;
+                    alertType = "email_link";
+                    alertMatch = href;
+                    alertIndicator = matchedIndicator;
 
                     break;
                 }
@@ -137,19 +137,19 @@ export default function scanEmail(fromEmail, emailBody, uid) {
         // TODO: this is ugly.
         // If there is any malicious element we proceed with notifications.
         if (isEmailBad === true) {
-            // First we send an "event" to the PhishDetect Node through the "sendEvent"
+            // First we send an "event" to the PhishDetect Node through the "sendAlert"
             // message to the background script. This will proceed only if the
             // appropriate settings option is enabled.
             chrome.runtime.sendMessage({
-                method: "sendEvent",
-                eventType: eventType,
-                match: eventMatch,
-                indicator: eventIndicator,
+                method: "sendAlert",
+                alertType: alertType,
+                match: alertMatch,
+                indicator: alertIndicator,
                 identifier: uid,
             });
 
             // Then we display a warning to the user inside the Gmail web interface.
-            var warning = generateWebmailWarning(eventType);
+            var warning = generateWebmailWarning(alertType);
             emailBody.prepend(warning);
         }
     });

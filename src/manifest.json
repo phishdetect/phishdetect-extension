@@ -24,7 +24,7 @@
             "js/utils.js",
             "js/const.js",
             "js/indicators.js",
-            "js/events.js",
+            "js/alerts.js",
             "js/reports.js",
             "js/alarms.js",
             "js/scanHistory.js",

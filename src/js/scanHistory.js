@@ -50,7 +50,7 @@ function scanBrowsingHistory(tabId) {
             var matchedIndicator = checkForIndicators(elementsToCheck, indicators.domains);
             if (matchedIndicator !== null) {
                 console.log("WARNING! Found match at link " + url + " (indicator: " + matchedIndicator + "). Sending notification to tab with ID: " + tabId);
-                sendEvent("browsing_history", url, matchedIndicator, "");
+                sendAlert("browsing_history", url, matchedIndicator, "");
                 chrome.tabs.sendMessage(tabId, {
                     method: "historyMatchFound",
                     match: {url: url, indicator: matchedIndicator, visitTime: items[i].lastVisitTime},

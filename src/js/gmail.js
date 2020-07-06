@@ -63,7 +63,7 @@ function gmailModifyEmail(id) {
 // PhishDetect Node. Reported emails will be marked in the extension's storage
 // and we will avoid duplication.
 function gmailReportEmail(uid) {
-    chrome.runtime.sendMessage({method: "getReportedEmails"}, function(response) {
+    chrome.runtime.sendMessage({method: "getSendAlertsedEmails"}, function(response) {
         var isReported = false;
         for (var i=0; i<response.length; i++) {
             // If the email was already reported before, no need to

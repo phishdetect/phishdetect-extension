@@ -114,7 +114,7 @@ function roundcubeModifyEmail(email) {
 function roundcubeReportEmail(email) {
     var uid = roundcubeGetOpenEmailUID();
 
-    chrome.runtime.sendMessage({method: "getReportedEmails"}, function(response) {
+    chrome.runtime.sendMessage({method: "getSendAlertsedEmails"}, function(response) {
         var isReported = false;
         for (var i=0; i<response.length; i++) {
             // If the email was already shared before, no need to

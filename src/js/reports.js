@@ -18,12 +18,12 @@
 function sendReport(reportType, reportContent, identifier) {
     var cfg = new Config();
 
-    // Check if the event type is email_*.
+    // Check if the report type is email_*.
     if (reportType == "email") {
         // If an email identifier was provided...
         if (identifier !== undefined && identifier != "") {
             // Get a list of already shared emails.
-            var emails = cfg.getReportedEmails();
+            var emails = cfg.getSendAlertsedEmails();
             for (var i=0; i<emails.length; i++) {
                 // If the email was already shared before, no need to
                 // report it again.
@@ -46,7 +46,7 @@ function sendReport(reportType, reportContent, identifier) {
         headers: {"Content-Type": "application/json"},
     };
 
-    fetch(cfg.getReportsURL(), properties)
+    fetch(cfg.getSendAlertssURL(), properties)
     .then((response) => response.json())
     .then(function(data) {
         // We do this to avoid re-sharing already shared emails.

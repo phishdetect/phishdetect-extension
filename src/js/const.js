@@ -25,7 +25,7 @@ NODE_GUI_REGISTER                     = "/register/";
 NODE_API_CONFIG_PATH                  = "/api/config/";
 NODE_API_INDICATORS_FETCH_PATH        = "/api/indicators/fetch/";
 NODE_API_RECENT_INDICATORS_FETCH_PATH = "/api/indicators/fetch/recent/";
-NODE_API_EVENTS_ADD_PATH              = "/api/events/add/";
+NODE_API_ALERTS_ADD_PATH              = "/api/alerts/add/";
 NODE_API_REPORTS_ADD_PATH             = "/api/reports/add/";
 NODE_API_AUTH                         = "/api/auth/";
 

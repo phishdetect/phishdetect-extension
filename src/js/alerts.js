@@ -15,15 +15,15 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-function sendEvent(eventType, match, indicator, identifier) {
+function sendAlert(alertType, match, indicator, identifier) {
     var cfg = new Config();
 
-    if (cfg.getReport() === false) {
+    if (cfg.getSendAlerts() === false) {
         return;
     }
 
-    // Check if the event type is email_*.
-    if (eventType.startsWith("email_")) {
+    // Check if the alert type is email_*.
+    if (alertType.startsWith("email_")) {
         // If an email identifier was provided...
         if (identifier !== undefined && identifier != "") {
             // Get a list of already reported emails.
@@ -42,7 +42,7 @@ function sendEvent(eventType, match, indicator, identifier) {
     var properties = {
         method: "POST",
         body: JSON.stringify({
-            "type": eventType,
+            "type": alertType,
             "match": match,
             "indicator": indicator,
             "user_contact": cfg.getContact(),
@@ -54,15 +54,15 @@ function sendEvent(eventType, match, indicator, identifier) {
     fetch(cfg.getEventsURL(), properties)
     .then((response) => response.json())
     .then(function(data) {
-        // If event is of type email_* we add the email ID to the list of
+        // If alert is of type email_* we add the email ID to the list of
         // successfully reported emails.
-        if (eventType.startsWith("email_")) {
+        if (alertType.startsWith("email_")) {
             if (identifier !== undefined && identifier != "") {
                 cfg.addDetectedEmail(identifier);
             }
         }
 
-        console.log("Sent notification", eventType, "to PhishDetect Node.");
+        console.log("Sent notification", alertType, "to PhishDetect Node.");
     })
     .catch(error => {
         console.log(error);

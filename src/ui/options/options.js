@@ -23,10 +23,10 @@ function loadOptions() {
     $("#server").val(cfg.getNode());
     $("#webmails").prop("checked", cfg.getWebmails());
 
-    var report = cfg.getReport();
-    $("#report").prop("checked", cfg.getReport());
+    var sendAlerts = cfg.getSendAlerts();
+    $("#sendAlerts").prop("checked", cfg.getSendAlerts());
     $("#contact").val(cfg.getContact());
-    if (report) {
+    if (sendAlerts) {
         $("#contactLabel").removeClass("text-grey");
         $("#contact").prop("disabled", false);
     } else {
@@ -54,7 +54,7 @@ function saveOptions(event) {
     if (contact != "") {
         cfg.setContact(contact);
     }
-    cfg.setReport($("#report").is(":checked"));
+    cfg.setSentAlerts($("#sendAlerts").is(":checked"));
     cfg.setWebmails($("#webmails").is(":checked"));
 
     var container = $("#container").empty();
@@ -65,7 +65,7 @@ function restoreDefaults() {
     $("#server").val(NODE_DEFAULT_URL);
     $("#key").val("");
     $("#webmails").prop("checked", true);
-    $("#report").prop("checked", true);
+    $("#sendAlerts").prop("checked", true);
     $("#contact").val("");
 }
 
@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", loadOptions);
 $("form").submit(saveOptions);
 $("#restoreDefaults").click(restoreDefaults);
 
-$("#report").change(function() {
+$("#sendAlerts").change(function() {
     if (this.checked) {
         $("#contactLabel").removeClass("text-grey");
         $("#contact").prop("disabled", false);

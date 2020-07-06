@@ -2,8 +2,8 @@ const React = require("react");
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons"
 export default class WebmailWarning extends React.Component {
-    getWarningText(eventType) {
-        switch(eventType) {
+    getWarningText(alertType) {
+        switch(alertType) {
           case "email_sender":
           case "email_sender_domain":
               return chrome.i18n.getMessage("webmailWarningSender");
@@ -24,7 +24,7 @@ export default class WebmailWarning extends React.Component {
                 <br />
                 {chrome.i18n.getMessage("webmailWarningPleaseBeCautious")}
                 {" "}
-                {this.getWarningText(this.props.eventType)}
+                {this.getWarningText(this.props.alertType)}
                 {" "}
                 {chrome.i18n.getMessage("webmailWarningHelp")}
                 {" "}

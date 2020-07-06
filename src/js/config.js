@@ -193,7 +193,7 @@ class Config {
         }
         return url;
     }
-    getReportURL(link) {
+    getSendAlertsURL(link) {
         var url = this.getNode() + NODE_GUI_REPORT;
         url += link + "/";
         if (this.getNodeEnforceUserAuth() == true) {
@@ -216,13 +216,13 @@ class Config {
         return url;
     }
     getEventsURL() {
-        var url = this.getNode() + NODE_API_EVENTS_ADD_PATH;
+        var url = this.getNode() + NODE_API_ALERTS_ADD_PATH;
         if (this.getNodeEnforceUserAuth() == true) {
             url += "?key=" + this.getApiKey()
         }
         return url;
     }
-    getReportsURL() {
+    getSendAlertssURL() {
         var url = this.getNode() + NODE_API_REPORTS_ADD_PATH;
         if (this.getNodeEnforceUserAuth() == true) {
             url += "?key=" + this.getApiKey()
@@ -231,14 +231,13 @@ class Config {
     }
 
     //=========================================================================
-    // Report (events).
-    // TODO: rename this to something more descriptive.
+    // Send alerts.
     //=========================================================================
-    getReport() {
-        return localStorage.getItem("cfg_report") == "true" ? true : false;
+    getSendAlerts() {
+        return localStorage.getItem("cfg_send_alerts") == "true" ? true : false;
     }
-    setReport(value) {
-        localStorage.setItem("cfg_report", value);
+    setSentAlerts(value) {
+        localStorage.setItem("cfg_send_alerts", value);
     }
 
     //=========================================================================
@@ -307,11 +306,11 @@ class Config {
     //=========================================================================
     // Emails that were reported by the user to the Node
     //=========================================================================
-    getReportedEmails() {
+    getSendAlertsedEmails() {
         return JSON.parse(localStorage.getItem("cfg_reported_emails"));
     }
     addReportedEmail(value) {
-        var emails = this.getReportedEmails();
+        var emails = this.getSendAlertsedEmails();
         emails.push(value);
         localStorage.setItem("cfg_reported_emails", JSON.stringify(emails));
     }

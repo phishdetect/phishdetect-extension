@@ -44,7 +44,7 @@ chrome.webRequest.onBeforeRequest.addListener(function(details) {
     var matchedIndicator = checkForIndicators(itemsToCheck, indicators.domains);
     if (matchedIndicator !== null) {
         console.log("Bad domain identified:", url);
-        sendEvent("website_visit", url, matchedIndicator, "");
+        sendAlert("website_visit", url, matchedIndicator, "");
 
         // We redirect to the warning page.
         var redirect = chrome.extension.getURL(WARNING_PAGE) + "?url=" + encodeURIComponent(url) + "&indicator=" + matchedIndicator;
@@ -109,14 +109,13 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     //=========================================================================
     // This message is received when the user wants to report a suspicious opened page.
     case "reportPage":
-        var nodeUrl = cfg.getReportURL(base64encode(request.url));
+        var nodeUrl = cfg.getSendAlertsURL(base64encode(request.url));
         chrome.tabs.create({"url": nodeUrl});
         break;
-    // This message is received when a security event was detected and needs to be sent
-    // to the PhishDetect node.
-    case "sendEvent":
-        // Send event to REST API server.
-        sendEvent(request.eventType, request.match, request.indicator, request.identifier);
+    // This message is received when an alert needs to be sent to the PhishDetect node.
+    case "sendAlert":
+        // Send alert to REST API server.
+        sendAlert(request.alertType, request.match, request.indicator, request.identifier);
         break;
     case "sendReport":
         sendReport(request.reportType, request.reportContent, request.identifier);
@@ -137,8 +136,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     // Extras
     //=========================================================================
     // This message returns the list of email IDs that were already previously shared.
-    case "getReportedEmails":
-        sendResponse(cfg.getReportedEmails());
+    case "getSendAlertsedEmails":
+        sendResponse(cfg.getSendAlertsedEmails());
         break;
     case "loadFontAwesome":
         console.log("Injecting FontAwesome into tab...");
@@ -197,11 +196,11 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
         scanLink(info.linkUrl);
         break;
     case "report-page":
-        var nodeUrl = cfg.getReportURL(base64encode(info.pageUrl));
+        var nodeUrl = cfg.getSendAlertsURL(base64encode(info.pageUrl));
         chrome.tabs.create({"url": nodeUrl});
         break;
     case "report-link":
-        var nodeUrl = cfg.getReportURL(base64encode(info.linkUrl));
+        var nodeUrl = cfg.getSendAlertsURL(base64encode(info.linkUrl));
         chrome.tabs.create({"url": nodeUrl});
         break;
     }

@@ -31,8 +31,8 @@
         "message": "Enable Webmails integration",
         "description": "Label for checkbox to enable webmail integration."
     },
-    "optionsReportAlerts": {
-        "message": "Report alerts to PhishDetect Node",
+    "optionsSendAlerts": {
+        "message": "Send alerts to PhishDetect Node",
         "description": "Label for checkbox to enable reporting of alerts."
     },
     "optionsContact": {

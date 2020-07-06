@@ -44,8 +44,8 @@ function renderDOM(component, options, element) {
 
 // generateWebmailWarning is a helper function used to generate the HTML
 // needed to show a warning message inside the supported webmails.
-window.generateWebmailWarning = function generateWebmailWarning(eventType) {
-    return renderHTML(WebmailWarning, {eventType: eventType});
+window.generateWebmailWarning = function generateWebmailWarning(alertType) {
+    return renderHTML(WebmailWarning, {alertType: alertType});
 }
 // Renders a button into an existing DOM element and attachs a click handler
 // element: the container DOM element

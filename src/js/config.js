@@ -47,8 +47,8 @@ class Config {
         if (localStorage.cfg_last_update === undefined) {
             localStorage.cfg_last_update = "";
         }
-        if (localStorage.cfg_report === undefined) {
-            localStorage.cfg_report = true;
+        if (localStorage.cfg_send_alerts === undefined) {
+            localStorage.cfg_send_alerts = true;
         }
         if (localStorage.cfg_webmails === undefined) {
             localStorage.cfg_webmails = true;

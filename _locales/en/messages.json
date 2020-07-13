@@ -32,7 +32,7 @@
         "description": "Label for checkbox to enable webmail integration."
     },
     "optionsSendAlerts": {
-        "message": "Automaticalluy share alerts with PhishDetect Node",
+        "message": "Automatically share alerts with PhishDetect Node",
         "description": "Label for checkbox to enable automatically sharing of alerts."
     },
     "optionsContact": {

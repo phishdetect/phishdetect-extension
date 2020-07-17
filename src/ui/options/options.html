@@ -7,18 +7,18 @@
 <link href="../../fontawesome/css/all.min.css" rel="stylesheet">
 <link href="../../css/phishdetect-ui.css" rel="stylesheet">
 </head>
-<body class="bg-grey-lightest h-screen">
+<body class="bg-gray-100 h-screen">
 <div id="container">
-    <h1>PhishDetect - Settings</h1>
+    <h1 class="text-xl text-gray-900">PhishDetect - Settings</h1>
 
     <p class="mt-4 mb-4 leading-normal" data-resource="optionsDescription">Through this form you can decide which PhishDetect Node to connect to.</p>
 
     <form>
         <label for="server" class="font-bold" data-resource="optionsNode">Your preferred PhishDetect Node:</label>
-        <div class="mt-2 mb-6"><input type="text" class="block appearance-none w-full bg-white border border-grey-light px-4 py-4 rounded focus:border-blue-light" id="server" /></div>
+        <div class="mt-2 mb-6"><input type="text" class="block appearance-none w-full bg-white border border-grey-light px-4 py-4 rounded focus:border-blue-300" id="server" /></div>
 
         <div id="keySection"><label for="key" id="keyLabel" class="font-bold">Your secret token:</label>
-        <div class="mt-2 mb-6"><input type="text" class="block appearance-none w-full bg-white border border-grey-light px-4 py-4 rounded focus:border-blue-light" id="key" /></div>
+        <div class="mt-2 mb-6"><input type="text" class="block appearance-none w-full bg-white border border-grey-light px-4 py-4 rounded focus:border-blue-300" id="key" /></div>
         </div>
 
         <div class="mt-6"><input type="checkbox" id="webmails" /> <label
@@ -30,14 +30,14 @@
             data-resource="optionsSendAlerts">Automatically share alerts with PhishDetect Node</label></div>
 
         <label for="contact" id="contactLabel" class="leading-normal" data-resource="optionsContact">If you wish, you can leave your contact details:</label>
-        <div class="mt-2"><input type="text" class="block appearance-none w-full bg-white border border-grey-light px-4 py-4 rounded focus:border-blue-light" id="contact" /></div>
+        <div class="mt-2"><input type="text" class="block appearance-none w-full bg-white border border-grey-light px-4 py-4 rounded focus:border-blue-300" id="contact" /></div>
 
         <div class="mt-6">
-            <button type="submit" class="bg-blue hover:bg-blue-light text-white py-2 px-4 border-b-4 border-blue-dark hover:text-white hover:no-underline hover:border-blue rounded cursor-pointer">
+            <button type="submit" class="bg-blue-500 hover:bg-blue-300 text-white py-2 px-4 border-b-4 border-blue-700 hover:text-white hover:no-underline hover:border-blue-500 rounded cursor-pointer">
                 <i class="fas fa-save"></i>
                 <span data-resource="optionsSave">Save</span>
             </button>
-            <a id="restoreDefaults" class="bg-grey hover:bg-grey-light py-2 px-4 border-b-4 border-grey-dark hover:no-underline hover:border-grey rounded cursor-pointer font-normal text-grey-darkest">
+            <a id="restoreDefaults" class="bg-gray-500 hover:bg-gray-300 py-2 px-4 border-b-4 border-gray-700 hover:no-underline hover:border-gray-500 rounded cursor-pointer font-normal text-gray-800">
                 <i class="fas fa-history"></i>
                 <span data-resource="optionsRestore">Restore Defaults</span>
             </a>

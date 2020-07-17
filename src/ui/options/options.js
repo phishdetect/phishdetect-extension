@@ -15,9 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { OptionsSaved } from '../../components/Options.js';
+import React from "react";
+import ReactDOM from "react-dom";
+import { OptionsSaved } from "../../components/Options.js";
 
 function loadOptions() {
     $("#server").val(cfg.getNode());

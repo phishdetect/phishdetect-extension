@@ -2,16 +2,25 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title data-i18n="">PhishDetect - Check Browsing History</title>
+<title data-i18n="">PhishDetect - Scan Browsing History</title>
 <link href="../../css/tailwind.min.css" rel="stylesheet">
 <link href="../../fontawesome/css/all.min.css" rel="stylesheet">
 <link href="../../css/phishdetect-ui.css" rel="stylesheet">
 </head>
-<body class="bg-grey-lightest">
+<body class="bg-grey-lightest h-screen">
 <div id="container">
-    <h1>PhishDetect - Check Browsing History</h1>
+    <h1>PhishDetect - Scan Browsing History</h1>
+
+    <p class="leading-normal"></p>
+
+    <a id="startButton" type="submit" class="bg-blue hover:bg-blue-light text-white py-2 px-4 border-b-4 border-blue-dark hover:text-white hover:no-underline hover:border-blue rounded cursor-pointer"><i class="fas fa-search mr-2"></i> Scan your history!</a>
+
     <div id="alerts" class="leading-normal"></div>
-    <div id="status" class="mt-8">Scan in progress...</div>
+
+    <div id="status" class="">
+        <div id="statusInProgress" data-resource="historyScanInProgress" class="mt-8 hidden"><i class="fas fa-spinner fa-spin"></i> <span data-resource="historyScanCompleted">Scan in progress...</span></div>
+        <div id="statusCompleted" class="mt-8 hidden text-green"><i class="fas fa-check"></i> <span data-resource="historyScanCompleted">Scan completed!</span></div>
+    </div>
 
     <div class="mt-8">
         <a target="_blank" href="https://phishdetect.io/help/" id="button-help">
@@ -23,6 +32,6 @@
 <script src="../../lib/jquery.min.js"></script>
 <script src="../../js/i18n.js"></script>
 <script src="../../js/utils.js"></script>
-<script src="history.js"></script>
+<script src="../../dist/history.js"></script>
 </body>
 </html>

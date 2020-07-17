@@ -34,3 +34,10 @@ a:hover {
     margin-top: 1em;
     margin-bottom: 1em;
 }
+
+/* https://stackoverflow.com/questions/34378940/rotating-a-font-awesome-icon-on-hover */
+.fa-spin {
+    animation: fa-spin 2s infinite linear;
+}
+@-webkit-keyframes fa-spin{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(359deg);transform:rotate(359deg)}}
+@keyframes fa-spin{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(359deg);transform:rotate(359deg)}}

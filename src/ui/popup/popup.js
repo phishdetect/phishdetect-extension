@@ -22,7 +22,7 @@ import { PopupActivate } from '../../components/Popup.js'
 function reportPage() {
     getTab(function(tab) {
         chrome.runtime.sendMessage({method: "reportPage", url: tab.url}, function(response) {
-            $("#div-reportpage").text(chrome.i18n.getMessage("popupReported"));
+            $("#divReportPage").text(chrome.i18n.getMessage("popupReported"));
         });
     });
 }
@@ -30,7 +30,7 @@ function reportPage() {
 function scanPage() {
     getTab(function(tab) {
         chrome.runtime.sendMessage({method: "scanPage", tabId: tab.id, tabUrl: tab.url}, function(response) {
-            $("#div-scanpage").text(chrome.i18n.getMessage("popupScanning"));
+            $("#divScanPage").text(chrome.i18n.getMessage("popupScanning"));
         });
     });
 }
@@ -47,20 +47,20 @@ document.addEventListener("DOMContentLoaded", function () {
         let backendURL = new URL(cfg.getNode());
         // We disable the scan this page button for the node site and for Gmail.
         if (url.hostname == backendURL.hostname || url.hostname == "mail.google.com") {
-            $("#div-reportpage").html("");
-            $("#div-scanpage").html("");
+            $("#divReportPage").html("");
+            $("#divScanPage").html("");
         }
 
         // We disable the scan this page button if the Node doesn't support
         // scanning.
         chrome.runtime.sendMessage({method: "getNodeEnableAnalysis", tabId: tab.id}, function(response) {
             if (response === false) {
-                $("#div-scanpage").html("");
+                $("#divScanPage").html("");
             }
         });
     });
 
-    $("#button-reportpage").on("click", function() {
+    $("#buttonReportPage").on("click", function() {
         reportPage();
     })
 

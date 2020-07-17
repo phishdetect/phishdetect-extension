@@ -17,6 +17,7 @@ var options = {
     entry: {
         popup: path.join(__dirname, "src", "ui", "popup", "popup.js"),
         options: path.join(__dirname, "src", "ui", "options", "options.js"),
+        history: path.join(__dirname, "src", "ui", "history", "history.js"),
         apikey: path.join(__dirname, "src", "ui", "apikey", "apikey.js"),
         gmail: path.join(__dirname, "src", "js", "gmail.js"),
         roundcube: path.join(__dirname, "src", "js", "roundcube.js"),

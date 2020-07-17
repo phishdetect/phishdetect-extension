@@ -7,9 +7,9 @@
         "message": "Scan this page!",
         "description": "Displayed on the popup page button."
     },
-    "popupCheckHistory": {
-        "message": "Check browsing history",
-        "description": "Link for launching check of browsing history on popup page."
+    "popupScanHistory": {
+        "message": "Scan browsing history",
+        "description": "Link for launching scan of browsing history on popup page."
     },
     "popupSettings": {
         "message": "Settings",
@@ -46,6 +46,14 @@
     "optionsRestore": {
         "message": "Restore Defaults",
         "description": "Link to restore default values on the options page."
+    },
+    "historyScanInProgress": {
+        "message": "Scan in progress...",
+        "description": "Text displayed when browsing history scan is in progress"
+    },
+    "historyScanCompleted": {
+        "message": "Scan completed!",
+        "description": "Text displayed when browsing history scan is completed"
     },
     "warningWarning": {
         "message": "Warning",

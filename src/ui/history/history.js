@@ -15,22 +15,31 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
+import React from "react";
+import ReactDOM from "react-dom";
+import { HistoryAlert } from "../../components/History.js";
+
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     switch (request.method) {
     case "historyMatchFound":
-        var dateTime = new Date(request.match.visitTime);
-        $("#alerts").append("<div class=\"mb-4\">" + dateTime + " Suspicious visit to page " + request.match.url + "</div>");
+        var url = request.match.url;
+        var dateTime = new Date(request.match.visitTime).toString();
+        var alerts = $("#alerts").empty();
+        ReactDOM.render(React.createElement(HistoryAlert, {dateTime, url}), alerts.get(0));
         break;
     case "historyScanCompleted":
-        $("#status").text("Scan completed!");
+        $("#statusInProgress").hide();
+        $("#statusCompleted").show();
         break;
     }
 });
 
 document.addEventListener("DOMContentLoaded", function() {
-    console.log("Requesting to launch scanHistory!")
-
-    getTab(function(tab) {
-        chrome.runtime.sendMessage({method: "scanHistory", tabId: tab.id});
+    $("#startButton").click(function() {
+        $("#startButton").hide();
+        $("#statusInProgress").show();
+        getTab(function(tab) {
+            chrome.runtime.sendMessage({method: "scanHistory", tabId: tab.id});
+        });
     });
 });

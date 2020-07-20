@@ -28,6 +28,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         ReactDOM.render(React.createElement(HistoryAlert, {dateTime, url}), alerts.get(0));
         break;
     case "historyScanCompleted":
+        $("#alerts").show();
         $("#statusInProgress").hide();
         $("#statusCompleted").show();
         break;

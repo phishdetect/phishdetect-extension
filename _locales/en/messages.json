@@ -49,11 +49,15 @@
     },
     "historyScanInProgress": {
         "message": "Scan in progress...",
-        "description": "Text displayed when browsing history scan is in progress"
+        "description": "Text displayed when browsing history scan is in progress."
     },
     "historyScanCompleted": {
         "message": "Scan completed!",
-        "description": "Text displayed when browsing history scan is completed"
+        "description": "Text displayed when browsing history scan is completed."
+    },
+    "historyNothingFound": {
+        "message": "Nothing suspicious found!",
+        "description": "Text displayed when scan is completed and no results were found."
     },
     "warningWarning": {
         "message": "Warning",

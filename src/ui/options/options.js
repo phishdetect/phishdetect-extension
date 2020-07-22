@@ -27,10 +27,10 @@ function loadOptions() {
     $("#sendAlerts").prop("checked", cfg.getSendAlerts());
     $("#contact").val(cfg.getContact());
     if (sendAlerts) {
-        $("#contactLabel").removeClass("text-grey");
+        $("#contactLabel").removeClass("text-gray-500");
         $("#contact").prop("disabled", false);
     } else {
-        $("#contactLabel").addClass("text-grey");
+        $("#contactLabel").addClass("text-gray-500");
         $("#contact").prop("disabled", true);
     }
 
@@ -70,15 +70,15 @@ function restoreDefaults() {
 }
 
 document.addEventListener("DOMContentLoaded", loadOptions);
-$("form").submit(saveOptions);
+$("#saveOptions").click(saveOptions);
 $("#restoreDefaults").click(restoreDefaults);
 
 $("#sendAlerts").change(function() {
     if (this.checked) {
-        $("#contactLabel").removeClass("text-grey");
+        $("#contactLabel").removeClass("text-gray-500");
         $("#contact").prop("disabled", false);
     } else {
-        $("#contactLabel").addClass("text-grey");
+        $("#contactLabel").addClass("text-gray-500");
         $("#contact").prop("disabled", true);
     }
 });

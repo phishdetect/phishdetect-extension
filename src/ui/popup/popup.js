@@ -45,17 +45,21 @@ document.addEventListener("DOMContentLoaded", function () {
     getTab(function(tab) {
         let url = new URL(tab.url);
         let backendURL = new URL(cfg.getNode());
-        // We disable the scan this page button for the node site and for Gmail.
-        if (url.hostname == backendURL.hostname || url.hostname == "mail.google.com") {
-            $("#divReportPage").html("");
-            $("#divScanPage").html("");
+
+        // We disable the report and scan this page buttons for browser pages,
+        // the node site, and Gmail.
+        if (url.protocol == "chrome:" || url.protocol == "about:"                   ||
+            url.protocol == "chrome-extension:" || url.protocol == "moz-extension:" ||
+            url.hostname == backendURL.hostname || url.hostname == "mail.google.com") {
+            $("#divReportPage").hide();
+            $("#divScanPage").hide();
         }
 
         // We disable the scan this page button if the Node doesn't support
         // scanning.
         chrome.runtime.sendMessage({method: "getNodeEnableAnalysis", tabId: tab.id}, function(response) {
             if (response === false) {
-                $("#divScanPage").html("");
+                $("#divScanPage").hide();
             }
         });
     });

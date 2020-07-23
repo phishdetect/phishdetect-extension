@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
         reportPage();
     })
 
-    $("#button-scanpage").on("click", function() {
+    $("#buttonScanPage").on("click", function() {
         scanPage();
     });
 });

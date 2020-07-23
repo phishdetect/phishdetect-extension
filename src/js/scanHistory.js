@@ -21,46 +21,46 @@ function scanBrowsingHistory(tabId) {
     var indicators = cfg.getIndicators();
     if (indicators.domains === undefined || indicators.domains.length == 0) {
         console.log("No indicators to use for scanning browsing history. Skip.");
-        return;
+    } else {
+        chrome.history.search({text: "", startTime: 0}, function(items) {
+            for (var i=0; i<items.length; i++) {
+                var url = items[i].url;
+
+                if (!url.startsWith("http")) {
+                    continue;
+                }
+
+                try {
+                    var domain = getDomainFromURL(url);
+                    var domainHash = sha256(domain);
+                    var topDomain = getTopDomainFromURL(url);
+                    var topDomainHash = sha256(topDomain);
+                } catch (err) {
+                    console.log("ERROR! Failed to parse history item with URL: ", url, " with error: ", err);
+                    continue;
+                }
+
+                var elementsToCheck = [
+                    domainHash,
+                    topDomainHash
+                ];
+
+                var matchedIndicator = checkForIndicators(elementsToCheck, indicators.domains);
+                if (matchedIndicator !== null) {
+                    console.log("WARNING! Found match at link " + url + " (indicator: " + matchedIndicator + "). Sending notification to tab with ID: " + tabId);
+                    sendAlert("browsing_history", url, matchedIndicator, "");
+                    chrome.tabs.sendMessage(tabId, {
+                        method: "historyMatchFound",
+                        match: {url: url, indicator: matchedIndicator, visitTime: items[i].lastVisitTime},
+                    });
+                }
+            }
+
+            console.log("Browsing history scan completed.");
+        });
     }
 
-    chrome.history.search({text: "", startTime: 0}, function(items) {
-        for (var i=0; i<items.length; i++) {
-            var url = items[i].url;
-
-            if (!url.startsWith("http")) {
-                continue;
-            }
-
-            try {
-                var domain = getDomainFromURL(url);
-                var domainHash = sha256(domain);
-                var topDomain = getTopDomainFromURL(url);
-                var topDomainHash = sha256(topDomain);
-            } catch (err) {
-                console.log("ERROR! Failed to parse history item with URL: ", url, " with error: ", err);
-                continue;
-            }
-
-            var elementsToCheck = [
-                domainHash,
-                topDomainHash
-            ];
-
-            var matchedIndicator = checkForIndicators(elementsToCheck, indicators.domains);
-            if (matchedIndicator !== null) {
-                console.log("WARNING! Found match at link " + url + " (indicator: " + matchedIndicator + "). Sending notification to tab with ID: " + tabId);
-                sendAlert("browsing_history", url, matchedIndicator, "");
-                chrome.tabs.sendMessage(tabId, {
-                    method: "historyMatchFound",
-                    match: {url: url, indicator: matchedIndicator, visitTime: items[i].lastVisitTime},
-                });
-            }
-        }
-
-        console.log("Browsing history scan completed.");
-        chrome.tabs.sendMessage(tabId, {
-            method: "historyScanCompleted",
-        });
+    chrome.tabs.sendMessage(tabId, {
+        method: "historyScanCompleted",
     });
 }

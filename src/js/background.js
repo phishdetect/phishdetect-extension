@@ -82,6 +82,15 @@ function scanLink(link) {
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     switch (request.method) {
     //=========================================================================
+    // Messages related to internal background script functioning.
+    //=========================================================================
+    case "nodeChanged":
+        console.log("Received a \"nodeChanged\" event, reloading context menus.");
+        updateIndicators();
+        loadContextMenus();
+        break;
+
+    //=========================================================================
     // Messages related to indicators.
     //=========================================================================
     // This message is received when a component of the extension is requesting the

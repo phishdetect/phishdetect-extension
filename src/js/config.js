@@ -94,7 +94,9 @@ class Config {
         // We reinitialize the storage.
         this.initLocalStorage();
         // And we pull the new config.
-        this.fetchNodeConfig(function() {});
+        this.fetchNodeConfig(function() {
+            chrome.runtime.sendMessage({method: "nodeChanged"});
+        });
     }
     restoreDefaultNode() {
         this.setNode(NODE_DEFAULT_URL);

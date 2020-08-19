@@ -24,7 +24,7 @@ function loadContent() {
 
     var indicator = href.searchParams.get("indicator");
     var reviewURL = cfg.getReviewURL(indicator);
-    $("#report").attr("href", reviewURL);
+    $("#reviewMistake").attr("href", reviewURL);
 
     $("#takeMeAway").attr("href", "about:blank");
 }

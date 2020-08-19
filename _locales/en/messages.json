@@ -76,11 +76,11 @@
         "description": "Text displayed when PhishDetect prevents you from visiting a page"
     },
     "warningWrongfullyBlocked": {
-        "message": "If you think this website was wrongfully blocked, please report the mistake here:",
+        "message": "If you think this website was wrongfully blocked, please ",
         "description": "Text displayed when PhishDetect prevents you from visiting a page"
     },
-    "warningReportMistake": {
-        "message": "Report mistake",
+    "warningReviewMistake": {
+        "message": "request to review this mistake",
         "description": "Link text to report a wrongfully blocked page"
     },
     "apikeyGetToken": {

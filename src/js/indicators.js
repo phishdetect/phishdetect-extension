@@ -23,8 +23,8 @@ function updateIndicators(full = false) {
 
     // JavaScript's date/timezone handling is ridiculous.
     // Did you know that Date.getMonth() returns a value from 0-11?
-    let now = new Date();
-    let nowUTC = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 
+    const now = new Date();
+    const nowUTC = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 
         now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds());
 
     // Check if there was never any update or if there wasn't any full

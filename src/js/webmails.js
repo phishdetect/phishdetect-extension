@@ -25,13 +25,13 @@ $(document).ready(function() {
 
         console.log("[PhishDetect] Checking for any supported webmail...");
 
-        var handler = null;
+        let handler = null;
 
         // First we check if there are typical Rouncube elements.
         if ($("#rcmbtn100, #rcmbtn101, #rcmbtn102").length) {
             // Then we use the stylesheet URL to figure which skin is being
             // used, between Larry and Elastic.
-            var links = $("link");
+            const links = $("link");
             if (links.length == 0) {
                 return;
             }

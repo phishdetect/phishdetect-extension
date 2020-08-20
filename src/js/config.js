@@ -73,14 +73,14 @@ class Config {
     // Node
     //=========================================================================
     getNode() {
-        let address = localStorage.getItem("cfg_node");
+        const address = localStorage.getItem("cfg_node");
         if (!address.startsWith("http")) {
             return "https://" + address;
         }
         return address;
     }
     setNode(value) {
-        let currentAddress = this.getNode()
+        const currentAddress = this.getNode()
         if (value == currentAddress) {
             return;
         }

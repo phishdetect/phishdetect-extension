@@ -164,10 +164,10 @@ window.generateWebmailPreview = function generateWebmailPreview(anchor) {
         event.preventDefault();
 
         // Get URLs.
-        // let unsafeUrl = event.srcElement.getAttribute("href");
-        let unsafeUrl = href;
+        // const unsafeUrl = event.srcElement.getAttribute("href");
+        const unsafeUrl = href;
         // We sanitize the link and preview it in the dialog.
-        let message = renderHTML(WebmailLinkDialog, {
+        const message = renderHTML(WebmailLinkDialog, {
             content: chrome.i18n.getMessage("webmailPreview"),
             href: href
         });

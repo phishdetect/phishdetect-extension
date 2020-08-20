@@ -23,7 +23,7 @@ function loadOptions() {
     $("#server").val(cfg.getNode());
     $("#webmails").prop("checked", cfg.getWebmails());
 
-    let sendAlerts = cfg.getSendAlerts();
+    const sendAlerts = cfg.getSendAlerts();
     $("#sendAlerts").prop("checked", cfg.getSendAlerts());
     $("#contact").val(cfg.getContact());
     if (sendAlerts) {
@@ -42,22 +42,22 @@ function loadOptions() {
 
 function saveOptions(event) {
     event.preventDefault();
-    let node = $("#server").val().trim();
+    const node = $("#server").val().trim();
     if (node != "") {
         cfg.setNode(node);
     }
-    let key = $("#key").val().trim();
+    const key = $("#key").val().trim();
     if (key != "") {
         cfg.setApiKey(key);
     }
-    let contact = $("#contact").val().trim();
+    const contact = $("#contact").val().trim();
     if (contact != "") {
         cfg.setContact(contact);
     }
     cfg.setSentAlerts($("#sendAlerts").is(":checked"));
     cfg.setWebmails($("#webmails").is(":checked"));
 
-    let container = $("#container").empty();
+    const container = $("#container").empty();
     ReactDOM.render(React.createElement(OptionsSaved), container.get(0));
 }
 

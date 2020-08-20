@@ -21,16 +21,16 @@ import { ApiKeySaved } from '../../components/ApiKey.js'
 
 $("form").submit(function(event) {
     event.preventDefault();
-    let node = $("#server").val().trim();
+    const node = $("#server").val().trim();
     if (node != "") {
         cfg.setNode(node);
     }
 
-    let apiKey = $("#key").val().trim()
+    const apiKey = $("#key").val().trim()
     if (apiKey != "") {
         cfg.setApiKey(apiKey);
 
-        let container = $("#container").empty();
+        const container = $("#container").empty();
         ReactDOM.render(React.createElement(ApiKeySaved), container.get(0));
     } else {
         $("#errors").text(chrome.i18n.getMessage("apikeyErrorSecretToken"));
@@ -38,7 +38,7 @@ $("form").submit(function(event) {
 });
 
 document.addEventListener("DOMContentLoaded", function() {
-    let link = cfg.getRegisterURL();
+    const link = cfg.getRegisterURL();
     $("#link-register").attr("href", link);
     $("#server").val(cfg.getNode());
 });

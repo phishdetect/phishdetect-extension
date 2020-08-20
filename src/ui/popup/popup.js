@@ -37,14 +37,14 @@ function scanPage() {
 
 document.addEventListener("DOMContentLoaded", function () {
     if (cfg.getNodeEnforceUserAuth() === true && cfg.getApiKey() == "") {
-        let container = $("#content").empty();
+        const container = $("#content").empty();
         ReactDOM.render(React.createElement(PopupActivate), container.get(0));
         return;
     }
 
     getTab(function(tab) {
-        let url = new URL(tab.url);
-        let backendURL = new URL(cfg.getNode());
+        const url = new URL(tab.url);
+        const backendURL = new URL(cfg.getNode());
 
         // We disable the report and scan this page buttons for browser pages,
         // the node site, and Gmail.

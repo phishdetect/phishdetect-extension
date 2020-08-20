@@ -63,13 +63,13 @@ function updateIndicators(full = false) {
             indicators = cfg.getIndicators();
 
             // Then we look for any updates in domains.
-            for (var i=0; i<data.domains.length; i++) {
+            for (let i=0; i<data.domains.length; i++) {
                 if (checkForIndicators([data.domains[i],], indicators.domains) === null) {
                     indicators.domains.push(data.domains[i]);
                 }
             }
             // We look for any updates in email indicators.
-            for (var i=0; i<data.emails.length; i++) {
+            for (let i=0; i<data.emails.length; i++) {
                 if (checkForIndicators([data.emails[i],], indicators.emails) === null) {
                     indicators.emails.push(data.emails[i]);
                 }

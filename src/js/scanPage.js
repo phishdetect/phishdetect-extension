@@ -45,12 +45,12 @@ function DOMtoString(document_root) {
     return html;
 }
 
-console.log("*** Loaded scanPage ***");
+console.log("[PhishDetect] Loaded scanPage");
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         if (request.method && (request.method == "sendPageToNode")) {
-            console.log("Received request to extract DOM and send it for analysis...");
+            console.log("[PhishDetect] Received request to extract DOM and send it for analysis...");
 
             var actionUrl = request.actionUrl;
             var html = base64encode(DOMtoString(document));

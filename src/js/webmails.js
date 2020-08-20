@@ -15,21 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-function checkAllElements(elements) {
-    var counter = 0;
-    for (var i=0; i<elements.length; i++) {
-        if (document.getElementById(elements[i]) !== null) {
-            counter++;
-        }
-    }
-
-    if (counter == elements.length) {
-        return true;
-    }
-
-    return false;
-}
-
 $(document).ready(function() {
     // Check if the option to integrate with webmails is enabled.
     chrome.runtime.sendMessage({method: "getWebmails"}, function(response) {
@@ -38,20 +23,44 @@ $(document).ready(function() {
             return;
         }
 
-        console.log("Checking for any supported webmail...");
+        console.log("[PhishDetect] Checking for any supported webmail...");
 
         var handler = null;
-        // Roundcube.
-        if (checkAllElements(["rcmbtn100", "rcmbtn101", "rcmbtn102"])) {
-            console.log("Roundcube detected!");
-            handler = "roundcube";
+
+        // First we check if there are typical Rouncube elements.
+        if ($("#rcmbtn100, #rcmbtn101, #rcmbtn102").length) {
+            // Then we use the stylesheet URL to figure which skin is being
+            // used, between Larry and Elastic.
+            var links = $("link");
+            if (links.length == 0) {
+                return;
+            }
+
+            for (let i=0; i<links.length; i++) {
+                var href = links[i].href;
+                if (href.indexOf("/larry/") >= 0) {
+                    console.log("[PhishDetect] Found Roundcube with Larry skin!");
+                    handler = "roundcube-larry";
+                    break;
+                } else if (href.indexOf("/elastic/") >= 0) {
+                    console.log("[PhishDetect] Found Roundcube wih Elastic skin!");
+                    handler = "roundcube-elastic";
+                    break;
+                }
+            }
         }
 
+        // We launch the detected webmails initialization functions only later,
+        // as they require to load font awesome, and we want to avoid loading
+        // it even on unrelated pages.
         if (handler !== null) {
             chrome.runtime.sendMessage({method: "loadFontAwesome"}, function(response) {
                 switch (handler) {
-                case "roundcube":
-                    roundcube();
+                case "roundcube-elastic":
+                    roundcube("elastic");
+                    break;
+                case "roundcube-larry":
+                    roundcube("larry");
                     break;
                 }
             });

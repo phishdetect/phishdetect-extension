@@ -17,30 +17,33 @@
 
 import scanEmail from "./scanEmail.js";
 
+// Get the email ID from the URL.
 function roundcubeGetOpenEmailUID() {
-    var url = new URL(location.href);
+    const url = new URL(location.href);
     return url.searchParams.get("_uid");
 }
 
+// Get mbox ID from the URL.
 function roundcubeGetOpenEmailMailbox() {
-    var url = new URL(location.href);
+    const url = new URL(location.href);
     return url.searchParams.get("_mbox");
 }
 
+// Get the email source by invoking Roundcube's "viewsource" view.
 function roundcubeGetEmailSource() {
-    var uid = roundcubeGetOpenEmailUID();
-    var mbox = roundcubeGetOpenEmailMailbox();
+    const uid = roundcubeGetOpenEmailUID();
+    const mbox = roundcubeGetOpenEmailMailbox();
 
-    var url = (window.location.origin +
-               window.location.pathname +
-               "?_task=mail&_uid=" + uid +
-               "&_mbox=" + mbox +
-               "&_action=viewsource&_extwin=1");
+    const url = (window.location.origin +
+                 window.location.pathname +
+                 "?_task=mail&_uid=" + uid +
+                 "&_mbox=" + mbox +
+                 "&_action=viewsource&_extwin=1");
 
     return new Promise(function(resolve, reject) {
         fetch(url)
         .then(function(response) {
-            resolve(response.text())
+            resolve(response.text());
         })
         .catch(error => {
             reject(error);
@@ -48,50 +51,81 @@ function roundcubeGetEmailSource() {
     });
 }
 
-function roundcubeGetEmail() {
-    var iframe = $(".iframe.fullheight");
-    if (iframe.length) {
-        console.log("Found the iframe. This is likely the two panes view.");
-        return iframe;
-    } else {
-        var email = $("#mainscreencontent #mailview-right");
+// Try to detect and retrieve the DOM object containing the email.
+function roundcubeGetEmail(version) {
+    if (version == "larry") {
+        console.log("[PhishDetect] Looking for email in Rouncube Larry template...");
+
+        const iframe = $(".iframe.fullheight");
+        if (iframe.length) {
+            console.log("[PhishDetect] Found the iframe. This is likely the two panes view.");
+            return iframe;
+        }
+
+        const email = $("#mainscreencontent #mailview-right");
         if (email.length) {
-            console.log("Found the full mailview. This is likely the single pane view.");
+            console.log("[PhishDetect] Found the full mailview. This is likely the single pane view.");
+            return email;
+        }
+    } else if (version == "elastic") {
+        console.log("[PhishDetect] Looking for email in Rouncube Elastic template...");
+
+        const iframe = $(".task-mail");
+        if (iframe.length) {
+            console.log("[PhishDetect] Found the iframe. This is likely the two panes view.");
+            return iframe;
+        }
+
+        const email = $(".content.frame-content");
+        if (email.length) {
+            console.log("[PhishDetect] Found the full mailview. This is likely the single pane view.");
             return email;
         }
     }
 
+    console.log("[PhishDetect] No email view found.");
+
     return null;
 }
 
+// Extract email sender and body and launch a scan.
 function roundcubeCheckEmail(email) {
     // Get email body.
-    var emailBody = email.find("#messagebody");
+    const emailBody = email.find("#messagebody");
+
     // If there is already a PhishDetect warning, we presume that there is no
     // need to proceed scanning the email.
-    var existingWarning = emailBody.find("#phishdetect-warning");
+    const existingWarning = emailBody.find("#phishdetect-warning");
     if (existingWarning.length) {
         return
     }
 
     // We get the email UID.
-    var uid = roundcubeGetOpenEmailUID();
-    console.log("Checking email with UID", uid);
+    const uid = roundcubeGetOpenEmailUID();
+    // If the ID is null, we stop.
+    if (uid === null) {
+        return;
+    }
 
+    console.log("[PhishDetect] Checking email with UID", uid);
+
+    // Get the email sender.
     var from = email.find(".rcmContactAddress");
+
     // If we do not find any sender, we might not have any email open.
     if (from === null || from === undefined) {
         return;
     }
 
     // Get email sender.
-    var fromEmail = from.attr("href").toLowerCase().replace("mailto:", "");
+    const fromEmail = from.attr("href").toLowerCase().replace("mailto:", "");
 
     return scanEmail(fromEmail, emailBody, uid);
 }
 
+// Modify the email to add PhishDetect's prompts.
 function roundcubeModifyEmail(email) {
-    var emailBody = email.find("#messagebody");
+    const emailBody = email.find("#messagebody");
     if (!emailBody.length) {
         return;
     }
@@ -99,7 +133,7 @@ function roundcubeModifyEmail(email) {
     var anchors = emailBody.find("a");
 
     chrome.runtime.sendMessage({method: "getNodeEnableAnalysis"}, function(response) {
-        for (var i=0; i<anchors.length; i++) {
+        for (let i=0; i<anchors.length; i++) {
             if (response === true) {
                 // If the configured node supports analysis we show the full dialog.
                 generateWebmailDialog(anchors[i]);
@@ -111,12 +145,13 @@ function roundcubeModifyEmail(email) {
     });
 }
 
-function roundcubeReportEmail(email) {
-    var uid = roundcubeGetOpenEmailUID();
+// Add button to report email to the Node.
+function roundcubeReportEmail(email, version) {
+    const uid = roundcubeGetOpenEmailUID();
 
-    chrome.runtime.sendMessage({method: "getSendAlertsedEmails"}, function(response) {
-        var isReported = false;
-        for (var i=0; i<response.length; i++) {
+    chrome.runtime.sendMessage({method: "getReportedEmails"}, function(response) {
+        let isReported = false;
+        for (let i=0; i<response.length; i++) {
             // If the email was already shared before, no need to
             // report it again.
             if (response[i] == uid) {
@@ -124,12 +159,17 @@ function roundcubeReportEmail(email) {
             }
         }
 
-        var emailHeader = email.find("#messageheader");
+        let emailHeader;
+        if (version == "larry") {
+            emailHeader = email.find("#messageheader");
+        } else if (version == "elastic") {
+            emailHeader = email.find("#message-header");
+        }
         if (!emailHeader.length) {
             return;
         }
 
-        var element = $('<div>').addClass('roundcube').get(0);
+        let element = $("<div>").addClass("roundcube").get(0);
         generateReportEmailButton(element, {
             uid: uid,
             reported: isReported,
@@ -139,16 +179,15 @@ function roundcubeReportEmail(email) {
     });
 }
 
-function roundcube() {
+window.roundcube = function roundcube(version) {
     // NOTE: Currently this is executed inside the main frame as well
     // as the message iframe for the two panes view.
-    var email = roundcubeGetEmail();
+    var email = roundcubeGetEmail(version);
     if (email === null) {
         return;
     }
 
-    roundcubeReportEmail(email);
+    roundcubeReportEmail(email, version);
     roundcubeCheckEmail(email);
     roundcubeModifyEmail(email);
 }
-window.roundcube = roundcube;

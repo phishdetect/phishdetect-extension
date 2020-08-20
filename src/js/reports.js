@@ -23,8 +23,8 @@ function sendReport(reportType, reportContent, identifier) {
         // If an email identifier was provided...
         if (identifier !== undefined && identifier != "") {
             // Get a list of already shared emails.
-            var emails = cfg.getSendAlertsedEmails();
-            for (var i=0; i<emails.length; i++) {
+            var emails = cfg.getReportedEmails();
+            for (let i=0; i<emails.length; i++) {
                 // If the email was already shared before, no need to
                 // report it again.
                 if (emails[i] == identifier) {

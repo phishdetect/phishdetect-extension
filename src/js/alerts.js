@@ -28,7 +28,7 @@ function sendAlert(alertType, match, indicator, identifier) {
         if (identifier !== undefined && identifier != "") {
             // Get a list of already reported emails.
             var emails = cfg.getDetectedEmails();
-            for (var i=0; i<emails.length; i++) {
+            for (let i=0; i<emails.length; i++) {
                 // If the email was already reported before, no need to
                 // report it again.
                 if (emails[i] == identifier) {

@@ -23,7 +23,7 @@ function scanBrowsingHistory(tabId) {
         console.log("No indicators to use for scanning browsing history. Skip.");
     } else {
         chrome.history.search({text: "", startTime: 0}, function(items) {
-            for (var i=0; i<items.length; i++) {
+            for (let i=0; i<items.length; i++) {
                 var url = items[i].url;
 
                 if (!url.startsWith("http")) {

@@ -47,7 +47,7 @@ function gmailModifyEmail(id) {
     var anchors = $(emailBody).find("a");
 
     chrome.runtime.sendMessage({method: "getNodeEnableAnalysis"}, function(response) {
-        for (var i=0; i<anchors.length; i++) {
+        for (let i=0; i<anchors.length; i++) {
             if (response === true) {
                 // If the configured node supports analysis we show the full dialog.
                 generateWebmailDialog(anchors[i]);
@@ -63,9 +63,9 @@ function gmailModifyEmail(id) {
 // PhishDetect Node. Reported emails will be marked in the extension's storage
 // and we will avoid duplication.
 function gmailReportEmail(uid) {
-    chrome.runtime.sendMessage({method: "getSendAlertsedEmails"}, function(response) {
+    chrome.runtime.sendMessage({method: "getReportedEmails"}, function(response) {
         var isReported = false;
-        for (var i=0; i<response.length; i++) {
+        for (let i=0; i<response.length; i++) {
             // If the email was already reported before, no need to
             // report it again.
             if (response[i] == uid) {

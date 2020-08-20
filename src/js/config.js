@@ -289,11 +289,11 @@ class Config {
     //=========================================================================
     // Emails that were reported by the user to the Node
     //=========================================================================
-    getSendAlertsedEmails() {
+    getReportedEmails() {
         return JSON.parse(localStorage.getItem("cfg_reported_emails"));
     }
     addReportedEmail(value) {
-        var emails = this.getSendAlertsedEmails();
+        var emails = this.getReportedEmails();
         emails.push(value);
         localStorage.setItem("cfg_reported_emails", JSON.stringify(emails));
     }

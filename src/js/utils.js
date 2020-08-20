@@ -18,9 +18,9 @@
 // This is a helper function to check hashes against the list of
 // malicious indicators.
 function checkForIndicators(items, indicators) {
-    for (var i=0; i<indicators.length; i++) {
+    for (let i=0; i<indicators.length; i++) {
         var indicator = indicators[i].toLowerCase();
-        for (var j=0; j<items.length; j++) {
+        for (let j=0; j<items.length; j++) {
             if (items[j] == indicator) {
                 return indicator;
             }

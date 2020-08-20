@@ -23,8 +23,7 @@
 // If it matches anything, it will display a warning, highlight any bad link,
 // and send an alert through the "sendAlert" message to the background script.
 export default function scanEmail(fromEmail, emailBody, uid) {
-
-    console.log("Checking email sender:", fromEmail);
+    console.log("[PhishDetect] Checking email sender:", fromEmail);
 
     var fromEmailHash = sha256(fromEmail);
     var fromEmailDomain = "";
@@ -64,7 +63,7 @@ export default function scanEmail(fromEmail, emailBody, uid) {
             var itemsToCheck = [fromEmailHash,];
             var matchedIndicator = checkForIndicators(itemsToCheck, indicators.emails);
             if (matchedIndicator !== null) {
-                console.log("Detected bad email sender with indicator:", matchedIndicator);
+                console.log("[PhishDetect] Detected bad email sender with indicator:", matchedIndicator);
 
                 // Mark email as bad.
                 isEmailBad = true;
@@ -81,7 +80,7 @@ export default function scanEmail(fromEmail, emailBody, uid) {
             var itemsToCheck = [fromEmailDomainHash, fromEmailTopDomainHash];
             var matchedIndicator = checkForIndicators(itemsToCheck, indicators.domains);
             if (matchedIndicator !== null) {
-                console.log("Detected email sender domain with indicator:", matchedIndicator);
+                console.log("[PhishDetect] Detected email sender domain with indicator:", matchedIndicator);
 
                 // Mark whole email as bad.
                 // TODO: this is ugly.
@@ -96,7 +95,7 @@ export default function scanEmail(fromEmail, emailBody, uid) {
             var anchors = $(emailBody).find("a");
 
             // TODO: Might want to reverse these loops for performance reasons.
-            for (var i=0; i<anchors.length; i++) {
+            for (let i=0; i<anchors.length; i++) {
                 // Lowercase the link.
                 var href = anchors[i].href.toLowerCase();
 
@@ -106,7 +105,7 @@ export default function scanEmail(fromEmail, emailBody, uid) {
                     continue;
                 }
 
-                console.log("Checking link:", href);
+                console.log("[PhishDetect] Checking link:", href);
 
                 var hrefDomain = getDomainFromURL(href);
                 var hrefDomainHash = sha256(hrefDomain);
@@ -117,7 +116,7 @@ export default function scanEmail(fromEmail, emailBody, uid) {
                 var elementsToCheck = [hrefDomainHash, hrefTopDomainHash];
                 var matchedIndicator = checkForIndicators(elementsToCheck, indicators.domains);
                 if (matchedIndicator !== null) {
-                    console.log("Detected bad link with indicator:", matchedIndicator);
+                    console.log("[PhishDetect] Detected bad link with indicator:", matchedIndicator);
 
                     // We add a warning sign to the link.
                     generateWebmailLinkWarning(anchors[i]);

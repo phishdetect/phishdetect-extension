@@ -18,8 +18,6 @@
 (function() {
     console.log("*** PhishDetect init ***")
 
-    const cfg = new Config();
-
     cfg.initLocalStorage();
     cfg.fetchNodeConfig(function() {
         // If the node enforces authentication, but we don't have an API key,

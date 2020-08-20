@@ -16,8 +16,6 @@
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
 function sendReport(reportType, reportContent, identifier) {
-    const cfg = new Config();
-
     // Check if the report type is email_*.
     if (reportType == "email") {
         // If an email identifier was provided...

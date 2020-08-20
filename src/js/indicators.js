@@ -16,7 +16,6 @@
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
 function updateIndicators(full = false) {
-    const cfg = new Config();
     if (cfg.getNodeEnforceUserAuth() === true && cfg.getApiKey() == "") {
         console.log("Node enforces user authentication and no API key is provided. Skipping indicators update.");
         return;

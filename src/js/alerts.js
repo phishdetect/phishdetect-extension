@@ -16,8 +16,6 @@
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
 function sendAlert(alertType, match, indicator, identifier) {
-    const cfg = new Config();
-
     if (cfg.getSendAlerts() === false) {
         return;
     }

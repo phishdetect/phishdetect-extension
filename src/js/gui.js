@@ -67,7 +67,7 @@ window.generateWebmailLinkWarning = function generateWebmailLinkWarning(element)
 // generateWebmailDialog adds a click event handler to the given anchor
 // in order to display a dialog offering to open the link safely.
 window.generateWebmailDialog = function generateWebmailDialog(anchor) {
-    var href = anchor.href;
+    const href = anchor.href;
 
     // We check if it is an http link.
     if (href.indexOf("http://") != 0 && href.indexOf("https://") != 0) {
@@ -85,7 +85,7 @@ window.generateWebmailDialog = function generateWebmailDialog(anchor) {
         event.preventDefault();
 
         // We safely render the link and preview it in the dialog.
-        var message = renderHTML(WebmailLinkDialog, {
+        const message = renderHTML(WebmailLinkDialog, {
             content: chrome.i18n.getMessage("webmailDialog"),
             href: href
         });
@@ -146,7 +146,7 @@ window.generateWebmailDialog = function generateWebmailDialog(anchor) {
 // click event handler. However, it does not provide any option to scan
 // the link. This is utilized if the Node has disabled analysis.
 window.generateWebmailPreview = function generateWebmailPreview(anchor) {
-    var href = anchor.href;
+    const href = anchor.href;
 
     // We check if it is an http link.
     if (href.indexOf("http://") != 0 && href.indexOf("https://") != 0) {
@@ -164,10 +164,10 @@ window.generateWebmailPreview = function generateWebmailPreview(anchor) {
         event.preventDefault();
 
         // Get URLs.
-        // var unsafeUrl = event.srcElement.getAttribute("href");
-        var unsafeUrl = href;
+        // let unsafeUrl = event.srcElement.getAttribute("href");
+        let unsafeUrl = href;
         // We sanitize the link and preview it in the dialog.
-        var message = renderHTML(WebmailLinkDialog, {
+        let message = renderHTML(WebmailLinkDialog, {
             content: chrome.i18n.getMessage("webmailPreview"),
             href: href
         });

@@ -73,14 +73,14 @@ class Config {
     // Node
     //=========================================================================
     getNode() {
-        var address = localStorage.getItem("cfg_node");
+        let address = localStorage.getItem("cfg_node");
         if (!address.startsWith("http")) {
             return "https://" + address;
         }
         return address;
     }
     setNode(value) {
-        var currentAddress = this.getNode()
+        let currentAddress = this.getNode()
         if (value == currentAddress) {
             return;
         }
@@ -120,7 +120,7 @@ class Config {
     fetchNodeConfig(callback) {
         console.log("Fetching configuration from Node...");
 
-        var url = this.getConfigURL()
+        let url = this.getConfigURL()
 
         fetch(url)
         .then((response) => response.json())
@@ -156,7 +156,7 @@ class Config {
         return this.getNode() + NODE_API_CONFIG_PATH;
     }
     getAuthURL() {
-        var url = this.getNode() + NODE_API_AUTH;
+        let url = this.getNode() + NODE_API_AUTH;
         if (this.getNodeEnforceUserAuth() == true) {
             url += "?key=" + this.getApiKey()
         }
@@ -169,7 +169,7 @@ class Config {
         return this.getNode() + NODE_GUI_LINK_CHECK + link + "/";
     }
     getReviewURL(ioc) {
-        var url = this.getNode() + NODE_GUI_REVIEW;
+        let url = this.getNode() + NODE_GUI_REVIEW;
         url += ioc + "/";
         if (this.getNodeEnforceUserAuth() == true) {
             url += "?key=" + this.getApiKey()
@@ -177,7 +177,7 @@ class Config {
         return url;
     }
     getSendAlertsURL(link) {
-        var url = this.getNode() + NODE_GUI_REPORT;
+        let url = this.getNode() + NODE_GUI_REPORT;
         url += link + "/";
         if (this.getNodeEnforceUserAuth() == true) {
             url += "?key=" + this.getApiKey()
@@ -185,28 +185,28 @@ class Config {
         return url;
     }
     getIndicatorsURL() {
-        var url = this.getNode() + NODE_API_INDICATORS_FETCH_PATH;
+        let url = this.getNode() + NODE_API_INDICATORS_FETCH_PATH;
         if (this.getNodeEnforceUserAuth() == true) {
             url += "?key=" + this.getApiKey()
         }
         return url;
     }
     getRecentIndicatorsURL() {
-        var url = this.getNode() + NODE_API_RECENT_INDICATORS_FETCH_PATH;
+        let url = this.getNode() + NODE_API_RECENT_INDICATORS_FETCH_PATH;
         if (this.getNodeEnforceUserAuth() == true) {
             url += "?key=" + this.getApiKey()
         }
         return url;
     }
     getEventsURL() {
-        var url = this.getNode() + NODE_API_ALERTS_ADD_PATH;
+        let url = this.getNode() + NODE_API_ALERTS_ADD_PATH;
         if (this.getNodeEnforceUserAuth() == true) {
             url += "?key=" + this.getApiKey()
         }
         return url;
     }
     getSendAlertssURL() {
-        var url = this.getNode() + NODE_API_REPORTS_ADD_PATH;
+        let url = this.getNode() + NODE_API_REPORTS_ADD_PATH;
         if (this.getNodeEnforceUserAuth() == true) {
             url += "?key=" + this.getApiKey()
         }
@@ -253,7 +253,7 @@ class Config {
     // Update time
     //=========================================================================
     getLastFullUpdateTime() {
-        var lastUpdate = localStorage.getItem("cfg_last_update")
+        const lastUpdate = localStorage.getItem("cfg_last_update")
         if (lastUpdate == "") {
             return null;
         }
@@ -281,7 +281,7 @@ class Config {
         return JSON.parse(localStorage.getItem("cfg_detected_emails"));
     }
     addDetectedEmail(value) {
-        var emails = this.getDetectedEmails();
+        let emails = this.getDetectedEmails();
         emails.push(value);
         localStorage.setItem("cfg_detected_emails", JSON.stringify(emails));
     }
@@ -293,10 +293,10 @@ class Config {
         return JSON.parse(localStorage.getItem("cfg_reported_emails"));
     }
     addReportedEmail(value) {
-        var emails = this.getReportedEmails();
+        let emails = this.getReportedEmails();
         emails.push(value);
         localStorage.setItem("cfg_reported_emails", JSON.stringify(emails));
     }
 }
 
-var cfg = new Config();
+const cfg = new Config();

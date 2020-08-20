@@ -16,7 +16,7 @@
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
 function sendAlert(alertType, match, indicator, identifier) {
-    var cfg = new Config();
+    const cfg = new Config();
 
     if (cfg.getSendAlerts() === false) {
         return;
@@ -27,7 +27,7 @@ function sendAlert(alertType, match, indicator, identifier) {
         // If an email identifier was provided...
         if (identifier !== undefined && identifier != "") {
             // Get a list of already reported emails.
-            var emails = cfg.getDetectedEmails();
+            const emails = cfg.getDetectedEmails();
             for (let i=0; i<emails.length; i++) {
                 // If the email was already reported before, no need to
                 // report it again.
@@ -39,7 +39,7 @@ function sendAlert(alertType, match, indicator, identifier) {
     }
 
     // Craft request to send to REST API server.
-    var properties = {
+    const properties = {
         method: "POST",
         body: JSON.stringify({
             "type": alertType,

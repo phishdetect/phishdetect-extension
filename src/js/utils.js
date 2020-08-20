@@ -36,13 +36,13 @@ function getCurrentISODate() {
         return (i < 10) ? "0" + i : "" + i;
     }
 
-    var now = new Date();
-    var nowStr = this.pad(now.getUTCFullYear()) + "-" +
-                 this.pad(now.getUTCMonth()) + "-" +
-                 this.pad(now.getUTCDate()) + "T" +
-                 this.pad(now.getUTCHours()) + ":" +
-                 this.pad(now.getUTCMinutes()) + ":" +
-                 this.pad(now.getUTCSeconds()) + "Z";
+    const now = new Date();
+    const nowStr = this.pad(now.getUTCFullYear()) + "-" +
+                   this.pad(now.getUTCMonth()) + "-" +
+                   this.pad(now.getUTCDate()) + "T" +
+                   this.pad(now.getUTCHours()) + ":" +
+                   this.pad(now.getUTCMinutes()) + ":" +
+                   this.pad(now.getUTCSeconds()) + "Z";
 
     return nowStr;
 }

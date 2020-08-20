@@ -18,7 +18,7 @@
 (function() {
     console.log("*** PhishDetect init ***")
 
-    var cfg = new Config();
+    const cfg = new Config();
 
     cfg.initLocalStorage();
     cfg.fetchNodeConfig(function() {

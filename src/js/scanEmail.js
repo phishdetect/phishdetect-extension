@@ -25,14 +25,14 @@
 export default function scanEmail(fromEmail, emailBody, uid) {
     console.log("[PhishDetect] Checking email sender:", fromEmail);
 
-    var fromEmailHash = sha256(fromEmail);
-    var fromEmailDomain = "";
-    var fromEmailDomainHash = "";
-    var fromEmailTopDomain = "";
-    var fromEmailTopDomainHash = "";
+    const fromEmailHash = sha256(fromEmail);
+    let fromEmailDomain = "";
+    let fromEmailDomainHash = "";
+    let fromEmailTopDomain = "";
+    let fromEmailTopDomainHash = "";
 
     // We extract the domain from the email address.
-    var parts = fromEmail.split('@');
+    let parts = fromEmail.split('@');
     if (parts.length === 2) {
         fromEmailDomain = getDomainFromURL(parts[1]);
         fromEmailDomainHash = sha256(fromEmailDomain);
@@ -46,22 +46,22 @@ export default function scanEmail(fromEmail, emailBody, uid) {
         if (response == "") {
             return false;
         }
-        var indicators = response;
+        const indicators = response;
 
         if (indicators === undefined) {
             return false;
         }
 
         // Email status.
-        var isEmailBad = false;
-        var alertType = "";
-        var alertMatch = "";
-        var alertIndicator = "";
+        let isEmailBad = false;
+        let alertType = "";
+        let alertMatch = "";
+        let alertIndicator = "";
 
         // We check for email addresses, if we have any indicators to check.
         if (indicators.emails !== null) {
-            var itemsToCheck = [fromEmailHash,];
-            var matchedIndicator = checkForIndicators(itemsToCheck, indicators.emails);
+            let itemsToCheck = [fromEmailHash,];
+            let matchedIndicator = checkForIndicators(itemsToCheck, indicators.emails);
             if (matchedIndicator !== null) {
                 console.log("[PhishDetect] Detected bad email sender with indicator:", matchedIndicator);
 
@@ -77,8 +77,8 @@ export default function scanEmail(fromEmail, emailBody, uid) {
         // We check for domains, if we have any indicators to check.
         if (indicators.domains !== null) {
             // First we check the domain of the email sender.
-            var itemsToCheck = [fromEmailDomainHash, fromEmailTopDomainHash];
-            var matchedIndicator = checkForIndicators(itemsToCheck, indicators.domains);
+            let itemsToCheck = [fromEmailDomainHash, fromEmailTopDomainHash];
+            let matchedIndicator = checkForIndicators(itemsToCheck, indicators.domains);
             if (matchedIndicator !== null) {
                 console.log("[PhishDetect] Detected email sender domain with indicator:", matchedIndicator);
 
@@ -92,12 +92,12 @@ export default function scanEmail(fromEmail, emailBody, uid) {
 
             // Now we check for links contained in the emails body.
             // We extract all links from the body of the email.
-            var anchors = $(emailBody).find("a");
+            let anchors = $(emailBody).find("a");
 
             // TODO: Might want to reverse these loops for performance reasons.
             for (let i=0; i<anchors.length; i++) {
                 // Lowercase the link.
-                var href = anchors[i].href.toLowerCase();
+                let href = anchors[i].href.toLowerCase();
 
                 // Only check for HTTP links.
                 // NOTE: also scanning for mailto: links (currently experimental).
@@ -107,14 +107,14 @@ export default function scanEmail(fromEmail, emailBody, uid) {
 
                 console.log("[PhishDetect] Checking link:", href);
 
-                var hrefDomain = getDomainFromURL(href);
-                var hrefDomainHash = sha256(hrefDomain);
-                var hrefTopDomain = getTopDomainFromURL(href);
-                var hrefTopDomainHash = sha256(hrefTopDomain);
+                let hrefDomain = getDomainFromURL(href);
+                let hrefDomainHash = sha256(hrefDomain);
+                let hrefTopDomain = getTopDomainFromURL(href);
+                let hrefTopDomainHash = sha256(hrefTopDomain);
 
                 // We loop through the list of hashed bad domains.
-                var elementsToCheck = [hrefDomainHash, hrefTopDomainHash];
-                var matchedIndicator = checkForIndicators(elementsToCheck, indicators.domains);
+                let elementsToCheck = [hrefDomainHash, hrefTopDomainHash];
+                let matchedIndicator = checkForIndicators(elementsToCheck, indicators.domains);
                 if (matchedIndicator !== null) {
                     console.log("[PhishDetect] Detected bad link with indicator:", matchedIndicator);
 

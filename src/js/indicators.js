@@ -16,7 +16,7 @@
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
 function updateIndicators(full = false) {
-    var cfg = new Config();
+    const cfg = new Config();
     if (cfg.getNodeEnforceUserAuth() === true && cfg.getApiKey() == "") {
         console.log("Node enforces user authentication and no API key is provided. Skipping indicators update.");
         return;
@@ -24,8 +24,8 @@ function updateIndicators(full = false) {
 
     // JavaScript's date/timezone handling is ridiculous.
     // Did you know that Date.getMonth() returns a value from 0-11?
-    var now = new Date();
-    var nowUTC = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 
+    let now = new Date();
+    let nowUTC = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 
         now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds());
 
     // Check if there was never any update or if there wasn't any full

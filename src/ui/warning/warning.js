@@ -16,14 +16,13 @@
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
 function loadContent() {
-    var href = new URL(location.href);
-    var url = href.searchParams.get("url");
-
-    var cleanURL = $("<span>").text(url).html();
+    const href = new URL(location.href);
+    const url = href.searchParams.get("url");
+    const cleanURL = $("<span>").text(url).html();
     $("#badURL").html(cleanURL);
 
-    var indicator = href.searchParams.get("indicator");
-    var reviewURL = cfg.getReviewURL(indicator);
+    const indicator = href.searchParams.get("indicator");
+    const reviewURL = cfg.getReviewURL(indicator);
     $("#reviewMistake").attr("href", reviewURL);
 
     $("#takeMeAway").attr("href", "about:blank");

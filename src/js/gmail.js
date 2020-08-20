@@ -28,11 +28,11 @@ function gmailCheckEmail(uid) {
     console.log("Checking email", uid)
 
     // Extract the email DOM.
-    var email = new gmail.dom.email(uid);
-    var emailBody = email.dom("body");
+    const email = new gmail.dom.email(uid);
+    const emailBody = email.dom("body");
     // Extract from field and prepare hashes.
-    var from = email.from();
-    var fromEmail = from["email"].toLowerCase();
+    const from = email.from();
+    const fromEmail = from["email"].toLowerCase();
 
     return scanEmail(fromEmail, emailBody, uid);
 }
@@ -42,9 +42,9 @@ function gmailCheckEmail(uid) {
 function gmailModifyEmail(id) {
     console.log("Modifying email", id);
 
-    var email = new gmail.dom.email(id);
-    var emailBody = email.dom("body");
-    var anchors = $(emailBody).find("a");
+    const email = new gmail.dom.email(id);
+    const emailBody = email.dom("body");
+    const anchors = $(emailBody).find("a");
 
     chrome.runtime.sendMessage({method: "getNodeEnableAnalysis"}, function(response) {
         for (let i=0; i<anchors.length; i++) {
@@ -64,7 +64,7 @@ function gmailModifyEmail(id) {
 // and we will avoid duplication.
 function gmailReportEmail(uid) {
     chrome.runtime.sendMessage({method: "getReportedEmails"}, function(response) {
-        var isReported = false;
+        let isReported = false;
         for (let i=0; i<response.length; i++) {
             // If the email was already reported before, no need to
             // report it again.
@@ -81,7 +81,7 @@ function gmailReportEmail(uid) {
         // instead be changed to place the button elsewhere.
         $("[id^='pd-report']").parent().parent().remove();
 
-        var element = $("<div>").get(0);
+        let element = $("<div>").get(0);
         generateReportEmailButton(element, {
             uid: uid,
             reported: isReported,

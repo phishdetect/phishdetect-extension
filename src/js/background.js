@@ -23,31 +23,31 @@ chrome.webRequest.onBeforeRequest.addListener(function(details) {
     // }
 
     // We lowercase the link.
-    var url = details.url.toLowerCase();
+    const url = details.url.toLowerCase();
 
-    var domain = window.getDomainFromURL(url);
-    var topDomain = window.getTopDomainFromURL(url);
+    const domain = window.getDomainFromURL(url);
+    const topDomain = window.getTopDomainFromURL(url);
 
     if (domain === null || topDomain === null) {
         return {cancel: false};
     }
 
-    var domainHash = sha256(domain);
-    var topDomainHash = sha256(topDomain);
+    const domainHash = sha256(domain);
+    const topDomainHash = sha256(topDomain);
 
-    var indicators = cfg.getIndicators();
+    const indicators = cfg.getIndicators();
     if (indicators === undefined || indicators.domains === undefined || indicators.domains === null) {
         return {cancel: false};
     }
 
-    var itemsToCheck = [domainHash, topDomainHash];
-    var matchedIndicator = checkForIndicators(itemsToCheck, indicators.domains);
+    const itemsToCheck = [domainHash, topDomainHash];
+    const matchedIndicator = checkForIndicators(itemsToCheck, indicators.domains);
     if (matchedIndicator !== null) {
         console.log("Bad domain identified:", url);
         sendAlert("website_visit", url, matchedIndicator, "");
 
         // We redirect to the warning page.
-        var redirect = chrome.extension.getURL(WARNING_PAGE) + "?url=" + encodeURIComponent(url) + "&indicator=" + matchedIndicator;
+        const redirect = chrome.extension.getURL(WARNING_PAGE) + "?url=" + encodeURIComponent(url) + "&indicator=" + matchedIndicator;
         return {redirectUrl: redirect};
     }
 
@@ -75,8 +75,8 @@ function scanPage(tabId, tabUrl) {
 // Analyze a link (coming from webmail and context menu).
 function scanLink(link) {
     console.log("Received request to analyze link", link);
-    var url = cfg.getLinkCheckURL(base64encode(link)) + "?key=" + cfg.getApiKey();
-    chrome.tabs.create({url: url});
+    let linkCheckURL = cfg.getLinkCheckURL(base64encode(link)) + "?key=" + cfg.getApiKey();
+    chrome.tabs.create({url: linkCheckURL});
 }
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
@@ -118,8 +118,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     //=========================================================================
     // This message is received when the user wants to report a suspicious opened page.
     case "reportPage":
-        var nodeUrl = cfg.getSendAlertsURL(base64encode(request.url));
-        chrome.tabs.create({"url": nodeUrl});
+        let reportPageURL = cfg.getSendAlertsURL(base64encode(request.url));
+        chrome.tabs.create({"url": reportPageURL});
         break;
     // This message is received when an alert needs to be sent to the PhishDetect node.
     case "sendAlert":
@@ -151,7 +151,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     case "loadFontAwesome":
         console.log("Injecting FontAwesome into tab...");
         chrome.tabs.executeScript(sender.tab.id, {file: "../fontawesome/js/all.js", allFrames: true, runAt: "document_end"}, function(result) {
-            console.log(result);
             if (chrome.runtime.lastError) {
                 console.log("ERROR: FontAwesome injection failed:", chrome.runtime.lastError.message);
             }
@@ -205,12 +204,12 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
         scanLink(info.linkUrl);
         break;
     case "report-page":
-        var nodeUrl = cfg.getSendAlertsURL(base64encode(info.pageUrl));
-        chrome.tabs.create({"url": nodeUrl});
+        let reportPageURL = cfg.getSendAlertsURL(base64encode(info.pageUrl));
+        chrome.tabs.create({"url": reportPageURL});
         break;
     case "report-link":
-        var nodeUrl = cfg.getSendAlertsURL(base64encode(info.linkUrl));
-        chrome.tabs.create({"url": nodeUrl});
+        let reportLinkURL = cfg.getSendAlertsURL(base64encode(info.linkUrl));
+        chrome.tabs.create({"url": reportLinkURL});
         break;
     }
 

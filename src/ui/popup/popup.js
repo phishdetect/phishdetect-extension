@@ -37,7 +37,7 @@ function scanPage() {
 
 document.addEventListener("DOMContentLoaded", function () {
     if (cfg.getNodeEnforceUserAuth() === true && cfg.getApiKey() == "") {
-        var container = $("#content").empty();
+        let container = $("#content").empty();
         ReactDOM.render(React.createElement(PopupActivate), container.get(0));
         return;
     }

@@ -18,7 +18,7 @@
 function scanBrowsingHistory(tabId) {
     console.log("Scanning browsing history...");
 
-    var indicators = cfg.getIndicators();
+    const indicators = cfg.getIndicators();
     if (indicators.domains === undefined || indicators.domains.length == 0) {
         console.log("No indicators to use for scanning browsing history. Skip.");
     } else {
@@ -31,21 +31,21 @@ function scanBrowsingHistory(tabId) {
                 }
 
                 try {
-                    var domain = getDomainFromURL(url);
+                    let domain = getDomainFromURL(url);
                     var domainHash = sha256(domain);
-                    var topDomain = getTopDomainFromURL(url);
+                    let topDomain = getTopDomainFromURL(url);
                     var topDomainHash = sha256(topDomain);
                 } catch (err) {
                     console.log("ERROR! Failed to parse history item with URL: ", url, " with error: ", err);
                     continue;
                 }
 
-                var elementsToCheck = [
+                const elementsToCheck = [
                     domainHash,
                     topDomainHash
                 ];
 
-                var matchedIndicator = checkForIndicators(elementsToCheck, indicators.domains);
+                const matchedIndicator = checkForIndicators(elementsToCheck, indicators.domains);
                 if (matchedIndicator !== null) {
                     console.log("WARNING! Found match at link " + url + " (indicator: " + matchedIndicator + "). Sending notification to tab with ID: " + tabId);
                     sendAlert("browsing_history", url, matchedIndicator, "");

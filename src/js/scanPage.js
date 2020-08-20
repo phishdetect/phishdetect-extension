@@ -52,12 +52,12 @@ chrome.runtime.onMessage.addListener(
         if (request.method && (request.method == "sendPageToNode")) {
             console.log("[PhishDetect] Received request to extract DOM and send it for analysis...");
 
-            var actionUrl = request.actionUrl;
-            var html = base64encode(DOMtoString(document));
-            var screenshot = request.screenshot;
-            var key = request.key;
+            const actionUrl = request.actionUrl;
+            const html = base64encode(DOMtoString(document));
+            const screenshot = request.screenshot;
+            const key = request.key;
 
-            var form = $("<form></form>", {
+            const form = $("<form></form>", {
                 action: actionUrl,
                 method: "POST",
             })

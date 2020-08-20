@@ -16,14 +16,14 @@
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
 function sendReport(reportType, reportContent, identifier) {
-    var cfg = new Config();
+    const cfg = new Config();
 
     // Check if the report type is email_*.
     if (reportType == "email") {
         // If an email identifier was provided...
         if (identifier !== undefined && identifier != "") {
             // Get a list of already shared emails.
-            var emails = cfg.getReportedEmails();
+            let emails = cfg.getReportedEmails();
             for (let i=0; i<emails.length; i++) {
                 // If the email was already shared before, no need to
                 // report it again.
@@ -35,7 +35,7 @@ function sendReport(reportType, reportContent, identifier) {
     }
 
     // Craft request to send to REST API server.
-    var properties = {
+    const properties = {
         method: "POST",
         body: JSON.stringify({
             "type": reportType,

@@ -22,9 +22,9 @@ import { HistoryAlert } from "../../components/History.js";
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     switch (request.method) {
     case "historyMatchFound":
-        var url = request.match.url;
-        var dateTime = new Date(request.match.visitTime).toString();
-        var alerts = $("#alerts").empty();
+        let url = request.match.url;
+        let dateTime = new Date(request.match.visitTime).toString();
+        let alerts = $("#alerts").empty();
         ReactDOM.render(React.createElement(HistoryAlert, {dateTime, url}), alerts.get(0));
         break;
     case "historyScanCompleted":

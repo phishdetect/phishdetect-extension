@@ -16,8 +16,8 @@
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
 $("[data-resource]").each(function() {
-    var el = $(this);
-    var resourceName = el.data("resource");
-    var resourceText = chrome.i18n.getMessage(resourceName);
+    let el = $(this);
+    let resourceName = el.data("resource");
+    let resourceText = chrome.i18n.getMessage(resourceName);
     el.text(resourceText);
 });

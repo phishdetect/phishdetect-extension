@@ -17,7 +17,6 @@
 
 "use strict";
 
-// vex.js is used to create dialogs inside Gmail.
 const vex = require("vex-js");
 window.vex = vex;
 vex.registerPlugin(require("vex-dialog"));

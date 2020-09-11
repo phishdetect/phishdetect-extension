@@ -15,9 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { ApiKeySaved } from '../../components/ApiKey.js'
+import React from "react";
+import ReactDOM from "react-dom";
+import { ApiKeySaved } from "../../components/ApiKey.js"
 
 $("form").submit(function(event) {
     event.preventDefault();

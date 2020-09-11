@@ -15,19 +15,27 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
+function initSuccess() {
+    console.log("PhishDetect init success");
+
+    // If the node enforces authentication, but we don't have an API key,
+    // we show an error icon in the toolbar.
+    if (cfg.getNodeEnforceUserAuth() === true && cfg.getApiKey() == "") {
+        console.log("The user does not appear to have configured a required API key!");
+        chrome.browserAction.setIcon({path: chrome.extension.getURL("icons/icon_error@34.png")});
+    } else {
+        // If everything is fine, we launch an update of indicators.
+        updateIndicators();
+    }
+}
+
+function initFailure() {
+    console.log("PhishDetect init failed!")
+}
+
 (function() {
     console.log("*** PhishDetect init ***")
 
     cfg.initLocalStorage();
-    cfg.fetchNodeConfig(function() {
-        // If the node enforces authentication, but we don't have an API key,
-        // we show an error icon in the toolbar.
-        if (cfg.getNodeEnforceUserAuth() === true && cfg.getApiKey() == "") {
-            console.log("The user does not appear to have configured a required API key!");
-            chrome.browserAction.setIcon({path: chrome.extension.getURL("icons/icon_error@34.png")});
-        } else {
-            // If everything is fine, we launch an update of indicators.
-            updateIndicators();
-        }
-    });
+    cfg.fetchNodeConfig(initSuccess, initFailure);
 })();

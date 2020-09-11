@@ -117,7 +117,7 @@ class Config {
     //=========================================================================
     // Node configuration
     //=========================================================================
-    fetchNodeConfig(callback) {
+    fetchNodeConfig(success, failure) {
         console.log("Fetching configuration from Node...");
 
         let url = this.getConfigURL()
@@ -129,11 +129,13 @@ class Config {
             this.setNodeEnforceUserAuth(data.enforce_user_auth);
 
             console.log("Configuration fetched successfully.");
-            // Calling callback only if successful.
-            callback();
+            // Calling success callback if all worked.
+            success();
         })
         .catch(error => {
-            console.log(error);
+            console.log("ERROR: Connection failed: " + error);
+            // Calling failure callback if errored.
+            failure();
         });
     }
     getNodeEnableAnalysis() {

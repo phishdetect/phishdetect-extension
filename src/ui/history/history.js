@@ -33,10 +33,13 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         $("#statusInProgress").hide();
         $("#statusCompleted").show();
 
-        if ($("#alerts > *").length == 0) {
-            $("#alerts").hide();
-            $("#nothingFound").show();
-        }
+        // TODO: This doesn't currently work because of a race condition in
+        //       receiving the alert messages. The scan is often completed
+        //       before all messages were received.
+        // if ($("#alerts > *").length == 0) {
+        //     $("#alerts").hide();
+        //     $("#nothingFound").show();
+        // }
         break;
     }
 });

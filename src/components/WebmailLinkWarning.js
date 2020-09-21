@@ -15,9 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-const React = require("react");
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons"
+
 export default function WebmailLinkWarning(props) {
     return (
         <span className="pd-webmail-link-warning"

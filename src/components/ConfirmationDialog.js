@@ -15,7 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-const React = require("react");
+import React from "react";
+
 export default function ConfirmationDialog(props) {
     return (
         <span>

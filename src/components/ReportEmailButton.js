@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-const React = require("react");
+import React from "react";
 const vex = require("vex-js");
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faFish, faCheckCircle } from "@fortawesome/free-solid-svg-icons"

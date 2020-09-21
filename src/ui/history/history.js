@@ -17,20 +17,14 @@
 
 import React from "react";
 import ReactDOM from "react-dom";
-import { HistoryAlert } from "../../components/History.js";
+import HistoryAlerts from "../../components/HistoryAlerts";
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     switch (request.method) {
     case "historyMatchFound":
         const url = request.match.url;
         const dateTime = new Date(request.match.visitTime).toString();
-
-        console.log("Received match for url: " + url)
-
-        const alerts = $("#alerts");
-        const div = $("<div>");
-        alerts.append(div);
-        ReactDOM.render(React.createElement(HistoryAlert, {dateTime, url}), div.get(0));
+        window.alertsRendered.onAddAlert(dateTime, url);
         break;
     case "historyScanCompleted":
         $("#statusInProgress").hide();
@@ -49,6 +43,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
 document.addEventListener("DOMContentLoaded", function() {
     $("#startButton").click(function() {
+        ReactDOM.render(<HistoryAlerts ref={(alertsRendered) => {window.alertsRendered = alertsRendered}} />, $("#alerts").get(0));
         $("#startButton").hide();
         $("#statusInProgress").show();
         getTab(function(tab) {

@@ -26,8 +26,11 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         const dateTime = new Date(request.match.visitTime).toString();
 
         console.log("Received match for url: " + url)
+
         const alerts = $("#alerts");
-        ReactDOM.render(React.createElement(HistoryAlert, {dateTime, url}), alerts.get(0));
+        const div = $("<div>");
+        alerts.append(div);
+        ReactDOM.render(React.createElement(HistoryAlert, {dateTime, url}), div.get(0));
         break;
     case "historyScanCompleted":
         $("#statusInProgress").hide();

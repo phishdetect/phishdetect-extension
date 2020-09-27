@@ -11,14 +11,14 @@ var webpack = require("webpack"),
 var fileExtensions = ["jpg", "jpeg", "png", "gif", "eot", "otf", "svg", "ttf", "woff", "woff2"];
 var options = {
     devServer: {
-        publicPath: '/'
+        publicPath: "/"
     },
     mode: process.env.NODE_ENV || "development",
     entry: {
-        popup: path.join(__dirname, "src", "ui", "popup", "popup.js"),
-        options: path.join(__dirname, "src", "ui", "options", "options.js"),
-        history: path.join(__dirname, "src", "ui", "history", "history.js"),
         apikey: path.join(__dirname, "src", "ui", "apikey", "apikey.js"),
+        history: path.join(__dirname, "src", "ui", "history", "history.js"),
+        options: path.join(__dirname, "src", "ui", "options", "options.js"),
+        popup: path.join(__dirname, "src", "ui", "popup", "popup.js"),
         gmail: path.join(__dirname, "src", "js", "gmail.js"),
         roundcube: path.join(__dirname, "src", "js", "roundcube.js"),
         domains: path.join(__dirname, "src", "js", "domains.js"),
@@ -41,7 +41,7 @@ var options = {
                 exclude: /node_modules/
             },
             {
-                test: new RegExp('\.(' + fileExtensions.join('|') + ')$'),
+                test: new RegExp("\.(" + fileExtensions.join("|") + ")$"),
                 loader: "file-loader?name=[name].[ext]",
                 exclude: /node_modules/
             },
@@ -57,7 +57,7 @@ var options = {
         new CleanWebpackPlugin(["build"]),
         // expose and write the allowed env vars on the compiled bundle
         new webpack.EnvironmentPlugin({
-            NODE_ENV: 'development' // process.env.NODE_ENV overrides this default
+            NODE_ENV: "development" // process.env.NODE_ENV overrides this default
         }),
         new CopyWebpackPlugin([{
             from: "src/manifest.json",
@@ -75,20 +75,20 @@ var options = {
             }
         }]),
         new CopyWebpackPlugin([
-            {from: 'src/css',to:'css'},
-            {from: 'src/icons',to:'icons'},
-            {from: 'src/js',to:'js'},
-            {from: 'src/lib',to:'lib'},
-            {from: 'src/ui',to:'ui'},
-            {from: '_locales/',to:'_locales'},
-            {from: 'node_modules/vex-js/dist/css/vex.css',to:'css'},
-            {from: 'node_modules/vex-js/dist/css/vex-theme-default.css',to:'css'},
-            {from: 'node_modules/tailwindcss/dist/tailwind.min.css',to:'css'},
-            {from: 'node_modules/jquery/dist/jquery.min.js',to:'lib'},
-            {from: 'node_modules/js-sha256/build/sha256.min.js',to:'lib'},
-            {from: 'node_modules/@fortawesome/fontawesome-free/css',to:'fontawesome/css'},
-            {from: 'node_modules/@fortawesome/fontawesome-free/js',to:'fontawesome/js'},
-            {from: 'node_modules/@fortawesome/fontawesome-free/webfonts',to:'fontawesome/webfonts'}
+            {from: "src/css",to:"css"},
+            {from: "src/icons",to:"icons"},
+            {from: "src/js",to:"js", ignore: ["gmail.js", "roundcube.js", "domains.js", "gui.js"]},
+            {from: "src/lib",to:"lib"},
+            {from: "src/ui",to:"ui", ignore: ["apikey/apikey.js", "history/history.js", "options/options.js", "popup/popup.js"]},
+            {from: "_locales/",to:"_locales"},
+            {from: "node_modules/vex-js/dist/css/vex.css",to:"css"},
+            {from: "node_modules/vex-js/dist/css/vex-theme-default.css",to:"css"},
+            {from: "node_modules/tailwindcss/dist/tailwind.min.css",to:"css"},
+            {from: "node_modules/jquery/dist/jquery.min.js",to:"lib"},
+            {from: "node_modules/js-sha256/build/sha256.min.js",to:"lib"},
+            {from: "node_modules/@fortawesome/fontawesome-free/css",to:"fontawesome/css"},
+            {from: "node_modules/@fortawesome/fontawesome-free/js",to:"fontawesome/js"},
+            {from: "node_modules/@fortawesome/fontawesome-free/webfonts",to:"fontawesome/webfonts"}
         ]),
         new WriteFilePlugin()
     ]

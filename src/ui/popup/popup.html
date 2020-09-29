@@ -5,7 +5,7 @@
 <title data-i18n=""></title>
 <link href="../../css/tailwind.min.css" rel="stylesheet">
 <link href="../../fontawesome/css/all.min.css" rel="stylesheet">
-<link href="../../css/phishdetect-ui.css" rel="stylesheet">
+<link href="../../css/phishdetect-ui.dist.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 text-gray-900">
 <div id="container">
@@ -13,13 +13,13 @@
 
     <div id="content">
         <div class="mt-8" id="divScanPage">
-            <a class="bg-blue-500 hover:bg-blue-300 text-white py-2 px-4 border-b-4 border-blue-700 hover:text-white hover:no-underline hover:border-blue-500 rounded cursor-pointer" id="buttonScanPage" title="Scan this link to determine if it might be suspicious">
+            <a class="pd-button-blue" id="buttonScanPage" title="Scan this link to determine if it might be suspicious">
                 <i class="fas fa-search mr-2"></i>
                 <span data-resource="popupScanThisPage">Scan this page!</span>
             </a>
         </div>
         <div class="mt-8" id="divReportPage">
-            <a class="bg-gray-400 hover:bg-gray-300 text-gray-800 py-2 px-4 border-b-4 border-gray-600 hover:no-underline hover:border-gray-500 rounded cursor-pointer" id="buttonReportPage" title="Report this page as suspicious to your PhishDetect Node operators">
+            <a class="pd-button-gray" id="buttonReportPage" title="Report this page as suspicious to your PhishDetect Node operators">
                 <i class="fas fa-fish mr-2 text-blue"></i>
                 <span data-resource="popupReportThisPage">Report this page</span>
             </a>

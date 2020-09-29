@@ -5,11 +5,11 @@
 <title data-i18n="">PhishDetect - Settings</title>
 <link href="../../css/tailwind.min.css" rel="stylesheet">
 <link href="../../fontawesome/css/all.min.css" rel="stylesheet">
-<link href="../../css/phishdetect-ui.css" rel="stylesheet">
+<link href="../../css/phishdetect-ui.dist.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 h-screen text-gray-900">
 <div id="container">
-    <h1 class="text-xl">PhishDetect</h1>
+    <h1>PhishDetect</h1>
 
     <p class="leading-normal mb-4"><span data-resource="apikeyGetToken">In order
         to continue using the PhishDetect Browser Extension, you will be required
@@ -20,13 +20,13 @@
 
     <form>
         <label for="server" data-resource="apikeyNode">Your preferred PhishDetect Node:</label>
-        <div class="mt-2 mb-4"><input type="text" class="block appearance-none w-full bg-white border border-grey-light px-4 py-4 rounded focus:border-blue-300" id="server" /></div>
+        <div class="mt-2 mb-4"><input type="text" class="pd-form-input" id="server" /></div>
 
         <label for="key" id="keyLabel" data-resource="apikeyToken">Enter your secret token:</label>
-        <div class="mt-2"><input type="text" class="block appearance-none w-full bg-white border border-grey-light px-4 py-4 rounded focus:border-blue-300" id="key" /></div>
+        <div class="mt-2"><input type="text" class="pd-form-input" id="key" /></div>
 
         <div class="mt-6">
-            <button type="submit" class="bg-blue-500 hover:bg-blue-300 text-white py-2 px-4 border-b-4 border-blue-700 hover:text-white hover:no-underline hover:border-blue-500 rounded cursor-pointer">
+            <button type="submit" class="pd-button-blue">
                 <i class="fas fa-save"></i>
                 <span data-resource="apikeySave">Save</span>
             </button>

@@ -5,20 +5,20 @@
 <title data-i18n="">PhishDetect - Settings</title>
 <link href="../../css/tailwind.min.css" rel="stylesheet">
 <link href="../../fontawesome/css/all.min.css" rel="stylesheet">
-<link href="../../css/phishdetect-ui.css" rel="stylesheet">
+<link href="../../css/phishdetect-ui.dist.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 h-screen text-gray-900">
 <div id="container">
-    <h1 class="text-xl">PhishDetect - Settings</h1>
+    <h1>PhishDetect - Settings</h1>
 
     <p class="mt-4 mb-4 leading-normal" data-resource="optionsDescription">Through this form you can decide which PhishDetect Node to connect to.</p>
 
     <form>
         <label for="server" class="font-bold" data-resource="optionsNode">Your preferred PhishDetect Node:</label>
-        <div class="mt-2 mb-6"><input type="text" class="block appearance-none w-full bg-white border border-grey-light px-4 py-4 rounded focus:border-blue-300" id="server" /></div>
+        <div class="mt-2 mb-6"><input type="text" class="pd-form-input" id="server" /></div>
 
         <div id="keySection"><label for="key" id="keyLabel" class="font-bold">Your secret token:</label>
-        <div class="mt-2 mb-6"><input type="text" class="block appearance-none w-full bg-white border border-grey-light px-4 py-4 rounded focus:border-blue-300" id="key" /></div>
+        <div class="mt-2 mb-6"><input type="text" class="pd-form-input" id="key" /></div>
         </div>
 
         <div class="mt-6"><input type="checkbox" id="webmails" /> <label
@@ -30,14 +30,14 @@
             data-resource="optionsSendAlerts">Automatically send alerts to PhishDetect Node</label></div>
 
         <label for="contact" id="contactLabel" class="leading-normal" data-resource="optionsContact">If you wish, you can leave your contact details:</label>
-        <div class="mt-2"><input type="text" class="block appearance-none w-full bg-white border border-grey-light px-4 py-4 rounded focus:border-blue-300" id="contact" /></div>
+        <div class="mt-2"><input type="text" class="pd-form-input" id="contact" /></div>
 
         <div class="mt-6">
-            <a id="saveOptions" class="bg-blue-500 hover:bg-blue-300 text-white py-2 px-4 border-b-4 border-blue-700 hover:text-white hover:no-underline hover:border-blue-500 rounded cursor-pointer">
+            <a id="saveOptions" class="pd-button-blue mr-2">
                 <i class="fas fa-save"></i>
                 <span data-resource="optionsSave">Save</span>
             </a>
-            <a id="restoreDefaults" class="ml-2 bg-gray-400 hover:bg-gray-300 text-gray-800 py-2 px-4 border-b-4 border-gray-600 hover:no-underline hover:border-gray-500 rounded cursor-pointer">
+            <a id="restoreDefaults" class="pd-button-gray">
                 <i class="fas fa-history"></i>
                 <span data-resource="optionsRestore">Restore Defaults</span>
             </a>

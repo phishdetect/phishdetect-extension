@@ -5,15 +5,21 @@
 <title data-i18n="">PhishDetect - Scan Browsing History</title>
 <link href="../../css/tailwind.min.css" rel="stylesheet">
 <link href="../../fontawesome/css/all.min.css" rel="stylesheet">
-<link href="../../css/phishdetect-ui.css" rel="stylesheet">
+<link href="../../css/phishdetect-ui.dist.css" rel="stylesheet">
+<style>
+/* https://stackoverflow.com/questions/34378940/rotating-a-font-awesome-icon-on-hover */
+.fa-spin {
+    animation: fa-spin 2s infinite linear;
+}
+@-webkit-keyframes fa-spin{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(359deg);transform:rotate(359deg)}}
+@keyframes fa-spin{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(359deg);transform:rotate(359deg)}}
+</style>
 </head>
 <body class="bg-gray-100 h-screen text-gray-900">
 <div id="container">
-    <h1 class="text-xl">PhishDetect - Scan Browsing History</h1>
+    <h1>PhishDetect - Scan Browsing History</h1>
 
-    <p class="leading-normal"></p>
-
-    <a id="startButton" type="submit" class="bg-blue-500 hover:bg-blue-300 text-white py-2 px-4 border-b-4 border-blue-700 hover:text-white hover:no-underline hover:border-blue-500 rounded cursor-pointer"><i class="fas fa-search mr-2"></i> Scan your history!</a>
+    <a id="startButton" type="submit" class="pd-button-blue"><i class="fas fa-search mr-2"></i> Scan your history!</a>
 
     <div id="status" class="">
         <div id="statusInProgress" data-resource="historyScanInProgress" class="mt-8mt-4 hidden"><i class="fas fa-spinner fa-spin"></i> <span data-resource="historyScanCompleted">Scan in progress...</span></div>

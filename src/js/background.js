@@ -148,15 +148,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     case "getReportedEmails":
         sendResponse(cfg.getReportedEmails());
         break;
-    case "loadFontAwesome":
-        console.log("Injecting FontAwesome into tab...");
-        chrome.tabs.executeScript(sender.tab.id, {file: "../fontawesome/js/all.js", allFrames: true, runAt: "document_end"}, function(result) {
-            if (chrome.runtime.lastError) {
-                console.log("ERROR: FontAwesome injection failed:", chrome.runtime.lastError.message);
-            }
-            sendResponse(true);
-        });
-        break;
     }
     return false;
 });

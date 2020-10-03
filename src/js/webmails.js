@@ -54,16 +54,14 @@ $(document).ready(function() {
         // as they require to load font awesome, and we want to avoid loading
         // it even on unrelated pages.
         if (handler !== null) {
-            chrome.runtime.sendMessage({method: "loadFontAwesome"}, function(response) {
-                switch (handler) {
-                case "roundcube-elastic":
-                    roundcube("elastic");
-                    break;
-                case "roundcube-larry":
-                    roundcube("larry");
-                    break;
-                }
-            });
+            switch (handler) {
+            case "roundcube-elastic":
+                roundcube("elastic");
+                break;
+            case "roundcube-larry":
+                roundcube("larry");
+                break;
+            }
         }
     });
 });

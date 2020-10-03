@@ -86,7 +86,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     //=========================================================================
     case "nodeChanged":
         console.log("Received a \"nodeChanged\" event, reloading context menus.");
-        updateIndicators();
+        updateIndicators(true);
         loadContextMenus();
         break;
 

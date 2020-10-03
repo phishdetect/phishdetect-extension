@@ -43,7 +43,7 @@ a:hover {
 }
 
 .pd-form-input {
-    @apply block appearance-none w-full bg-white border border-gray-300 px-2 py-2 rounded;
+    @apply block appearance-none w-2/5 bg-white border border-gray-300 px-2 py-2 rounded;
 }
 .pd-form-input:focus {
     @apply border-blue-300;

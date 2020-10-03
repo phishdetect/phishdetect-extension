@@ -25,8 +25,6 @@ $(document).ready(function() {
 
         console.log("[PhishDetect] Checking for any supported webmail...");
 
-        let handler = null;
-
         // First we check if there are typical Rouncube elements.
         if ($("#rcmbtn100, #rcmbtn101, #rcmbtn102").length) {
             // Then we use the stylesheet URL to figure which skin is being
@@ -40,27 +38,13 @@ $(document).ready(function() {
                 var href = links[i].href;
                 if (href.indexOf("/larry/") >= 0) {
                     console.log("[PhishDetect] Found Roundcube with Larry skin!");
-                    handler = "roundcube-larry";
-                    break;
+                    roundcube("larry");
+                    return;
                 } else if (href.indexOf("/elastic/") >= 0) {
                     console.log("[PhishDetect] Found Roundcube wih Elastic skin!");
-                    handler = "roundcube-elastic";
-                    break;
+                    roundcube("elastic");
+                    return;
                 }
-            }
-        }
-
-        // We launch the detected webmails initialization functions only later,
-        // as they require to load font awesome, and we want to avoid loading
-        // it even on unrelated pages.
-        if (handler !== null) {
-            switch (handler) {
-            case "roundcube-elastic":
-                roundcube("elastic");
-                break;
-            case "roundcube-larry":
-                roundcube("larry");
-                break;
             }
         }
     });

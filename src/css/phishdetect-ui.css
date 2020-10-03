@@ -1,7 +1,7 @@
 @tailwind base;
 
 html, body {
-    @apply bg-white;
+    @apply bg-gray-100 text-gray-900;
     font-family: "Lucida Grande", "Segoe UI", Tahoma, "DejaVu Sans", Arial, sans-serif;
 }
 

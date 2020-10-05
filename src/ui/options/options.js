@@ -65,6 +65,8 @@ function saveOptions(event) {
         const container = $("#container").empty();
         chrome.runtime.sendMessage({method: "updateConfiguration", config: cfg.config}, function(response) {
             ReactDOM.render(React.createElement(OptionsSaved), container.get(0));
+            // Update indicators in background script after we have potential edited API key.
+            chrome.runtime.sendMessage({method: "updateIndicators"})
         });
     }
 }

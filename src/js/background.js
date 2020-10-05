@@ -88,6 +88,11 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     case "updateNode":
         console.log("New node set in UI")
         cfg.setNode(request.node, request.config)
+        break;
+
+    case "updateIndicators":
+        updateIndicators(request.full_update)
+        break;
 
     //=========================================================================
     // Messages related to indicators.

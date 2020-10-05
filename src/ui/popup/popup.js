@@ -35,7 +35,7 @@ function scanPage() {
     });
 }
 
-document.addEventListener("DOMContentLoaded", function () {
+function loadPopup() {
     if (cfg.getNodeEnforceUserAuth() === true && cfg.getApiKey() == "") {
         const container = $("#content").empty();
         ReactDOM.render(React.createElement(PopupActivate), container.get(0));
@@ -71,4 +71,6 @@ document.addEventListener("DOMContentLoaded", function () {
     $("#buttonScanPage").on("click", function() {
         scanPage();
     });
-});
+};
+
+document.addEventListener("DOMContentLoaded", cfg.loadFromBackground(loadPopup))

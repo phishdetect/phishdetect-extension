@@ -59,7 +59,7 @@ function updateIndicators(full = false) {
             console.log("Updating local indicators with only new ones...");
 
             // First we get the current list.
-            indicators = cfg.getIndicators();
+            var indicators = cfg.getIndicators();
 
             // Then we look for any updates in domains.
             for (let i=0; i<data.domains.length; i++) {

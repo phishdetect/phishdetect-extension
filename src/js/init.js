@@ -36,6 +36,7 @@ function initFailure() {
 (function() {
     console.log("*** PhishDetect init ***")
 
-    cfg.initLocalStorage();
-    cfg.fetchNodeConfig(initSuccess, initFailure);
+    cfg.initStorage(() => {
+        cfg.fetchNodeConfig(initSuccess, initFailure);
+    });
 })();

@@ -14,6 +14,11 @@
         "default_icon": "icons/icon.png",
         "default_popup": "ui/popup/popup.html"
     },
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "addon@phishdetect.io"
+        }
+    },
     "options_ui" : {
         "page": "ui/options/options.html"
     },
@@ -41,6 +46,8 @@
         "webRequest",
         "webRequestBlocking",
         "history",
+        "storage",
+        "unlimitedStorage",
         "<all_urls>"
     ],
     "content_scripts": [

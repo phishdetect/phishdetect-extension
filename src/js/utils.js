@@ -38,7 +38,7 @@ function getCurrentISODate() {
 
     const now = new Date();
     const nowStr = this.pad(now.getUTCFullYear()) + "-" +
-                   this.pad(now.getUTCMonth()) + "-" +
+                   this.pad(now.getUTCMonth()) + 1 + "-" +
                    this.pad(now.getUTCDate()) + "T" +
                    this.pad(now.getUTCHours()) + ":" +
                    this.pad(now.getUTCMinutes()) + ":" +

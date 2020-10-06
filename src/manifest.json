@@ -35,6 +35,7 @@
             "js/scanHistory.js",
             "js/config.js",
             "js/background.js",
+            "js/status.js",
             "js/init.js"
         ]
     },

@@ -36,6 +36,8 @@ function getCurrentISODate() {
         return (i < 10) ? "0" + i : "" + i;
     }
 
+    // JavaScript's date/timezone handling is ridiculous.
+    // Did you know that Date.getMonth() returns a value from 0-11?
     const now = new Date();
     const nowStr = this.pad(now.getUTCFullYear()) + "-" +
                    this.pad(now.getUTCMonth()) + 1 + "-" +

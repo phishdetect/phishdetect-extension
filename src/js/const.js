@@ -32,4 +32,5 @@ NODE_API_AUTH                         = "/api/auth/";
 WARNING_PAGE                          = "ui/warning/warning.html";
 
 INDICATORS_UPDATE_FREQUENCY           = 15;
+CONFIG_UPDATE_FREQUENCY               = 30;
 ONE_DAY_TIME                          = 24 * 60 * 60 * 1000;

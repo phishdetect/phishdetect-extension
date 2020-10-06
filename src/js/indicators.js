@@ -16,21 +16,17 @@
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
 function updateIndicators(full = false) {
-    if (cfg.getNodeEnforceUserAuth() === true && cfg.getApiKey() == "") {
-        console.log("Node enforces user authentication and no API key is provided. Skipping indicators update.");
+    if (!checkKeySetIfNeeded()) {
+        console.log("Node enforces user authentication and no API key is provided. " +
+                    "Skipping indicators update.");
         return;
     }
 
-    // JavaScript's date/timezone handling is ridiculous.
-    // Did you know that Date.getMonth() returns a value from 0-11?
-    const now = new Date();
-    const nowUTC = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 
-        now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds());
-
     // Check if there was never any update or if there wasn't any full
     // update in the last 24 hours.
+    const now = new Date(getCurrentISODate());
     if (full == true || ((cfg.getLastFullUpdateTime() === null) ||
-       ((cfg.getLastFullUpdateTime() - nowUTC) > ONE_DAY_TIME))) {
+       ((cfg.getLastFullUpdateTime() - now) > ONE_DAY_TIME))) {
         console.log("Performing a full update...");
         var updateURL = cfg.getIndicatorsURL();
         full = true;
@@ -42,8 +38,24 @@ function updateIndicators(full = false) {
     console.log("Fetching indicators from:", updateURL);
 
     fetch(updateURL)
-    .then((response) => response.json())
+    .then(function(response) {
+        // If user is not authorized, then we change the status to unauthorized,
+        // display warning icon, etc.
+        if (response.status == 200) {
+            setStatusAuthorized();
+        } else if (response.status == 401) {
+            console.log("ERROR: The indicators update failed: user is not authorized!");
+            setStatusUnauthorized();
+            return null;
+        }
+
+        return response.json();
+    })
     .then(function(data) {
+        if (data === null)
+            return;
+
+        // If some other error occurred, return.
         if ("error" in data) {
             console.log("ERROR: The indicators update failed:", data.error);
             return;

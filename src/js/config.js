@@ -31,10 +31,9 @@ class Config {
         const config_defaults = {
             cfg_node: NODE_DEFAULT_URL,
             cfg_api_key: "",
-            cfg_node_enforce_user_auth: true,
+            cfg_node_enforce_user_auth: false,
             cfg_node_enable_analysis: false,
             cfg_node_contacts: "",
-            cfg_update_frequency: 30,
             cfg_last_update: null,
             cfg_send_alerts: true,
             cfg_webmails: true,
@@ -146,12 +145,7 @@ class Config {
             // Then we set the new node.
             this.setItem("cfg_node", value);
             // And we pull the new config.
-            this.fetchNodeConfig(function() {
-                console.log("Received a new node config, reloading context menus.");
-                // Call init success to add API key warning and update indicators.
-                initSuccess()
-                loadContextMenus();
-            });
+            this.fetchNodeConfig(initSuccess, initFailure);
         });
     }
 
@@ -167,8 +161,6 @@ class Config {
     }
     setApiKey(value) {
         this.setItem("cfg_api_key", value);
-        // We restore the good icon.
-        chrome.browserAction.setIcon({path: chrome.extension.getURL("icons/icon@34.png")});
     }
 
     //=========================================================================

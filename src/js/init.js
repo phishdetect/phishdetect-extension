@@ -18,19 +18,19 @@
 function initSuccess() {
     console.log("PhishDetect init success");
 
-    // If the node enforces authentication, but we don't have an API key,
-    // we show an error icon in the toolbar.
-    if (cfg.getNodeEnforceUserAuth() === true && cfg.getApiKey() == "") {
-        console.log("The user does not appear to have configured a required API key!");
-        chrome.browserAction.setIcon({path: chrome.extension.getURL("icons/icon_error@34.png")});
-    } else {
+    // First, we check if the server requires authorization, and if user
+    // has yet provided an API key.
+    if (checkKeySetIfNeeded()) {
         // If everything is fine, we launch an update of indicators.
         updateIndicators();
     }
+
+    loadContextMenus()
 }
 
 function initFailure() {
     console.log("PhishDetect init failed!")
+    setStatusOffline();
 }
 
 (function() {

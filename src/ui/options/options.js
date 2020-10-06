@@ -43,22 +43,32 @@ function loadOptions() {
 function saveOptions(event) {
     event.preventDefault();
     const node = $("#server").val().trim();
-    if (node != "") {
-        cfg.setNode(node);
-    }
-    const key = $("#key").val().trim();
-    if (key != "") {
-        cfg.setApiKey(key);
-    }
-    const contact = $("#contact").val().trim();
-    if (contact != "") {
-        cfg.setContact(contact);
-    }
-    cfg.setSentAlerts($("#sendAlerts").is(":checked"));
-    cfg.setWebmails($("#webmails").is(":checked"));
+    if (node != "" && cfg.getNode() != node) {
+        // Set request to background to update node and reset config.
+        const container = $("#container").empty();
+        chrome.runtime.sendMessage({method: "updateNode", node: node}, function(response) {
+            ReactDOM.render(React.createElement(OptionsSaved), container.get(0));
+        });
+    } else {
+        const key = $("#key").val().trim();
+        if (key != "") {
+            cfg.setApiKey(key);
+        }
+        const contact = $("#contact").val().trim();
+        if (contact != "") {
+            cfg.setContact(contact);
+        }
+        cfg.setSentAlerts($("#sendAlerts").is(":checked"));
+        cfg.setWebmails($("#webmails").is(":checked"));
 
-    const container = $("#container").empty();
-    ReactDOM.render(React.createElement(OptionsSaved), container.get(0));
+        // Reload config on background page
+        const container = $("#container").empty();
+        chrome.runtime.sendMessage({method: "updateConfiguration", config: cfg.config}, function(response) {
+            ReactDOM.render(React.createElement(OptionsSaved), container.get(0));
+            // Update indicators in background script after we have potential edited API key.
+            chrome.runtime.sendMessage({method: "updateIndicators"})
+        });
+    }
 }
 
 function restoreDefaults() {
@@ -69,7 +79,7 @@ function restoreDefaults() {
     $("#contact").val("");
 }
 
-document.addEventListener("DOMContentLoaded", loadOptions);
+document.addEventListener("DOMContentLoaded", cfg.loadFromBackground(loadOptions));
 $("#saveOptions").click(saveOptions);
 $("#restoreDefaults").click(restoreDefaults);
 

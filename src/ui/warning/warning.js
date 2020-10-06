@@ -28,4 +28,4 @@ function loadContent() {
     $("#takeMeAway").attr("href", "about:blank");
 }
 
-document.addEventListener("DOMContentLoaded", loadContent);
+document.addEventListener("DOMContentLoaded", cfg.loadFromBackground(loadContent));

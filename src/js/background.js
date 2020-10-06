@@ -84,10 +84,14 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     //=========================================================================
     // Messages related to internal background script functioning.
     //=========================================================================
-    case "nodeChanged":
-        console.log("Received a \"nodeChanged\" event, reloading context menus.");
-        updateIndicators(true);
-        loadContextMenus();
+
+    case "updateNode":
+        console.log("New node set in UI")
+        cfg.setNode(request.node, request.config)
+        break;
+
+    case "updateIndicators":
+        updateIndicators(request.full_update)
         break;
 
     //=========================================================================
@@ -139,6 +143,14 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         break;
     case "getNodeEnableAnalysis":
         sendResponse(cfg.getNodeEnableAnalysis());
+        break;
+
+    case "loadConfiguration":
+        sendResponse(cfg.config)
+        break;
+
+    case "updateConfiguration":
+        sendResponse(cfg.updateConfig(request.config))
         break;
 
     //=========================================================================

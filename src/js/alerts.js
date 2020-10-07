@@ -43,7 +43,7 @@ function sendAlert(alertType, match, indicator, identifier) {
             "type": alertType,
             "match": match,
             "indicator": indicator,
-            "user_contact": cfg.getContact(),
+            "user_contact": cfg.getUserContact(),
             "key": cfg.getApiKey(),
         }),
         headers: {"Content-Type": "application/json"},

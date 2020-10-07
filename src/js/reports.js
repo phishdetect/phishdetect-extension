@@ -38,7 +38,7 @@ function sendReport(reportType, reportContent, identifier) {
         body: JSON.stringify({
             "type": reportType,
             "content": reportContent,
-            "user_contact": cfg.getContact(),
+            "user_contact": cfg.getUserContact(),
             "key": cfg.getApiKey(),
         }),
         headers: {"Content-Type": "application/json"},

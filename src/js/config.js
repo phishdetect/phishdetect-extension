@@ -320,7 +320,7 @@ class Config {
     //=========================================================================
     // User contact details
     //=========================================================================
-    getContact() {
+    getUserContact() {
         return this.getItem("cfg_contact");
     }
     setContact(value) {

@@ -203,65 +203,48 @@ class Config {
     //=========================================================================
     // Node URLs
     //=========================================================================
+    addAuthToURL(url) {
+        if (this.getNodeEnforceUserAuth() == true) {
+            url += "?key=" + this.getApiKey()
+        }
+        return url;
+    }
     getConfigURL() {
-        return this.getNode() + NODE_API_CONFIG_PATH;
+        return new URL(NODE_API_CONFIG_PATH, this.getNode()).href;
     }
     getAuthURL() {
-        let url = this.getNode() + NODE_API_AUTH;
-        if (this.getNodeEnforceUserAuth() == true) {
-            url += "?key=" + this.getApiKey()
-        }
-        return url;
+        let url = new URL(NODE_API_AUTH, this.getNode()).href;
+        return this.addAuthToURL(url);
     }
     getRegisterURL() {
-        return this.getNode() + NODE_GUI_REGISTER;
+        return new URL(NODE_GUI_REGISTER, this.getNode()).href
     }
     getLinkCheckURL(link) {
-        return this.getNode() + NODE_GUI_LINK_CHECK + link + "/";
+        return new URL(NODE_GUI_LINK_CHECK + link + "/", this.getNode()).href;
     }
     getReviewURL(ioc) {
-        let url = this.getNode() + NODE_GUI_REVIEW;
-        url += ioc + "/";
-        if (this.getNodeEnforceUserAuth() == true) {
-            url += "?key=" + this.getApiKey()
-        }
-        return url;
+        let url = new URL(NODE_GUI_REVIEW + ioc + "/", this.getNode()).href;
+        return this.addAuthToURL(url);
     }
     getSendAlertsURL(link) {
-        let url = this.getNode() + NODE_GUI_REPORT;
-        url += link + "/";
-        if (this.getNodeEnforceUserAuth() == true) {
-            url += "?key=" + this.getApiKey()
-        }
-        return url;
+        let url = new URL(NODE_GUI_REPORT + link + "/", this.getNode()).href;
+        return this.addAuthToURL(url);
     }
     getIndicatorsURL() {
-        let url = this.getNode() + NODE_API_INDICATORS_FETCH_PATH;
-        if (this.getNodeEnforceUserAuth() == true) {
-            url += "?key=" + this.getApiKey()
-        }
-        return url;
+        let url = new URL(NODE_API_INDICATORS_FETCH_PATH, this.getNode()).href;
+        return this.addAuthToURL(url);
     }
     getRecentIndicatorsURL() {
-        let url = this.getNode() + NODE_API_RECENT_INDICATORS_FETCH_PATH;
-        if (this.getNodeEnforceUserAuth() == true) {
-            url += "?key=" + this.getApiKey()
-        }
-        return url;
+        let url = new URL(NODE_API_RECENT_INDICATORS_FETCH_PATH, this.getNode()).href;
+        return this.addAuthToURL(url);
     }
-    getEventsURL() {
-        let url = this.getNode() + NODE_API_ALERTS_ADD_PATH;
-        if (this.getNodeEnforceUserAuth() == true) {
-            url += "?key=" + this.getApiKey()
-        }
-        return url;
+    getAlertsAddURL() {
+        let url = new URL(NODE_API_ALERTS_ADD_PATH, this.getNode()).href;
+        return this.addAuthToURL(url);
     }
-    getSendAlertssURL() {
-        let url = this.getNode() + NODE_API_REPORTS_ADD_PATH;
-        if (this.getNodeEnforceUserAuth() == true) {
-            url += "?key=" + this.getApiKey()
-        }
-        return url;
+    getReportsAddURL() {
+        let url = new URL(NODE_API_REPORTS_ADD_PATH, this.getNode()).href;
+        return this.addAuthToURL(url);
     }
 
     //=========================================================================

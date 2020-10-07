@@ -49,7 +49,7 @@ function sendAlert(alertType, match, indicator, identifier) {
         headers: {"Content-Type": "application/json"},
     };
 
-    fetch(cfg.getEventsURL(), properties)
+    fetch(cfg.getAlertsAddURL(), properties)
     .then((response) => response.json())
     .then(function(data) {
         // If alert is of type email_* we add the email ID to the list of

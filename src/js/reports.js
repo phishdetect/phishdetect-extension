@@ -44,7 +44,7 @@ function sendReport(reportType, reportContent, identifier) {
         headers: {"Content-Type": "application/json"},
     };
 
-    fetch(cfg.getSendAlertssURL(), properties)
+    fetch(cfg.getReportsAddURL(), properties)
     .then((response) => response.json())
     .then(function(data) {
         // We do this to avoid re-sharing already shared emails.
@@ -54,7 +54,7 @@ function sendReport(reportType, reportContent, identifier) {
             }
         }
 
-        console.log("Reported report of type", reportType, "to PhishDetect Node.");
+        console.log("Submitted report of type", reportType, "to PhishDetect Node.");
     })
     .catch(error => {
         console.log(error);

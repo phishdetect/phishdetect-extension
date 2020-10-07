@@ -25,7 +25,7 @@ function loadOptions() {
 
     const sendAlerts = cfg.getSendAlerts();
     $("#sendAlerts").prop("checked", cfg.getSendAlerts());
-    $("#contact").val(cfg.getContact());
+    $("#contact").val(cfg.getUserContact());
     if (sendAlerts) {
         $("#contactLabel").removeClass("text-gray-500");
         $("#contact").prop("disabled", false);

@@ -24,9 +24,9 @@ function updateIndicators(full = false) {
 
     // Check if there was never any update or if there wasn't any full
     // update in the last 24 hours.
-    const now = new Date(getCurrentISODate());
+    const now = getCurrentUTCDate();
     if (full == true || ((cfg.getLastFullUpdateTime() === null) ||
-       ((cfg.getLastFullUpdateTime() - now) > ONE_DAY_TIME))) {
+       ((now - cfg.getLastFullUpdateTime()) >= ONE_DAY_TIME))) {
         console.log("Performing a full update...");
         var updateURL = cfg.getIndicatorsURL();
         full = true;

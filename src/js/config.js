@@ -294,10 +294,10 @@ class Config {
             return null;
         }
 
-        return Date(lastUpdate);
+        return lastUpdate;
     }
     setLastFullUpdateTime() {
-        this.setItem("cfg_last_update", getCurrentISODate())
+        this.setItem("cfg_last_update", getCurrentUTCDate())
     }
 
     //=========================================================================

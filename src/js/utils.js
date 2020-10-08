@@ -31,22 +31,13 @@ function checkForIndicators(items, indicators) {
 }
 
 // This returns the current UTC ISO Date.
-function getCurrentISODate() {
-    this.pad = function(i) {
-        return (i < 10) ? "0" + i : "" + i;
-    }
-
-    // JavaScript's date/timezone handling is ridiculous.
-    // Did you know that Date.getMonth() returns a value from 0-11?
+function getCurrentUTCDate() {
     const now = new Date();
-    const nowStr = this.pad(now.getUTCFullYear()) + "-" +
-                   this.pad(now.getUTCMonth()) + 1 + "-" +
-                   this.pad(now.getUTCDate()) + "T" +
-                   this.pad(now.getUTCHours()) + ":" +
-                   this.pad(now.getUTCMinutes()) + ":" +
-                   this.pad(now.getUTCSeconds()) + "Z";
+    const timestamp = Date.UTC(now.getUTCFullYear(),now.getUTCMonth(), now.getUTCDate(),
+                               now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds(),
+                               now.getUTCMilliseconds());
 
-    return nowStr;
+    return timestamp;
 }
 
 function base64encode(str) {

@@ -16,13 +16,13 @@
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 
 export default function WebmailLinkWarning(props) {
     return (
         <span className="pd-webmail-link-warning"
-              title={chrome.i18n.getMessage("webmailLinkWarning")}>
+            title={chrome.i18n.getMessage("webmailLinkWarning")}>
             {" "}
             <FontAwesomeIcon icon={faExclamationTriangle} />
         </span>

@@ -25,7 +25,7 @@ window.gmail = gmail;
 import scanEmail from "./scanEmail.js";
 
 function gmailCheckEmail(uid) {
-    console.log("Checking email", uid)
+    console.log("Checking email", uid);
 
     // Extract the email DOM.
     const email = new gmail.dom.email(uid);
@@ -86,7 +86,7 @@ function gmailReportEmail(uid) {
             uid: uid,
             reported: isReported,
             getEmailPromise: function() {
-              return gmail.get.email_source_promise(uid);
+                return gmail.get.email_source_promise(uid);
             }
         });
         gmail.tools.add_toolbar_button(element);
@@ -100,7 +100,7 @@ function gmailReportEmail(uid) {
             return;
         }
 
-        console.log("Integrating in Gmail...")
+        console.log("Integrating in Gmail...");
 
         gmail.observe.on("view_email", function(obj) {
             console.log("Email opened with ID", obj.id);

@@ -25,16 +25,16 @@ function initSuccess() {
         updateIndicators();
     }
 
-    loadContextMenus()
+    loadContextMenus();
 }
 
 function initFailure() {
-    console.log("PhishDetect init failed!")
+    console.log("PhishDetect init failed!");
     setStatusOffline();
 }
 
 (function() {
-    console.log("*** PhishDetect init ***")
+    console.log("*** PhishDetect init ***");
 
     cfg.initStorage(() => {
         cfg.fetchNodeConfig(initSuccess, initFailure);

@@ -43,7 +43,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
 document.addEventListener("DOMContentLoaded", function() {
     $("#startButton").click(function() {
-        ReactDOM.render(<HistoryAlerts ref={(alertsRendered) => {window.alertsRendered = alertsRendered}} />, $("#alerts").get(0));
+        ReactDOM.render(<HistoryAlerts ref={(alertsRendered) => {window.alertsRendered = alertsRendered;}} />, $("#alerts").get(0));
         $("#startButton").hide();
         $("#statusInProgress").show();
         getTab(function(tab) {

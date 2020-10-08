@@ -17,7 +17,7 @@
 
 import React from "react";
 import ReactDOM from "react-dom";
-import { ApiKeySaved } from "../../components/ApiKey.js"
+import { ApiKeySaved } from "../../components/ApiKey.js";
 
 $("form").submit(function(event) {
     event.preventDefault();
@@ -29,14 +29,14 @@ $("form").submit(function(event) {
         });
     }
 
-    const apiKey = $("#key").val().trim()
+    const apiKey = $("#key").val().trim();
     if (apiKey != "") {
         cfg.setApiKey(apiKey);
 
         chrome.runtime.sendMessage({method: "updateConfiguration", config: cfg.config}, function(response) {
             const container = $("#container").empty();
             ReactDOM.render(React.createElement(ApiKeySaved), container.get(0));
-        })
+        });
     } else {
         $("#errors").text(chrome.i18n.getMessage("apikeyErrorSecretToken"));
     }
@@ -46,6 +46,6 @@ function loadContent() {
     const link = cfg.getRegisterURL();
     $("#link-register").attr("href", link);
     $("#server").val(cfg.getNode());
-};
+}
 
 document.addEventListener("DOMContentLoaded", cfg.loadFromBackground(loadContent));

@@ -85,11 +85,11 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     // Messages related to internal background script functioning.
     //=========================================================================
     case "updateNode":
-        console.log("New node set in UI")
-        cfg.setNode(request.node, request.config)
+        console.log("New node set in UI");
+        cfg.setNode(request.node, request.config);
         break;
     case "updateIndicators":
-        updateIndicators(request.full_update)
+        updateIndicators(request.full_update);
         break;
 
     //=========================================================================
@@ -143,10 +143,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         sendResponse(cfg.getNodeEnableAnalysis());
         break;
     case "loadConfiguration":
-        sendResponse(cfg.config)
+        sendResponse(cfg.config);
         break;
     case "updateConfiguration":
-        sendResponse(cfg.updateConfig(request.config))
+        sendResponse(cfg.updateConfig(request.config));
         break;
 
     //=========================================================================
@@ -194,7 +194,7 @@ function loadContextMenus() {
                 "contexts": ["link"]
             });
         }
-    })
+    });
 }
 
 chrome.contextMenus.onClicked.addListener(function(info, tab) {

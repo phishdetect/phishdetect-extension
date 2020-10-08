@@ -16,24 +16,24 @@
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 
 export default class WebmailWarning extends React.Component {
     getWarningText(alertType) {
         switch(alertType) {
-          case "email_sender":
-          case "email_sender_domain":
-              return chrome.i18n.getMessage("webmailWarningSender");
-          case "email_link":
-              return chrome.i18n.getMessage("webmailWarningLinks");
+        case "email_sender":
+        case "email_sender_domain":
+            return chrome.i18n.getMessage("webmailWarningSender");
+        case "email_link":
+            return chrome.i18n.getMessage("webmailWarningLinks");
         }
     }
 
     render() {
         return (
             <div id="phishdetect-warning" className="pd-webmail-warning"
-                 style={ {paddingTop: "1rem"} }>
+                style={ {paddingTop: "1rem"} }>
                 <span style={ {fontSize: "1.125rem"} }>
                     <FontAwesomeIcon icon={faExclamationTriangle} /> <b>PhishDetect</b>
                     {" "}

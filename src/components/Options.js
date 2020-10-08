@@ -16,8 +16,8 @@
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faCheckCircle } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 
 export function OptionsSaved(props) {
     return (

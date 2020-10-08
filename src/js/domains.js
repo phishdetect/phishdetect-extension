@@ -22,9 +22,9 @@ const tldts = require("tldts");
 window.getDomainFromURL = function getDomainFromURL(url) {
     const urlParsed = tldts.parse(url);
     return urlParsed.hostname;
-}
+};
 
 window.getTopDomainFromURL = function getTopDomainFromURL(url) {
     const urlParsed = tldts.parse(url);
     return urlParsed.domain;
-}
+};

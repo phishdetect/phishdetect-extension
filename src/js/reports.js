@@ -45,18 +45,18 @@ function sendReport(reportType, reportContent, identifier) {
     };
 
     fetch(cfg.getReportsAddURL(), properties)
-    .then((response) => response.json())
-    .then(function(data) {
+        .then((response) => response.json())
+        .then(function(data) {
         // We do this to avoid re-sharing already shared emails.
-        if (reportType == "email") {
-            if (identifier !== undefined && identifier != "") {
-                cfg.addReportedEmail(identifier);
+            if (reportType == "email") {
+                if (identifier !== undefined && identifier != "") {
+                    cfg.addReportedEmail(identifier);
+                }
             }
-        }
 
-        console.log("Submitted report of type", reportType, "to PhishDetect Node.");
-    })
-    .catch(error => {
-        console.log(error);
-    })
+            console.log("Submitted report of type", reportType, "to PhishDetect Node.");
+        })
+        .catch(error => {
+            console.log(error);
+        });
 }

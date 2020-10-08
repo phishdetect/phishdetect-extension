@@ -38,61 +38,61 @@ function updateIndicators(full = false) {
     console.log("Fetching indicators from:", updateURL);
 
     fetch(updateURL)
-    .then(function(response) {
+        .then(function(response) {
         // If user is not authorized, then we change the status to unauthorized,
         // display warning icon, etc.
-        if (response.status == 200) {
-            setStatusAuthorized();
-        } else if (response.status == 401) {
-            console.log("ERROR: The indicators update failed: user is not authorized!");
-            setStatusUnauthorized();
-            return null;
-        }
-
-        return response.json();
-    })
-    .then(function(data) {
-        if (data === null)
-            return;
-
-        // If some other error occurred, return.
-        if ("error" in data) {
-            console.log("ERROR: The indicators update failed:", data.error);
-            return;
-        }
-
-        // If it's a full update, we store the whole indicators feed.
-        // Otherwise we only append the updates.
-        if (full == true) {
-            console.log("Replacing local indicators with remote list...");
-            cfg.setIndicators(data);
-            cfg.setLastFullUpdateTime();
-        } else {
-            console.log("Updating local indicators with only new ones...");
-
-            // First we get the current list.
-            var indicators = cfg.getIndicators();
-
-            // Then we look for any updates in domains.
-            for (let i=0; i<data.domains.length; i++) {
-                if (checkForIndicators([data.domains[i],], indicators.domains) === null) {
-                    indicators.domains.push(data.domains[i]);
-                }
-            }
-            // We look for any updates in email indicators.
-            for (let i=0; i<data.emails.length; i++) {
-                if (checkForIndicators([data.emails[i],], indicators.emails) === null) {
-                    indicators.emails.push(data.emails[i]);
-                }
+            if (response.status == 200) {
+                setStatusAuthorized();
+            } else if (response.status == 401) {
+                console.log("ERROR: The indicators update failed: user is not authorized!");
+                setStatusUnauthorized();
+                return null;
             }
 
-            // Now we update indicators in the storage.
-            cfg.setIndicators(indicators);
-        }
+            return response.json();
+        })
+        .then(function(data) {
+            if (data === null)
+                return;
 
-        console.log("Indicators updated successfully.");
-    })
-    .catch(error => {
-        console.log("ERROR: Fetching indicators failed:", error);
-    })
+            // If some other error occurred, return.
+            if ("error" in data) {
+                console.log("ERROR: The indicators update failed:", data.error);
+                return;
+            }
+
+            // If it's a full update, we store the whole indicators feed.
+            // Otherwise we only append the updates.
+            if (full == true) {
+                console.log("Replacing local indicators with remote list...");
+                cfg.setIndicators(data);
+                cfg.setLastFullUpdateTime();
+            } else {
+                console.log("Updating local indicators with only new ones...");
+
+                // First we get the current list.
+                var indicators = cfg.getIndicators();
+
+                // Then we look for any updates in domains.
+                for (let i=0; i<data.domains.length; i++) {
+                    if (checkForIndicators([data.domains[i],], indicators.domains) === null) {
+                        indicators.domains.push(data.domains[i]);
+                    }
+                }
+                // We look for any updates in email indicators.
+                for (let i=0; i<data.emails.length; i++) {
+                    if (checkForIndicators([data.emails[i],], indicators.emails) === null) {
+                        indicators.emails.push(data.emails[i]);
+                    }
+                }
+
+                // Now we update indicators in the storage.
+                cfg.setIndicators(indicators);
+            }
+
+            console.log("Indicators updated successfully.");
+        })
+        .catch(error => {
+            console.log("ERROR: Fetching indicators failed:", error);
+        });
 }

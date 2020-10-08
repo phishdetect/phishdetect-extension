@@ -45,23 +45,23 @@ function renderDOM(component, options, element) {
 // needed to show a warning message inside the supported webmails.
 window.generateWebmailWarning = function generateWebmailWarning(alertType) {
     return renderHTML(WebmailWarning, {alertType: alertType});
-}
+};
 // Renders a button into an existing DOM element and attachs a click handler
 // element: the container DOM element
 // getEmailPromise: a function that returns a promise resolving to an email
 // uid: the unique identifier for the email
 window.generateReportEmailButton = function(element, options) {
     return renderDOM(ReportEmailButton, options, element);
-}
+};
 window.generateConfirmationDialog = function() {
     return renderHTML(ConfirmationDialog);
-}
+};
 
 // generateWebmailLinkWarning appends a red warning sign to an HTML element
 // (normally a link) to alert the user that what's contained is malicious.
 window.generateWebmailLinkWarning = function generateWebmailLinkWarning(element) {
-    element.insertAdjacentHTML('afterend', renderHTML(WebmailLinkWarning));
-}
+    element.insertAdjacentHTML("afterend", renderHTML(WebmailLinkWarning));
+};
 
 // generateWebmailDialog adds a click event handler to the given anchor
 // in order to display a dialog offering to open the link safely.
@@ -111,7 +111,7 @@ window.generateWebmailDialog = function generateWebmailDialog(anchor) {
                     click: function($vexContent, event) {
                         this.value = "unsafe";
                         this.close();
-                        return false
+                        return false;
                     }
                 }),
                 // Button to open help page.
@@ -119,7 +119,7 @@ window.generateWebmailDialog = function generateWebmailDialog(anchor) {
                     text: "?",
                     click: function($vexContent, event) {
                         this.value = "help";
-                        return false
+                        return false;
                     }
                 })
             ],
@@ -139,7 +139,7 @@ window.generateWebmailDialog = function generateWebmailDialog(anchor) {
             }
         });
     });
-}
+};
 
 // Similarly to generateWebmailDialog, generateWebmailPreview creates a
 // click event handler. However, it does not provide any option to scan
@@ -182,14 +182,14 @@ window.generateWebmailPreview = function generateWebmailPreview(anchor) {
                     click: function($vexContent, event) {
                         this.value = "continue";
                         this.close();
-                        return false
+                        return false;
                     }
                 }),
                 $.extend({}, vex.dialog.buttons.NO, {
                     text: chrome.i18n.getMessage("webmailPreviewCancel"),
                     click: function($vexContent, event) {
                         this.close();
-                        return false
+                        return false;
                     }
                 }),
                 // Button to open help page.
@@ -197,7 +197,7 @@ window.generateWebmailPreview = function generateWebmailPreview(anchor) {
                     text: "?",
                     click: function($vexContent, event) {
                         this.value = "help";
-                        return false
+                        return false;
                     }
                 })
             ],
@@ -213,4 +213,4 @@ window.generateWebmailPreview = function generateWebmailPreview(anchor) {
             }
         });
     });
-}
+};

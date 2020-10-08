@@ -17,8 +17,8 @@
 
 import React from "react";
 const vex = require("vex-js");
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faFish, faCheckCircle } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFish, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 
 function WebmailButton(props) {
     let { className, icon, message, onClick } = props;

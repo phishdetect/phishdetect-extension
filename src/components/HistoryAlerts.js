@@ -36,14 +36,14 @@ export default class HistoryAlerts extends React.Component {
 
     onClearAlerts() {
         this.setState({alerts: []});
-    };
+    }
 
     onAddAlert(dateTime, url) {
         const alert = React.createElement(HistoryAlert, {dateTime, url});
         this.setState({
             alerts: this.state.alerts.concat(alert),
         });
-    };
+    }
 
     render() {
         return (

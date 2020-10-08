@@ -34,15 +34,15 @@ function checkForIndicators(items, indicators) {
 function getCurrentUTCDate() {
     const now = new Date();
     const timestamp = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(),
-                               now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds(),
-                               now.getUTCMilliseconds());
+        now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds(),
+        now.getUTCMilliseconds());
 
     return timestamp;
 }
 
 function base64encode(str) {
     return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
-        return String.fromCharCode('0x' + p1);
+        return String.fromCharCode("0x" + p1);
     }));
 }
 
@@ -50,7 +50,7 @@ function i18nHtmlSafe(key) {
     // Returns html-safe content for `key`
     // Use this when embedding translation strings in html markup
     let translation = chrome.i18n.getMessage(key);
-    let textNode = $('<div>').text(translation);
+    let textNode = $("<div>").text(translation);
     return textNode.html(); // return html content
 }
 

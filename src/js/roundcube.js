@@ -42,12 +42,12 @@ function roundcubeGetEmailSource() {
 
     return new Promise(function(resolve, reject) {
         fetch(url)
-        .then(function(response) {
-            resolve(response.text());
-        })
-        .catch(error => {
-            reject(error);
-        })
+            .then(function(response) {
+                resolve(response.text());
+            })
+            .catch(error => {
+                reject(error);
+            });
     });
 }
 
@@ -97,7 +97,7 @@ function roundcubeCheckEmail(email) {
     // need to proceed scanning the email.
     const existingWarning = emailBody.find("#phishdetect-warning");
     if (existingWarning.length) {
-        return
+        return;
     }
 
     // We get the email UID.
@@ -190,4 +190,4 @@ window.roundcube = function roundcube(version) {
     roundcubeReportEmail(email, version);
     roundcubeCheckEmail(email);
     roundcubeModifyEmail(email);
-}
+};

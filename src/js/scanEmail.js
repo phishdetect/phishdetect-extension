@@ -32,7 +32,7 @@ export default function scanEmail(fromEmail, emailBody, uid) {
     let fromEmailTopDomainHash = "";
 
     // We extract the domain from the email address.
-    let parts = fromEmail.split('@');
+    let parts = fromEmail.split("@");
     if (parts.length === 2) {
         fromEmailDomain = getDomainFromURL(parts[1]);
         fromEmailDomainHash = sha256(fromEmailDomain);

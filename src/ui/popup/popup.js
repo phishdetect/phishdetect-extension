@@ -15,9 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { PopupActivate } from '../../components/Popup.js'
+import React from "react";
+import ReactDOM from "react-dom";
+import { PopupActivate } from "../../components/Popup.js";
 
 function reportPage() {
     getTab(function(tab) {
@@ -66,11 +66,11 @@ function loadPopup() {
 
     $("#buttonReportPage").on("click", function() {
         reportPage();
-    })
+    });
 
     $("#buttonScanPage").on("click", function() {
         scanPage();
     });
-};
+}
 
-document.addEventListener("DOMContentLoaded", cfg.loadFromBackground(loadPopup))
+document.addEventListener("DOMContentLoaded", cfg.loadFromBackground(loadPopup));

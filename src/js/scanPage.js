@@ -19,7 +19,7 @@
 // Demo: var serialized_html = DOMtoString(document);
 
 function DOMtoString(document_root) {
-    var html = '',
+    var html = "",
         node = document_root.firstChild;
     while (node) {
         switch (node.nodeType) {
@@ -30,14 +30,14 @@ function DOMtoString(document_root) {
             html += node.nodeValue;
             break;
         case Node.CDATA_SECTION_NODE:
-            html += '<![CDATA[' + node.nodeValue + ']]>';
+            html += "<![CDATA[" + node.nodeValue + "]]>";
             break;
         case Node.COMMENT_NODE:
-            html += '<!--' + node.nodeValue + '-->';
+            html += "<!--" + node.nodeValue + "-->";
             break;
         case Node.DOCUMENT_TYPE_NODE:
             // (X)HTML documents are identified by public identifiers
-            html += "<!DOCTYPE " + node.name + (node.publicId ? ' PUBLIC "' + node.publicId + '"' : '') + (!node.publicId && node.systemId ? ' SYSTEM' : '') + (node.systemId ? ' "' + node.systemId + '"' : '') + '>\n';
+            html += "<!DOCTYPE " + node.name + (node.publicId ? " PUBLIC \"" + node.publicId + "\"" : "") + (!node.publicId && node.systemId ? " SYSTEM" : "") + (node.systemId ? " \"" + node.systemId + "\"" : "") + ">\n";
             break;
         }
         node = node.nextSibling;
@@ -61,12 +61,12 @@ chrome.runtime.onMessage.addListener(
                 action: actionUrl,
                 method: "POST",
             })
-            .css("display", "none")
-            .append(
-                $("<textarea></textarea>", {id: "html", name: "html"}).text(html),
-                $("<textarea></textarea>", {id: "screenshot", name: "screenshot"}).text(screenshot),
-                $("<input />", {id: "key", name: "key", value: key}),
-            );
+                .css("display", "none")
+                .append(
+                    $("<textarea></textarea>", {id: "html", name: "html"}).text(html),
+                    $("<textarea></textarea>", {id: "screenshot", name: "screenshot"}).text(screenshot),
+                    $("<input />", {id: "key", name: "key", value: key}),
+                );
             $(document.body).append(form);
             form.submit();
         }

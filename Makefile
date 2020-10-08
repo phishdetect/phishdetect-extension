@@ -13,7 +13,7 @@ package:
 	@cd build/; zip -r -FS ../phishdetect.zip .
 
 lint:
-    yarn eslint src/ --fix
+	yarn eslint src/ --fix
 
 clean:
 	rm -rf build/

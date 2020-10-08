@@ -47,7 +47,7 @@ function sendReport(reportType, reportContent, identifier) {
     fetch(cfg.getReportsAddURL(), properties)
         .then((response) => response.json())
         .then(function(data) {
-        // We do this to avoid re-sharing already shared emails.
+            // We do this to avoid re-sharing already shared emails.
             if (reportType == "email") {
                 if (identifier !== undefined && identifier != "") {
                     cfg.addReportedEmail(identifier);

@@ -39,8 +39,8 @@ function updateIndicators(full = false) {
 
     fetch(updateURL)
         .then(function(response) {
-        // If user is not authorized, then we change the status to unauthorized,
-        // display warning icon, etc.
+            // If user is not authorized, then we change the status to unauthorized,
+            // display warning icon, etc.
             if (response.status == 200) {
                 setStatusAuthorized();
             } else if (response.status == 401) {

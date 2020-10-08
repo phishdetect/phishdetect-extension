@@ -33,7 +33,7 @@ function checkForIndicators(items, indicators) {
 // This returns the current UTC ISO Date.
 function getCurrentUTCDate() {
     const now = new Date();
-    const timestamp = Date.UTC(now.getUTCFullYear(),now.getUTCMonth(), now.getUTCDate(),
+    const timestamp = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(),
                                now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds(),
                                now.getUTCMilliseconds());
 

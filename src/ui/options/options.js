@@ -17,11 +17,17 @@
 
 import React from "react";
 import ReactDOM from "react-dom";
-import { OptionsSaved } from "../../components/Options.js";
+import { OptionsSaved, OptionsWarning } from "../../components/Options.js";
 
 function loadOptions() {
     $("#server").val(cfg.getNode());
     $("#webmails").prop("checked", cfg.getWebmails());
+
+    if (cfg.status == "offline") {
+        ReactDOM.render(React.createElement(OptionsWarning, {message: "serverOfflineFormError"}), $("#nodeError").get(0));
+    } else if (cfg.status == "unauthorized") {
+        ReactDOM.render(React.createElement(OptionsWarning, {message: "serverUnauthorizedWarning"}), $("#keyError").get(0));
+    }
 
     const sendAlerts = cfg.getSendAlerts();
     $("#sendAlerts").prop("checked", cfg.getSendAlerts());
@@ -43,21 +49,16 @@ function loadOptions() {
 function saveOptions(event) {
     event.preventDefault();
     const node = $("#server").val().trim();
+    var key = $("#key").val().trim();
     if (node != "" && cfg.getNode() != node) {
         // Set request to background to update node and reset config.
         const container = $("#container").empty();
-        chrome.runtime.sendMessage({method: "updateNode", node: node}, function(response) {
+        chrome.runtime.sendMessage({method: "updateNode", node: node, key: key}, function(response) {
             ReactDOM.render(React.createElement(OptionsSaved), container.get(0));
         });
     } else {
-        const key = $("#key").val().trim();
-        if (key != "") {
-            cfg.setApiKey(key);
-        }
-        const contact = $("#contact").val().trim();
-        if (contact != "") {
-            cfg.setContact(contact);
-        }
+        cfg.setApiKey(key);
+        cfg.setContact($("#contact").val().trim());
         cfg.setSentAlerts($("#sendAlerts").is(":checked"));
         cfg.setWebmails($("#webmails").is(":checked"));
 

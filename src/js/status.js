@@ -17,20 +17,24 @@
 
 function setStatusOnline() {
     console.log("PhishDetect Node is online! Yay?");
+    cfg.status = "online";
 }
 
 function setStatusOffline() {
     console.log("PhishDetect Node is offline! Setting status to offline too.");
+    cfg.status = "offline";
 }
 
 function setStatusAuthorized() {
     console.log("Setting status as authorized");
     chrome.browserAction.setIcon({path: chrome.extension.getURL("icons/icon@34.png")});
+    cfg.status = "authorized";
 }
 
 function setStatusUnauthorized() {
     console.log("Setting status as unauthorized!");
     chrome.browserAction.setIcon({path: chrome.extension.getURL("icons/icon_error@34.png")});
+    cfg.status = "unauthorized";
 }
 
 function checkKeySetIfNeeded() {
@@ -39,8 +43,9 @@ function checkKeySetIfNeeded() {
     if (cfg.getNodeEnforceUserAuth() === true && cfg.getApiKey() == "") {
         console.log("The user does not appear to have configured a required API key!");
         chrome.browserAction.setIcon({path: chrome.extension.getURL("icons/icon_error@34.png")});
+        cfg.status = "authorization_needed";
         return false;
     }
-    
+
     return true;
 }

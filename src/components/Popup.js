@@ -18,6 +18,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSmile } from "@fortawesome/free-solid-svg-icons";
+import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 
 export function PopupActivate(props) {
     return (
@@ -27,6 +28,17 @@ export function PopupActivate(props) {
                 <a target="_blank" href="/ui/apikey/apikey.html">
                     {chrome.i18n.getMessage("popupActivate")}
                 </a> <FontAwesomeIcon icon={faSmile} className="text-blue" />
+            </p>
+        </div>
+    );
+}
+
+export function PopupStatusWarning(props) {
+    return (
+        <div>
+            <p className="pd-alert space-x-2" role="alert">
+                <FontAwesomeIcon icon={faExclamationTriangle} />
+                <span>{chrome.i18n.getMessage(props.message)}</span>
             </p>
         </div>
     );

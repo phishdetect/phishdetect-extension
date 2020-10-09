@@ -86,11 +86,13 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     //=========================================================================
     case "updateNode":
         console.log("New node set in UI");
-        cfg.setNode(request.node, request.config);
+        cfg.setNode(request.node, request.key);
         break;
     case "updateIndicators":
         updateIndicators(request.full_update);
         break;
+    case "getStatus":
+        sendResponse(cfg.status);
 
     //=========================================================================
     // Messages related to indicators.
@@ -143,7 +145,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         sendResponse(cfg.getNodeEnableAnalysis());
         break;
     case "loadConfiguration":
-        sendResponse(cfg.config);
+        sendResponse({config: cfg.config, status: cfg.status});
         break;
     case "updateConfiguration":
         sendResponse(cfg.updateConfig(request.config));

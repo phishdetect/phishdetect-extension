@@ -36,7 +36,6 @@ function scanPage() {
 }
 
 function loadPopup() {
-
     var content_container = $("#content");
     if (cfg.status == "authorization_needed") {
         // Override all UI if user has not enabled an API key yet

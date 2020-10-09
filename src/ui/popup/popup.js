@@ -17,7 +17,7 @@
 
 import React from "react";
 import ReactDOM from "react-dom";
-import { PopupActivate } from "../../components/Popup.js";
+import { PopupActivate, PopupStatusWarning } from "../../components/Popup.js";
 
 function reportPage() {
     getTab(function(tab) {
@@ -36,10 +36,24 @@ function scanPage() {
 }
 
 function loadPopup() {
-    if (cfg.getNodeEnforceUserAuth() === true && cfg.getApiKey() == "") {
-        const container = $("#content").empty();
-        ReactDOM.render(React.createElement(PopupActivate), container.get(0));
+
+    var content_container = $("#content");
+    if (cfg.status == "authorization_needed") {
+        // Override all UI if user has not enabled an API key yet
+        ReactDOM.render(React.createElement(PopupActivate), content_container.empty().get(0));
         return;
+    }
+
+    var status_container = $("#divPopupServerStatus");
+    if (cfg.status == "offline") {
+        ReactDOM.render(React.createElement(PopupStatusWarning, {message: "serverOfflineWarning"}), status_container.get(0));
+    } else if (cfg.status == "unauthorized") {
+        ReactDOM.render(React.createElement(PopupStatusWarning, {message: "serverUnauthorizedWarning"}), status_container.get(0));
+    }
+
+    // Show interactive buttons if the node is online and reachable
+    if (cfg.status == "authorized" || cfg.status == "online") {
+        $(".pd-needs-online").show();
     }
 
     getTab(function(tab) {

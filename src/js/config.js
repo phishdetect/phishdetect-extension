@@ -20,6 +20,7 @@ class Config {
     constructor() {
         this.config = {};
         this.indicators = {};
+        this.status = null; // Global status for the API server reachablity and auth.
     }
 
     //=========================================================================
@@ -102,7 +103,8 @@ class Config {
         // Lightweight method to populate Config data from the background page for use in the UI.
         chrome.runtime.sendMessage({method: "loadConfiguration"}, function(response) {
             // Got config state from background page
-            cfg.config = response;
+            cfg.config = response.config;
+            cfg.status = response.status;
             config_loaded_callback();
         });
     }
@@ -115,6 +117,7 @@ class Config {
 
     clearStorage() {
         this.config = {};
+        this.indicators = {};
         chrome.storage.sync.clear();
         chrome.storage.local.clear();
         localStorage.clear();  // Clear legacy localStorage if it still exist
@@ -130,9 +133,9 @@ class Config {
         }
         return address;
     }
-    setNode(value) {
+    setNode(node, api_key) {
         const currentAddress = this.getNode();
-        if (value == currentAddress) {
+        if (node == currentAddress) {
             return;
         }
 
@@ -143,7 +146,10 @@ class Config {
         // We reinitialize the storage.
         this.initStorage(() => {
             // Then we set the new node.
-            this.setItem("cfg_node", value);
+            this.setItem("cfg_node", node);
+            if (api_key) {
+                this.setApiKey(api_key);
+            }
             // And we pull the new config.
             this.fetchNodeConfig(initSuccess, initFailure);
         });

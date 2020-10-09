@@ -29,3 +29,14 @@ export function OptionsSaved(props) {
         </div>
     );
 }
+
+
+export function OptionsWarning(props) {
+    return (
+        <div>
+            <p className="pd-alert-text">
+                <span>{chrome.i18n.getMessage(props.message)}</span>
+            </p>
+        </div>
+    );
+}

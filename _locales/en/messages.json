@@ -203,6 +203,18 @@
         "message": "You did not provide a valid secret token.",
         "description": "Error text when no secret token is entered in the apikey form"
     },
+    "serverOfflineWarning": {
+        "message": "The PhishDetect node is unreachable",
+        "description": "Error when PhishDetect node is offline or incorrect"
+    },
+    "serverOfflineFormError": {
+        "message": "This PhishDetect node is unreachable. Confirm that you have typed the address correctly.",
+        "description": "Error when PhishDetect node is offline or incorrect"
+    },
+    "serverUnauthorizedWarning": {
+        "message": "Error authenticating to the PhishDetect node. Check that you secret token is correct and valid for this server.",
+        "description": "Error when an unauthorized error is returned from the PhishDetect server."
+    },
     "apikeySaved": {
         "message": "Saved!",
         "description": "Displayed when an apikey is saved succesfully"

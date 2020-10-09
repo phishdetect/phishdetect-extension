@@ -12,26 +12,30 @@
     <h2>PhishDetect</h2>
 
     <div id="content">
-        <div class="mt-4" id="divScanPage">
-            <a class="pd-button-blue" id="buttonScanPage" title="Scan this link to determine if it might be suspicious">
+
+        <div class="mt-4" id="divPopupServerStatus"></div>
+
+        <div class="mt-4 pd-needs-online" id="divScanPage">
+            <a class="pd-button-blue pd-button-" id="buttonScanPage" title="Scan this link to determine if it might be suspicious">
                 <i class="fas fa-search mr-2"></i>
                 <span data-resource="popupScanThisPage">Scan this page!</span>
             </a>
         </div>
-        <div class="mt-4" id="divReportPage">
+        <div class="mt-4 pd-needs-online" id="divReportPage">
             <a class="pd-button-gray" id="buttonReportPage" title="Report this page as suspicious to your PhishDetect Node operators">
                 <i class="fas fa-fish mr-2 text-blue"></i>
                 <span data-resource="popupReportThisPage">Report this page</span>
             </a>
         </div>
 
-        <div class="mt-6">
+        <div class="mt-6 pd-needs-online" id="divScanHistory">
             <a target="_blank" href="/ui/history/history.html">
                 <i class="fas fa-history"></i>
                 <span data-resource="popupScanHistory">Scan browsing history</span>
             </a>
         </div>
-        <div class="mt-2">
+
+        <div class="mt-4">
             <a target="_blank" href="/ui/options/options.html">
                 <i class="fas fa-cog"></i>
                 <span data-resource="popupSettings">Settings</span>

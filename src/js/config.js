@@ -20,7 +20,8 @@ class Config {
     constructor() {
         this.config = {};
         this.indicators = {};
-        this.status = null; // Global status for the API server reachablity and auth.
+        // Global status for the API server reachablity and auth.
+        this.status = null;
     }
 
     //=========================================================================
@@ -81,7 +82,8 @@ class Config {
                 config_options[config_key] = exisiting_value;
             }
         }
-        // Reset last update to force a full indicator update after extension upgrade.
+        // Reset last update to force a full indicator update after extension
+        // upgrade.
         config_options.cfg_last_update = null;
 
         // Clear localStorage as it is not used anymore.
@@ -94,13 +96,14 @@ class Config {
     }
 
     setItem(item_name, item_value) {
-        // Update a config value and persist to storage
+        // Update a config value and persist to storage.
         this.config[item_name] = item_value;
         chrome.storage.sync.set({config: this.config});
     }
 
     loadFromBackground(config_loaded_callback) {
-        // Lightweight method to populate Config data from the background page for use in the UI.
+        // Lightweight method to populate Config data from the background page
+        // for use in the UI.
         chrome.runtime.sendMessage({method: "loadConfiguration"}, function(response) {
             // Got config state from background page
             cfg.config = response.config;
@@ -110,7 +113,8 @@ class Config {
     }
 
     updateConfig(config) {
-        // Reload background page config and persist to storage object when changes made from UI
+        // Reload background page config and persist to storage object when
+        // changes made from UI.
         this.config = config;
         chrome.storage.sync.set({config: this.config});
     }
@@ -120,7 +124,8 @@ class Config {
         this.indicators = {};
         chrome.storage.sync.clear();
         chrome.storage.local.clear();
-        localStorage.clear();  // Clear legacy localStorage if it still exist
+        // Clear legacy localStorage if it still exist.
+        localStorage.clear();
     }
 
     //=========================================================================

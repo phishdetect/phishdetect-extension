@@ -38,7 +38,7 @@ function scanPage() {
 function loadPopup() {
     var content_container = $("#content");
     if (cfg.status == "authorization_needed") {
-        // Override all UI if user has not enabled an API key yet
+        // Override all UI if user has not enabled an API key yet.
         ReactDOM.render(React.createElement(PopupActivate), content_container.empty().get(0));
         return;
     }
@@ -50,7 +50,7 @@ function loadPopup() {
         ReactDOM.render(React.createElement(PopupStatusWarning, {message: "serverUnauthorizedWarning"}), status_container.get(0));
     }
 
-    // Show interactive buttons if the node is online and reachable
+    // Show interactive buttons if the node is online and reachable.
     if (cfg.status == "authorized" || cfg.status == "online") {
         $(".pd-needs-online").show();
     }

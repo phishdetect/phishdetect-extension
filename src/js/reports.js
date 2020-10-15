@@ -19,7 +19,7 @@ function sendReport(reportType, reportContent, identifier) {
     // Check if the report type is email_*.
     if (reportType == "email") {
         // If an email identifier was provided...
-        if (identifier !== undefined && identifier != "") {
+        if (identifier !== undefined && identifier !== null && identifier != "") {
             // Get a list of already shared emails.
             let emails = cfg.getReportedEmails();
             for (let i=0; i<emails.length; i++) {
@@ -55,6 +55,11 @@ function sendReport(reportType, reportContent, identifier) {
             }
 
             console.log("Submitted report of type", reportType, "to PhishDetect Node.");
+            let confirmationPage = chrome.extension.getURL(REPORT_PAGE) + "?type=" + reportType;
+            if (reportType == "url")
+                confirmationPage += "?content="+ reportContent;
+
+            chrome.tabs.create({url: confirmationPage});
         })
         .catch(error => {
             console.log(error);

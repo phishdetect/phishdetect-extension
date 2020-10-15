@@ -21,7 +21,7 @@ import { PopupActivate, PopupStatusWarning } from "../../components/Popup.js";
 
 function reportPage() {
     getTab(function(tab) {
-        chrome.runtime.sendMessage({method: "reportPage", url: tab.url}, function(response) {
+        chrome.runtime.sendMessage({method: "sendReport", reportType: "url", reportContent: tab.url}, function(response) {
             $("#divReportPage").text(chrome.i18n.getMessage("popupReported"));
         });
     });

@@ -122,7 +122,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     //=========================================================================
     // This message is received when the user wants to report a suspicious opened page.
     case "reportPage":
-        let reportPageURL = cfg.getSendAlertsURL(base64encode(request.url));
+        let reportPageURL = cfg.getReportLinkURL(base64encode(request.url));
         chrome.tabs.create({"url": reportPageURL});
         break;
     // This message is received when an alert needs to be sent to the PhishDetect node.
@@ -208,11 +208,11 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
         scanLink(info.linkUrl);
         break;
     case "report-page":
-        let reportPageURL = cfg.getSendAlertsURL(base64encode(info.pageUrl));
+        let reportPageURL = cfg.getReportLinkURL(base64encode(info.pageUrl));
         chrome.tabs.create({"url": reportPageURL});
         break;
     case "report-link":
-        let reportLinkURL = cfg.getSendAlertsURL(base64encode(info.linkUrl));
+        let reportLinkURL = cfg.getReportLinkURL(base64encode(info.linkUrl));
         chrome.tabs.create({"url": reportLinkURL});
         break;
     }

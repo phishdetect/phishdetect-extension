@@ -237,7 +237,7 @@ class Config {
         let url = new URL(NODE_GUI_REVIEW + ioc + "/", this.getNode()).href;
         return this.addAuthToURL(url);
     }
-    getSendAlertsURL(link) {
+    getReportLinkURL(link) {
         let url = new URL(NODE_GUI_REPORT + link + "/", this.getNode()).href;
         return this.addAuthToURL(url);
     }

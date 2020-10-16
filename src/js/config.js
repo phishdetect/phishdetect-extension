@@ -51,7 +51,6 @@ class Config {
         // existing options, and retrieve the settings from localStorage.
         if (localStorage.getItem("cfg_node") !== null) {
             config_options = this.migrateLocalStorage(config_defaults);
-            console.log(config_options);
         } else {
             // Otherwise we just deep copy the default settings.
             for (const [default_key, default_value] of Object.entries(config_defaults)) {
@@ -68,13 +67,13 @@ class Config {
 
             // Store the config values on the Config object.
             this.config = result["config"];
-
             // Persist config with storage API.
             chrome.storage.sync.set({config: this.config});
+
             console.log("Storage initialization completed.");
 
             // Load indicators with async API.
-            return chrome.storage.local.get({indicators: { domains: [], emails: [], } }, (result) => {
+            return chrome.storage.local.get({indicators: {domains: [], emails: [],}}, (result) => {
                 console.log("Loaded indicators from storage.");
                 this.indicators = result.indicators;
                 configCallback();
@@ -86,23 +85,20 @@ class Config {
         console.log("Migrating configuration from localStorage...");
 
         var config_options = {};
-
         // Migrate config from localstorage to storage API
-        for (const config_key in Object.keys(config_defaults)) {
-            var exisiting_value = localStorage.getItem(config_key);
-            if (exisiting_value != undefined) {
-                config_options[config_key] = exisiting_value;
+        for (const config_key in config_defaults) {
+            const existing_value = localStorage.getItem(config_key);
+            if (existing_value != undefined) {
+                config_options[config_key] = existing_value;
             }
         }
+
         // Reset last update to force a full indicator update after extension
         // upgrade.
         config_options.cfg_last_update = null;
 
         // Clear localStorage as it is not used anymore.
         // localStorage.clear();
-        // NOTE: For the moment only clear indicators, which is what takes most
-        //       space. Later we should just clear localStorage completely.
-        localStorage.removeItem("cfg_indicators");
 
         return config_options;
     }

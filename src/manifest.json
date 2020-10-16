@@ -16,7 +16,7 @@
     },
     "browser_specific_settings": {
         "gecko": {
-            "id": "addon@phishdetect.io"
+            "id": "{32e37b7c-894f-47bf-a68b-75f939276910}"
         }
     },
     "options_ui" : {

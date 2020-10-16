@@ -75,6 +75,8 @@ class Config {
     }
 
     migrateLocalStorage(config_options) {
+        console.log("Migrating configuration from localStorage...");
+
         // Migirate config from localstorage to storage API
         for (let config_key in Object.keys(config_options)) {
             var exisiting_value = localStorage.getItem(config_key);
@@ -88,6 +90,9 @@ class Config {
 
         // Clear localStorage as it is not used anymore.
         // localStorage.clear();
+        // NOTE: For the moment only clear indicators, which is what takes most
+        //       space. Later we should just clear localStorage completely.
+        localStorage.clear("cfg_indicators");
 
         return config_options;
     }

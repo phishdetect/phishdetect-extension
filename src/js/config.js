@@ -98,7 +98,7 @@ class Config {
         config_options.cfg_last_update = null;
 
         // Clear localStorage as it is not used anymore.
-        // localStorage.clear();
+        localStorage.clear();
 
         return config_options;
     }

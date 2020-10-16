@@ -46,7 +46,7 @@ class Config {
         };
 
         // Migrate options from localStorage if set
-        if (localStorage.getItem("cfg_node")) {
+        if (localStorage.getItem("cfg_node") !== null) {
             config_defaults = this.migrateLocalStorage(config_defaults);
         }
 

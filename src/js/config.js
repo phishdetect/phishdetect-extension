@@ -30,7 +30,7 @@ class Config {
     initStorage(configCallback) {
         console.log("Initializing storage...");
 
-        var config_defaults = {
+        const config_defaults = {
             cfg_node: NODE_DEFAULT_URL,
             cfg_api_key: "",
             cfg_node_enforce_user_auth: false,
@@ -45,14 +45,22 @@ class Config {
             cfg_last_error: null,
         };
 
-        // Migrate options from localStorage if set
+        var config_options = {}
+
+        // If localStorage settings exist, use defaults to iterate through
+        // existing options, and retrieve the settings from localStorage.
         if (localStorage.getItem("cfg_node") !== null) {
-            config_defaults = this.migrateLocalStorage(config_defaults);
+            config_options = this.migrateLocalStorage(config_defaults);
+            console.log(config_options);
+        } else {
+            // Otherwise we just deep copy the default settings.
+            for (const [default_key, default_value] of Object.entries(config_defaults)) {
+                config_options[default_key] = default_value;
+            }
         }
 
         chrome.storage.sync.get({config: {}}, result => {
-            // Set defaults for all config options
-            for (let [config_key, config_value] of Object.entries(config_defaults)) {
+            for (const [config_key, config_value] of Object.entries(config_options)) {
                 if (result["config"][config_key] == undefined) {
                     result["config"][config_key] = config_value;
                 }
@@ -61,24 +69,26 @@ class Config {
             // Store the config values on the Config object.
             this.config = result["config"];
 
-            // Persist config with storage API
+            // Persist config with storage API.
             chrome.storage.sync.set({config: this.config});
             console.log("Storage initialization completed.");
 
-            // Load indicators with async API
+            // Load indicators with async API.
             return chrome.storage.local.get({indicators: { domains: [], emails: [], } }, (result) => {
-                console.log("Loaded indicators from storage");
+                console.log("Loaded indicators from storage.");
                 this.indicators = result.indicators;
                 configCallback();
             });
         });
     }
 
-    migrateLocalStorage(config_options) {
+    migrateLocalStorage(config_defaults) {
         console.log("Migrating configuration from localStorage...");
 
-        // Migirate config from localstorage to storage API
-        for (let config_key in Object.keys(config_options)) {
+        var config_options = {};
+
+        // Migrate config from localstorage to storage API
+        for (const config_key in Object.keys(config_defaults)) {
             var exisiting_value = localStorage.getItem(config_key);
             if (exisiting_value != undefined) {
                 config_options[config_key] = exisiting_value;

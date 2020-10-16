@@ -47,7 +47,7 @@ class Config {
 
         // Migrate options from localStorage if set
         if (localStorage.getItem("cfg_node")) {
-            config_defaults = migrateLocalStorage(config_defaults);
+            config_defaults = this.migrateLocalStorage(config_defaults);
         }
 
         chrome.storage.sync.get({config: {}}, result => {

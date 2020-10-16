@@ -25,6 +25,10 @@ a:hover {
     @apply underline;
 }
 
+p {
+    @apply leading-normal;
+}
+
 .separator {
     @apply border-b border-gray-500 mt-1 mb-1;
 }

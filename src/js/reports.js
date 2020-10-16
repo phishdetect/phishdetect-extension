@@ -55,13 +55,15 @@ function sendReport(reportType, reportContent, identifier) {
             }
 
             console.log("Submitted report of type", reportType, "to PhishDetect Node.");
+
             let confirmationPage = chrome.extension.getURL(REPORT_PAGE) + "?type=" + reportType;
             if (reportType == "url")
-                confirmationPage += "?content="+ reportContent;
+                confirmationPage += "&content="+ reportContent;
 
             chrome.tabs.create({url: confirmationPage});
         })
         .catch(error => {
-            console.log(error);
+            console.log("Failed to submit report: ", error);
+            chrome.tabs.create({url: chrome.extension.getURL(REPORT_FAILED_PAGE)});
         });
 }

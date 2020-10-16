@@ -226,5 +226,17 @@
     "optionsSettings": {
         "message": "Settings",
         "description": "Heading for the form on the settings page."
+    },
+    "reportThankYou": {
+        "message": "Thank you for your report! We will review it as soon as possible and take action if required. By reporting suspicious links and emails you help to protect others like you!",
+        "description": "Thank you message when user reports a link or email"
+    },
+    "reportReportedURL": {
+        "message": "You reported the following link as suspicious:",
+        "description": "URL report description"
+    },
+    "reportReportedEmail": {
+        "message": "You reported a suspicious email!",
+        "description": "Email report description"
     }
 }

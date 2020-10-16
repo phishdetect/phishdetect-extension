@@ -11,7 +11,20 @@
 <div id="container">
     <h1><b>PhishDetect</b> Report</h1>
 
-    <p class="mt-4 mb-4 leading-normal" data-resource="optionsDescription">Thank you for your report!</p>
+    <div id="urlReport" class="hidden">
+        <div data-resource="reportReportedURL">You reported the following link as suspicious:</div>
+        <div class="mt-4 p-4 rounded bg-blue-100 text-blue-500 border-l-4 border-blue-500" id="reportedURL"></div>
+    </div>
+
+    <div id="emailReport" class="hidden">
+        <div data-resource="reportReportedEmail">You reported a suspicious email!</div>
+    </div>
+
+    <p class="mt-4 mb-4" data-resource="reportThankYou">Thank you for your report! We will review it as soon as possible and take action if required. By reporting suspicious links and emails you help to protect others like you!</p>
 </div>
+<script src="../../lib/jquery.min.js"></script>
+<script src="../../js/i18n.js"></script>
+<script src="../../js/config.js"></script>
+<script src="report.js"></script>
 </body>
 </html>

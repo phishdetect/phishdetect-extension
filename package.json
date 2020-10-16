@@ -1,6 +1,6 @@
 {
     "name": "phishdetect",
-    "version": "2020.10.16.1",
+    "version": "2020.10.17",
     "description": "Anti-phishing browser extension. Scan suspicious pages and links.",
     "main": "",
     "scripts": {

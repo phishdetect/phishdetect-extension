@@ -30,7 +30,7 @@ class Config {
     initStorage(configCallback) {
         console.log("Initializing storage...");
 
-        const config_defaults = {
+        var config_defaults = {
             cfg_node: NODE_DEFAULT_URL,
             cfg_api_key: "",
             cfg_node_enforce_user_auth: false,
@@ -87,7 +87,9 @@ class Config {
         config_options.cfg_last_update = null;
 
         // Clear localStorage as it is not used anymore.
-        localStorage.clear();
+        // localStorage.clear();
+
+        return config_options;
     }
 
     getItem(item_name){

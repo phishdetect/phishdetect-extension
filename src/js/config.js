@@ -92,7 +92,7 @@ class Config {
         // localStorage.clear();
         // NOTE: For the moment only clear indicators, which is what takes most
         //       space. Later we should just clear localStorage completely.
-        localStorage.clear("cfg_indicators");
+        localStorage.removeItem("cfg_indicators");
 
         return config_options;
     }

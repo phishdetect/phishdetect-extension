@@ -65,8 +65,10 @@ function updateIndicators(full = false) {
             // Otherwise we only append the updates.
             if (full == true) {
                 console.log("Replacing local indicators with remote list...");
-                cfg.setIndicators(data);
-                cfg.setLastFullUpdateTime();
+                cfg.setIndicators(data, () => {
+                    console.log("Stored full indicator list")
+                    cfg.setLastFullUpdateTime();
+                });
             } else {
                 console.log("Updating local indicators with only new ones...");
 
@@ -87,7 +89,9 @@ function updateIndicators(full = false) {
                 }
 
                 // Now we update indicators in the storage.
-                cfg.setIndicators(indicators);
+                cfg.setIndicators(indicators, () => {
+                    console.log("Stored updated indicator list")
+                });
             }
 
             console.log("Indicators updated successfully.");

@@ -302,11 +302,12 @@ class Config {
     setIndicators(value, callback) {
         // If the domains and emails are undefined, something went wrong.
         if (value.domains === undefined || value.emails === undefined) {
+            console.error("Indicator list missing the domain or email field.")
             return;
         }
 
         this.indicators = value;
-        return chrome.storage.local.set({cfg_indicators: value}, callback);
+        return chrome.storage.local.set({indicators: value}, callback);
     }
 
     //=========================================================================

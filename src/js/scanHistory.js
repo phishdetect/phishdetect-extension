@@ -23,6 +23,8 @@ function scanBrowsingHistory(tabId) {
         console.log("No indicators to use for scanning browsing history. Skip.");
     } else {
         chrome.history.search({text: "", startTime: 0}, function(items) {
+            console.log("Found a total of", items.length, "history items.");
+
             for (let i=0; i<items.length; i++) {
                 var url = items[i].url;
 
@@ -30,8 +32,13 @@ function scanBrowsingHistory(tabId) {
                     continue;
                 }
 
+                console.log("Checking history item at URL:", url);
+
                 try {
                     let domain = getDomainFromURL(url);
+                    if (checkIfIPAddress(domain))
+                        continue;
+
                     var domainHash = sha256(domain);
                     let topDomain = getTopDomainFromURL(url);
                     var topDomainHash = sha256(topDomain);

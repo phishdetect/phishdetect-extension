@@ -30,6 +30,15 @@ function checkForIndicators(items, indicators) {
     return null;
 }
 
+function checkIfIPAddress(target) {
+    const ip = target.split(":")[0];
+    const regex = /^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$/;
+    if (regex.test(ip)) {
+        return true;
+    }
+    return false;
+}
+
 function getCurrentUTCDate() {
     const now = new Date();
     const timestamp = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(),

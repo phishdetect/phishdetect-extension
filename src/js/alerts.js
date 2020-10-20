@@ -52,8 +52,8 @@ function sendAlert(alertType, match, indicator, identifier) {
     fetch(cfg.getAlertsAddURL(), properties)
         .then((response) => response.json())
         .then(function(data) {
-        // If alert is of type email_* we add the email ID to the list of
-        // successfully reported emails.
+            // If alert is of type email_* we add the email ID to the list of
+            // successfully reported emails.
             if (alertType.startsWith("email_")) {
                 if (identifier !== undefined && identifier != "") {
                     cfg.addDetectedEmail(identifier);

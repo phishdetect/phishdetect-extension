@@ -45,7 +45,7 @@ class Config {
             cfg_last_error: null,
         };
 
-        var config_options = {}
+        var config_options = {};
 
         // If localStorage settings exist, use defaults to iterate through
         // existing options, and retrieve the settings from localStorage.
@@ -301,7 +301,7 @@ class Config {
     setIndicators(value, callback) {
         // If the domains and emails are undefined, something went wrong.
         if (value.domains === undefined || value.emails === undefined) {
-            console.error("Indicator list missing the domain or email field.")
+            console.error("Indicator list missing the domain or email field.");
             return;
         }
 

@@ -95,7 +95,7 @@ function gmailReportEmail(uid) {
 
 (function() {
     // Check if the option to integrate with webmails is enabled.
-    chrome.runtime.sendMessage({method: "getWebmails"}, function(response) {
+    chrome.runtime.sendMessage({method: "getWebmailsIntegration"}, function(response) {
         if (response === false) {
             return;
         }

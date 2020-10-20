@@ -133,8 +133,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     // Messages requesting configuration options.
     //=========================================================================
     // Get the flag to enable or disable webmails integration.
-    case "getWebmails":
-        sendResponse(cfg.getWebmails());
+    case "getWebmailsIntegration":
+        sendResponse(cfg.getWebmailsIntegration());
         break;
     case "getNodeEnableAnalysis":
         sendResponse(cfg.getNodeEnableAnalysis());

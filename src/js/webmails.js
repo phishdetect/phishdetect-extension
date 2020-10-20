@@ -17,7 +17,7 @@
 
 $(document).ready(function() {
     // Check if the option to integrate with webmails is enabled.
-    chrome.runtime.sendMessage({method: "getWebmails"}, function(response) {
+    chrome.runtime.sendMessage({method: "getWebmailsIntegration"}, function(response) {
         // If not, we stop straight away.
         if (response === false) {
             return;

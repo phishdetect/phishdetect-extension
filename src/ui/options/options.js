@@ -21,7 +21,7 @@ import { OptionsSaved, OptionsWarning } from "../../components/Options.js";
 
 function loadOptions() {
     $("#server").val(cfg.getNode());
-    $("#webmails").prop("checked", cfg.getWebmails());
+    $("#webmails").prop("checked", cfg.getWebmailsIntegration());
 
     if (cfg.status == "offline") {
         ReactDOM.render(React.createElement(OptionsWarning, {message: "serverOfflineFormError"}), $("#nodeError").get(0));
@@ -60,7 +60,7 @@ function saveOptions(event) {
         cfg.setApiKey(key);
         cfg.setContact($("#contact").val().trim());
         cfg.setSentAlerts($("#sendAlerts").is(":checked"));
-        cfg.setWebmails($("#webmails").is(":checked"));
+        cfg.setWebmailsIntegration($("#webmails").is(":checked"));
 
         // Reload config on background page
         const container = $("#container").empty();

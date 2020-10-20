@@ -283,12 +283,11 @@ class Config {
 
     //=========================================================================
     // Webmails integration.
-    // TODO: rename this to something more descriptive.
     //=========================================================================
-    getWebmails() {
+    getWebmailsIntegration() {
         return this.getItem("cfg_webmails");
     }
-    setWebmails(value) {
+    setWebmailsIntegration(value) {
         this.setItem("cfg_webmails", value);
     }
 

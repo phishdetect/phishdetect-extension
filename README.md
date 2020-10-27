@@ -26,14 +26,13 @@ First install node.js:
 
     $ sudo apt-get install nodejs
 
-Then install yarn as explained by the [official instructions](https://classic.yarnpkg.com/en/docs/install#debian-stable).
+Then install yarn as explained in the [official instructions](https://classic.yarnpkg.com/en/docs/install#debian-stable).
 
-Then we can run the build command, which will pull dependencies and compile a
-single JavaScript file:
+You can now build the extension by simply launching `make`:
 
-    $ make build
+    $ make
 
-Finally, we can create the package that we can use for distribution:
+The extension is now available in the `build/` folder and it is ready to be loaded or packaged. For the latter, we can use the following command to obtain a `phishdetect.zip` file for distribution:
 
     $ make package
 

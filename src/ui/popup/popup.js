@@ -36,18 +36,20 @@ function scanPage() {
 }
 
 function loadPopup() {
-    var content_container = $("#content");
+    const contentContainer = $("#content");
     if (cfg.status == "authorization_needed") {
         // Override all UI if user has not enabled an API key yet.
-        ReactDOM.render(React.createElement(PopupActivate), content_container.empty().get(0));
+        ReactDOM.render(React.createElement(PopupActivate), contentContainer.empty().get(0));
         return;
     }
 
-    var status_container = $("#divPopupServerStatus");
+    const statusContainer = $("#divPopupServerStatus");
     if (cfg.status == "offline") {
-        ReactDOM.render(React.createElement(PopupStatusWarning, {message: "serverOfflineWarning"}), status_container.get(0));
+        ReactDOM.render(React.createElement(PopupStatusWarning,
+            {message: "serverOfflineWarning", color: "yellow"}), statusContainer.get(0));
     } else if (cfg.status == "unauthorized") {
-        ReactDOM.render(React.createElement(PopupStatusWarning, {message: "serverUnauthorizedWarning"}), status_container.get(0));
+        ReactDOM.render(React.createElement(PopupStatusWarning,
+            {message: "serverUnauthorizedWarning", color: "red"}), statusContainer.get(0));
     }
 
     // Show interactive buttons if the node is online and reachable.

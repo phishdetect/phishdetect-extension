@@ -34,7 +34,7 @@ export function OptionsSaved(props) {
 export function OptionsWarning(props) {
     return (
         <div>
-            <p className="pd-alert-text">
+            <p className={"pd-status-" + props.color + "-text"}>
                 <span>{chrome.i18n.getMessage(props.message)}</span>
             </p>
         </div>

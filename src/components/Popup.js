@@ -36,7 +36,7 @@ export function PopupActivate(props) {
 export function PopupStatusWarning(props) {
     return (
         <div>
-            <p className="pd-alert space-x-2" role="alert">
+            <p className={"space-x-2 pd-status-" + props.color} role="alert">
                 <FontAwesomeIcon icon={faExclamationTriangle} />
                 <span>{chrome.i18n.getMessage(props.message)}</span>
             </p>

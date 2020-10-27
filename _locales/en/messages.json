@@ -204,7 +204,7 @@
         "description": "Error text when no secret token is entered in the apikey form"
     },
     "serverOfflineWarning": {
-        "message": "The PhishDetect node is unreachable",
+        "message": "The PhishDetect node is offline or your Internet connection is down.",
         "description": "Error when PhishDetect node is offline or incorrect"
     },
     "serverOfflineFormError": {

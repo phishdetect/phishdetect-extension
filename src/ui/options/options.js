@@ -24,9 +24,9 @@ function loadOptions() {
     $("#webmails").prop("checked", cfg.getWebmailsIntegration());
 
     if (cfg.status == "offline") {
-        ReactDOM.render(React.createElement(OptionsWarning, {message: "serverOfflineFormError"}), $("#nodeError").get(0));
+        ReactDOM.render(React.createElement(OptionsWarning, {message: "serverOfflineFormError", color: "yellow"}), $("#nodeError").get(0));
     } else if (cfg.status == "unauthorized") {
-        ReactDOM.render(React.createElement(OptionsWarning, {message: "serverUnauthorizedWarning"}), $("#keyError").get(0));
+        ReactDOM.render(React.createElement(OptionsWarning, {message: "serverUnauthorizedWarning", color: "red"}), $("#keyError").get(0));
     }
 
     const sendAlerts = cfg.getSendAlerts();

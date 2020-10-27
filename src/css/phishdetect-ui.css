@@ -52,11 +52,17 @@ p {
 .pd-form-input:focus {
     @apply border-blue-300;
 }
-.pd-alert {
+.pd-status-red {
     @apply bg-red-100 border border-red-400 text-red-700 px-3 py-2 rounded relative;
 }
-.pd-alert-text {
+.pd-status-red-text {
     @apply text-red-700;
+}
+.pd-status-yellow {
+    @apply bg-yellow-100 border border-yellow-400 text-yellow-700 px-3 py-2 rounded relative;
+}
+.pd-status-yellow-text {
+    @apply text-yellow-700;
 }
 .pd-needs-online {
     display: none;

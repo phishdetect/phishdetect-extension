@@ -45,30 +45,13 @@ function DOMtoString(document_root) {
     return html;
 }
 
-console.log("[PhishDetect] Loaded scanPage");
+console.log("[PhishDetect] Loaded getTabHTML");
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-        if (request.method && (request.method == "sendPageToNode")) {
+        if (request.method && (request.method == "getTabHTML")) {
             console.log("[PhishDetect] Received request to extract DOM and send it for analysis...");
-
-            const actionUrl = request.actionUrl;
-            const html = base64encode(DOMtoString(document));
-            const screenshot = request.screenshot;
-            const key = request.key;
-
-            const form = $("<form></form>", {
-                action: actionUrl,
-                method: "POST",
-            })
-                .css("display", "none")
-                .append(
-                    $("<textarea></textarea>", {id: "html", name: "html"}).text(html),
-                    $("<textarea></textarea>", {id: "screenshot", name: "screenshot"}).text(screenshot),
-                    $("<input />", {id: "key", name: "key", value: key}),
-                );
-            $(document.body).append(form);
-            form.submit();
+            sendResponse(DOMtoString(document));
         }
     }
 );

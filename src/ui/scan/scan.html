@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title data-i18n=""></title>
+<link href="../../css/tailwind.min.css" rel="stylesheet">
+<link href="../../fontawesome/css/all.min.css" rel="stylesheet">
+<link href="../../css/phishdetect-ui.dist.css" rel="stylesheet">
+</head>
+<body>
+<div id="container">
+    <h1><b>PhishDetect</b> Scan</h1>
+
+    <div class="text-center">
+        <div id="status">
+            <div class="mt-8 mb-8">
+                <div class="mb-1">We are analyzing the link. This might take a few moments...</div>
+                <div><a target="_blank" href="https://phishdetect.io/" class="text-blue hover:text-blue-darker hover:no-underline"><i class="fas fa-link" title="This link leads to an external page"></i> Click here</a> for more information on this service.</div>
+            </div>
+            <div><img src="rolling.gif" class="h-32" /></div>
+        </div>
+    </div>
+</div>
+<script src="../../lib/jquery.min.js"></script>
+<script src="../../js/i18n.js"></script>
+<script src="../../js/const.js"></script>
+<script src="../../js/config.js"></script>
+<script src="../../js/utils.js"></script>
+<script src="scan.js"></script>
+<script>
+// $(document).ready(function() {
+//     $.post({
+//         url: "/link/analyze/?key={{key}}",
+//         data: {
+//             "url": "{{url|safe}}",
+//             "html": "{{html}}",
+//             "screenshot": "{{screenshot}}"
+//         },
+//         dataType: "html",
+//         contentType: "application/x-www-form-urlencoded",
+//         cache: false,
+//         timeout: 120000,
+//         success: function(response) {
+//             $("#container").html(response);
+//             $(document).trigger("warningLoaded");
+//         },
+//         error: function(jqXHR, textStatus, errorThrown) {
+//             console.log(textStatus);
+//             console.log(errorThrown);
+//             $("#status").html("<div class=\"border-l-8 border-red-lighter bg-red-lightest p-6 rounded-lg text-left text-red-darker\"><b>Error! Something failed while analyzing the link!</b><br /><a href=\"javascript:location.reload();\" class=\"text-red-darker hover:no-underline\">Do you want to try again?</a> If the error persists, please get in contact with the administrators of this PhishDetect Node.</div>");
+//         }
+//     });
+// });
+
+// $(document).on("warningLoaded", function() {
+//     $("#warnings").on("hide.bs.collapse", function() {
+//         $("#warningsLink").html("More details <i class=\"fa fa-plus-square\" aria-hidden=\"true\"></i>");
+//     });
+
+//     $("#warnings").on("show.bs.collapse", function() {
+//         $("#warningsLink").html("Less details <i class=\"fa fa-minus-square\" aria-hidden=\"true\"></i>");
+//     });
+// });
+
+</script>
+</body>
+</html>

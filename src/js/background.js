@@ -62,12 +62,17 @@ chrome.webRequest.onBeforeRequest.addListener(function(details) {
 function scanPage(tabId, tabUrl) {
     console.log("Received request to analyze page at tab", tabId, "with URL", tabUrl);
     chrome.tabs.captureVisibleTab(null, {}, function(img) {
-        console.log("Captured screenshot.");
-        chrome.tabs.sendMessage(tabId, {
-            method: "sendPageToNode",
-            actionUrl: cfg.getLinkCheckURL(base64encode(tabUrl)),
-            screenshot: img,
-            key: cfg.getApiKey(),
+        chrome.tabs.executeScript(tabId, {file: "./js/getTabHTML.js"}, function() {
+            if (chrome.runtime.lastError) {
+                // TODO: Show error page.
+                console.error("Failed to execute getTabHTML: " + chrome.runtime.lastError.message);
+                return;
+            }
+
+            chrome.tabs.sendMessage(tabId, {method: "getTabHTML"}, function(response) {
+                chrome.tabs.update(tabId, {url: chrome.extension.getURL(SCAN_PAGE)});
+                chrome.tabs.sendMessage(tabId, {method: "scanHTML", url: tabUrl, screenshot: img, html: response})
+            });
         });
     });
 }

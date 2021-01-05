@@ -72,15 +72,6 @@
         },
         {
             "matches": ["http://*/*", "https://*/*"],
-            "js": [
-                "lib/jquery.min.js",
-                "js/utils.js",
-                "js/scanPage.js"
-            ],
-            "run_at": "document_end"
-        },
-        {
-            "matches": ["http://*/*", "https://*/*"],
             "exclude_matches": ["https://mail.google.com/*"],
             "js": [
                 "lib/jquery.min.js",

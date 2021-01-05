@@ -32,6 +32,7 @@ NODE_API_AUTH                         = "/api/auth/";
 WARNING_PAGE                          = "ui/warning/warning.html";
 REPORT_PAGE                           = "ui/report/report.html";
 REPORT_FAILED_PAGE                    = "ui/report/report_failed.html";
+SCAN_PAGE                             = "ui/scan/scan.html";
 
 INDICATORS_UPDATE_FREQUENCY           = 15;
 CONFIG_UPDATE_FREQUENCY               = 30;

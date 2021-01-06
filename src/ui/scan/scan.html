@@ -8,16 +8,13 @@
 <link href="../../css/phishdetect-ui.dist.css" rel="stylesheet">
 </head>
 <body>
-<div id="container">
+<div id="container" class="container mx-auto justify-center items-center">
     <div class="text-center">
         <h1><b>PhishDetect</b> Scan</h1>
-
-        <div id="status">
-            <div class="mt-8 mb-8">
-                <div class="mb-1">We are analyzing the link. This might take a few moments...</div>
-            </div>
-            <div class="flex justify-center"><img src="rolling.gif" class="h-32" /></div>
+        <div class="mt-8 mb-8">
+            <div class="mb-1">We are analyzing the link. This might take a few moments...</div>
         </div>
+        <div class="flex justify-center"><img src="rolling.gif" class="h-32" /></div>
     </div>
 </div>
 <script src="../../lib/jquery.min.js"></script>
@@ -25,6 +22,6 @@
 <script src="../../js/const.js"></script>
 <script src="../../js/config.js"></script>
 <script src="../../js/utils.js"></script>
-<script src="scan.js"></script>
+<script src="../../dist/scan.js"></script>
 </body>
 </html>

@@ -15,6 +15,26 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
+import React from "react";
+import ReactDOM from "react-dom";
+import { ScanResultsContinue, ScanResultsWarning } from "../../components/ScanResults";
+
+const requestTimeout = 120000;
+
+function renderResults(data) {
+    if ((data.safelisted || data.score < 30) && !data.dangerous) {
+        ReactDOM.render(
+            React.createElement(ScanResultsContinue, data),
+            $("#container").get(0)
+        );
+    } else {
+        ReactDOM.render(
+            React.createElement(ScanResultsWarning, data),
+            $("#container").get(0)
+        );
+    }
+}
+
 function scanHTML(url, html, screenshot) {
     $.post({
         url: cfg.getAPIAnalyzeHTMLURL(),
@@ -25,15 +45,14 @@ function scanHTML(url, html, screenshot) {
         dataType: "json",
         contentType: "application/json",
         cache: false,
-        timeout: 120000,
+        timeout: requestTimeout,
         success: function(response) {
-            alert("SUCCESS");
-            $("#container").html(response);
-            console.log(response);
+            let data = response;
+            data.screenshot = screenshot;
+            renderResults(data);
             $(document).trigger("warningLoaded");
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            alert("ERROR");
             console.log(textStatus);
             console.log(errorThrown);
         }
@@ -49,15 +68,12 @@ function scanLink(url) {
         dataType: "json",
         contentType: "application/json",
         cache: false,
-        timeout: 120000,
+        timeout: requestTimeout,
         success: function(response) {
-            alert("SUCCESS");
-            $("#container").html(response);
-            console.log(response);
+            renderResults(response);
             $(document).trigger("warningLoaded");
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            alert("ERROR");
             console.log(textStatus);
             console.log(errorThrown);
         }

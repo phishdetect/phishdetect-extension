@@ -18,6 +18,7 @@ var options = {
         apikey: path.join(__dirname, "src", "ui", "apikey", "apikey.js"),
         history: path.join(__dirname, "src", "ui", "history", "history.js"),
         options: path.join(__dirname, "src", "ui", "options", "options.js"),
+        scan: path.join(__dirname, "src", "ui", "scan", "scan.js"),
         popup: path.join(__dirname, "src", "ui", "popup", "popup.js"),
         gmail: path.join(__dirname, "src", "js", "gmail.js"),
         roundcube: path.join(__dirname, "src", "js", "roundcube.js"),

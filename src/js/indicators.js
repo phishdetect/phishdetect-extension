@@ -28,11 +28,11 @@ function updateIndicators(full = false) {
     if (full == true || ((cfg.getLastFullUpdateTime() === null) ||
        ((now - cfg.getLastFullUpdateTime()) >= ONE_DAY_TIME))) {
         console.log("Performing a full update...");
-        var updateURL = cfg.getIndicatorsURL();
+        var updateURL = cfg.getAPIIndicatorsURL();
         full = true;
     } else {
         console.log("Only retrieving the latest indicators...");
-        var updateURL = cfg.getRecentIndicatorsURL();
+        var updateURL = cfg.getAPIRecentIndicatorsURL();
     }
 
     console.log("Fetching indicators from:", updateURL);

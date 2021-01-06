@@ -151,6 +151,7 @@ class Config {
         }
         return address;
     }
+
     setNode(node, api_key) {
         const currentAddress = this.getNode();
         if (node == currentAddress) {
@@ -183,6 +184,7 @@ class Config {
     getApiKey() {
         return this.getItem("cfg_api_key");
     }
+
     setApiKey(value) {
         this.setItem("cfg_api_key", value);
     }
@@ -193,7 +195,7 @@ class Config {
     fetchNodeConfig(success, failure) {
         console.log("Fetching configuration from Node...");
 
-        let url = this.getConfigURL();
+        let url = this.getAPIConfigURL();
 
         fetch(url)
             .then((response) => response.json())
@@ -211,15 +213,19 @@ class Config {
                 failure();
             });
     }
+
     getNodeEnableAnalysis() {
         return this.getItem("cfg_node_enable_analysis");
     }
+
     setNodeEnableAnalysis(value) {
         this.setItem("cfg_node_enable_analysis", value);
     }
+
     getNodeEnforceUserAuth() {
         return this.getItem("cfg_node_enforce_user_auth");
     }
+
     setNodeEnforceUserAuth(value) {
         this.setItem("cfg_node_enforce_user_auth", value);
     }
@@ -233,40 +239,51 @@ class Config {
         }
         return url;
     }
-    getConfigURL() {
-        return new URL(NODE_API_CONFIG_PATH, this.getNode()).href;
-    }
-    getAuthURL() {
-        let url = new URL(NODE_API_AUTH, this.getNode()).href;
-        return this.addAuthToURL(url);
-    }
+
     getRegisterURL() {
         return new URL(NODE_GUI_REGISTER, this.getNode()).href;
     }
-    getLinkCheckURL(link) {
-        return new URL(NODE_GUI_LINK_CHECK + link + "/", this.getNode()).href;
-    }
+
     getReviewURL(ioc) {
         let url = new URL(NODE_GUI_REVIEW + ioc + "/", this.getNode()).href;
         return this.addAuthToURL(url);
     }
-    getReportLinkURL(link) {
-        let url = new URL(NODE_GUI_REPORT + link + "/", this.getNode()).href;
+
+    getAPIConfigURL() {
+        return new URL(NODE_API_CONFIG_PATH, this.getNode()).href;
+    }
+
+    getAPIAuthURL() {
+        let url = new URL(NODE_API_AUTH_PATH, this.getNode()).href;
         return this.addAuthToURL(url);
     }
-    getIndicatorsURL() {
+
+    getAPIAnalyzeHTMLURL() {
+        let url = new URL(NODE_API_ANALYZE_HTML_PATH, this.getNode()).href;
+        return this.addAuthToURL(url);
+    }
+
+    getAPIAnalyzeLinkURL() {
+        let url = new URL(NODE_API_ANALYZE_LINK_PATH, this.getNode()).href;
+        return this.addAuthToURL(url);
+    }
+
+    getAPIIndicatorsURL() {
         let url = new URL(NODE_API_INDICATORS_FETCH_PATH, this.getNode()).href;
         return this.addAuthToURL(url);
     }
-    getRecentIndicatorsURL() {
+
+    getAPIRecentIndicatorsURL() {
         let url = new URL(NODE_API_RECENT_INDICATORS_FETCH_PATH, this.getNode()).href;
         return this.addAuthToURL(url);
     }
-    getAlertsAddURL() {
+
+    getAPIAlertsAddURL() {
         let url = new URL(NODE_API_ALERTS_ADD_PATH, this.getNode()).href;
         return this.addAuthToURL(url);
     }
-    getReportsAddURL() {
+
+    getAPIReportsAddURL() {
         let url = new URL(NODE_API_REPORTS_ADD_PATH, this.getNode()).href;
         return this.addAuthToURL(url);
     }
@@ -277,6 +294,7 @@ class Config {
     getSendAlerts() {
         return this.getItem("cfg_send_alerts");
     }
+
     setSentAlerts(value) {
         this.setItem("cfg_send_alerts", value);
     }
@@ -287,6 +305,7 @@ class Config {
     getWebmailsIntegration() {
         return this.getItem("cfg_webmails");
     }
+
     setWebmailsIntegration(value) {
         this.setItem("cfg_webmails", value);
     }
@@ -320,6 +339,7 @@ class Config {
 
         return lastUpdate;
     }
+
     setLastFullUpdateTime() {
         this.setItem("cfg_last_update", getCurrentUTCDate());
     }
@@ -330,6 +350,7 @@ class Config {
     getUserContact() {
         return this.getItem("cfg_contact");
     }
+
     setContact(value) {
         this.setItem("cfg_contact", value);
     }
@@ -340,6 +361,7 @@ class Config {
     getDetectedEmails() {
         return this.getItem("cfg_detected_emails");
     }
+
     addDetectedEmail(value) {
         let emails = this.getDetectedEmails();
         emails.push(value);
@@ -352,6 +374,7 @@ class Config {
     getReportedEmails() {
         return this.getItem("cfg_reported_emails");
     }
+
     addReportedEmail(value) {
         let emails = this.getReportedEmails();
         emails.push(value);

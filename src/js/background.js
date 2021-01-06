@@ -58,32 +58,6 @@ chrome.webRequest.onBeforeRequest.addListener(function(details) {
 ["blocking"]
 );
 
-// Analyze an HTML page (taken from an open tab).
-function scanPage(tabId, tabUrl) {
-    console.log("Received request to analyze page at tab", tabId, "with URL", tabUrl);
-    chrome.tabs.captureVisibleTab(null, {}, function(img) {
-        chrome.tabs.executeScript(tabId, {file: "./js/getTabHTML.js"}, function() {
-            if (chrome.runtime.lastError) {
-                // TODO: Show error page.
-                console.error("Failed to execute getTabHTML: " + chrome.runtime.lastError.message);
-                return;
-            }
-
-            chrome.tabs.sendMessage(tabId, {method: "getTabHTML"}, function(response) {
-                chrome.tabs.update(tabId, {url: chrome.extension.getURL(SCAN_PAGE)});
-                chrome.tabs.sendMessage(tabId, {method: "scanHTML", url: tabUrl, screenshot: img, html: response})
-            });
-        });
-    });
-}
-
-// Analyze a link (coming from webmail and context menu).
-function scanLink(link) {
-    console.log("Received request to analyze link", link);
-    let linkCheckURL = cfg.getLinkCheckURL(base64encode(link)) + "?key=" + cfg.getApiKey();
-    chrome.tabs.create({url: linkCheckURL});
-}
-
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     switch (request.method) {
     //=========================================================================
@@ -98,6 +72,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         break;
     case "getStatus":
         sendResponse(cfg.status);
+        break;
 
     //=========================================================================
     // Messages related to indicators.
@@ -163,13 +138,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     return false;
 });
 
-// Welcome page.
-function openWelcomePage(details) {
-    if (details.reason === "install") { // 'install' or 'upgrade'
-        window.open("/ui/options/options.html");
-    }
-}
-
 // Context menus.
 function loadContextMenus() {
     chrome.contextMenus.removeAll(function() {
@@ -218,6 +186,14 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
     return false;
 });
 
-chrome.runtime.onInstalled.addListener(openWelcomePage);
 chrome.runtime.onInstalled.addListener(loadContextMenus);
 chrome.runtime.onStartup.addListener(loadContextMenus);
+
+// Open welcome page at installation.
+// TODO: do we want to open one at upgrade too?
+chrome.runtime.onInstalled.addListener(function(details) {
+    // "install" or "upgrade".
+    if (details.reason === "install") {
+        window.open("/ui/options/options.html");
+    }
+});

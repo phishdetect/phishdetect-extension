@@ -17,9 +17,7 @@
 
 NODE_DEFAULT_URL                      = "https://phishdetect.securitywithoutborders.org";
 
-NODE_GUI_LINK_CHECK                   = "/link/";
 NODE_GUI_REVIEW                       = "/review/";
-NODE_GUI_REPORT                       = "/report/";
 NODE_GUI_REGISTER                     = "/register/";
 
 NODE_API_CONFIG_PATH                  = "/api/config/";
@@ -27,7 +25,9 @@ NODE_API_INDICATORS_FETCH_PATH        = "/api/indicators/fetch/";
 NODE_API_RECENT_INDICATORS_FETCH_PATH = "/api/indicators/fetch/recent/";
 NODE_API_ALERTS_ADD_PATH              = "/api/alerts/add/";
 NODE_API_REPORTS_ADD_PATH             = "/api/reports/add/";
-NODE_API_AUTH                         = "/api/auth/";
+NODE_API_AUTH_PATH                    = "/api/auth/";
+NODE_API_ANALYZE_HTML_PATH            = "/api/analyze/html/";
+NODE_API_ANALYZE_LINK_PATH            = "/api/analyze/link/";
 
 WARNING_PAGE                          = "ui/warning/warning.html";
 REPORT_PAGE                           = "ui/report/report.html";

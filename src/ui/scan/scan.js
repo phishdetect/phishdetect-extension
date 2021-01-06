@@ -15,10 +15,66 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    switch (request.method) {
-    case "scanHTML":
-        alert("SCAN HTML " + request.url);
-        break;
-    }
-});
+function scanHTML(url, html, screenshot) {
+    $.post({
+        url: cfg.getAPIAnalyzeHTMLURL(),
+        data: JSON.stringify({
+            "url": url,
+            "html": html,
+        }),
+        dataType: "json",
+        contentType: "application/json",
+        cache: false,
+        timeout: 120000,
+        success: function(response) {
+            alert("SUCCESS");
+            $("#container").html(response);
+            console.log(response);
+            $(document).trigger("warningLoaded");
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert("ERROR");
+            console.log(textStatus);
+            console.log(errorThrown);
+        }
+    });
+}
+
+function scanLink(url) {
+    $.post({
+        url: cfg.getAPIAnalyzeLinkURL(),
+        data: JSON.stringify({
+            "url": url,
+        }),
+        dataType: "json",
+        contentType: "application/json",
+        cache: false,
+        timeout: 120000,
+        success: function(response) {
+            alert("SUCCESS");
+            $("#container").html(response);
+            console.log(response);
+            $(document).trigger("warningLoaded");
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert("ERROR");
+            console.log(textStatus);
+            console.log(errorThrown);
+        }
+    });
+}
+
+function loadScan() {
+    chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+        switch (request.method) {
+        case "scanHTML":
+            scanHTML(request.url, request.html, request.screenshot);
+            break;
+        case "scanLink":
+            scanLink(request.url);
+            break;
+        }
+    });
+}
+
+document.addEventListener("DOMContentLoaded", cfg.loadFromBackground(loadScan));

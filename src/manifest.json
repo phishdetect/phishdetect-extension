@@ -32,6 +32,8 @@
             "js/alerts.js",
             "js/reports.js",
             "js/alarms.js",
+            "js/scanLink.js",
+            "js/scanPage.js",
             "js/scanHistory.js",
             "js/config.js",
             "js/background.js",

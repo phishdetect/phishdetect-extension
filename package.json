@@ -4,7 +4,7 @@
     "description": "Anti-phishing browser extension. Scan suspicious pages and links.",
     "main": "",
     "scripts": {
-        "build": "node utils/build.js",
+        "build": "webpack",
         "start": "node utils/webserver.js"
     },
     "author": "Claudio Guarnieri",
@@ -33,9 +33,9 @@
     },
     "devDependencies": {
         "@babel/core": "^7.12.10",
+        "@babel/preset-env": "^7.12.11",
+        "@babel/preset-react": "^7.12.10",
         "babel-loader": "8.2.2",
-        "babel-preset-env": "^1.7.0",
-        "babel-preset-react": "^6.24.1",
         "clean-webpack-plugin": "^3.0.0",
         "copy-webpack-plugin": "^7.0.0",
         "css-loader": "5.0.1",

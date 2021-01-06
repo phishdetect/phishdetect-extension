@@ -92,7 +92,7 @@ var options = {
                         ignore: ["gmail.js", "roundcube.js", "domains.js", "gui.js"],
                     },
                 },
-                {from: "src/lib", to: "lib"},
+                // {from: "src/lib", to: "lib"},
                 {
                     from: "src/ui",
                     to: "ui",
@@ -112,11 +112,14 @@ var options = {
             ],
         }),
         new WriteFilePlugin()
-    ]
+    ],
+    optimization: {
+        minimize: false
+    }
 };
 
 if (env.NODE_ENV === "development") {
-    options.devtool = "cheap-module-eval-source-map";
+    options.devtool = "eval-cheap-module-source-map";
 }
 
 module.exports = options;

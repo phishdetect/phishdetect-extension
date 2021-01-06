@@ -89,7 +89,7 @@ var options = {
                     from: "src/js",
                     to: "js",
                     globOptions: {
-                        ignore: ["gmail.js", "roundcube.js", "domains.js", "gui.js"],
+                        ignore: ["*/*.js"],
                     },
                 },
                 // {from: "src/lib", to: "lib"},
@@ -97,7 +97,7 @@ var options = {
                     from: "src/ui",
                     to: "ui",
                     globOptions: {
-                        ignore: ["apikey/apikey.js", "history/history.js", "options/options.js", "popup/popup.js"],
+                        ignore: ["*/*.js"],
                     },
                 },
                 {from: "_locales/", to: "_locales"},

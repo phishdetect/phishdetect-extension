@@ -311,6 +311,10 @@
         "message": "please report it to us!",
         "description": "Link to report a link that was not detected"
     },
+    "scanResultsThankYouForReport": {
+        "message": "Thank you for reporting this to us!",
+        "description": "Message displayed when a user decided to report an inconclusive scan result"
+    },
     "scanResultsContinueNow": {
         "message": "Continue to the link now",
         "description": "Label for button in scan results page when link was not detected"

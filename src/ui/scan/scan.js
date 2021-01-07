@@ -28,7 +28,9 @@ function renderResults(data) {
             $("#container").get(0)
         );
         $("#pleaseReport").on("click", function() {
-            chrome.runtime.sendMessage({method: "sendReport", reportType: "url", reportContent: data.url});
+            chrome.runtime.sendMessage({method: "sendReport", reportType: "url", reportContent: data.url}, function(response) {
+                $("#reportResults").text(chrome.i18n.getMessage("scanResultsThankYouForReport"));
+            });
         });
     } else {
         ReactDOM.render(

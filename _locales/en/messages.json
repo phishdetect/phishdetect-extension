@@ -238,5 +238,53 @@
     "reportReportedEmail": {
         "message": "You reported a suspicious email!",
         "description": "Email report description"
+    },
+    "scanResultsLinkAnalyzed": {
+        "message": "We analyzed the link:",
+        "description": ""
+    },
+    "scanResultDangerous": {
+        "message": "While this is a legitimate site, we advise caution. Some services offer functionality often abused by malicious attackers. This link leads to one such risky legitimate services, therefore we are not able to automatically determine whether it's safe to proceed.",
+        "description": "Recommendation when an analyzed website turns out to be potentially dangerous"
+    },
+    "scanResultsDangerousExamples": {
+        "message": "Following are some examples:",
+        "description": ""
+    },
+    "scanResultsDangerousExample1": {
+        "message": "Services like Google or Microsoft allow for <b>third-party applications</b> to connect to your account (for example, to import invitations into an external calendar service). An attacker might try to obtain access to your account by tricking you into granting a malicious third-party application access to it.",
+        "description": ""
+    },
+    "scanResultsDangerousExample2": {
+        "message": "Google, for example, offers to host pages at <b>sites.google.com</b>. Attackers often abuse this service to serve their phishing websites.",
+        "description": ""
+    },
+    "scanResultsSuspicious": {
+        "message": "This website has suspicious properties. This <b>could be a phishing site</b>, but we couldn't determine more conclusively. Please proceed with caution.",
+        "description": "Message displayed when an analysis returns a yellow warning"
+    },
+    "scanResultsBad": {
+        "message": "This website has very suspicious properties. This is <b>highly likely a phishing site</b>. We recommend to not proceed to this page.",
+        "description": "Message displayed when analysis returns a red warning"
+    },
+    "scanResultsWarnings": {
+        "message": "Warnings",
+        "description": ""
+    },
+    "scanResultsScreenshot": {
+        "message": "Following is a screenshot preview of the website:",
+        "description": ""
+    },
+    "scanResultsContinueAtMyOwnRisk": {
+        "message": "Continue anyway at my own risk!",
+        "description": "Label for button in scan results page when link was detected as suspicious"
+    },
+    "scanResultsSafelisted": {
+        "message": "The domain the link leads to is <b>safelisted</b>! It appears to be a legitimate BRAND site.",
+        "description": ""
+    },
+    "scanResultsContinueNow": {
+        "message": "Continue to the link now",
+        "description": "Label for button in scan results page when link was not detected"
     }
 }

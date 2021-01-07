@@ -20,6 +20,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLink, faExclamationTriangle, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 
 export function ScanResultsWarning(props) {
+    let warningClass = "pd-yellow-warning";
+    let warningMessage = chrome.i18n.getMessage("scanResultsSuspicious");
+    if (props.score > 50) {
+        warningClass = "pd-red-warning";
+        warningMessage = chrome.i18n.getMessage("scanResultsBad");
+    }
+
     return (
         <div>
             <div className="text-center mb-6">
@@ -28,21 +35,23 @@ export function ScanResultsWarning(props) {
             </div>
 
             {props.dangerous ?
-                <div className="border-l-8 border-yellow-lighter mb-8 bg-yellow-lightest text-yellow-darker p-6 rounded-lg leading-normal">
-                    <div>We analyzed the link: <span className="font-mono bg-yellow-lighter text-yellow-darkest">{props.url}</span></div>
-                    <div className="mt-2">While this is a legitimate BRAND site, we advise caution. Some services offer functionality often abused by malicious attackers. This link leads to one such risky legitimate services, therefore we are not able to automatically determine whether it's safe to proceed.</div>
+                <div className="pd-yellow-warning">
+                    <div>{chrome.i18n.getMessage("scanResultsLinkAnalyzed")} <span className="highlight">{props.url}</span></div>
+                    <div className="mt-2">{chrome.i18n.getMessage("scanResultsDangerous")}</div>
 
-                    <h4 className="mt-4 mb-2">Following are some examples:</h4>
+                    <h4 className="mt-4 mb-2">{chrome.i18n.getMessage("scanResultsDangerousExamples")}</h4>
                     <div>
                         <ul>
-                            <li>Services like Google or Microsoft allow for <b>third-party applications</b> to connect to your account (for example, to import invitations into an external calendar service). An attacker might try to obtain access to your account by tricking you into granting a malicious third-party application access to it.</li>
-                            <li>Google, for example, offers to host pages at <b>sites.google.com</b>. Attackers often abuse this service to serve their phishing websites.</li>
+                            <li>{chrome.i18n.getMessage("scanResultsDangerousExample1")}</li>
+                            <li>{chrome.i18n.getMessage("scanResultsDangerousExample2")}</li>
                         </ul>
                     </div>
                 </div>
                 :
-                <div className="border-l-8 border-red-300 mb-8 bg-red-200 text-red-700 p-6 rounded-lg leading-normal">
-                    <h4 className="mt-4">Warnings</h4>
+                <div className={warningClass}>
+                    <div>{chrome.i18n.getMessage("scanResultsLinkAnalyzed")} <span className="highlight">{props.url}</span></div>
+                    <div>{warningMessage}</div>
+                    <h4 className="mt-4 font-bold">{chrome.i18n.getMessage("scanResultsWarnings")}</h4>
 
                     {props.warnings.map((warning, index) =>
                         <div>{warning.description}</div>
@@ -54,10 +63,10 @@ export function ScanResultsWarning(props) {
                 <div className="mb-8">The original URL <span className="font-mono bg-grey-300">{props.url}</span> redirected to the final URL <span className="font-mono bg-grey-300">{props.final_url}</span></div>
             }
 
-            <div className="mb-4">Following is a screenshot preview of the website.</div>
+            <div className="mb-4">{chrome.i18n.getMessage("scanResultsScreenshot")}</div>
             <div className="text-center"><img className="rounded-lg shadow-lg w-full border-t-2 border-gray-200" src={props.screenshot} /></div>
 
-            <div className="text-center mt-16 mb-10"><a href={props.url} className="pd-button-red text-xl pl-8 pr-8 pt-4 pb-4" role="button" onClick="return confirm('Are you sure?');"><FontAwesomeIcon icon={faLink} /> Continue anyway at my own risk!</a></div>
+            <div className="text-center mt-16 mb-10"><a href={props.url} className="pd-button-red text-xl pl-8 pr-8 pt-4 pb-4" role="button" onClick="return confirm('Are you sure?');"><FontAwesomeIcon icon={faLink} /> {chrome.i18n.getMessage("scanResultsContinueAtMyOwnRisk")}</a></div>
         </div>
     );
 }
@@ -71,7 +80,7 @@ export function ScanResultsContinue(props) {
             </div>
 
             {props.safelisted &&
-                <div className="border-l-8 border-green-300 mb-8 bg-green-200 text-green-700 p-6 rounded-lg leading-normal">The domain the link leads to is <b>safelisted</b>! It appears to be a legitimate BRAND site.</div>
+                <div className="border-l-8 border-green-300 mb-8 bg-green-200 text-green-700 p-6 rounded-lg leading-normal">{chrome.i18n.getMessage("scanResultsSafelisted")}</div>
             }
 
             <div className="border-l-8 border-blue-300 mb-8 bg-blue-200 text-blue-700 p-6 rounded-lg leading-normal">
@@ -83,10 +92,10 @@ export function ScanResultsContinue(props) {
                 <div className="mb-8">The original URL <span className="font-mono bg-grey-300">{props.url}</span> redirected to the final URL <span className="font-mono bg-grey-300">{props.final_url}</span></div>
             }
 
-            <div className="mb-4">Following is a screenshot preview of the website.</div>
+            <div className="mb-4">{chrome.i18n.getMessage("scanResultsScreenshot")}</div>
             <div className="text-center"><img className="rounded-lg shadow-lg w-full border-t-2 border-gray-200" src={props.screenshot} /></div>
 
-            <div className="text-center mt-16 mb-10"><a href={props.url} className="pd-button-blue text-xl pl-8 pr-8 pt-4 pb-4"><FontAwesomeIcon icon={faLink} /> Continue to the link now</a></div>
+            <div className="text-center mt-16 mb-10"><a href={props.url} className="pd-button-blue text-xl pl-8 pr-8 pt-4 pb-4"><FontAwesomeIcon icon={faLink} /> {chrome.i18n.getMessage("scanResultsContinueNow")}</a></div>
         </div>
     );
 }

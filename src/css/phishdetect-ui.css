@@ -13,7 +13,6 @@ html, body {
 h1 {
     @apply text-xl mb-4;
 }
-
 h2 {
     @apply text-lg font-normal m-0 p-0;
 }
@@ -58,20 +57,35 @@ p {
 .pd-form-input:focus {
     @apply border-blue-300;
 }
+
 .pd-status-red {
-    @apply bg-red-100 border border-red-400 text-red-700 px-3 py-2 rounded relative;
+    @apply bg-red-200 border border-red-400 text-red-700 px-3 py-2 rounded relative;
 }
 .pd-status-red-text {
     @apply text-red-700;
 }
 .pd-status-yellow {
-    @apply bg-yellow-100 border border-yellow-400 text-yellow-700 px-3 py-2 rounded relative;
+    @apply bg-yellow-200 border border-yellow-400 text-yellow-700 px-3 py-2 rounded relative;
 }
 .pd-status-yellow-text {
     @apply text-yellow-700;
 }
 .pd-needs-online {
     display: none;
+}
+
+.pd-yellow-warning {
+    @apply border-l-8 border-yellow-400 mb-8 bg-yellow-200 text-yellow-700 p-6 rounded-lg leading-normal
+}
+.pd-yellow-warning .highlight {
+    @apply font-mono bg-yellow-300 text-yellow-700;
+}
+.pd-red-warning {
+    @apply 
+    border-l-8 border-red-400 mb-8 bg-red-200 text-red-700 p-6 rounded-lg leading-normal;
+}
+.pd-red-warning .highlight {
+    @apply font-mono bg-red-300 text-red-700;
 }
 
 @tailwind utilities;

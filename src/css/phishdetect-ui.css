@@ -11,10 +11,10 @@ html, body {
 }
 
 h1 {
-    @apply text-xl mb-4;
+    @apply text-2xl mb-4;
 }
 h2 {
-    @apply text-lg font-normal m-0 p-0;
+    @apply text-xl font-normal m-0 p-0;
 }
 
 a {

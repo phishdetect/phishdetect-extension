@@ -87,5 +87,11 @@ p {
 .pd-red-warning .highlight {
     @apply font-mono bg-red-300 text-red-700;
 }
+.pd-safelisted {
+    @apply border-l-8 border-green-300 mb-8 bg-green-200 text-green-700 p-6 rounded-lg leading-normal;
+}
+.pd-information {
+    @apply border-l-8 border-blue-300 mb-8 bg-blue-200 text-blue-700 p-6 rounded-lg leading-normal;
+}
 
 @tailwind utilities;

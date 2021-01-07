@@ -267,6 +267,10 @@
         "message": "This website has very suspicious properties. This is <b>highly likely a phishing site</b>. We recommend to not proceed to this page.",
         "description": "Message displayed when analysis returns a red warning"
     },
+    "scanResultsStored": {
+        "message": "The results of this scan were stored for operators to review and take action.",
+        "description": "Notice displayed when analysis returns a warning"
+    },
     "scanResultsWarnings": {
         "message": "Warnings",
         "description": ""
@@ -294,6 +298,18 @@
     "scanResultsRemainCautious": {
         "message": "<b>Please notice:</b> this does not guarantee that the page is completely safe (for example, it might evade our detection or identify our service and redirect instead to a legitimate page), please always be cautious.",
         "description": "Message displayed when the scan didn't find anything suspicious, but to make sure the user takes this with a gain of salt"
+    },
+    "scanResultsNotStored": {
+        "message": "The results of this scan were not stored.",
+        "description": "Notice displayed when the scan didn't find anything suspicious, to inform that results were not stored"
+    },
+    "scanResultsIfYouThinkWrong": {
+        "message": "If you believe this assessment is wrong, and suspect this page to be suspicious",
+        "description": "Message to solicit a report if user thinks assessment is wrong"
+    },
+    "scanResultsPleaseReport": {
+        "message": "please report it to us!",
+        "description": "Link to report a link that was not detected"
     },
     "scanResultsContinueNow": {
         "message": "Continue to the link now",

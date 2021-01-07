@@ -27,6 +27,9 @@ function renderResults(data) {
             React.createElement(ScanResultsContinue, data),
             $("#container").get(0)
         );
+        $("#pleaseReport").on("click", function() {
+            chrome.runtime.sendMessage({method: "sendReport", reportType: "url", reportContent: data.url});
+        });
     } else {
         ReactDOM.render(
             React.createElement(ScanResultsWarning, data),
@@ -50,7 +53,6 @@ function scanHTML(url, html, screenshot) {
             let data = response;
             data.screenshot = screenshot;
             renderResults(data);
-            $(document).trigger("warningLoaded");
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(textStatus);
@@ -71,7 +73,6 @@ function scanLink(url) {
         timeout: requestTimeout,
         success: function(response) {
             renderResults(response);
-            $(document).trigger("warningLoaded");
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(textStatus);

@@ -46,6 +46,8 @@ export function ScanResultsWarning(props) {
                             <li>{chrome.i18n.getMessage("scanResultsDangerousExample2")}</li>
                         </ul>
                     </div>
+
+                    <div className="mt-4">{chrome.i18n.getMessage("scanResultsStored")}</div>
                 </div>
                 :
                 <div className={warningClass}>
@@ -56,6 +58,8 @@ export function ScanResultsWarning(props) {
                     {props.warnings.map((warning, index) =>
                         <div>{warning.description}</div>
                     )}
+
+                    <div className="mt-4">{chrome.i18n.getMessage("scanResultsStored")}</div>
                 </div>
             }
 
@@ -80,12 +84,13 @@ export function ScanResultsContinue(props) {
             </div>
 
             {props.safelisted &&
-                <div className="border-l-8 border-green-300 mb-8 bg-green-200 text-green-700 p-6 rounded-lg leading-normal">{chrome.i18n.getMessage("scanResultsSafelisted")}</div>
+                <div className="pd-safelisted">{chrome.i18n.getMessage("scanResultsSafelisted")}</div>
             }
 
-            <div className="border-l-8 border-blue-300 mb-8 bg-blue-200 text-blue-700 p-6 rounded-lg leading-normal">
+            <div className="pd-information">
                 <div>{chrome.i18n.getMessage("scanResultsLinkAnalyzed")} <span className="font-mono bg-blue-300 text-blue-800">{props.url}</span>. </div>
                 <div className="mt-4">{chrome.i18n.getMessage("scanResultsRemainCautious")}</div>
+                <div className="mt-4">{chrome.i18n.getMessage("scanResultsNotStored")} {chrome.i18n.getMessage("scanResultsIfYouThinkWrong")}, <a id="pleaseReport" href="#">{chrome.i18n.getMessage("scanResultsPleaseReport")}</a></div>
             </div>
 
             {props.final_url && (props.final_url != props.url) &&

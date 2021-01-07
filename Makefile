@@ -3,7 +3,7 @@ build: clean
 	yarn install
 
 	@echo "Building files..."
-	NODE_ENV=production yarn run build
+	NODE_ENV=production yarn run build --mode production
 
 	@echo "Building CSS..."
 	yarn tailwind build src/css/phishdetect-ui.css -o build/css/phishdetect-ui.dist.css

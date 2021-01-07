@@ -271,6 +271,10 @@
         "message": "Warnings",
         "description": ""
     },
+    "scanResultsRedirectedTo": {
+        "message": "The original link redirected to the URL",
+        "description": "Message shown when an analyzed link redirected to a second one"
+    },
     "scanResultsScreenshot": {
         "message": "Following is a screenshot preview of the website:",
         "description": ""
@@ -282,6 +286,14 @@
     "scanResultsSafelisted": {
         "message": "The domain the link leads to is <b>safelisted</b>! It appears to be a legitimate BRAND site.",
         "description": ""
+    },
+    "scanResultsNothingSuspicious": {
+        "message": "No suspicious elements have been found in this page.",
+        "description": "Message displayed when the scan didn't find anything suspicious"
+    },
+    "scanResultsRemainCautious": {
+        "message": "<b>Please notice:</b> this does not guarantee that the page is completely safe (for example, it might evade our detection or identify our service and redirect instead to a legitimate page), please always be cautious.",
+        "description": "Message displayed when the scan didn't find anything suspicious, but to make sure the user takes this with a gain of salt"
     },
     "scanResultsContinueNow": {
         "message": "Continue to the link now",

@@ -60,7 +60,7 @@ export function ScanResultsWarning(props) {
             }
 
             {props.final_url && (props.final_url != props.url) &&
-                <div className="mb-8">The original URL <span className="font-mono bg-grey-300">{props.url}</span> redirected to the final URL <span className="font-mono bg-grey-300">{props.final_url}</span></div>
+                <div className="mb-8">{chrome.i18n.getMessage("scanResultsRedirectedTo")} <span className="font-mono bg-grey-300">{props.final_url}</span></div>
             }
 
             <div className="mb-4">{chrome.i18n.getMessage("scanResultsScreenshot")}</div>
@@ -84,12 +84,12 @@ export function ScanResultsContinue(props) {
             }
 
             <div className="border-l-8 border-blue-300 mb-8 bg-blue-200 text-blue-700 p-6 rounded-lg leading-normal">
-                <div>We analyzed the link: <span className="font-mono bg-blue-300 text-blue-800">{props.url}</span>. No suspicious elements have been found in this page.</div>
-                <div className="mt-4"><b>Please notice:</b> this does not guarantee that the page is completely safe (for example, it might evade our detection or identify our service and redirect instead to a legitimate page), please always be cautious.</div>
+                <div>{chrome.i18n.getMessage("scanResultsLinkAnalyzed")} <span className="font-mono bg-blue-300 text-blue-800">{props.url}</span>. </div>
+                <div className="mt-4">{chrome.i18n.getMessage("scanResultsRemainCautious")}</div>
             </div>
 
             {props.final_url && (props.final_url != props.url) &&
-                <div className="mb-8">The original URL <span className="font-mono bg-grey-300">{props.url}</span> redirected to the final URL <span className="font-mono bg-grey-300">{props.final_url}</span></div>
+                <div className="mb-8">{chrome.i18n.getMessage("scanResultsRedirectedTo")} <span className="font-mono bg-grey-300">{props.final_url}</span></div>
             }
 
             <div className="mb-4">{chrome.i18n.getMessage("scanResultsScreenshot")}</div>

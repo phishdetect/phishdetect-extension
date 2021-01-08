@@ -94,7 +94,7 @@ export function ScanResultsContinue(props) {
             }
 
             <div className="pd-information">
-                <div>{chrome.i18n.getMessage("scanResultsLinkAnalyzed")} <span className="font-mono bg-blue-300 text-blue-800">{props.url}</span>. </div>
+                <div>{chrome.i18n.getMessage("scanResultsLinkAnalyzed")} <span className="font-mono bg-blue-300 text-blue-800">{props.url}</span>. {chrome.i18n.getMessage("scanResultsNothingSuspicious")}</div>
                 <div className="mt-4">{chrome.i18n.getMessage("scanResultsRemainCautious")}</div>
                 <div className="mt-4">{chrome.i18n.getMessage("scanResultsNotStored")} <span id="reportResults">{chrome.i18n.getMessage("scanResultsIfYouThinkWrong")}, <a id="pleaseReport" href="#">{chrome.i18n.getMessage("scanResultsPleaseReport")}</a></span></div>
             </div>

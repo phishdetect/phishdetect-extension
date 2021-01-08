@@ -18,21 +18,21 @@
 import scanEmail from "./scanEmail.js";
 
 // Get the email ID from the URL.
-function roundcubeGetOpenEmailUID() {
+function rcGetOpenEmailUID() {
     const url = new URL(location.href);
     return url.searchParams.get("_uid");
 }
 
 // Get mbox ID from the URL.
-function roundcubeGetOpenEmailMailbox() {
+function rcGetOpenEmailMailbox() {
     const url = new URL(location.href);
     return url.searchParams.get("_mbox");
 }
 
 // Get the email source by invoking Roundcube's "viewsource" view.
-function roundcubeGetEmailSource() {
-    const uid = roundcubeGetOpenEmailUID();
-    const mbox = roundcubeGetOpenEmailMailbox();
+function rcGetEmailSource() {
+    const uid = rcGetOpenEmailUID();
+    const mbox = rcGetOpenEmailMailbox();
 
     const url = (window.location.origin +
                  window.location.pathname +
@@ -52,7 +52,7 @@ function roundcubeGetEmailSource() {
 }
 
 // Try to detect and retrieve the DOM object containing the email.
-function roundcubeGetEmail(version) {
+function rcGetEmail(version) {
     if (version == "larry") {
         console.log("[PhishDetect] Looking for email in Rouncube Larry template...");
 
@@ -89,7 +89,9 @@ function roundcubeGetEmail(version) {
 }
 
 // Extract email sender and body and launch a scan.
-function roundcubeCheckEmail(email) {
+function rcCheckEmail(email) {
+    console.log("[PhishDetect] Scanning email ...");
+
     // Get email body.
     const emailBody = email.find("#messagebody");
 
@@ -101,7 +103,7 @@ function roundcubeCheckEmail(email) {
     }
 
     // We get the email UID.
-    const uid = roundcubeGetOpenEmailUID();
+    const uid = rcGetOpenEmailUID();
     // If the ID is null, we stop.
     if (uid === null) {
         return;
@@ -124,7 +126,9 @@ function roundcubeCheckEmail(email) {
 }
 
 // Modify the email to add PhishDetect's prompts.
-function roundcubeModifyEmail(email) {
+function rcModifyEmail(email) {
+    console.log("[PhishDetect] Modifying email ...");
+
     const emailBody = email.find("#messagebody");
     if (!emailBody.length) {
         return;
@@ -146,8 +150,10 @@ function roundcubeModifyEmail(email) {
 }
 
 // Add button to report email to the Node.
-function roundcubeReportEmail(email, version) {
-    const uid = roundcubeGetOpenEmailUID();
+function rcReportEmail(email, version) {
+    console.log("[PhishDetect] Adding email report button ...");
+
+    const uid = rcGetOpenEmailUID();
 
     chrome.runtime.sendMessage({method: "getReportedEmails"}, function(response) {
         let isReported = false;
@@ -173,7 +179,7 @@ function roundcubeReportEmail(email, version) {
         generateReportEmailButton(element, {
             uid: uid,
             reported: isReported,
-            getEmailPromise: roundcubeGetEmailSource
+            getEmailPromise: rcGetEmailSource
         });
         emailHeader.append(element);
     });
@@ -182,12 +188,12 @@ function roundcubeReportEmail(email, version) {
 window.roundcube = function roundcube(version) {
     // NOTE: Currently this is executed inside the main frame as well
     // as the message iframe for the two panes view.
-    var email = roundcubeGetEmail(version);
+    var email = rcGetEmail(version);
     if (email === null) {
         return;
     }
 
-    roundcubeReportEmail(email, version);
-    roundcubeCheckEmail(email);
-    roundcubeModifyEmail(email);
+    rcReportEmail(email, version);
+    rcCheckEmail(email);
+    rcModifyEmail(email);
 };

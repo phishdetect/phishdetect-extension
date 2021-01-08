@@ -28,6 +28,10 @@ p {
     @apply leading-normal;
 }
 
+.pd-container {
+    @apply container mx-auto justify-center items-center;
+}
+
 .separator {
     @apply border-b border-gray-500 mt-1 mb-1;
 }

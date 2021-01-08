@@ -244,28 +244,46 @@
         "description": ""
     },
     "scanResultDangerous": {
-        "message": "While this is a legitimate site, we advise caution. Some services offer functionality often abused by malicious attackers. This link leads to one such risky legitimate services, therefore we are not able to automatically determine whether it's safe to proceed.",
-        "description": "Recommendation when an analyzed website turns out to be potentially dangerous"
+        "message": "While this is a legitimate $brand$ site, we advise caution. Some services offer functionality often abused by malicious attackers. This link leads to one such risky legitimate services, therefore we are not able to automatically determine whether it's safe to proceed.",
+        "description": "Recommendation when an analyzed website turns out to be potentially dangerous",
+        "placeholders": {
+            "brand": {
+                "content": "$1",
+                "example": "Google"
+            }
+        }
     },
     "scanResultsDangerousExamples": {
         "message": "Following are some examples:",
-        "description": ""
+        "description": "Label for list of examples of potentially dangerous legitimate links"
     },
     "scanResultsDangerousExample1": {
-        "message": "Services like Google or Microsoft allow for <b>third-party applications</b> to connect to your account (for example, to import invitations into an external calendar service). An attacker might try to obtain access to your account by tricking you into granting a malicious third-party application access to it.",
-        "description": ""
+        "message": "Services like Google or Microsoft allow for third-party applications to connect to your account (for example, to import invitations into an external calendar service). An attacker might try to obtain access to your account by tricking you into granting a malicious third-party application access to it.",
+        "description": "Dangerous link example #1"
     },
     "scanResultsDangerousExample2": {
-        "message": "Google, for example, offers to host pages at <b>sites.google.com</b>. Attackers often abuse this service to serve their phishing websites.",
-        "description": ""
+        "message": "Google, for example, offers to host pages at sites.google.com. Attackers often abuse this service to serve their phishing websites.",
+        "description": "Dangerous link example #2"
     },
     "scanResultsSuspicious": {
-        "message": "This website has suspicious properties. This <b>could be a phishing site</b>, but we couldn't determine more conclusively. Please proceed with caution.",
-        "description": "Message displayed when an analysis returns a yellow warning"
+        "message": "This website has suspicious properties. This could be a $brand$ phishing site, but we couldn't determine more conclusively. Please proceed with caution.",
+        "description": "Message displayed when an analysis returns a yellow warning",
+        "placeholders": {
+            "brand": {
+                "content": "$1",
+                "example": "Google"
+            }
+        }
     },
     "scanResultsBad": {
-        "message": "This website has very suspicious properties. This is <b>highly likely a phishing site</b>. We recommend to not proceed to this page.",
-        "description": "Message displayed when analysis returns a red warning"
+        "message": "This website has very suspicious properties. This is highly likely a $brand$ phishing site. We recommend to not proceed to this page.",
+        "description": "Message displayed when analysis returns a red warning",
+        "placeholders": {
+            "brand": {
+                "content": "$1",
+                "example": "Google"
+            }
+        }
     },
     "scanResultsStored": {
         "message": "The results of this scan were stored for operators to review and take action.",
@@ -273,7 +291,7 @@
     },
     "scanResultsWarnings": {
         "message": "Warnings",
-        "description": ""
+        "description": "Label for list of warnings displayed in scan results page"
     },
     "scanResultsRedirectedTo": {
         "message": "The original link redirected to the URL",
@@ -281,22 +299,28 @@
     },
     "scanResultsScreenshot": {
         "message": "Following is a screenshot preview of the website:",
-        "description": ""
+        "description": "Label for screenshot preview displayed in scan results page"
     },
     "scanResultsContinueAtMyOwnRisk": {
         "message": "Continue anyway at my own risk!",
         "description": "Label for button in scan results page when link was detected as suspicious"
     },
     "scanResultsSafelisted": {
-        "message": "The domain the link leads to is <b>safelisted</b>! It appears to be a legitimate BRAND site.",
-        "description": ""
+        "message": "The domain the link leads to is safelisted! It appears to be a legitimate $brand$ site.",
+        "description": "Message displayed when the link analyzed is found as safelisted",
+        "placeholders": {
+            "brand": {
+                "content": "$1",
+                "example": "Google"
+            }
+        }
     },
     "scanResultsNothingSuspicious": {
         "message": "No suspicious elements have been found in this page.",
         "description": "Message displayed when the scan didn't find anything suspicious"
     },
     "scanResultsRemainCautious": {
-        "message": "<b>Please notice:</b> this does not guarantee that the page is completely safe (for example, it might evade our detection or identify our service and redirect instead to a legitimate page), please always be cautious.",
+        "message": "Please notice: this does not guarantee that the page is completely safe (for example, it might evade our detection or identify our service and redirect instead to a legitimate page), please always be cautious.",
         "description": "Message displayed when the scan didn't find anything suspicious, but to make sure the user takes this with a gain of salt"
     },
     "scanResultsNotStored": {

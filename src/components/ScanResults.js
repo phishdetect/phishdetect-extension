@@ -19,12 +19,18 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLink, faExclamationTriangle, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 
+function getBrandHTML(brand) {
+    // TODO: Need to find a way to dynamically load FontAwesome icon by
+    //       brand name.
+    return brand[0].toUpperCase() + brand.slice(1).toLowerCase();;
+}
+
 export function ScanResultsWarning(props) {
     let warningClass = "pd-yellow-warning";
-    let warningMessage = chrome.i18n.getMessage("scanResultsSuspicious");
+    let warningMessage = chrome.i18n.getMessage("scanResultsSuspicious", [getBrandHTML(props.brand)]);
     if (props.score > 50) {
         warningClass = "pd-red-warning";
-        warningMessage = chrome.i18n.getMessage("scanResultsBad");
+        warningMessage = chrome.i18n.getMessage("scanResultsBad", [getBrandHTML(props.brand)]);
     }
 
     return (
@@ -84,7 +90,7 @@ export function ScanResultsContinue(props) {
             </div>
 
             {props.safelisted &&
-                <div className="pd-safelisted">{chrome.i18n.getMessage("scanResultsSafelisted")}</div>
+                <div className="pd-safelisted">{chrome.i18n.getMessage("scanResultsSafelisted", [getBrandHTML(props.brand)])}</div>
             }
 
             <div className="pd-information">

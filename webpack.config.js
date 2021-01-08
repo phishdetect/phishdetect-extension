@@ -104,7 +104,6 @@ var options = {
                 {from: "_locales/", to: "_locales"},
                 {from: "node_modules/vex-js/dist/css/vex.css", to: "css"},
                 {from: "node_modules/vex-js/dist/css/vex-theme-default.css", to: "css"},
-                {from: "node_modules/tailwindcss/dist/tailwind.min.css", to: "css"},
                 {from: "node_modules/jquery/dist/jquery.min.js", to: "lib"},
                 {from: "node_modules/js-sha256/build/sha256.min.js", to: "lib"},
                 {from: "node_modules/@fortawesome/fontawesome-free/css", to: "fontawesome/css"},

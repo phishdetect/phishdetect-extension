@@ -25,7 +25,9 @@ function loadContent() {
     const reviewURL = cfg.getReviewURL(indicator);
     $("#reviewMistake").attr("href", reviewURL);
 
-    $("#takeMeAway").attr("href", "about:blank");
+    $("#takeMeAway").click(function() {
+        window.location = "about:blank";
+    });
 }
 
 document.addEventListener("DOMContentLoaded", cfg.loadFromBackground(loadContent));

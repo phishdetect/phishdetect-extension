@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <title data-i18n="">PhishDetect - Warning</title>
-<link href="../../css/tailwind.min.css" rel="stylesheet">
 <link href="../../fontawesome/css/all.min.css" rel="stylesheet">
+<link href="../../css/phishdetect-ui.dist.css" rel="stylesheet">
 </head>
-<body class="bg-gray-900 text-gray-100 p-20">
-<div class="container mx-auto">
+<body class="pd-blocked-body">
+<div class="pd-container">
     <div class="text-5xl mb-2 text-center"><i class="fas fa-exclamation-triangle"></i></div>
     <div class="text-3xl mb-4 text-center"><b>PhishDetect</b> <span data-resource="warningWarning">Warning</span></div>
     <div class="leading-normal text-lg">
@@ -21,9 +21,7 @@
             <a class="text-blue-300" target="_blank" href="https://phishdetect.io/help/">phishdetect.io/help</a>.
         </p>
 
-        <a class="no-underline" id="takeMeAway" href="#">
-            <div class="mt-8 py-3 px-3 bg-blue-500 hover:bg-blue-300 border-b-4 border-blue-700 hover:border-blue-500 rounded cursor-pointer text-center text-blue-300est no-underline text-base font-bold" data-resource="warningAway">TAKE ME AWAY</div>
-        </a>
+        <button id="takeMeAway" class="pd-blocked-away" data-resource="warningAway">TAKE ME AWAY</button>
 
         <!-- <p class="mt-12 text-sm text-red-lighter">If you want to visit this link anyway, you can do so <a id="continueAnyway" class="text-red-lighter" href="">at your own risk</a>.</p> -->
 

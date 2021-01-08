@@ -18,12 +18,12 @@ var options = {
         apikey: path.join(__dirname, "src", "ui", "apikey", "apikey.js"),
         history: path.join(__dirname, "src", "ui", "history", "history.js"),
         options: path.join(__dirname, "src", "ui", "options", "options.js"),
-        scan: path.join(__dirname, "src", "ui", "scan", "scan.js"),
         popup: path.join(__dirname, "src", "ui", "popup", "popup.js"),
-        gmail: path.join(__dirname, "src", "js", "gmail.js"),
-        roundcube: path.join(__dirname, "src", "js", "roundcube.js"),
+        scan: path.join(__dirname, "src", "ui", "scan", "scan.js"),
         domains: path.join(__dirname, "src", "js", "domains.js"),
-        gui: path.join(__dirname, "src", "js", "gui.js")
+        gmail: path.join(__dirname, "src", "js", "gmail.js"),
+        gui: path.join(__dirname, "src", "js", "gui.js"),
+        roundcube: path.join(__dirname, "src", "js", "roundcube.js")
     },
     output: {
         path: path.join(__dirname, "build"),
@@ -84,30 +84,21 @@ var options = {
         }),
         new CopyWebpackPlugin({
             patterns: [
-                {from: "src/css", to: "css"},
+                {from: "src/css/phishdetect-webmails.css", to: "css/"},
                 {from: "src/icons", to: "icons"},
-                {
-                    from: "src/js",
-                    to: "js",
-                    globOptions: {
-                        ignore: ["*/*.js"],
-                    },
-                },
-                // {from: "src/lib", to: "lib"},
-                {
-                    from: "src/ui",
-                    to: "ui",
-                    globOptions: {
-                        ignore: ["*/*.js"],
-                    },
-                },
+                {from: "src/js", to: "js"},
+                {from: "src/ui", to: "ui"},
                 {from: "_locales/", to: "_locales"},
                 {from: "node_modules/vex-js/dist/css/vex.css", to: "css"},
                 {from: "node_modules/vex-js/dist/css/vex-theme-default.css", to: "css"},
                 {from: "node_modules/jquery/dist/jquery.min.js", to: "lib"},
                 {from: "node_modules/js-sha256/build/sha256.min.js", to: "lib"},
-                {from: "node_modules/@fortawesome/fontawesome-free/css", to: "fontawesome/css"},
-                {from: "node_modules/@fortawesome/fontawesome-free/js", to: "fontawesome/js"},
+                {from: "node_modules/@fortawesome/fontawesome-free/css/*.min.css", to({context, absoluteFileName}) {
+                    return "fontawesome/css/[name].[ext]";
+                }},
+                {from: "node_modules/@fortawesome/fontawesome-free/js/*.min.js", to({context, absoluteFileName}) {
+                    return "fontawesome/js/[name].[ext]";
+                }},
                 {from: "node_modules/@fortawesome/fontawesome-free/webfonts", to: "fontawesome/webfonts"}
             ],
         }),

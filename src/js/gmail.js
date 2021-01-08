@@ -25,7 +25,7 @@ window.gmail = gmail;
 import scanEmail from "./scanEmail.js";
 
 function gmailCheckEmail(uid) {
-    console.log("Checking email", uid);
+    console.log("[PhishDetect] Checking email", uid);
 
     // Extract the email DOM.
     const email = new gmail.dom.email(uid);
@@ -40,7 +40,7 @@ function gmailCheckEmail(uid) {
 // gmailModifyEmail will modify the email body and rewrite links to open our
 // confirmation dialog first.
 function gmailModifyEmail(id) {
-    console.log("Modifying email", id);
+    console.log("[PhishDetect] Modifying email", id);
 
     const email = new gmail.dom.email(id);
     const emailBody = email.dom("body");
@@ -94,16 +94,18 @@ function gmailReportEmail(uid) {
 }
 
 (function() {
+    console.log("[PhishDetect] Calling PhishDetect Gmail integration...");
+
     // Check if the option to integrate with webmails is enabled.
     chrome.runtime.sendMessage({method: "getWebmailsIntegration"}, function(response) {
         if (response === false) {
             return;
         }
 
-        console.log("Integrating in Gmail...");
+        console.log("[PhishDetect] Integrating in Gmail...");
 
         gmail.observe.on("view_email", function(obj) {
-            console.log("Email opened with ID", obj.id);
+            console.log("[PhishDetect] Email opened with ID", obj.id);
 
             // Add report email button.
             gmailReportEmail(obj.id);

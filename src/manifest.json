@@ -59,7 +59,6 @@
             "js": [
                 "lib/jquery.min.js",
                 "lib/sha256.min.js",
-                "fontawesome/js/all.js",
                 "dist/domains.js",
                 "dist/gui.js",
                 "js/utils.js",

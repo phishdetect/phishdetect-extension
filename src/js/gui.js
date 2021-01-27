@@ -68,6 +68,11 @@ window.generateWebmailLinkWarning = function generateWebmailLinkWarning(element)
 window.generateWebmailDialog = function generateWebmailDialog(anchor) {
     const href = anchor.href;
 
+    // First we check if the href link is actually a string.
+    if (typeof href !== "string") {
+        return;
+    }
+
     // We check if it is an http link.
     if (href.indexOf("http://") != 0 && href.indexOf("https://") != 0) {
         return;
@@ -146,6 +151,11 @@ window.generateWebmailDialog = function generateWebmailDialog(anchor) {
 // the link. This is utilized if the Node has disabled analysis.
 window.generateWebmailPreview = function generateWebmailPreview(anchor) {
     const href = anchor.href;
+
+    // First we check if the href link is actually a string.
+    if (typeof href !== "string") {
+        return;
+    }
 
     // We check if it is an http link.
     if (href.indexOf("http://") != 0 && href.indexOf("https://") != 0) {

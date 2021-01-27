@@ -96,6 +96,11 @@ export default function scanEmail(fromEmail, emailBody, uid) {
 
             // TODO: Might want to reverse these loops for performance reasons.
             for (let i=0; i<anchors.length; i++) {
+                // First we check if the href link is actually a string.
+                if (typeof anchors[i].href !== "string") {
+                    continue;
+                }
+
                 // Lowercase the link.
                 let href = anchors[i].href.toLowerCase();
 

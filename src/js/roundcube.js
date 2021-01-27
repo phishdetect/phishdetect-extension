@@ -95,13 +95,6 @@ function rcCheckEmail(email) {
     // Get email body.
     const emailBody = email.find("#messagebody");
 
-    // If there is already a PhishDetect warning, we presume that there is no
-    // need to proceed scanning the email.
-    const existingWarning = emailBody.find("#phishdetect-warning");
-    if (existingWarning.length) {
-        return;
-    }
-
     // We get the email UID.
     const uid = rcGetOpenEmailUID();
     // If the ID is null, we stop.

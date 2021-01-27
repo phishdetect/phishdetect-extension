@@ -95,6 +95,10 @@ function rcCheckEmail(email) {
     // Get email body.
     const emailBody = email.find("#messagebody");
 
+    // NOTE: If we need to check if the email was already detected, do not
+    //       rely on DOM elements, as those can be faked and the analysis
+    //       could be prevented.
+
     // We get the email UID.
     const uid = rcGetOpenEmailUID();
     // If the ID is null, we stop.

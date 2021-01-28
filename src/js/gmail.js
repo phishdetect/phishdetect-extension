@@ -44,7 +44,7 @@ function gmailModifyEmail(id) {
 
     const email = new gmail.dom.email(id);
     const emailBody = email.dom("body");
-    const anchors = $(emailBody).find("a");
+    const anchors = $(emailBody).find("a, area");
 
     chrome.runtime.sendMessage({method: "getNodeEnableAnalysis"}, function(response) {
         for (let i=0; i<anchors.length; i++) {

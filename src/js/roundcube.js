@@ -131,7 +131,7 @@ function rcModifyEmail(email) {
         return;
     }
 
-    var anchors = emailBody.find("a");
+    var anchors = emailBody.find("a, area");
 
     chrome.runtime.sendMessage({method: "getNodeEnableAnalysis"}, function(response) {
         for (let i=0; i<anchors.length; i++) {

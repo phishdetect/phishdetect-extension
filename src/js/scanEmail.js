@@ -92,7 +92,7 @@ export default function scanEmail(fromEmail, emailBody, uid) {
 
             // Now we check for links contained in the emails body.
             // We extract all links from the body of the email.
-            let anchors = $(emailBody).find("a");
+            let anchors = $(emailBody).find("a, area");
 
             // TODO: Might want to reverse these loops for performance reasons.
             for (let i=0; i<anchors.length; i++) {

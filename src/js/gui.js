@@ -41,11 +41,9 @@ function renderDOM(component, options, element) {
     ReactDOM.render(React.createElement(component, options), element);
 }
 
-// generateWebmailWarning is a helper function used to generate the HTML
-// needed to show a warning message inside the supported webmails.
-window.generateWebmailWarning = function generateWebmailWarning(alertType) {
-    return renderHTML(WebmailWarning, {alertType: alertType});
-};
+//=============================================================================
+// Report email button.
+//=============================================================================
 // Renders a button into an existing DOM element and attachs a click handler
 // element: the container DOM element
 // getEmailPromise: a function that returns a promise resolving to an email
@@ -57,12 +55,24 @@ window.generateConfirmationDialog = function() {
     return renderHTML(ConfirmationDialog);
 };
 
+//=============================================================================
+// Email warnings when detected as malicious.
+//=============================================================================
+// generateWebmailWarning is a helper function used to generate the HTML
+// needed to show a warning message inside the supported webmails.
+window.generateWebmailWarning = function generateWebmailWarning(alertType) {
+    return renderHTML(WebmailWarning, {alertType: alertType});
+};
 // generateWebmailLinkWarning appends a red warning sign to an HTML element
 // (normally a link) to alert the user that what's contained is malicious.
 window.generateWebmailLinkWarning = function generateWebmailLinkWarning(element) {
     element.insertAdjacentHTML("afterend", renderHTML(WebmailLinkWarning));
 };
 
+//=============================================================================
+// Webmail links full dialog.
+// This is used when the configured Node supports dynamic analysis.
+//=============================================================================
 function createDialogOnClick(href) {
     // We safely render the link and preview it in the dialog.
     const message = renderHTML(WebmailLinkDialog, {
@@ -155,6 +165,64 @@ window.generateWebmailDialog = function generateWebmailDialog(anchor) {
     });
 };
 
+//=============================================================================
+// Webmail links previews.
+// This is used when the configured Node does not support dynamic link
+// analysis.
+//=============================================================================
+function createPreviewOnClick(href) {
+    // Get URLs.
+    // const unsafeUrl = event.srcElement.getAttribute("href");
+    const unsafeUrl = href;
+    // We sanitize the link and preview it in the dialog.
+    const message = renderHTML(WebmailLinkDialog, {
+        content: chrome.i18n.getMessage("webmailPreview"),
+        href: href
+    });
+
+    // We spawn a dialog.
+    vex.defaultOptions.contentClassName = "w-full";
+    vex.dialog.open({
+        unsafeMessage: message,
+        buttons: [
+            $.extend({}, vex.dialog.buttons.YES, {
+                text: chrome.i18n.getMessage("webmailPreviewContinue"),
+                className: "pd-webmail-dialog-red-button",
+                click: function($vexContent, event) {
+                    this.value = "continue";
+                    this.close();
+                    return false;
+                }
+            }),
+            $.extend({}, vex.dialog.buttons.NO, {
+                text: chrome.i18n.getMessage("webmailPreviewCancel"),
+                click: function($vexContent, event) {
+                    this.close();
+                    return false;
+                }
+            }),
+            // Button to open help page.
+            $.extend({}, vex.dialog.buttons.YES, {
+                text: "?",
+                click: function($vexContent, event) {
+                    this.value = "help";
+                    return false;
+                }
+            })
+        ],
+        // Callback to handle button actions.
+        callback: function(value) {
+            if (value) {
+                if (value == "continue") {
+                    window.open(unsafeUrl);
+                } else if (value == "help") {
+                    window.open("https://phishdetect.io/help/");
+                }
+            }
+        }
+    });
+}
+
 // Similarly to generateWebmailDialog, generateWebmailPreview creates a
 // click event handler. However, it does not provide any option to scan
 // the link. This is utilized if the Node has disabled analysis.
@@ -176,60 +244,16 @@ window.generateWebmailPreview = function generateWebmailPreview(anchor) {
     // mostly duplicated by using phishdetect.io anyway.
     anchor.removeAttribute("data-saferedirecturl");
 
-    // We add a listener so we can catch the clicks.
+    // We add listeners so we can catch the both left button and middle
+    // button clicks.
     anchor.addEventListener("click", function(event) {
-        // We prevent the link from opening.
         event.preventDefault();
-
-        // Get URLs.
-        // const unsafeUrl = event.srcElement.getAttribute("href");
-        const unsafeUrl = href;
-        // We sanitize the link and preview it in the dialog.
-        const message = renderHTML(WebmailLinkDialog, {
-            content: chrome.i18n.getMessage("webmailPreview"),
-            href: href
-        });
-
-        // We spawn a dialog.
-        vex.defaultOptions.contentClassName = "w-full";
-        vex.dialog.open({
-            unsafeMessage: message,
-            buttons: [
-                $.extend({}, vex.dialog.buttons.YES, {
-                    text: chrome.i18n.getMessage("webmailPreviewContinue"),
-                    className: "pd-webmail-dialog-red-button",
-                    click: function($vexContent, event) {
-                        this.value = "continue";
-                        this.close();
-                        return false;
-                    }
-                }),
-                $.extend({}, vex.dialog.buttons.NO, {
-                    text: chrome.i18n.getMessage("webmailPreviewCancel"),
-                    click: function($vexContent, event) {
-                        this.close();
-                        return false;
-                    }
-                }),
-                // Button to open help page.
-                $.extend({}, vex.dialog.buttons.YES, {
-                    text: "?",
-                    click: function($vexContent, event) {
-                        this.value = "help";
-                        return false;
-                    }
-                })
-            ],
-            // Callback to handle button actions.
-            callback: function(value) {
-                if (value) {
-                    if (value == "continue") {
-                        window.open(unsafeUrl);
-                    } else if (value == "help") {
-                        window.open("https://phishdetect.io/help/");
-                    }
-                }
-            }
-        });
+        createPreviewOnClick(href);
+    });
+    anchor.addEventListener("auxclick", function(event) {
+        if (event.button == 1) {
+            event.preventDefault();
+            createPreviewOnClick(href);
+        }
     });
 };

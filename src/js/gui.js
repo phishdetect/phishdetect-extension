@@ -63,6 +63,64 @@ window.generateWebmailLinkWarning = function generateWebmailLinkWarning(element)
     element.insertAdjacentHTML("afterend", renderHTML(WebmailLinkWarning));
 };
 
+function createDialogOnClick(href) {
+    // We safely render the link and preview it in the dialog.
+    const message = renderHTML(WebmailLinkDialog, {
+        content: chrome.i18n.getMessage("webmailDialog"),
+        href: href
+    });
+
+    // We spawn a dialog.
+    vex.defaultOptions.contentClassName = "w-full";
+    vex.dialog.open({
+        unsafeMessage: message,
+        buttons: [
+            // Button to open "Safely".
+            $.extend({}, vex.dialog.buttons.YES, {
+                text: chrome.i18n.getMessage("webmailDialogSafely"),
+                className: "pd-webmail-dialog-green-button",
+                click: function($vexContent, event) {
+                    this.value = "safe";
+                    this.close();
+                    return false;
+                }
+            }),
+            // Button to open "Directly" / "Unsafely".
+            $.extend({}, vex.dialog.buttons.YES, {
+                text: chrome.i18n.getMessage("webmailDialogDirectly"),
+                className: "pd-webmail-dialog-red-button",
+                click: function($vexContent, event) {
+                    this.value = "unsafe";
+                    this.close();
+                    return false;
+                }
+            }),
+            // Button to open help page.
+            $.extend({}, vex.dialog.buttons.YES, {
+                text: "?",
+                click: function($vexContent, event) {
+                    this.value = "help";
+                    return false;
+                }
+            })
+        ],
+        // Callback to handle button actions.
+        callback: function(value) {
+            if (value) {
+                // Open the URL through our service.
+                if (value == "safe") {
+                    chrome.runtime.sendMessage({method: "scanLink", link: href});
+                // Open the URL directly.
+                } else if (value == "unsafe") {
+                    window.open(href);
+                } else if (value == "help") {
+                    window.open("https://phishdetect.io/help/");
+                }
+            }
+        }
+    });
+}
+
 // generateWebmailDialog adds a click event handler to the given anchor
 // in order to display a dialog offering to open the link safely.
 window.generateWebmailDialog = function generateWebmailDialog(anchor) {
@@ -83,66 +141,17 @@ window.generateWebmailDialog = function generateWebmailDialog(anchor) {
     // mostly duplicated by using phishdetect.io anyway.
     anchor.removeAttribute("data-saferedirecturl");
 
-    // We add a listener so we can catch the clicks.
+    // We add listeners so we can catch the both left button and middle
+    // button clicks.
     anchor.addEventListener("click", function(event) {
-        // We prevent the link from opening.
         event.preventDefault();
-
-        // We safely render the link and preview it in the dialog.
-        const message = renderHTML(WebmailLinkDialog, {
-            content: chrome.i18n.getMessage("webmailDialog"),
-            href: href
-        });
-
-        // We spawn a dialog.
-        vex.defaultOptions.contentClassName = "w-full";
-        vex.dialog.open({
-            unsafeMessage: message,
-            buttons: [
-                // Button to open "Safely".
-                $.extend({}, vex.dialog.buttons.YES, {
-                    text: chrome.i18n.getMessage("webmailDialogSafely"),
-                    className: "pd-webmail-dialog-green-button",
-                    click: function($vexContent, event) {
-                        this.value = "safe";
-                        this.close();
-                        return false;
-                    }
-                }),
-                // Button to open "Directly" / "Unsafely".
-                $.extend({}, vex.dialog.buttons.YES, {
-                    text: chrome.i18n.getMessage("webmailDialogDirectly"),
-                    className: "pd-webmail-dialog-red-button",
-                    click: function($vexContent, event) {
-                        this.value = "unsafe";
-                        this.close();
-                        return false;
-                    }
-                }),
-                // Button to open help page.
-                $.extend({}, vex.dialog.buttons.YES, {
-                    text: "?",
-                    click: function($vexContent, event) {
-                        this.value = "help";
-                        return false;
-                    }
-                })
-            ],
-            // Callback to handle button actions.
-            callback: function(value) {
-                if (value) {
-                    // Open the URL through our service.
-                    if (value == "safe") {
-                        chrome.runtime.sendMessage({method: "scanLink", link: href});
-                    // Open the URL directly.
-                    } else if (value == "unsafe") {
-                        window.open(href);
-                    } else if (value == "help") {
-                        window.open("https://phishdetect.io/help/");
-                    }
-                }
-            }
-        });
+        createDialogOnClick(href);
+    });
+    anchor.addEventListener("auxclick", function(event) {
+        if (event.button == 1) {
+            event.preventDefault();
+            createDialogOnClick(href);
+        }
     });
 };
 

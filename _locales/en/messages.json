@@ -83,6 +83,26 @@
         "message": "request to review this mistake",
         "description": "Link text to report a wrongfully blocked page"
     },
+    "registerLabelName": {
+        "message": "Your name and affiliation:",
+        "description": "Label to the registration form input for user name"
+    },
+    "registerLabelEmail": {
+        "message": "Your email address:",
+        "description": "Label to the registration form input for user email"
+    },
+    "registerButtonRegister": {
+        "message": "Register",
+        "description": "Label to the registration form confirmation button"
+    },
+    "registerErrorInvalidName": {
+        "message": "You did not enter a valid name and affiliation",
+        "description": "Error message shown when the user enters an invalid name and affiliation"
+    },
+    "registerErrorInvalidEmail": {
+        "message": "You entered an invalid email address!",
+        "description": "Error message shown when the user enters an invalid email address"
+    },
     "apikeyGetToken": {
         "message": "In order to continue using the PhishDetect Browser Extension, you will be required to enter a valid secret token. You don't have one yet?",
         "description": "Paragraph text. Following this text is a link to register for a token"

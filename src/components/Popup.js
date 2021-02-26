@@ -25,7 +25,7 @@ export function PopupActivate(props) {
         <div>
             <p className="mt-4 leading-normal">
                 {chrome.i18n.getMessage("popupTokenRequired") + " "}
-                <a target="_blank" href="/ui/apikey/apikey.html">
+                <a target="_blank" href="/ui/register/register.html">
                     {chrome.i18n.getMessage("popupActivate")}
                 </a> <FontAwesomeIcon icon={faSmile} className="text-blue" />
             </p>

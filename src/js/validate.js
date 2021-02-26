@@ -15,21 +15,26 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-function loadContent() {
-    const href = new URL(location.href);
-    const url = href.searchParams.get("url");
-    const cleanURL = $("<span>").text(url).html();
-    $("#badURL").html(cleanURL);
+"use strict";
 
-    const indicator = href.searchParams.get("indicator");
+const validator = require("validator");
 
-    // TODO: Need to move to REST API.
-    // const reviewURL = cfg.getReviewURL(indicator);
-    // $("#reviewMistake").attr("href", reviewURL);
-
-    $("#takeMeAway").click(function() {
-        window.location = "about:blank";
-    });
+window.isEmpty = function isEmpty(s) {
+    return validator.isEmpty(s);
 }
 
-document.addEventListener("DOMContentLoaded", cfg.loadFromBackground(loadContent));
+window.isEmail = function isEmail(s) {
+    return validator.isEmail(s);
+}
+
+window.isIP = function isIP(s) {
+    return validator.isIP(s);
+}
+
+window.normalizeName = function normalizeName(name) {
+    return validator.escape(name);
+}
+
+window.normalizeEmail = function normalieEmail(email) {
+    return validator.normalizeEmail(email);
+}

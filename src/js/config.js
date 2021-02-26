@@ -240,17 +240,12 @@ class Config {
         return url;
     }
 
-    getRegisterURL() {
-        return new URL(NODE_GUI_REGISTER, this.getNode()).href;
-    }
-
-    getReviewURL(ioc) {
-        let url = new URL(NODE_GUI_REVIEW + ioc + "/", this.getNode()).href;
-        return this.addAuthToURL(url);
-    }
-
     getAPIConfigURL() {
         return new URL(NODE_API_CONFIG_PATH, this.getNode()).href;
+    }
+
+    getAPIRegisterURL() {
+        return new URL(NODE_API_REGISTER_PATH, this.getNode()).href;
     }
 
     getAPIAuthURL() {
@@ -285,6 +280,11 @@ class Config {
 
     getAPIReportsAddURL() {
         let url = new URL(NODE_API_REPORTS_ADD_PATH, this.getNode()).href;
+        return this.addAuthToURL(url);
+    }
+
+    getAPIReviewsAddURL() {
+        let url = new URL(NODE_API_REVIEWS_ADD_PATH, this.getNode()).href;
         return this.addAuthToURL(url);
     }
 

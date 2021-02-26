@@ -36,7 +36,7 @@ function scanBrowsingHistory(tabId) {
 
                 try {
                     let domain = getDomainFromURL(url);
-                    if (checkIfIPAddress(domain))
+                    if (isIP(domain))
                         continue;
 
                     var domainHash = sha256(domain);

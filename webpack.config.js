@@ -21,6 +21,7 @@ var options = {
         popup: path.join(__dirname, "src", "ui", "popup", "popup.js"),
         scan: path.join(__dirname, "src", "ui", "scan", "scan.js"),
         domains: path.join(__dirname, "src", "js", "domains.js"),
+        validate: path.join(__dirname, "src", "js", "validate.js"),
         gmail: path.join(__dirname, "src", "js", "gmail.js"),
         gui: path.join(__dirname, "src", "js", "gui.js"),
         roundcube: path.join(__dirname, "src", "js", "roundcube.js")

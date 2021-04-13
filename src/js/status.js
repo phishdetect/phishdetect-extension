@@ -22,18 +22,19 @@ function setStatusOnline() {
 
 function setStatusOffline() {
     console.log("PhishDetect Node is offline! Setting status to offline too.");
+    chrome.browserAction.setIcon({path: chrome.extension.getURL("icons/50x50/icon_gray.png")});
     cfg.status = "offline";
 }
 
 function setStatusAuthorized() {
     console.log("Setting status as authorized");
-    chrome.browserAction.setIcon({path: chrome.extension.getURL("icons/icon@34.png")});
+    chrome.browserAction.setIcon({path: chrome.extension.getURL("icons/50x50/icon.png")});
     cfg.status = "authorized";
 }
 
 function setStatusUnauthorized() {
     console.log("Setting status as unauthorized!");
-    chrome.browserAction.setIcon({path: chrome.extension.getURL("icons/icon_error@34.png")});
+    chrome.browserAction.setIcon({path: chrome.extension.getURL("icons/50x50/icon_error.png")});
     cfg.status = "unauthorized";
 }
 
@@ -42,7 +43,7 @@ function checkKeySetIfNeeded() {
     // we show an error icon in the toolbar.
     if (cfg.getNodeEnforceUserAuth() === true && cfg.getApiKey() == "") {
         console.log("The user does not appear to have configured a required API key!");
-        chrome.browserAction.setIcon({path: chrome.extension.getURL("icons/icon_error@34.png")});
+        chrome.browserAction.setIcon({path: chrome.extension.getURL("icons/50x50/icon_error.png")});
         cfg.status = "authorization_needed";
         return false;
     }

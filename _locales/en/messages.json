@@ -59,30 +59,6 @@
         "message": "Nothing suspicious found!",
         "description": "Text displayed when scan is completed and no results were found."
     },
-    "warningWarning": {
-        "message": "Warning",
-        "description": "Title for a warning page when opening a dangerous url."
-    },
-    "warningAway": {
-        "message": "TAKE ME AWAY",
-        "description": "Text for button to abort opening a dangerous url"
-    },
-    "warningPrevented": {
-        "message": "PhishDetect prevented you from visiting this page and, if you have this option enabled, alerted the administrator of your configured PhishDetect Node. For more information about this warning read the PhishDetect Help Page:",
-        "description": "Text displayed when PhishDetect prevents you from visiting a page"
-    },
-    "warningReportedNotSafe": {
-        "message": "PhishDetect reported it as not safe.",
-        "description": "Text displayed when PhishDetect prevents you from visiting a page"
-    },
-    "warningWrongfullyBlocked": {
-        "message": "If you think this website was wrongfully blocked, please ",
-        "description": "Text displayed when PhishDetect prevents you from visiting a page"
-    },
-    "warningReviewMistake": {
-        "message": "request to review this mistake",
-        "description": "Link text to report a wrongfully blocked page"
-    },
     "registerLabelName": {
         "message": "Your name and affiliation:",
         "description": "Label to the registration form input for user name"
@@ -362,5 +338,11 @@
     "scanResultsContinueNow": {
         "message": "Continue to the link now",
         "description": "Label for button in scan results page when link was not detected"
-    }
+    },
+
+
+    "blockedTitle": {
+        "message": "PhishDetect blocked this page for you",
+        "description": "Header of the blocked page"
+    },
 }

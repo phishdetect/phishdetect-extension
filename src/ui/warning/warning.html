@@ -7,29 +7,41 @@
 <link href="../../css/phishdetect-ui.dist.css" rel="stylesheet">
 </head>
 <body class="pd-blocked-body">
-<div class="pd-container">
-    <div class="text-5xl mb-2 text-center"><i class="fas fa-exclamation-triangle"></i></div>
-    <div class="text-3xl mb-4 text-center"><b>PhishDetect</b> <span data-resource="warningWarning">Warning</span></div>
-    <div class="leading-normal text-lg">
-        <p>
-            <span data-resource="warningTriedToVisit">You tried to visit</span>
-            <span class="font-bold font-mono" id="badURL"></span>.
-            <span data-resource="warningReportedNotSafe">PhishDetect reported it as <b>not safe</b>.</span>
-        </p>
-        <p>
-            <span data-resource="warningPrevented" >PhishDetect prevented you from visiting this page and, if you have this option enabled, alerted the administrator of your configured PhishDetect Node. For more information about this warning read the PhishDetect Help Page:</span>
-            <a class="text-blue-300" target="_blank" href="https://phishdetect.io/help/">phishdetect.io/help</a>.
-        </p>
+    <div class="pd-blocked-header pt-32 pb-10">
+        <div class="items-center flex justify-center">
+            <div class="flex items-center font-bold text-5xl"><img src="warning_icon.png" class="mr-2" /> PhishDetect blocked this page for you.</div>
+        </div>
 
-        <button id="takeMeAway" class="pd-blocked-away" data-resource="warningAway">TAKE ME AWAY</button>
+        <div class="items-center flex justify-center mt-6">
+            <div class="bg-white p-2 w-min w-max" id="badURL"></div>
+        </div>
 
-        <!-- <p class="mt-12 text-sm text-red-lighter">If you want to visit this link anyway, you can do so <a id="continueAnyway" class="text-red-lighter" href="">at your own risk</a>.</p> -->
+        <div class="text-center mt-6">Did we make a mistake? <a href="">Let us know</a></div>
 
-        <p class="mt-12">
-            <span data-resource="warningWrongfullyBlocked">If you think this website was wrongfully blocked, please </span><a data-resource="warningReviewMistake" class="text-blue-300" id="reviewMistake" href="#">request to review this mistake</a>.
-        </p>
+        <div class="items-center flex justify-center mt-6">
+            <a href="about:blank" class="pd-button-blue text-lg pl-6 pr-6 pt-2 pb-2">Take me away!</a>
+        </div>
     </div>
-</div>
+    <div class="pd-blocked-content">
+        <div class="pd-blocked-content-info">
+            <h1 class="font-bold">Why is this page blocked?</h1>
+            <p>A member of your PhishDetect Network reported this link to the Network's admin. The admin confirmed that it is a phishing link, the extension blocked it for everyone in  your PhishDetect Network.</p>
+
+            <h1 class="font-bold mt-10">Has anything bad happened?</h1>
+            <p>If you have not entered a login, password, or sensitive information, it's unlikely anything bad happened.</p>
+
+            <h1 class="font-bold mt-10">What are potential risks of phishing?</h1>
+            <p>
+                <ul>
+                    <li>Bad hackers could take over your online accounts</li>
+                    <li>Bad hackers could expose your personal information</li>
+                    <li>Bad hackers could control your bank account</li>
+                    <li>Bad hackers could access sensitive work documents</li>
+                    <li>Bad hackers could steal your identity</li>
+                </ul>
+            </p>
+        </div>
+    </div>
 <script src="../../lib/jquery.min.js"></script>
 <script src="../../js/i18n.js"></script>
 <script src="../../js/const.js"></script>

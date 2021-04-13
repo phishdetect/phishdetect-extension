@@ -5,13 +5,13 @@
     "description": "__MSG_manifestDescription__",
     "default_locale": "en",
     "icons": {
-        "16": "icons/icon@16.png",
-        "34": "icons/icon@34.png",
-        "48": "icons/icon@48.png",
-        "128": "icons/icon@128.png"
+        "16": "icons/16x16/icon.png",
+        "32": "icons/32x32/icon.png",
+        "48": "icons/50x50/icon.png",
+        "128": "icons/50x50/icon.png"
     },
     "browser_action": {
-        "default_icon": "icons/icon.png",
+        "default_icon": "icons/50x50/icon.png",
         "default_popup": "ui/popup/popup.html"
     },
     "browser_specific_settings": {

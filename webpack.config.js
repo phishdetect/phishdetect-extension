@@ -87,6 +87,8 @@ var options = {
             patterns: [
                 {from: "src/css/phishdetect-webmails.css", to: "css/"},
                 {from: "src/icons", to: "icons"},
+                {from: "src/images", to: "images"},
+                {from: "src/fonts", to: "fonts"},
                 {from: "src/js", to: "js"},
                 {from: "src/ui", to: "ui"},
                 {from: "_locales/", to: "_locales"},

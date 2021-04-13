@@ -1,7 +1,7 @@
 @tailwind base;
 
 html, body {
-    @apply bg-gray-100 text-gray-900;
+    @apply bg-gray-100 text-gray-900 text-base;
     font-family: "Lucida Grande", "Segoe UI", Tahoma, "DejaVu Sans", Arial, sans-serif;
 }
 
@@ -10,14 +10,22 @@ html, body {
     min-width: 300px;
 }
 
+@font-face {
+    font-family: "Inter", sans-serif;
+    src: url("/fonts/Inter/Inter-VariableFont_slnt,wght.ttf") format("truetype");
+}
+
 h1 {
+    font-family: "Inter", sans-serif;
     @apply text-2xl mb-4;
 }
 h2 {
-    @apply text-xl font-normal m-0 p-0;
+    font-family: "Inter", sans-serif;
+    @apply text-xl m-0 p-0;
 }
 h3, h4 {
-    @apply text-lg font-normal p-0 p-0;
+    font-family: "Inter", sans-serif;
+    @apply text-lg p-0 p-0;
 }
 
 a {

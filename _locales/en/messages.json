@@ -338,11 +338,5 @@
     "scanResultsContinueNow": {
         "message": "Continue to the link now",
         "description": "Label for button in scan results page when link was not detected"
-    },
-
-
-    "blockedTitle": {
-        "message": "PhishDetect blocked this page for you",
-        "description": "Header of the blocked page"
-    },
+    }
 }

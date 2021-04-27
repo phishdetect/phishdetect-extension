@@ -34,9 +34,6 @@ function scanPage() {
 }
 
 function loadPopup() {
-    console.log("POPUP OPEN");
-    console.log(cfg.status);
-
     // Show interactive buttons if the node is online and reachable.
     if (cfg.status == "authorized" || cfg.status == "online") {
         $(".pd-needs-online").show();

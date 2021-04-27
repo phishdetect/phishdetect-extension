@@ -15,10 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-import React from "react";
-import ReactDOM from "react-dom";
-import { PopupActivate, PopupStatusWarning } from "../../components/Popup.js";
-
 function reportPage() {
     getTab(function(tab) {
         chrome.runtime.sendMessage({method: "sendReport", reportType: "url", reportContent: tab.url}, function(response) {
@@ -30,27 +26,16 @@ function reportPage() {
 function scanPage() {
     getTab(function(tab) {
         chrome.runtime.sendMessage({method: "scanPage", tabId: tab.id, tabUrl: tab.url}, function(response) {
-            $("#divScanPage").text(chrome.i18n.getMessage("popupScanning"));
+            $("#scanBird").attr("src", "scan_bird.gif");
+            $("#divScanButton").text("Scanning...");
+            $("#divReportPage").hide();
         });
     });
 }
 
 function loadPopup() {
-    const contentContainer = $("#content");
-    if (cfg.status == "authorization_needed") {
-        // Override all UI if user has not enabled an API key yet.
-        ReactDOM.render(React.createElement(PopupActivate), contentContainer.empty().get(0));
-        return;
-    }
-
-    const statusContainer = $("#divPopupServerStatus");
-    if (cfg.status == "offline") {
-        ReactDOM.render(React.createElement(PopupStatusWarning,
-            {message: "serverOfflineWarning", color: "yellow"}), statusContainer.get(0));
-    } else if (cfg.status == "unauthorized") {
-        ReactDOM.render(React.createElement(PopupStatusWarning,
-            {message: "serverUnauthorizedWarning", color: "red"}), statusContainer.get(0));
-    }
+    console.log("POPUP OPEN");
+    console.log(cfg.status);
 
     // Show interactive buttons if the node is online and reachable.
     if (cfg.status == "authorized" || cfg.status == "online") {
@@ -66,8 +51,7 @@ function loadPopup() {
         if (url.protocol == "chrome:" || url.protocol == "about:"                   ||
             url.protocol == "chrome-extension:" || url.protocol == "moz-extension:" ||
             url.hostname == backendURL.hostname || url.hostname == "mail.google.com") {
-            $("#divReportPage").hide();
-            $("#divScanPage").hide();
+            $("#divPopupActions").text("PhishDetect doesn't work on this webpage.")
         }
 
         // We disable the scan this page button if the Node doesn't support
@@ -79,7 +63,7 @@ function loadPopup() {
         });
     });
 
-    $("#buttonReportPage").on("click", function() {
+    $("#linkReportPage").on("click", function() {
         reportPage();
     });
 

@@ -6,24 +6,16 @@
 <link href="../../fontawesome/css/all.min.css" rel="stylesheet">
 <link href="../../css/phishdetect-ui.dist.css" rel="stylesheet">
 </head>
-<body class="h-screen">
-<div id="container">
-    <h1><b>PhishDetect</b> Report</h1>
+<body>
+    <div class="overflow-hidden bg-white p-2 shadow-lg"><div class="float-left"><img src="../../images/logo.png" class="h-9" /></div><div class="float-right"><a href="https://phishdetect.io/help/">Help</a></div></div>
 
-    <div id="urlReport" class="hidden">
-        <div data-resource="reportReportedURL">You reported the following link as suspicious:</div>
-        <div class="pd-information mt-4" id="reportedURL"></div>
+    <div class="grid justify-items-stretch">
+        <div class="mt-20 justify-self-center text-center items-center w-1/2">
+            <div class="text-5xl font-bold">Thank you for reporting!</div>
+            <div class="mt-4">The admin will review your submission, and if necessary, block it to keep your network safe.</div>
+            <div class="mt-10"><img src="../../images/school_of_phish.png" />
+            <div class="mt-10">We're in it together. <a href="https://phishdetect.io">Learn more about PhishDetect</a>.</div>
+        </div>
     </div>
-
-    <div id="emailReport" class="hidden">
-        <div data-resource="reportReportedEmail">You reported a suspicious email!</div>
-    </div>
-
-    <p class="mt-4 mb-4" data-resource="reportThankYou">Thank you for your report! We will review it as soon as possible and take action if required. By reporting suspicious links and emails you help to protect others like you!</p>
-</div>
-<script src="../../lib/jquery.min.js"></script>
-<script src="../../js/i18n.js"></script>
-<script src="../../js/config.js"></script>
-<script src="report.js"></script>
 </body>
 </html>

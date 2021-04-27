@@ -7,10 +7,7 @@
 <link href="../../css/phishdetect-ui.dist.css" rel="stylesheet">
 </head>
 <body class="pd-blocked-body">
-    <div class="bg-white p-2 flex">
-        <div class="items-left"><img src="../../images/logo.png" class="h-9" /></div>
-        <div class="float-right text-right">Help</div>
-    </div>
+    <div class="overflow-hidden bg-white p-2 shadow-lg"><div class="float-left"><img src="../../images/logo.png" class="h-9" /></div><div class="float-right"><a href="https://phishdetect.io/help/">Help</a></div></div>
 
     <div class="pd-blocked-header pt-24 pb-10">
         <div class="items-center flex justify-center">
@@ -21,7 +18,7 @@
             <div class="bg-white p-2 w-min w-max" id="badURL"></div>
         </div>
 
-        <div class="text-center mt-6">Did we make a mistake? <a href="">Let us know</a></div>
+        <div class="text-center mt-6">Did we make a mistake? <a id="reviewMistake" href="#">Let us know</a></div>
 
         <div class="items-center flex justify-center mt-6">
             <a href="about:blank" class="pd-button-blue text-lg pl-6 pr-6 pt-2 pb-2">Take me away!</a>

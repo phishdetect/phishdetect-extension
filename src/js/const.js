@@ -31,6 +31,8 @@ NODE_API_REVIEWS_ADD_PATH             = "/api/reviews/add/";
 WARNING_PAGE                          = "ui/warning/warning.html";
 REPORT_PAGE                           = "ui/report/report.html";
 REPORT_FAILED_PAGE                    = "ui/report/report_failed.html";
+REVIEW_PAGE                           = "ui/review/review.html";
+REVIEW_FAILED_PAGE                    = "ui/review/review_failed.html";
 SCAN_PAGE                             = "ui/scan/scan.html";
 REGISTER_COMPLETED_PAGE               = "ui/register/register_completed.html";
 

@@ -1,7 +1,7 @@
 @tailwind base;
 
 html, body {
-    @apply bg-gray-100 text-gray-900 text-base;
+    @apply bg-offwhite text-almostblack text-base;
     font-family: "Lucida Grande", "Segoe UI", Tahoma, "DejaVu Sans", Arial, sans-serif;
 }
 
@@ -42,11 +42,13 @@ p {
 .pd-container {
     @apply container mx-auto justify-center items-center;
 }
-
 .separator {
     @apply border-b border-gray-500 mt-1 mb-1;
 }
 
+/*
+    BUTTONS
+*/
 .pd-button-blue {
     @apply py-1 px-2 rounded bg-whaleblue cursor-pointer text-white no-underline;
 }
@@ -109,6 +111,9 @@ p {
     @apply border-l-8 border-blue-300 mb-8 bg-blue-200 text-blue-700 p-6 rounded-lg leading-normal;
 }
 
+/*
+    WARNING PAGE
+*/
 .pd-blocked-body {
     background-color: #31302e;
     @apply h-screen;

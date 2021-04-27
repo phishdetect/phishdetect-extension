@@ -94,7 +94,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         scanLink(request.link);
         break;
     case "scanHistory":
-        sendResponse(scanBrowsingHistory(request.tabId));
+        scanBrowsingHistory(request.tabId);
         break;
 
     //=========================================================================
@@ -107,6 +107,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         break;
     case "sendReport":
         sendReport(request.reportType, request.reportContent, request.identifier);
+        break;
+    case "sendReview":
+        sendReview(request.ioc, request.tabId);
         break;
 
     //=========================================================================

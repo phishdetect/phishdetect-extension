@@ -23,9 +23,9 @@ function loadContent() {
 
     const indicator = href.searchParams.get("indicator");
 
-    // TODO: Need to move to REST API.
-    // const reviewURL = cfg.getReviewURL(indicator);
-    // $("#reviewMistake").attr("href", reviewURL);
+    $("#reviewMistake").click(function() {
+        chrome.runtime.sendMessage({method: "sendReview", ioc: indicator});
+    })
 
     $("#takeMeAway").click(function() {
         window.location = "about:blank";

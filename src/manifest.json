@@ -32,6 +32,7 @@
             "js/indicators.js",
             "js/alerts.js",
             "js/reports.js",
+            "js/reviews.js",
             "js/alarms.js",
             "js/scanLink.js",
             "js/scanPage.js",

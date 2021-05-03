@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title data-i18n="">PhishDetect - Warning</title>
+<link href="../../fontawesome/css/all.min.css" rel="stylesheet">
+<link href="../../css/phishdetect-ui.dist.css" rel="stylesheet">
+</head>
+<body>
+    <div class="overflow-hidden bg-white p-2 shadow-lg"><div class="pd-container"><div class="float-left"><img src="../../images/logo.png" class="h-9" /></div><div class="float-right"><a href="https://phishdetect.io/help/">Help</a></div></div></div>
+
+    <div class="pd-container mt-10">
+        <h1 class="mb-8">Settings</h1>
+
+        <div id="divServerDefault" class="pd-settings-box">
+            <h2 class="mb-4">Network</h2>
+            <div class="mb-2">Connected to the default <i class="fas fa-check-circle text-turquoise"></i></div>
+            <div>
+                <div class="italic mb-2">Invited to PhishDetect by a group, team, or organization?</div>
+                <div><a class="pd-button-blue">Join their Network</a></div>
+            </div>
+        </div>
+
+        <div id="divIntegrations" class="pd-settings-box">
+            <h2 class="mb-4">Integrations</h2>
+               
+            <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                <input type="checkbox" name="toggleIntegrations" id="toggleIntegrations" class="pd-settings-toggle absolute block w-6 h-6 rounded-full bg-white border-4 border-gray-300 appearance-none cursor-pointer"/>
+                <label for="toggleIntegrations" class="pd-settings-toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+            </div>
+            <label for="toggleIntegrations">Email (Gmail and Riseup and others are supported).</label>
+        </div>
+
+        <div id="divReporting" class="pd-settings-box">
+            <h2 class="mb-4">Reporting</h2>
+
+            <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                <input type="checkbox" name="toggleReporting" id="toggleReporting" class="pd-settings-toggle absolute block w-6 h-6 rounded-full bg-white border-4 border-gray-300 appearance-none cursor-pointer"/>
+                <label for="toggleReporting" class="pd-settings-toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+            </div>
+            <label for="toggleReporting">Add contact details when reporting phishing attacks to your admin.</label>
+        </div>
+
+        <h1 class="mb-8 mt-12">Scan your browser history for phishing</h1>
+
+        <div id="divScanHistory" class="pd-settings-box">
+            <div>PhishDetect will locally scan your browser history and check the websites you visited against confirmed phishing websites. You can perform this scan right after installing PhishDetect, spontaneously, or for research purposes.</div>
+            <div class="mt-4"><a class="pd-button-blue">Scan browser history</a></div>
+        </div>
+    </div>
+</div>
+<script src="../../lib/jquery.min.js"></script>
+<script src="../../js/i18n.js"></script>
+<script src="../../js/const.js"></script>
+<script src="../../js/config.js"></script>
+<script src="../../dist/options.js"></script>
+</body>
+</html>

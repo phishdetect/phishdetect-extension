@@ -20,7 +20,7 @@
         }
     },
     "options_ui" : {
-        "page": "ui/options/options.html"
+        "page": "ui/settings/settings.html"
     },
     "background": {
         "scripts": [

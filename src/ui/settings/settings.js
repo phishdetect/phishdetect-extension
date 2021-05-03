@@ -15,18 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
-import React from "react";
-import ReactDOM from "react-dom";
-import { OptionsSaved, OptionsWarning } from "../../components/Options.js";
-
 function loadOptions() {
     $("#server").val(cfg.getNode());
     $("#webmails").prop("checked", cfg.getWebmailsIntegration());
 
     if (cfg.status == "offline") {
-        ReactDOM.render(React.createElement(OptionsWarning, {message: "serverOfflineFormError", color: "yellow"}), $("#nodeError").get(0));
     } else if (cfg.status == "unauthorized") {
-        ReactDOM.render(React.createElement(OptionsWarning, {message: "serverUnauthorizedWarning", color: "red"}), $("#keyError").get(0));
     }
 
     const sendAlerts = cfg.getSendAlerts();
@@ -54,7 +48,7 @@ function saveOptions(event) {
         // Set request to background to update node and reset config.
         const container = $("#container").empty();
         chrome.runtime.sendMessage({method: "updateNode", node: node, key: key}, function(response) {
-            ReactDOM.render(React.createElement(OptionsSaved), container.get(0));
+            // Saved
         });
     } else {
         cfg.setApiKey(key);
@@ -65,7 +59,7 @@ function saveOptions(event) {
         // Reload config on background page
         const container = $("#container").empty();
         chrome.runtime.sendMessage({method: "updateConfiguration", config: cfg.config}, function(response) {
-            ReactDOM.render(React.createElement(OptionsSaved), container.get(0));
+            // Saved
             // Update indicators in background script after we have potential edited API key.
             chrome.runtime.sendMessage({method: "updateIndicators"});
         });

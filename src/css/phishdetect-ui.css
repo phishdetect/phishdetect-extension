@@ -17,15 +17,15 @@ html, body {
 
 h1 {
     font-family: "Inter", sans-serif;
-    @apply text-2xl mb-4;
+    @apply text-2xl mb-4 font-bold;
 }
 h2 {
     font-family: "Inter", sans-serif;
-    @apply text-xl m-0 p-0;
+    @apply text-xl m-0 p-0 font-bold;
 }
 h3, h4 {
     font-family: "Inter", sans-serif;
-    @apply text-lg p-0 p-0;
+    @apply text-lg p-0 p-0 font-bold;
 }
 
 a {
@@ -50,26 +50,26 @@ p {
     BUTTONS
 */
 .pd-button-blue {
-    @apply py-1 px-2 rounded bg-whaleblue cursor-pointer text-white no-underline;
+    @apply py-2 px-4 rounded bg-whaleblue cursor-pointer text-white no-underline;
 }
 .pd-button-blue:hover {
     @apply bg-whaleblue-light text-white no-underline;
 }
 .pd-button-red {
-    @apply py-1 px-2 rounded bg-red-500 cursor-pointer text-white no-underline;
+    @apply py-2 px-4 rounded bg-red-500 cursor-pointer text-white no-underline;
 }
 .pd-button-red:hover {
     @apply bg-red-600 border-red-600 no-underline;
 }
 .pd-button-gray {
-    @apply py-1 px-2 rounded bg-gray-300 cursor-pointer text-gray-800 no-underline;
+    @apply py-2 px-4 rounded bg-gray-300 cursor-pointer text-gray-800 no-underline;
 }
 .pd-button-gray:hover {
     @apply bg-gray-400 border-gray-400 no-underline;
 }
 
 .pd-form-input {
-    @apply block appearance-none w-2/5 bg-white border border-gray-300 px-2 py-2 rounded;
+    @apply block appearance-none w-2/5 bg-white border border-gray-300 px-4 py-2 rounded;
 }
 .pd-form-input:focus {
     @apply border-blue-300;
@@ -115,23 +115,38 @@ p {
     WARNING PAGE
 */
 .pd-blocked-body {
-    background-color: #31302e;
-    @apply h-screen;
+    @apply bg-almostblack h-screen;
 }
 .pd-blocked-header {
     background-color: #cbcbca;
 }
 .pd-blocked-content {
-    background-color: #31302e;
     background-image: url('/ui/warning/background.png');
     background-repeat: no-repeat no-repeat;
     background-size: 100%;
-    @apply text-white;
+    @apply bg-almostblack text-white;
 }
 .pd-blocked-content-info {
     padding-top: 600px;
     padding-bottom: 100px;
     @apply w-1/2 mx-auto justify-center items-center text-lg;
+}
+
+/*
+    SETTINGS PAGE
+*/
+.pd-settings-box {
+    @apply bg-white text-black shadow-lg p-6 mb-6 rounded;
+}
+
+.pd-settings-toggle:checked {
+    @apply: right-0 border-turquoise;
+    right: 0;
+    border-color: #6ACEA5;
+}
+.pd-settings-toggle:checked + .pd-settings-toggle-label {
+    @apply: bg-turquoise;
+    background-color: #6ACEA5;
 }
 
 @tailwind utilities;

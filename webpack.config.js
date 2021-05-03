@@ -17,7 +17,6 @@ var options = {
     entry: {
         apikey: path.join(__dirname, "src", "ui", "apikey", "apikey.js"),
         history: path.join(__dirname, "src", "ui", "history", "history.js"),
-        options: path.join(__dirname, "src", "ui", "options", "options.js"),
         scan: path.join(__dirname, "src", "ui", "scan", "scan.js"),
         domains: path.join(__dirname, "src", "js", "domains.js"),
         validate: path.join(__dirname, "src", "js", "validate.js"),

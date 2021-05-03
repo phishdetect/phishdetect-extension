@@ -25,14 +25,18 @@ function loadOptions() {
 
     const sendAlerts = cfg.getSendAlerts();
     $("#toggleReporting").prop("checked", cfg.getSendAlerts());
-    $("#contact").val(cfg.getUserContact());
+    $("#userContact").val(cfg.getUserContact());
 
     if (sendAlerts) {
-        $("#contactLabel").removeClass("text-gray-500");
-        $("#contact").prop("disabled", false);
+        $("#labelReporting").removeClass("text-gray-500");
+        $("#userContact").prop("disabled", false);
+        $("#userContactSave").removeClass("pd-button-disabled")
+        $("#userContactSave").addClass("pd-button-blue");
     } else {
-        $("#contactLabel").addClass("text-gray-500");
-        $("#contact").prop("disabled", true);
+        $("#labelReporting").addClass("text-gray-500");
+        $("#userContact").prop("disabled", true);
+        $("#userContactSave").removeClass("pd-button-blue");
+        $("#userContactSave").addClass("pd-button-disabled");
     }
 
     $("#key").val(cfg.getApiKey());
@@ -42,7 +46,6 @@ function loadOptions() {
 }
 
 function saveOptions() {
-    // cfg.setContact($("#contact").val().trim());
     cfg.setWebmailsIntegration($("#toggleIntegrations").is(":checked"));
     cfg.setSentAlerts($("#toggleReporting").is(":checked"));
 
@@ -58,11 +61,24 @@ $("#toggleIntegrations").change(function() {
 
 $("#toggleReporting").change(function() {
     saveOptions();
-    // if (this.checked) {
-    //     $("#contactLabel").removeClass("text-gray-500");
-    //     $("#contact").prop("disabled", false);
-    // } else {
-    //     $("#contactLabel").addClass("text-gray-500");
-    //     $("#contact").prop("disabled", true);
-    // }
+    if (this.checked) {
+        $("#labelReporting").removeClass("text-gray-500");
+        $("#userContact").prop("disabled", false);
+        $("#userContactSave").removeClass("pd-button-disabled")
+        $("#userContactSave").addClass("pd-button-blue");
+    } else {
+        $("#labelReporting").addClass("text-gray-500");
+        $("#userContact").prop("disabled", true);
+        $("#userContactSave").removeClass("pd-button-blue");
+        $("#userContactSave").addClass("pd-button-disabled");
+    }
 });
+
+$("#userContactSave").on("click", function() {
+    if ($("#toggleReporting").is(":checked")) {
+        cfg.setContact($("#userContact").val().trim());
+        // Reload config on background page
+        chrome.runtime.sendMessage({method: "updateConfiguration", config: cfg.config});
+        $("#spanUserContact").append("<span class=\"text-turquoise ml-2\">Saved!</span>");
+    }
+})

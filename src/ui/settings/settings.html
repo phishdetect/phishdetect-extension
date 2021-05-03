@@ -38,14 +38,14 @@
                 <input type="checkbox" name="toggleReporting" id="toggleReporting" class="pd-settings-toggle absolute block w-6 h-6 rounded-full bg-white border-4 border-gray-300 appearance-none cursor-pointer"/>
                 <label for="toggleReporting" class="pd-settings-toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
             </div>
-            <label for="toggleReporting">Add contact details when reporting phishing attacks to your admin.</label>
+            <label id="labelReporting" for="toggleReporting">Enable automatic reporting of detected attacks to your admin. Add your contact details if you wish: <input type="text" id="userContact" name="userContact" class="pd-form-input"></label> <span id="spanUserContact"><a class="pd-button-blue" id="userContactSave">Save</a></span>
         </div>
 
         <h1 class="mb-8 mt-12">Scan your browser history for phishing</h1>
 
         <div id="divScanHistory" class="pd-settings-box">
             <div>PhishDetect will locally scan your browser history and check the websites you visited against confirmed phishing websites. You can perform this scan right after installing PhishDetect, spontaneously, or for research purposes.</div>
-            <div class="mt-4"><a class="pd-button-blue">Scan browser history</a></div>
+            <div class="mt-4"><a class="pd-button-blue" href="/ui/history/history.html">Scan browser history</a></div>
         </div>
     </div>
 </div>

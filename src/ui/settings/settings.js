@@ -15,6 +15,20 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
+function toggleReportingOn() {
+    $("#labelReporting").removeClass("text-gray-500");
+    $("#userContact").prop("disabled", false);
+    $("#userContactSave").removeClass("pd-button-disabled")
+    $("#userContactSave").addClass("pd-button-blue"); 
+}
+
+function toggleReportingOff() {
+    $("#labelReporting").addClass("text-gray-500");
+    $("#userContact").prop("disabled", true);
+    $("#userContactSave").removeClass("pd-button-blue");
+    $("#userContactSave").addClass("pd-button-disabled");
+}
+
 function loadOptions() {
     $("#server").val(cfg.getNode());
     $("#toggleIntegrations").prop("checked", cfg.getWebmailsIntegration());
@@ -28,15 +42,9 @@ function loadOptions() {
     $("#userContact").val(cfg.getUserContact());
 
     if (sendAlerts) {
-        $("#labelReporting").removeClass("text-gray-500");
-        $("#userContact").prop("disabled", false);
-        $("#userContactSave").removeClass("pd-button-disabled")
-        $("#userContactSave").addClass("pd-button-blue");
+        toggleReportingOn();
     } else {
-        $("#labelReporting").addClass("text-gray-500");
-        $("#userContact").prop("disabled", true);
-        $("#userContactSave").removeClass("pd-button-blue");
-        $("#userContactSave").addClass("pd-button-disabled");
+        toggleReportingOff();
     }
 
     $("#key").val(cfg.getApiKey());
@@ -48,8 +56,6 @@ function loadOptions() {
 function saveOptions() {
     cfg.setWebmailsIntegration($("#toggleIntegrations").is(":checked"));
     cfg.setSentAlerts($("#toggleReporting").is(":checked"));
-
-    // Reload config on background page
     chrome.runtime.sendMessage({method: "updateConfiguration", config: cfg.config});
 }
 
@@ -62,22 +68,15 @@ $("#toggleIntegrations").change(function() {
 $("#toggleReporting").change(function() {
     saveOptions();
     if (this.checked) {
-        $("#labelReporting").removeClass("text-gray-500");
-        $("#userContact").prop("disabled", false);
-        $("#userContactSave").removeClass("pd-button-disabled")
-        $("#userContactSave").addClass("pd-button-blue");
+        toggleReportingOn();
     } else {
-        $("#labelReporting").addClass("text-gray-500");
-        $("#userContact").prop("disabled", true);
-        $("#userContactSave").removeClass("pd-button-blue");
-        $("#userContactSave").addClass("pd-button-disabled");
+        toggleReportingOff();
     }
 });
 
 $("#userContactSave").on("click", function() {
     if ($("#toggleReporting").is(":checked")) {
         cfg.setContact($("#userContact").val().trim());
-        // Reload config on background page
         chrome.runtime.sendMessage({method: "updateConfiguration", config: cfg.config});
         $("#spanUserContact").append("<span class=\"text-turquoise ml-2\">Saved!</span>");
     }

@@ -15,6 +15,14 @@
 // You should have received a copy of the GNU General Public License
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
+function toggleIntegrationsOn() {
+    $("#labelIntegrations").removeClass("text-gray-500");
+}
+
+function toggleIntegrationsOff() {
+    $("#labelIntegrations").addClass("text-gray-500");
+}
+
 function toggleReportingOn() {
     $("#labelReporting").removeClass("text-gray-500");
     $("#userContact").prop("disabled", false);
@@ -39,17 +47,23 @@ function loadOptions() {
         $("#divCustomNetwork").show();
     }
 
-    $("#toggleIntegrations").prop("checked", cfg.getWebmailsIntegration());
+    const integration = cfg.getWebmailsIntegration();
+    if (integration) {
+        $("#toggleIntegrations").prop("checked", true);
+        toggleIntegrationsOn();
+    } else {
+        toggleIntegrationsOff();
+    }
 
     if (cfg.status == "offline") {
     } else if (cfg.status == "unauthorized") {
     }
 
     const sendAlerts = cfg.getSendAlerts();
-    $("#toggleReporting").prop("checked", cfg.getSendAlerts());
     $("#userContact").val(cfg.getUserContact());
 
     if (sendAlerts) {
+        $("#toggleReporting").prop("checked", true);
         toggleReportingOn();
     } else {
         toggleReportingOff();
@@ -71,6 +85,11 @@ document.addEventListener("DOMContentLoaded", cfg.loadFromBackground(loadOptions
 
 $("#toggleIntegrations").change(function() {
     saveOptions();
+    if (this.checked) {
+        toggleIntegrationsOn();
+    } else {
+        toggleIntegrationsOff();
+    }
 });
 
 $("#toggleReporting").change(function() {

@@ -200,6 +200,8 @@ class Config {
         fetch(url)
             .then((response) => response.json())
             .then(data => {
+                this.setNodeAdminName(data.admin_name);
+                this.setNodeAdminContacts(data.admin_contacts);
                 this.setNodeEnableAnalysis(data.enable_analysis);
                 this.setNodeEnforceUserAuth(data.enforce_user_auth);
 
@@ -212,6 +214,20 @@ class Config {
                 // Calling failure callback if errored.
                 failure();
             });
+    }
+
+    getNodeAdminName() {
+        return this.getItem("cfg_node_admin_name");
+    }
+    setNodeAdminName(value) {
+        this.setItem("cfg_node_admin_name", value);
+    }
+
+    getNodeAdminContacts() {
+        return this.getItem("cfg_node_admin_contacts");
+    }
+    setNodeAdminContacts(value) {
+        this.setItem("cfg_node_admin_contacts", value);
     }
 
     getNodeEnableAnalysis() {

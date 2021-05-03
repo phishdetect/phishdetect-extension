@@ -30,7 +30,15 @@ function toggleReportingOff() {
 }
 
 function loadOptions() {
-    $("#server").val(cfg.getNode());
+    const node = cfg.getNode();
+    if (node == NODE_DEFAULT_URL) {
+        $("#divDefaultNetwork").show();
+    } else {
+        $("#customNetworkAddress").text(node);
+        $("#customNetworkAdmin").text(cfg.getNodeAdminContacts());
+        $("#divCustomNetwork").show();
+    }
+
     $("#toggleIntegrations").prop("checked", cfg.getWebmailsIntegration());
 
     if (cfg.status == "offline") {

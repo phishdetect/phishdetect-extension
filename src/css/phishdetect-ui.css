@@ -55,6 +55,12 @@ p {
 .pd-button-blue:hover {
     @apply bg-whaleblue-light text-white no-underline;
 }
+.pd-button-blue-outline {
+    @apply py-2 px-4 rounded border-2 border-whaleblue cursor-pointer text-whaleblue no-underline;
+}
+.pd-button-blue-outline:hover {
+    @apply border-whaleblue-light text-whaleblue no-underline;
+}
 .pd-button-red {
     @apply py-2 px-4 rounded bg-red-500 cursor-pointer text-white no-underline;
 }

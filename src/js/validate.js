@@ -35,6 +35,6 @@ window.normalizeName = function normalizeName(name) {
     return validator.escape(name);
 }
 
-window.normalizeEmail = function normalieEmail(email) {
+window.normalizeEmail = function normalizeEmail(email) {
     return validator.normalizeEmail(email);
 }

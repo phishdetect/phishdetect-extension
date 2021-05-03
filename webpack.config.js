@@ -15,7 +15,6 @@ var options = {
     },
     mode: process.env.NODE_ENV || "development",
     entry: {
-        apikey: path.join(__dirname, "src", "ui", "apikey", "apikey.js"),
         history: path.join(__dirname, "src", "ui", "history", "history.js"),
         scan: path.join(__dirname, "src", "ui", "scan", "scan.js"),
         domains: path.join(__dirname, "src", "js", "domains.js"),

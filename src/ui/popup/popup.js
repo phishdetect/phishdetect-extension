@@ -33,10 +33,23 @@ function scanPage() {
     });
 }
 
+function error(msg) {
+    $("#divPopupActions").hide();
+    $("#divPopupServerStatus").text(msg)
+    $("#divPopupServerStatus").show();
+}
+
 function loadPopup() {
-    // if (cfg.status !== "authorized" || cfg.status !== "online") {
-    //     $(".pd-needs-online").show();
-    // }
+    if (cfg.status == "offline") {
+        error("Oops! The PhishDetect server seems to be offline at the moment, or your Internet connection might be down!")
+        return;
+    } else if (cfg.status == "unauthorized") {
+        error("Hold tight! Your admin has not yet activated your account!");
+        return;
+    } else if (cfg.status == "authorization_needed") {
+        error("Your Network requires registration!");
+        return;
+    }
 
     getTab(function(tab) {
         const url = new URL(tab.url);

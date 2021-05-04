@@ -35,6 +35,6 @@ REVIEW_PAGE                           = "ui/review/review.html";
 REVIEW_FAILED_PAGE                    = "ui/review/review_failed.html";
 SCAN_PAGE                             = "ui/scan/scan.html";
 
-INDICATORS_UPDATE_FREQUENCY           = 15;
-CONFIG_UPDATE_FREQUENCY               = 30;
+INDICATORS_UPDATE_FREQUENCY           = 30;
+CONFIG_UPDATE_FREQUENCY               = 60;
 ONE_DAY_TIME                          = 24 * 60 * 60 * 1000;

@@ -3517,10 +3517,10 @@ globby@^6.1.0:
     pify "^2.0.0"
     pinkie-promise "^2.0.0"
 
-gmail-js@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/gmail-js/-/gmail-js-1.0.5.tgz#c0f168d6364a78721e90eaddd7c7c49624eef0fe"
-  integrity sha512-3+51Tzf3hwVgDJzzA29VCFl0bm7ra74fx1Mj8rnGLp1jCTlJbXqOafMpY9o2QTuhf0NV7Lq90kgjV6lJD8Yxyg==
+gmail-js@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/gmail-js/-/gmail-js-1.0.6.tgz#c211b5953478fd49aa162461494fcb8e75be9005"
+  integrity sha512-JMaCBSFnChOAAyIlrUAp+os3QQ1Z8X/FDKdnmHjR1M4eoF0ecKudC5E3MEuVLimVZeMUXu/vBd273+B4qmiWBw==
   dependencies:
     jquery "^3.3.1"
 
@@ -4266,10 +4266,15 @@ jest-worker@^26.6.1:
     merge-stream "^2.0.0"
     supports-color "^7.0.0"
 
-jquery@^3.3.1, jquery@^3.5.1:
+jquery@^3.3.1:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.5.1.tgz#d7b4d08e1bfdb86ad2f1a3d039ea17304717abb5"
   integrity sha512-XwIBPqcMn57FxfT+Go5pzySnm4KWkT1Tv7gjrpT1srtf8Weynl6R273VJ5GjkRb51IzMp5nbaPjJXMWeju2MKg==
+
+jquery@^3.6.0:
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.6.0.tgz#c72a09f15c1bdce142f49dbf1170bdf8adac2470"
+  integrity sha512-JVzAR/AjBvVt2BmYhxRCSYysDsPcssdmTFnzyLEts9qNwmjmu4JTAMYubEfwVOSwpQ1I1sKKFcxhZCI2buerfw==
 
 js-sha256@^0.9.0:
   version "0.9.0"
@@ -6953,17 +6958,17 @@ tiny-relative-date@^1.3.0:
   resolved "https://registry.yarnpkg.com/tiny-relative-date/-/tiny-relative-date-1.3.0.tgz#fa08aad501ed730f31cc043181d995c39a935e07"
   integrity sha512-MOQHpzllWxDCHHaDno30hhLfbouoYlOI8YlMNtvKe1zXbjEVhbcEovQxvZrPvtiYW630GQDoMMarCnjfyfHA+A==
 
-tldts-core@^5.6.80:
-  version "5.6.80"
-  resolved "https://registry.yarnpkg.com/tldts-core/-/tldts-core-5.6.80.tgz#7f88e249bd89c4bf1c9011dc922a6b756ae733b2"
-  integrity sha512-yTsYxJg4UeXbsex/eWM7fSW9UeusaTsXUcovVf9E8h0mh5OD+P1nS9xiHekBcuKltSl8kYkQSDqbYpq9r+G+kw==
+tldts-core@^5.7.33:
+  version "5.7.33"
+  resolved "https://registry.yarnpkg.com/tldts-core/-/tldts-core-5.7.33.tgz#b2364f30d16e34b48961911408e9dbe3ae94ebdb"
+  integrity sha512-rESuFr/uhdKG8kXDsR6YBAbvV0k1lEn1ep4PKkej7ubkcWM84P7oqT+eTrr7170inds8jPTtkQBWIqDtwlIrvQ==
 
-tldts@^5.6.80:
-  version "5.6.80"
-  resolved "https://registry.yarnpkg.com/tldts/-/tldts-5.6.80.tgz#5b43d486ecc95e78fdbb4771cfa7ee1a9f84bb2d"
-  integrity sha512-dFVVHSL0T2f9+OPSF3v4cXLzCJqVBCTSuCu4/zTSBJZHUugtnZ6PMYBlVCIhH3kGmWWBQQYOwSL1sUf114Na3Q==
+tldts@^5.7.33:
+  version "5.7.33"
+  resolved "https://registry.yarnpkg.com/tldts/-/tldts-5.7.33.tgz#5ba62d7f5396f6fd28439e8371974888b9b72396"
+  integrity sha512-n8Xq0qeENXyCu+jpVlw+RHf0wYC0/WvvB88pU33G7QgsAhDMv2aQNlIHuqL+7Xyj5nXxwWXm3QLEYkKlHyb3Qg==
   dependencies:
-    tldts-core "^5.6.80"
+    tldts-core "^5.7.33"
 
 to-fast-properties@^2.0.0:
   version "2.0.0"
@@ -7235,10 +7240,10 @@ validate-npm-package-name@^3.0.0, validate-npm-package-name@~3.0.0:
   dependencies:
     builtins "^1.0.3"
 
-validator@^13.5.2:
-  version "13.5.2"
-  resolved "https://registry.yarnpkg.com/validator/-/validator-13.5.2.tgz#c97ae63ed4224999fb6f42c91eaca9567fe69a46"
-  integrity sha512-mD45p0rvHVBlY2Zuy3F3ESIe1h5X58GPfAtslBjY7EtTqGquZTj+VX/J4RnHWN8FKq0C9WRVt1oWAcytWRuYLQ==
+validator@^13.6.0:
+  version "13.6.0"
+  resolved "https://registry.yarnpkg.com/validator/-/validator-13.6.0.tgz#1e71899c14cdc7b2068463cb24c1cc16f6ec7059"
+  integrity sha512-gVgKbdbHgtxpRyR8K0O6oFZPhhB5tT1jeEHZR0Znr9Svg03U0+r9DXWMrnRAB+HtCStDQKlaIZm42tVsVjqtjg==
 
 vary@~1.1.2:
   version "1.1.2"

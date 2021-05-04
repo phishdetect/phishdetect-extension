@@ -34,10 +34,9 @@ function scanPage() {
 }
 
 function loadPopup() {
-    // Show interactive buttons if the node is online and reachable.
-    if (cfg.status == "authorized" || cfg.status == "online") {
-        $(".pd-needs-online").show();
-    }
+    // if (cfg.status !== "authorized" || cfg.status !== "online") {
+    //     $(".pd-needs-online").show();
+    // }
 
     getTab(function(tab) {
         const url = new URL(tab.url);
@@ -51,21 +50,25 @@ function loadPopup() {
             $("#divPopupActions").text("PhishDetect doesn't work on this webpage.")
         }
 
-        // We disable the scan this page button if the Node doesn't support
-        // scanning.
         chrome.runtime.sendMessage({method: "getNodeEnableAnalysis", tabId: tab.id}, function(response) {
-            if (response === false) {
-                $("#divScanPage").hide();
+            if (response === true) {
+                $("#popupFullActions").show();
+                $("#popupLimitedActions").hide();
+            } else {
+                $("#popupFullActions").hide();
+                $("#popupLimitedActions").show();
             }
         });
     });
 
+    $("#buttonScanPage").on("click", function() {
+        scanPage();
+    });
     $("#linkReportPage").on("click", function() {
         reportPage();
     });
-
-    $("#buttonScanPage").on("click", function() {
-        scanPage();
+    $("#buttonReportPage").on("click", function() {
+        reportPage();
     });
 }
 

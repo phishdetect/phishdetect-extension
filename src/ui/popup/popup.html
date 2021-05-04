@@ -15,17 +15,26 @@
         </div>
     </div>
 
-    <div class="p-4 mt-4">
+    <div class="p-4">
         <div id="divPopupServerStatus"></div>
 
         <div id="divPopupActions">
-            <div class="justify-center text-center items-center pd-needs-online" id="divScanPage">
-                <div><img id="scanBird" src="scan_bird.png" class="h-24" /></div>
-                <div class="mt-4" id="divScanButton"><a class="pd-button-blue" id="buttonScanPage">Scan page for phishing</a></div>
+            <div id="popupFullActions" class="hidden">
+                <div class="justify-center text-center items-center" id="divScanPage">
+                    <div><img id="scanBird" src="scan_bird.png" class="h-24" /></div>
+                    <div class="mt-4" id="divScanButton"><a class="pd-button-blue" id="buttonScanPage">Scan page for phishing</a></div>
+                </div>
+
+                <div class="items-center flex justify-center mt-8 text-xs" id="divReportPage">
+                    <img src="report_page.png" class="h-6 mr-2" alt="" /> <a id="linkReportPage" href="#">report this page now!</a>
+                </div>
             </div>
 
-            <div class="items-center flex justify-center mt-8 pd-needs-online text-xs" id="divReportPage">
-                <img src="report_page.png" class="h-6 mr-2" /> <a id="linkReportPage" href="#">report this page now!</a>
+            <div id="popupLimitedActions" class="hidden">
+                <center>
+                    <div><img src="report_page.png" alt="" style="height: 150px;" /></div>
+                    <div class="mt-4"><a class="pd-button-blue" id="buttonReportPage">Report phishing</a></div>
+                </center>
             </div>
         </div>
     </div>

@@ -40,6 +40,7 @@ function toggleReportingOff() {
 function loadOptions() {
     const node = cfg.getNode();
     if (node == NODE_DEFAULT_URL) {
+        $("#defaultNetworkAddress").text(node);
         $("#divDefaultNetwork").show();
     } else {
         $("#customNetworkAddress").text(node);

@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title data-i18n="">PhishDetect - Settings</title>
+<title data-i18n="">PhishDetect - Network</title>
 <link href="../../fontawesome/css/all.min.css" rel="stylesheet">
 <link href="../../css/phishdetect-ui.dist.css" rel="stylesheet">
 </head>
@@ -11,18 +11,24 @@
 
     <div class="pd-dialog">
         <div class="text-center items-center">
-            <h1>Confirmed</h1>
+            <h1>Join a Network</h1>
 
-            <div class="mt-4">You have left the Network:</div>
-            <div><span class="bg-gray-200 font-bold" id="networkAddress"></span></div>
+            <div class="mt-4">Invited to PhishDetect by a group, team, or organization?</div>
+            <div class="mt-4">
+                <div id="errorMessage" class="text-tomatored"></div>
+                <div><input type="text" id="networkAddress" name="networkAddress" class="pd-form-input w-full" placeholder="PhishDetect Network" /></div>
+            </div>
+        </div>
 
-            <div class="mt-8"><a class="pd-button-blue" href="/ui/settings/settings.html">OK</a></div>
+        <div class="mt-8 text-right">
+            <a class="mr-4 pd-button-blue-outline" href="/ui/settings/settings.html">Cancel</a> <a class="pd-button-blue" id="next" href="">Next</a>
         </div>
     </div>
 <script src="../../lib/jquery.min.js"></script>
 <script src="../../js/i18n.js"></script>
+<script src="../../js/utils.js"></script>
 <script src="../../js/const.js"></script>
 <script src="../../js/config.js"></script>
-<script src="leave_confirm.js"></script>
+<script src="join.js"></script>
 </body>
 </html>

@@ -34,7 +34,6 @@ REPORT_FAILED_PAGE                    = "ui/report/report_failed.html";
 REVIEW_PAGE                           = "ui/review/review.html";
 REVIEW_FAILED_PAGE                    = "ui/review/review_failed.html";
 SCAN_PAGE                             = "ui/scan/scan.html";
-REGISTER_COMPLETED_PAGE               = "ui/register/register_completed.html";
 
 INDICATORS_UPDATE_FREQUENCY           = 15;
 CONFIG_UPDATE_FREQUENCY               = 30;

@@ -2,27 +2,30 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title data-i18n="">PhishDetect - Settings</title>
+<title data-i18n="">PhishDetect - Network</title>
 <link href="../../fontawesome/css/all.min.css" rel="stylesheet">
 <link href="../../css/phishdetect-ui.dist.css" rel="stylesheet">
 </head>
 <body>
     <div class="overflow-hidden bg-white p-2 shadow-lg"><div class="pd-container"><div class="float-left"><img src="../../images/logo.png" class="h-9" /></div><div class="float-right"><a href="https://phishdetect.io/help/">Help</a></div></div></div>
 
-    <div class="pd-dialog">
-        <div class="text-center items-center">
-            <h1>Confirmed</h1>
-
-            <div class="mt-4">You have left the Network:</div>
+    <div class="pd-dialog grid justify-items-stretch">
+        <div class="justify-self-center text-center items-center">
+            <div class="mb-6"><img src="three_fish.png" alt="" height="80" /></div>
+            <div>You are now a member of the PhishDetect Network:</div>
             <div><span class="bg-gray-200 font-bold" id="networkAddress"></span></div>
 
-            <div class="mt-8"><a class="pd-button-blue" href="/ui/settings/settings.html">OK</a></div>
+            <div class="mt-4">Your admin is: <span id="adminContacts"></span></div>
+
+            <div class="mt-8">
+                <a class="pd-button-blue" href="/ui/settings/settings.html">OK</a>
+            </div>
         </div>
     </div>
 <script src="../../lib/jquery.min.js"></script>
 <script src="../../js/i18n.js"></script>
 <script src="../../js/const.js"></script>
 <script src="../../js/config.js"></script>
-<script src="leave_confirm.js"></script>
+<script src="joined.js"></script>
 </body>
 </html>

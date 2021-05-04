@@ -42,6 +42,9 @@ p {
 .pd-container {
     @apply container mx-auto justify-center items-center;
 }
+.pd-dialog {
+    @apply mt-20 w-1/3 mx-auto bg-white text-black shadow-lg p-6 mb-6 rounded;
+}
 .separator {
     @apply border-b border-gray-500 mt-1 mb-1;
 }

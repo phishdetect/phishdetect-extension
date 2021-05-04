@@ -1,3 +1,7 @@
+<p align="center">
+     <img src="https://raw.githubusercontent.com/phishdetect/assets/main/logos/phishdetect.png" width="300" />
+</p>
+
 # PhishDetect Extension
 
 This is a browser extension for Mozilla Firefox and Google Chrome. It is a client for PhishDetect and it is currently capable of the following functionality:
@@ -40,5 +44,3 @@ The extension is now available in the `build/` folder and it is ready to be load
 ## License
 
 PhishDetect Extension is released under GNU General Public License 3.0 and is copyrighted to Claudio Guarnieri.
-
-The hook icon was created by Alex Fuller from Noun Project.

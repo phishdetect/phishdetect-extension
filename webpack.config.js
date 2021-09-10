@@ -94,10 +94,10 @@ var options = {
                 {from: "node_modules/jquery/dist/jquery.min.js", to: "lib"},
                 {from: "node_modules/js-sha256/build/sha256.min.js", to: "lib"},
                 {from: "node_modules/@fortawesome/fontawesome-free/css/*.min.css", to({context, absoluteFileName}) {
-                    return "fontawesome/css/[name].[ext]";
+                    return "fontawesome/css/[name][ext]";
                 }},
                 {from: "node_modules/@fortawesome/fontawesome-free/js/*.min.js", to({context, absoluteFileName}) {
-                    return "fontawesome/js/[name].[ext]";
+                    return "fontawesome/js/[name][ext]";
                 }},
                 {from: "node_modules/@fortawesome/fontawesome-free/webfonts", to: "fontawesome/webfonts"}
             ],

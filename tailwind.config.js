@@ -33,11 +33,24 @@ module.exports = {
         dark: '#065290'
       },
       breezyblue: {
+        light: '#F1F9F9',
         DEFAULT: '#C9E9EA'
       },
       turquoise: {
         DEFAULT: '#6ACEA5'
       },
+    },
+    borderWidth: {
+      DEFAULT: '1px',
+      '0': '0px',
+      '2': '2px',
+      '4': '4px',
+      '6': '6px',
+      '8': '6px',
+      '10': '10px',
+      '15': '15px',
+      '20': '20px',
+      '25': '25px'
     },
     boxShadow: {
       sm: '0 1px 2px 0 rgba(0, 0, 0, 0.03)',

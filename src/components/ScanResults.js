@@ -16,85 +16,75 @@
 // along with PhishDetect.  If not, see <https://www.gnu.org/licenses/>.
 
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLink, faExclamationTriangle, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 
 function getBrandHTML(brand) {
     // TODO: Need to find a way to dynamically load FontAwesome icon by
     //       brand name.
+    if (brand.length == 0) {
+        return "";
+    }
     return brand[0].toUpperCase() + brand.slice(1).toLowerCase();;
 }
 
-export function ScanResultsWarning(props) {
-    let warningClass = "pd-yellow-warning";
-    let warningMessage = chrome.i18n.getMessage("scanResultsSuspicious", [getBrandHTML(props.brand)]);
-    if (props.score > 50) {
-        warningClass = "pd-red-warning";
-        warningMessage = chrome.i18n.getMessage("scanResultsBad", [getBrandHTML(props.brand)]);
-    }
-
+export function ScanResultsSafelisted(props) {
     return (
-        <div>
-            <div className="text-center mb-6">
-                <FontAwesomeIcon icon={faExclamationTriangle} className="text-5xl" />
-                <h1 className="font-normal mt-4"><b>PhishDetect</b> Warning</h1>
+        <div className="grid justify-items-stretch">
+            <div className="w-3/5 bg-breezyblue-light shadow-xl rounded-2xl justify-self-center text-center items-center">
+                <div className="font-bold tracking-widest mt-10">SCAN RESULT</div>
+                <div className="text-5xl font-bold mt-6 mb-6">Looks OK.</div>
+                <div className="w-3/5 bg-white p-2 mb-10">{props.url}</div>
+                <div>
+                    <img className="rounded-b-2xl" src="ok.png" />
+                </div>
             </div>
 
-            {props.dangerous ?
-                <div className="pd-yellow-warning">
-                    <div>{chrome.i18n.getMessage("scanResultsLinkAnalyzed")} <span className="highlight">{props.url}</span></div>
-                    <div className="mt-2">{chrome.i18n.getMessage("scanResultsDangerous")}</div>
+            <div className="text-center mt-10 mb-10"><a href={props.url} className="pd-button-blue text-xl pl-8 pr-8 pt-4 pb-4">Proceed</a></div>
 
-                    <h4 className="mt-4 mb-2">{chrome.i18n.getMessage("scanResultsDangerousExamples")}</h4>
-                    <div>
-                        <ul>
-                            <li>{chrome.i18n.getMessage("scanResultsDangerousExample1")}</li>
-                            <li>{chrome.i18n.getMessage("scanResultsDangerousExample2")}</li>
-                        </ul>
-                    </div>
-
-                    <div className="mt-4">{chrome.i18n.getMessage("scanResultsStored")}</div>
+            <div>
+                <h1>What happened?</h1>
+                <div>
+                    {chrome.i18n.getMessage("scanResultsLinkAnalyzed")} <span className="font-mono bg-white text-black font-bold">{props.url}</span>. <span className="text-turquoise font-bold">{chrome.i18n.getMessage("scanResultsSafelisted", [getBrandHTML(props.brand)])}</span>
                 </div>
-                :
-                <div className={warningClass}>
-                    <div>{chrome.i18n.getMessage("scanResultsLinkAnalyzed")} <span className="highlight">{props.url}</span></div>
-                    <div>{warningMessage}</div>
-                    <h4 className="mt-4 font-bold">{chrome.i18n.getMessage("scanResultsWarnings")}</h4>
-
-                    {props.warnings.map((warning, index) =>
-                        <div>{warning.description}</div>
-                    )}
-
-                    <div className="mt-4">{chrome.i18n.getMessage("scanResultsStored")}</div>
-                </div>
-            }
+                <div className="mt-4">{chrome.i18n.getMessage("scanResultsRemainCautious")}</div>
+            </div>
 
             {props.final_url && (props.final_url != props.url) &&
                 <div className="mb-8">{chrome.i18n.getMessage("scanResultsRedirectedTo")} <span className="font-mono bg-grey-300">{props.final_url}</span></div>
             }
 
-            <div className="mb-4">{chrome.i18n.getMessage("scanResultsScreenshot")}</div>
-            <div className="text-center"><img className="rounded-lg shadow-lg w-full border-t-2 border-gray-200" src={props.screenshot} /></div>
+            <div className="mt-6 mb-4 font-bold">{chrome.i18n.getMessage("scanResultsScreenshot")}</div>
 
-            <div className="text-center mt-16 mb-10"><a href={props.url} className="pd-button-red text-xl pl-8 pr-8 pt-4 pb-4" role="button" onClick="return confirm('Are you sure?');"><FontAwesomeIcon icon={faLink} /> {chrome.i18n.getMessage("scanResultsContinueAtMyOwnRisk")}</a></div>
+            <div className="text-center mb-10"><img className="rounded-2xl shadow-xl w-full border-15 border-turquoise" src={props.screenshot} /></div>
         </div>
     );
 }
 
 export function ScanResultsContinue(props) {
     return (
-        <div>
-            <div className="text-center mb-6">
-                <FontAwesomeIcon icon={faCheckCircle} className="text-5xl" />
-                <h1 className="font-normal mt-4"><b>PhishDetect</b> OK</h1>
+        <div className="grid justify-items-stretch">
+            <div className="w-3/5 bg-breezyblue-light shadow-xl rounded-2xl justify-self-center text-center items-center">
+                <div className="font-bold tracking-widest mt-10">SCAN RESULT</div>
+                <div className="text-5xl font-bold mt-6 mb-6">Looks OK.</div>
+                <div className="w-3/5 bg-white p-2 mb-10">{props.url}</div>
+                <div>
+                    <img className="rounded-b-2xl" src="ok.png" />
+                </div>
             </div>
 
-            {props.safelisted &&
-                <div className="pd-safelisted">{chrome.i18n.getMessage("scanResultsSafelisted", [getBrandHTML(props.brand)])}</div>
-            }
+            <div className="text-center mt-10 mb-10"><a href={props.url} className="pd-button-blue text-xl pl-8 pr-8 pt-4 pb-4">Proceed</a></div>
 
-            <div className="pd-information">
-                <div>{chrome.i18n.getMessage("scanResultsLinkAnalyzed")} <span className="font-mono bg-blue-300 text-blue-800">{props.url}</span>. {chrome.i18n.getMessage("scanResultsNothingSuspicious")}</div>
+            <div>
+                <h1>What happened?</h1>
+                <div>
+                    {chrome.i18n.getMessage("scanResultsLinkAnalyzed")} <span className="font-mono bg-white text-black font-bold">{props.url}</span>.&nbsp;
+
+                    {props.safelisted ? 
+                        <span className="text-turquoise font-bold">{chrome.i18n.getMessage("scanResultsSafelisted", [getBrandHTML(props.brand)])}</span>
+                        :
+                        <span>{chrome.i18n.getMessage("scanResultsNothingSuspicious")}</span>
+                    }
+
+                </div>
                 <div className="mt-4">{chrome.i18n.getMessage("scanResultsRemainCautious")}</div>
                 <div className="mt-4">{chrome.i18n.getMessage("scanResultsNotStored")} <span id="reportResults">{chrome.i18n.getMessage("scanResultsIfYouThinkWrong")}, <a id="pleaseReport" href="#">{chrome.i18n.getMessage("scanResultsPleaseReport")}</a></span></div>
             </div>
@@ -103,10 +93,90 @@ export function ScanResultsContinue(props) {
                 <div className="mb-8">{chrome.i18n.getMessage("scanResultsRedirectedTo")} <span className="font-mono bg-grey-300">{props.final_url}</span></div>
             }
 
-            <div className="mb-4">{chrome.i18n.getMessage("scanResultsScreenshot")}</div>
-            <div className="text-center"><img className="rounded-lg shadow-lg w-full border-t-2 border-gray-200" src={props.screenshot} /></div>
+            <div className="mt-6 mb-4 font-bold">{chrome.i18n.getMessage("scanResultsScreenshot")}</div>
 
-            <div className="text-center mt-16 mb-10"><a href={props.url} className="pd-button-blue text-xl pl-8 pr-8 pt-4 pb-4"><FontAwesomeIcon icon={faLink} /> {chrome.i18n.getMessage("scanResultsContinueNow")}</a></div>
+            {props.safelisted ?
+                <div className="text-center mb-10"><img className="rounded-2xl shadow-xl w-full border-15 border-turquoise" src={props.screenshot} /></div>
+                :
+                <div className="text-center mb-10"><img className="rounded-2xl shadow-xl w-full border-15 border-breezyblue" src={props.screenshot} /></div>
+            }
+        </div>
+    );
+}
+
+export function ScanResultsWarning(props) {
+    return (
+        <div className="grid justify-items-stretch">
+            <div className="w-3/5 bg-breezyblue-light shadow-xl rounded-2xl justify-self-center text-center items-center">
+                <div className="font-bold tracking-widest mt-10">SCAN RESULT</div>
+                <div className="text-5xl font-bold mt-6 mb-6">Be cautious.</div>
+                <div className="w-3/5 bg-white p-2 mb-10">{props.url}</div>
+                <div>
+                    <img className="rounded-b-2xl" src="warning.png" />
+                </div>
+            </div>
+
+            <div class="mt-10">
+                <h1>What happened?</h1>
+                <div>{chrome.i18n.getMessage("scanResultsLinkAnalyzed")} <span className="font-mono bg-white text-black font-bold">{props.url}</span></div>
+                <div>{chrome.i18n.getMessage("scanResultsSuspicious", [getBrandHTML(props.brand)])}</div>
+                
+                <h4 className="mt-4 font-bold">{chrome.i18n.getMessage("scanResultsWarnings")}</h4>
+
+                {props.warnings.map((warning, index) =>
+                    <div>{warning.description}</div>
+                )}
+
+                <div className="mt-4">{chrome.i18n.getMessage("scanResultsStored")}</div>
+            </div>
+
+            {props.final_url && (props.final_url != props.url) &&
+                <div className="mb-8">{chrome.i18n.getMessage("scanResultsRedirectedTo")} <span className="font-mono bg-grey-300">{props.final_url}</span></div>
+            }
+
+            <div className="mt-6 mb-4 font-bold">{chrome.i18n.getMessage("scanResultsScreenshot")}</div>
+            <div className="text-center mb-10"><img className="rounded-2xl shadow-xl w-full border-15 border-ripeyellow" src={props.screenshot} /></div>
+
+            <div className="text-center mt-10 mb-10"><a href={props.url} className="" role="button" onClick="return confirm('Are you sure?');">{chrome.i18n.getMessage("scanResultsContinueAtMyOwnRisk")}</a></div>
+        </div>
+    );
+}
+
+export function ScanResultsDanger(props) {
+    return (
+        <div className="grid justify-items-stretch">
+            <div className="w-3/5 bg-breezyblue-light shadow-xl rounded-2xl justify-self-center text-center items-center">
+                <div className="font-bold tracking-widest mt-10">SCAN RESULT</div>
+                <div className="text-5xl font-bold mt-6 mb-6">This page is unsafe.</div>
+                <div className="w-3/5 bg-white p-2 mb-10">{props.url}</div>
+                <div>
+                    <img className="rounded-b-2xl" src="danger.png" />
+                </div>
+            </div>
+
+
+            <div class="mt-10">
+                <h1>What happened?</h1>
+                <div>{chrome.i18n.getMessage("scanResultsLinkAnalyzed")} <span className="font-mono bg-white text-black font-bold">{props.url}</span></div>
+                <div>{chrome.i18n.getMessage("scanResultsBad", [getBrandHTML(props.brand)])}</div>
+                
+                <h4 className="mt-4 font-bold">{chrome.i18n.getMessage("scanResultsWarnings")}</h4>
+
+                {props.warnings.map((warning, index) =>
+                    <div>{warning.description}</div>
+                )}
+
+                <div className="mt-4">{chrome.i18n.getMessage("scanResultsStored")}</div>
+            </div>
+
+            {props.final_url && (props.final_url != props.url) &&
+                <div className="mb-8">{chrome.i18n.getMessage("scanResultsRedirectedTo")} <span className="font-mono bg-grey-300">{props.final_url}</span></div>
+            }
+
+            <div className="mt-6 mb-4 font-bold">{chrome.i18n.getMessage("scanResultsScreenshot")}</div>
+            <div className="text-center mb-10"><img className="rounded-2xl shadow-xl w-full border-15 border-tomatored" src={props.screenshot} /></div>
+
+            <div className="text-center mt-10 mb-10"><a href={props.url} className="" role="button" onClick="return confirm('Are you sure?');">{chrome.i18n.getMessage("scanResultsContinueAtMyOwnRisk")}</a></div>
         </div>
     );
 }

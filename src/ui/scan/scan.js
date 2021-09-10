@@ -17,26 +17,42 @@
 
 import React from "react";
 import ReactDOM from "react-dom";
-import { ScanResultsContinue, ScanResultsWarning } from "../../components/ScanResults";
+import { ScanResultsSafelisted, ScanResultsContinue, ScanResultsWarning, ScanResultsDanger} from "../../components/ScanResults";
 
 const requestTimeout = 120000;
 
 function renderResults(data) {
-    if ((data.safelisted || data.score < 30) && !data.dangerous) {
+    if (data.safelisted) {
         ReactDOM.render(
-            React.createElement(ScanResultsContinue, data),
+            React.createElement(ScanResultsSafelisted, data),
             $("#container").get(0)
         );
-        $("#pleaseReport").on("click", function() {
-            chrome.runtime.sendMessage({method: "sendReport", reportType: "url", reportContent: data.url}, function(response) {
-                $("#reportResults").text(chrome.i18n.getMessage("scanResultsThankYouForReport"));
-            });
-        });
     } else {
-        ReactDOM.render(
-            React.createElement(ScanResultsWarning, data),
-            $("#container").get(0)
-        );
+        if (data.score < 30) {
+            ReactDOM.render(
+                React.createElement(ScanResultsContinue, data),
+                $("#container").get(0)
+            );
+            $("#pleaseReport").on("click", function() {
+                chrome.runtime.sendMessage({method: "sendReport", reportType: "url", reportContent: data.url}, function(response) {
+                    $("#reportResults").text(chrome.i18n.getMessage("scanResultsThankYouForReport"));
+                });
+            });
+        // If instead it was not safelisted, and the score is between 30 and 50,
+        // we mark it as a warning.
+        } else if (!data.safelisted && data.score >= 30 && data.score <= 50) {
+            ReactDOM.render(
+                React.createElement(ScanResultsWarning, data),
+                $("#container").get(0)
+            );
+        // If it was not safelisted and the score is higher than 50, it is almost
+        // certainly bad.
+        } else if (!data.safelisted && data.score > 50) {
+            ReactDOM.render(
+                React.createElement(ScanResultsDanger, data),
+                $("#container").get(0)
+            );
+        }
     }
 }
 

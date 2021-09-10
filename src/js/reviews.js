@@ -29,10 +29,10 @@ function sendReview(ioc, tabId) {
         .then((response) => response.json())
         .then(function(data) {
             console.log("Submitted review for indicator", ioc, "to PhishDetect Node.");
-            chrome.tabs.update(tabId,{url: chrome.extension.getURL(REVIEW_PAGE)});
+            chrome.tabs.update(tabId, {url: chrome.extension.getURL(REVIEW_PAGE)});
         })
         .catch(error => {
             console.log("Failed to submit review: ", error);
-            chrome.tabs.update(tabId,{url: chrome.extension.getURL(REVIEW_FAILED_PAGE)});
+            chrome.tabs.update(tabId, {url: chrome.extension.getURL(REVIEW_FAILED_PAGE)});
         });
 }

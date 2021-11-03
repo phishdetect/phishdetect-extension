@@ -28,7 +28,7 @@
         "react-dom": "^17.0.2",
         "tailwindcss": "^2.2.14",
         "tldts": "^5.7.41",
-        "validator": "^13.6.0",
+        "validator": "^13.7.0",
         "vex-dialog": "^1.1.0",
         "vex-js": "^4.1.0"
     },
